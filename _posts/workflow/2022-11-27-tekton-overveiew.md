@@ -110,3 +110,13 @@ taskRuns 또는 pipelineRuns를 수동으로 생성하여 Tekton Task 또는 Pip
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/01-tekton-arch.png" alt="">
   <figcaption></figcaption>
 </figure> 
+
+
+## Tekton 작동원리
+
+Tekton Pipelines는 각 단계를 래핑하여 작동합니다. 보다 구체적으로 말하면 Tekton Pipelines는 단계 컨테이너에 진입점 바이너리를 주입하여 시스템이 준비될 때 지정한 명령을 실행합니다.
+Tekton Pipelines는 Kubernetes annotation을 사용하여 파이프라인의 상태를 추적합니다. 이러한 annotation은 Kubernetes Downward API를 사용하여 파일 형식으로 각 step컨테이너 내부에 투영됩니다. 진입점 바이너리는 투영된 파일을 자세히 관찰하고 특정 주석이 파일로 나타나는 경우에만 제공된 명령을 시작합니다. 
+
+예를 들어, Tekton에 작업에서 두 단계를 연속적으로 실행하도록 요청하면 두 번째 step컨테이너에 주입된 진입점 바이너리는 첫 번째 단계 컨테이너가 성공적으로 완료되었다고 annotation이 보고할 때까지 유휴 상태로 기다립니다.
+
+또한 Tekton Pipelines는 입력 리소스 검색 및 blob 스토리지 솔루션에 대한 출력 업로드와 같은 특정 기본 제공 기능을 지원하기 위해 일부 컨테이너가 Step컨테이너 전후에 자동으로 실행되도록 예약합니다. taskRuns 및 pipelineRuns를 통해 실행 상태도 추적할 수 있습니다. 시스템은 또한 단계 컨테이너를 실행하기 전에 환경을 설정하기 위해 여러 다른 작업을 수행합니다. 
