@@ -23,6 +23,12 @@ var store = [{
         "url": "/devops/cloud-native-cicd/",
         "teaser": null
       },{
+        "title": "Tekton First Pipeline",
+        "excerpt":"First Pipeline 작성 Tekton을 이용하여 Pipeline을 작성하는 것을 실습합니다. Pipeline은 CI/CD 워크플로의 일부로 특정 실행 순서로 정렬된 일련의 Task를 정의합니다. 이번에는 first Pipeline을 작성할 것입니다, First Pipeline에서는 이전에 작성했던 Hello World! 그리고 goodbye World! Task를 포함하는 Pipeline을 작성합니다. goodbye task를 다음과 같이 작성하고 적용합니다. kubectl apply -f goodbye.yaml [goodbye.yaml] apiVersion:...","categories": ["devops"],
+        "tags": ["tekton"],
+        "url": "/devops/tekton-first-pipeline/",
+        "teaser": null
+      },{
         "title": "Getting Start Tekton",
         "excerpt":"Getting start tekton API에서 Task Kubernetes resource type이 Task로 표현되는 Task는 작업에 필요한 로직을 수행하기 위해 순차적으로 실행되는 일련의 Step을 정의합니다. 모든 Task는 Kubernetes 클러스터에서 포드로 실행되며 각 Step은 Pod내에 자신의 컨테이너에서 실행됩니다. 아래와 같이 Hello World Task를 작성하여 Kubernetes 에 적용합니다. Hello World Task 작성 kubectl apply -f hello-world.yaml...","categories": ["devops"],
         "tags": ["tekton"],

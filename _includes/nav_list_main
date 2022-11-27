@@ -27,23 +27,23 @@
 
 
         <span class="nav__sub-title">Kubernetes</span>
+        <ul>
+            {% for category in site.categories %}
+                {% if category[0] == "devops" %}
+                    <li><a href="/categories/devops" class="">Cloud Native CI/CD ({{category[1].size}})</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <ul>
+            {% for category in site.categories %}
+               {% if category[0] == "kubernetes" %}
+                   <li><a href="/categories/kubernetes" class="">Kubernetes ({{category[1].size}})</a></li>
+               {% endif %}
+           {% endfor %}
+        </ul>
+            
+            
 
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "kubernetes" %}
-                        <li><a href="/categories/kubernetes" class="">Kubernetes ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-            
-            
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "kubernetes" %}
-                        <li><a href="/categories/devops" class="">Cloud Native CI/CD ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
       </li>
 
 

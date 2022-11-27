@@ -5,6 +5,7 @@ categories:
 tags:
   - tekton
 ---
+
 ## Tekton 개요 
 Tekton은 CI/CD(지속적 통합 및 지속적 전달) 시스템을 만들기 위한 Kubernetes 네이티브 오픈 소스 프레임워크입니다. 여러 클라우드 공급자 또는 하이브리드 환경에서 애플리케이션을 구축, 테스트 및 배포하는 데 최적화되어 있습니다.
 Tekton은 CI/CD 파이프라인을 구축하기 위한 클라우드 네이티브 솔루션입니다. 빌딩 블록을 제공하는 Tekton 파이프 라인과 Tekton Cli 및 Tekton 카탈로그와 같은 지원 구성 요소로 구성되어 Tekton을 완벽한 생태계로 만듭니다. Tekton은 Linux Foundation 프로젝트인 CD Foundation의 일부입니다.
