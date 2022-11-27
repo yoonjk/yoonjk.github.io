@@ -118,13 +118,13 @@
           
         </a>
         <ul class="visible-links"><li class="masthead__menu-item">
-              <a href="/about/">About</a>
+              <a href="/index.html">Home</a>
             </li><li class="masthead__menu-item">
               <a href="/year-archive/">Posts</a>
             </li><li class="masthead__menu-item">
               <a href="/categories/">Category</a>
             </li><li class="masthead__menu-item">
-              <a href="/tags/">tag</a>
+              <a href="/tags/">Tags</a>
             </li></ul>
         
         <button class="greedy-nav__toggle hidden" type="button">
@@ -250,8 +250,60 @@
 </div>
 
   
-  </div>
 
+  
+    
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <li>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">6</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </li>
+      <li>
+        <span class="nav__sub-title">Workflow</span>
+            <ul>
+                
+                    
+                        <li><a href="/categories/workflow" class="">workflow (5)</a></li>
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+            </ul>
+
+
+
+        <span class="nav__sub-title">Kubernetes</span>
+
+            <ul>
+                
+                    
+                
+                    
+                        <li><a href="/categories/kubernetes" class="">Kubernetes (1)</a></li>
+                    
+                
+            </ul>
+
+      </li>
+      <li>	
+            <br>      
+            <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fansohxxn.github.io&count_bg=%23FFCC35&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=visitors&edge_flat=false">
+      </li>
+  </ul>
+</nav>
+  
+
+  </div>
 
 
   <div class="archive">
@@ -276,7 +328,7 @@
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
       
-        <a href="/kubernetes/local-storage-class-on-ks/" rel="permalink">Install local storage class to kubernetes
+        <a href="/workflow/tasks/" rel="permalink">Airflow task
 </a>
       
     </h2>
@@ -294,17 +346,17 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          1 분 소요
+          2 분 소요
         
       </span>
     
   </p>
 
 
-    <p class="archive__item-excerpt" itemprop="description">kubernetes 에서 storage class가 없는 경우 실습을 목적으로 
-local-storage를 설치하여 실습을 목적으로 하는 경우 사용해 볼 수 있는 provisioner 입니다로
-Install local-storage-class to kubernetes
-Kuberne...</p>
+    <p class="archive__item-excerpt" itemprop="description">Airflow Task
+Task는 airflow의 기본 실행단위로 한개 이상의 Task를 이용해서 하나의 DAG을 정의합니다. Task간 순서를 표현하기 위해 작업간 «(스트림업), »(스트림다운) 종속성을 설정하여 합니다.
+Task는
+</p>
   </article>
 </div>
 
@@ -346,6 +398,48 @@ Kuberne...</p>
     <p class="archive__item-excerpt" itemprop="description">Install local-storage-class to kubernetes
 Apache Airflow에서 DAG을 선언하는 다음과 같이 3가 유형이 있습니다.
 </p>
+  </article>
+</div>
+
+  
+    
+
+
+
+<div class="list__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/kubernetes/local-storage-class-on-ks/" rel="permalink">Install local storage class to kubernetes
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">kubernetes 에서 storage class가 없는 경우 실습을 목적으로 
+local-storage를 설치하여 실습을 목적으로 하는 경우 사용해 볼 수 있는 provisioner 입니다로
+Install local-storage-class to kubernetes
+Kuberne...</p>
   </article>
 </div>
 
@@ -473,165 +567,6 @@ Airflow는 다음과 같은 구조를 가지고 있습니다.
 DAG(Directed Acyclic Graph)는 Airflow에서 실행할 작업들을 순서에 맞게 구성한 워크플로를 의미합니다.
 DAG을 구성하는 태스크(Task)라고 하며, 화살표 방향으로 순차, 병렬 실행합니다.
 DAG은 Py...</p>
-  </article>
-</div>
-
-  
-    
-
-
-
-<div class="list__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/markup-syntax-highlighting/" rel="permalink">Markup: Syntax Highlighting
-</a>
-      
-    </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          1 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">Post displaying the various ways of highlighting code in Markdown.
-</p>
-  </article>
-</div>
-
-  
-    
-
-
-
-<div class="list__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/markup/markup-html-tags-and-formatting/" rel="permalink">Markup: HTML Tags and Formatting
-</a>
-      
-    </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          3 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">A variety of common markup showing how the theme styles them.
-</p>
-  </article>
-</div>
-
-  
-    
-
-
-
-<div class="list__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/layout-header-image-text-readability/" rel="permalink">Layout: Header Image and Text Readability
-</a>
-      
-    </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          3 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">This is a sample post with a large feature image1 up top and tons of text. Odio ad blue bottle vinyl, 90’s narwhal commodo bitters pour-over nostrud. Ugh est...</p>
-  </article>
-</div>
-
-  
-    
-
-
-
-<div class="list__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/post%20formats/post-gallery/" rel="permalink">Post: Gallery
-</a>
-      
-    </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          1 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">These are gallery tests for image wrapped in &lt;figure&gt; elements.
-</p>
   </article>
 </div>
 
