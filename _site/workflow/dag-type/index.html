@@ -339,7 +339,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          최대 1 분 소요
+          1 분 소요
         
       </span>
     
@@ -354,9 +354,9 @@
         <h2 id="install-local-storage-class-to-kubernetes">Install local-storage-class to kubernetes</h2>
 <p>Apache Airflow에서 DAG을 선언하는 다음과 같이 3가 유형이 있습니다.</p>
 
-<ul>
+<ol>
   <li>with DAG</li>
-</ul>
+</ol>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">DAG</span> <span class="p">(</span>
     <span class="n">dag_id</span><span class="o">=</span><span class="err">”</span><span class="n">myFirstDag</span><span class="err">”</span><span class="p">,</span>
@@ -369,8 +369,40 @@
 </code></pre></div></div>
 
 <ul>
-  <li>표준 생성자 유형</li>
+  <li>with DAG 예시</li>
 </ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">airflow.models</span> <span class="kn">import</span> <span class="n">DAG</span> 
+<span class="kn">from</span> <span class="nn">airflow.providers.http.sensors.http</span> <span class="kn">import</span> <span class="n">HttpSensor</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+
+<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">"owner"</span><span class="p">:</span> <span class="s">"airflow"</span><span class="p">,</span>
+    <span class="s">"email_on_failure"</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="s">"email_on_retry"</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="s">"email"</span><span class="p">:</span> <span class="s">"admin@localhost.com"</span><span class="p">,</span>
+    <span class="s">"retries"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s">"retry_delay"</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">with</span> <span class="n">DAG</span><span class="p">(</span><span class="s">"date_pipeline_ex02"</span><span class="p">,</span> 
+  <span class="n">start_date</span><span class="o">=</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">17</span><span class="p">),</span>
+  <span class="n">schedule_interval</span><span class="o">=</span><span class="s">"@daily"</span><span class="p">,</span>
+  <span class="n">default_args</span> <span class="o">=</span> <span class="n">default_args</span><span class="p">,</span>
+  <span class="n">catchup</span><span class="o">=</span><span class="bp">False</span>
+<span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span>
+  <span class="n">is_api_available</span> <span class="o">=</span> <span class="n">HttpSensor</span><span class="p">(</span>
+    <span class="n">task_id</span><span class="o">=</span><span class="s">'is_api_available'</span><span class="p">,</span>
+    <span class="n">http_conn_id</span><span class="o">=</span><span class="s">'user_api'</span><span class="p">,</span>
+    <span class="n">endpoint</span><span class="o">=</span><span class="s">'api/'</span>
+  <span class="p">)</span>
+
+  <span class="n">is_api_available</span>
+</code></pre></div></div>
+
+<ol>
+  <li>표준 생성자 DAG</li>
+</ol>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dag</span><span class="o">=</span><span class="n">DAG</span> <span class="p">(</span>
     <span class="n">dag_id</span><span class="o">=</span><span class="err">”</span><span class="n">myFirstDag</span><span class="err">”</span><span class="p">,</span>
@@ -381,10 +413,46 @@
 <span class="n">start</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span><span class="o">=</span><span class="err">”</span><span class="n">start</span><span class="err">”</span><span class="p">,</span> <span class="n">dag</span><span class="o">=</span><span class="n">dag</span><span class="p">)</span>
 
 </code></pre></div></div>
-
 <ul>
-  <li>데코레이터 유형(@)</li>
+  <li>표준 생성자 DAG 예시</li>
 </ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span> 
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span> 
+<span class="kn">from</span> <span class="nn">airflow.operators.bash</span> <span class="kn">import</span> <span class="n">BashOperator</span> 
+<span class="kn">from</span> <span class="nn">airflow.utils.dates</span> <span class="kn">import</span> <span class="n">days_ago</span> 
+<span class="kn">import</span> <span class="nn">pendulum</span>
+
+<span class="c1"># timezone 한국시간으로 변경
+</span><span class="n">kst</span> <span class="o">=</span> <span class="n">pendulum</span><span class="p">.</span><span class="n">timezone</span><span class="p">(</span><span class="s">"Asia/Seoul"</span><span class="p">)</span>
+
+<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">"start_date"</span><span class="p">:</span> <span class="n">days_ago</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+    <span class="s">"catchup"</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">dag</span> <span class="o">=</span> <span class="n">DAG</span><span class="p">(</span>
+    <span class="s">"myFirstDAG"</span><span class="p">,</span>
+    <span class="n">default_args</span><span class="o">=</span><span class="n">default_args</span><span class="p">,</span>
+    <span class="n">schedule_interval</span><span class="o">=</span><span class="s">"@daily"</span>
+<span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">hello_airflow</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Hello airflow"</span><span class="p">)</span>
+
+<span class="n">t1</span> <span class="o">=</span> <span class="n">BashOperator</span><span class="p">(</span>
+    <span class="n">task_id</span><span class="o">=</span><span class="s">"bash"</span><span class="p">,</span>
+    <span class="n">bash_command</span><span class="o">=</span><span class="s">"echo Hello airflow"</span><span class="p">,</span>
+    <span class="n">dag</span><span class="o">=</span><span class="n">dag</span>
+<span class="p">)</span>
+
+<span class="n">t1</span>
+</code></pre></div></div>
+
+<ol>
+  <li>데코레이터 DAG(@)</li>
+</ol>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@dag (
     dag_id='data_pipeline_ex05',
@@ -402,7 +470,34 @@ def hello_dag():
 dag = hello_dag()
 
 </code></pre></div></div>
+<ul>
+  <li>데코레이터 예시</li>
+</ul>
 
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from airflow.decorators import dag, task 
+from datetime import datetime, timedelta 
+from airflow.utils.dates import days_ago 
+
+default_args = {
+    "start_date": days_ago(1),
+    "catchup": False,
+}
+
+@dag (
+    dag_id='data_pipeline_ex05',
+       default_args = default_args,
+       schedule_interval='@daily'
+) 
+def hello_dag():
+    @task
+    def hello_task1():
+        print('Hello World')
+
+    hello_task1()
+
+# DAG 호출
+dag = hello_dag()
+</code></pre></div></div>
 
         
       </section>
