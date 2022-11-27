@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-11-27T16:42:40+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Install local storage class to kubernetes</title><link href="http://localhost:4000/kubernetes/local-storage-class-on-ks/" rel="alternate" type="text/html" title="Install local storage class to kubernetes" /><published>2022-11-27T00:00:00+09:00</published><updated>2022-11-27T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/local-storage-class-on-ks</id><content type="html" xml:base="http://localhost:4000/kubernetes/local-storage-class-on-ks/"><![CDATA[<p>kubernetes 에서 storage class가 없는 경우 실습을 목적으로 
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-11-27T16:44:33+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Install local storage class to kubernetes</title><link href="http://localhost:4000/kubernetes/local-storage-class-on-ks/" rel="alternate" type="text/html" title="Install local storage class to kubernetes" /><published>2022-11-27T00:00:00+09:00</published><updated>2022-11-27T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/local-storage-class-on-ks</id><content type="html" xml:base="http://localhost:4000/kubernetes/local-storage-class-on-ks/"><![CDATA[<p>kubernetes 에서 storage class가 없는 경우 실습을 목적으로 
 local-storage를 설치하여 실습을 목적으로 하는 경우 사용해 볼 수 있는 provisioner 입니다로</p>
 <h2 id="install-local-storage-class-to-kubernetes">Install local-storage-class to kubernetes</h2>
 <p>Kubernetes에 local-storage 를 사용하고자 하는 경우 다음의 설정을 하면 storage class를 사용할 수 있습니다.</p>
@@ -408,8 +408,9 @@ set_upstream 는 Task 실행 전에 수행할 task를 설정</li>
 
 <p>t1.set_downstream(t2)</p>
 
-<p>t2는 성공적으로 실행되는 t1에 의존하여 실행됩니다..
-t2.set_upstream(t1)</p>
+<p>t2는 성공적으로 실행되는 t1에 의존하여 실행됩니다.</p>
+
+<p>t2.set_upstream(t1)</p>
 
 <p>비트 시프트 연산자를 사용하여 작업을 연결할 수도 있습니다.:
 t1 » t2</p>
@@ -420,10 +421,13 @@ t2 « t1</p>
 <p>여러 종속성을 연결하는 것은 비트 시프트 연산자로 간결해집니다.
 t1 » t2 » t3</p>
 
-<p>작업 목록을 종속성으로 설정할 수도 있습니다. 이러한 작업은 모두 동일한 효과를 갖습니다.:
-t1.set_downstream([t2, t3])
-t1 » [t2, t3]
-[t2, t3] « t1</p>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><category term="task" /><summary type="html"><![CDATA[Airflow Task Task는 airflow의 기본 실행단위로 한개 이상의 Task를 이용해서 하나의 DAG을 정의합니다. Task간 순서를 표현하기 위해 작업간 «(스트림업), »(스트림다운) 종속성을 설정하여 합니다. Task는]]></summary></entry><entry><title type="html">Airflow Xcom</title><link href="http://localhost:4000/workflow/xcom/" rel="alternate" type="text/html" title="Airflow Xcom" /><published>2022-11-27T00:00:00+09:00</published><updated>2022-11-27T00:00:00+09:00</updated><id>http://localhost:4000/workflow/xcom</id><content type="html" xml:base="http://localhost:4000/workflow/xcom/"><![CDATA[<h2 id="airflow-xcon">Airflow Xcon</h2>
+<p>작업 목록을 종속성으로 설정할 수도 있습니다. 
+이러한 작업은 모두 동일한 효과를 갖습니다</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">t1</span><span class="p">.</span><span class="n">set_downstream</span><span class="p">([</span><span class="n">t2</span><span class="p">,</span> <span class="n">t3</span><span class="p">])</span>
+<span class="n">t1</span> <span class="o">&gt;&gt;</span> <span class="p">[</span><span class="n">t2</span><span class="p">,</span> <span class="n">t3</span><span class="p">]</span>
+<span class="p">[</span><span class="n">t2</span><span class="p">,</span> <span class="n">t3</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">t1</span>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><category term="task" /><summary type="html"><![CDATA[Airflow Task Task는 airflow의 기본 실행단위로 한개 이상의 Task를 이용해서 하나의 DAG을 정의합니다. Task간 순서를 표현하기 위해 작업간 «(스트림업), »(스트림다운) 종속성을 설정하여 합니다. Task는]]></summary></entry><entry><title type="html">Airflow Xcom</title><link href="http://localhost:4000/workflow/xcom/" rel="alternate" type="text/html" title="Airflow Xcom" /><published>2022-11-27T00:00:00+09:00</published><updated>2022-11-27T00:00:00+09:00</updated><id>http://localhost:4000/workflow/xcom</id><content type="html" xml:base="http://localhost:4000/workflow/xcom/"><![CDATA[<h2 id="airflow-xcon">Airflow Xcon</h2>
 <p>Airflow task간 데이터를 공유가 필요할 때,  데이터를 공유하기 위해 push, pull 을 사용하여 값을 전달하고, 값을 가져오기 위해 사용합니다. Airflow에서는 여러 분산환경에서 서로 다른 Work에서 Task가 실행 될 수 있기 때문에 Xcom을 사용합니다. Variable과 비슷하지만 Xcom은 특정 DAG내부에서만 공유되는 특징이 있습니다. 여러 DAG에서 공유해서 사용하려면 Variable을 사용해야 합니다.  PythonOperator를 사용하면 return값이 자동으로 Xcom에 push됩니다.</p>
 
 <p>예시)</p>
