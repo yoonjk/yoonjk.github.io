@@ -35,6 +35,12 @@ var store = [{
         "url": "/workflow/tasks/",
         "teaser": null
       },{
+        "title": "Tekton 개요",
+        "excerpt":"Tekton 개요 Tekton은 CI/CD(지속적 통합 및 지속적 전달) 시스템을 만들기 위한 Kubernetes 네이티브 오픈 소스 프레임워크입니다. 여러 클라우드 공급자 또는 하이브리드 환경에서 애플리케이션을 구축, 테스트 및 배포하는 데 최적화되어 있습니다. Tekton은 CI/CD 파이프라인을 구축하기 위한 클라우드 네이티브 솔루션입니다. 빌딩 블록을 제공하는 Tekton 파이프 라인과 Tekton Cli 및 Tekton 카탈로그와 같은...","categories": ["workflow"],
+        "tags": ["tekton"],
+        "url": "/workflow/tekton-overveiew/",
+        "teaser": null
+      },{
         "title": "Airflow Xcon",
         "excerpt":"Airflow Xcon Airflow task간 데이터를 공유가 필요할 때, 데이터를 공유하기 위해 push, pull 을 사용하여 값을 전달하고, 값을 가져오기 위해 사용합니다. Airflow에서는 여러 분산환경에서 서로 다른 Work에서 Task가 실행 될 수 있기 때문에 Xcom을 사용합니다. Variable과 비슷하지만 Xcom은 특정 DAG내부에서만 공유되는 특징이 있습니다. 여러 DAG에서 공유해서 사용하려면 Variable을 사용해야 합니다....","categories": ["workflow"],
         "tags": ["airflow"],
