@@ -1,0 +1,726 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Apache Airflow - 구조 - Cloud Native Journey</title>
+<meta name="description" content="Airflow 구조 Airflow는 다음과 같은 구조를 가지고 있습니다.    Scheduler : Airflow의 DAG와 작업들을 모니터링하고 실행순서와 상태관리   Worker : Airflow의 작업을 실행하는 공간   Metadata database : Airflow에서 실행할 작업에 관한 정보를 저장   Webserver: Airflow의 User Interface 에 해당하는 dashboard   DAG Directory">
+
+
+  <meta name="author" content="Jaeguk Yun">
+  
+  <meta property="article:author" content="Jaeguk Yun">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="Cloud Native Journey">
+<meta property="og:title" content="Apache Airflow - 구조">
+<meta property="og:url" content="http://localhost:4000/workflow/apache-airflow-structure/">
+
+
+  <meta property="og:description" content="Airflow 구조 Airflow는 다음과 같은 구조를 가지고 있습니다.    Scheduler : Airflow의 DAG와 작업들을 모니터링하고 실행순서와 상태관리   Worker : Airflow의 작업을 실행하는 공간   Metadata database : Airflow에서 실행할 작업에 관한 정보를 저장   Webserver: Airflow의 User Interface 에 해당하는 dashboard   DAG Directory">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-11-20T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/workflow/apache-airflow-structure/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Jaeguk Yun",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Cloud Native Journey Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/logo.ico/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/logo.ico/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/logo.ico/favicon-16x16.png">
+<link rel="mask-icon" href="/assets/logo.ico/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Cloud Native Journey
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about/">About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/">Posts</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">tag</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Jaeguk Yun</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Software Engineer/Architect</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Korea</span>
+        </li>
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Apache Airflow - 구조">
+    <meta itemprop="description" content="Airflow 구조Airflow는 다음과 같은 구조를 가지고 있습니다.  Scheduler : Airflow의 DAG와 작업들을 모니터링하고 실행순서와 상태관리  Worker : Airflow의 작업을 실행하는 공간  Metadata database : Airflow에서 실행할 작업에 관한 정보를 저장  Webserver: Airflow의 User Interface 에 해당하는 dashboard  DAG Directory">
+    <meta itemprop="datePublished" content="2022-11-20T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/workflow/apache-airflow-structure/" class="u-url" itemprop="url">Apache Airflow - 구조
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+        <h2 id="airflow-구조">Airflow 구조</h2>
+<p>Airflow는 다음과 같은 구조를 가지고 있습니다.</p>
+<ul>
+  <li>Scheduler : Airflow의 DAG와 작업들을 모니터링하고 실행순서와 상태관리</li>
+  <li>Worker : Airflow의 작업을 실행하는 공간</li>
+  <li>Metadata database : Airflow에서 실행할 작업에 관한 정보를 저장</li>
+  <li>Webserver: Airflow의 User Interface 에 해당하는 dashboard</li>
+  <li>DAG Directory</li>
+</ul>
+
+<p><img src="/assets/images/01-airflow-architecture.png" alt="transparent black overlay" /></p>
+
+<p>Airflow는 스케줄러가 DAG Directory를 주기적으로 스캔하고 새로운 DAG 파일이 생성되면 Worker에서 실행합니다.</p>
+
+<h2 id="airflow-webserver">Airflow Webserver</h2>
+<p>Webserver에 로그인하면 다음과 같이 DAG 목록이 출력됩니다.</p>
+<figure style="width: 100%" class="align-left">
+  <img src="http://localhost:4000/assets/images/02-dag-list.png" alt="" />
+  <figcaption></figcaption>
+</figure>
+
+<p>조## DAG (Directed Acyclic Graph) 
+DAG(Directed Acyclic Graph)는 Airflow에서 실행할 작업들을 순서에 맞게 구성한 워크플로를 의미합니다.
+DAG을 구성하는 태스크(Task)라고 하며, 화살표 방향으로 순차, 병렬 실행합니다.
+DAG은 Python 코드로 정의하며 $AIRFLOW_HOME/dags폴더에 위치합니다.</p>
+
+<ul>
+  <li>default_args</li>
+</ul>
+
+<p>DAG에서 사용될 Attribute를 default_args로 분리하여 정의하여 DAG  파라메터로 전달합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">airflow.models</span> <span class="kn">import</span> <span class="n">DAG</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="err">“</span><span class="n">start_date</span><span class="err">”</span><span class="p">:</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">with</span> <span class="n">DAG</span><span class="p">(</span>
+<span class="err">“</span><span class="n">myFirstDag</span><span class="err">”</span><span class="p">,</span> 
+<span class="n">schedule_interval</span><span class="o">=</span><span class="err">”</span><span class="o">@</span><span class="n">daily</span><span class="err">”</span><span class="p">,</span> 
+<span class="n">default_args</span><span class="o">=</span><span class="n">default_args</span><span class="p">,</span> 
+<span class="n">catchup</span><span class="o">=</span><span class="bp">False</span>
+<span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span>
+</code></pre></div></div>
+
+<ul>
+  <li>catchup</li>
+</ul>
+
+<p>DAG을 생성할 때 전달하는 파라메터로써 Airflow에서는 default로 true로 설정되어 있는 옵션입니다. catchup기본 설정은 airflow.cfg 파일에 catchup_by_default값을 변경합니다. 
+catchup은 DAG이 스케줄링에서 dagrun을 실행하지 못했던 것을 채우기 위한 기능으로 backfill 이라고도 합니다.</p>
+
+<ul>
+  <li>Cron Preset</li>
+</ul>
+
+<p>DAG을 실행하기 위한 스케줄링에 사용하며, DAG을 정의할때 schedule_interval인자로 전달합니다.</p>
+
+<p><img src="/assets/images/03-cron-preset.png" alt="transparent black overlay" /></p>
+
+<figure style="width: 100%" class="align-left">
+  <img src="http://localhost:4000/assets/images/04-cron-preset.png" alt="" />
+  <figcaption></figcaption>
+</figure>
+
+<p>예시 )</p>
+
+<figure style="width: 100%" class="align-left">
+  <img src="http://localhost:4000/assets/images/05-ex-cron-preset.png" alt="" />
+  <figcaption></figcaption>
+</figure>
+
+<ul>
+  <li>스케줄링 간격 정의(timedelta)</li>
+</ul>
+
+<p>스케줄 간격 정의 – 빈도 기반
+cron expression은 간격(빈도)마다 스케줄을 정의할 수는 없습니다. 예를 들면 DAG을 3일에 한번씩 실행하는 cron을 정의하는 것은 어렵습니다. Airflow에서는 timedelta 인스턴스를 지원하여 빈도기반 스케줄링을 정의할 수 있습니다.
+예를 들면 3일마다 또는 3시간마다 실행하도록 하는 것을 timedelta 인스턴스를 활용할 수 있습니다.</p>
+
+<h2 id="dag-runs">DAG Runs</h2>
+<p>DAG Run은 Task 인스턴스들을 DAG 에 정의된 특정 execution_date에 실행하는 DAG의 인스턴스입니다. 
+execution_date는 Airflow 2.2에서는 local_date로 변경되었습니다.
+DAG는 Airflow 스케줄러 또는 외부 Trigger에 의해 실행될 수 있습니다. 
+Execution_date가 다른 여개 개의 DAG가 동시에 실행될 수 있습니다.</p>
+
+<figure style="width: 100%" class="align-left">
+  <img src="http://localhost:4000/assets/images/06-dag-runs.png" alt="" />
+  <figcaption></figcaption>
+</figure>
+
+<p>DAG Runs를 선택하면 다음과 같이 실행 중이거나 종료된 DAG의 실행이력이 표시됩니다. CLI 명령어는 다음과 같습니다.
+airflow dags list</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#airflow" class="page__taxonomy-item p-category" rel="tag">airflow</a><span class="sep">, </span>
+    
+      <a href="/tags/#workflow" class="page__taxonomy-item p-category" rel="tag">workflow</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#workflow" class="page__taxonomy-item p-category" rel="tag">workflow</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-11-20T00:00:00+09:00">November 20, 2022</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Apache+Airflow+-+%EA%B5%AC%EC%A1%B0%20http%3A%2F%2Flocalhost%3A4000%2Fworkflow%2Fapache-airflow-structure%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fworkflow%2Fapache-airflow-structure%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fworkflow%2Fapache-airflow-structure%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/workflow/apache-airflow-overview/" class="pagination--pager" title="Apache Airflow - 개요
+">이전</a>
+    
+    
+      <a href="/workflow/dag-type/" class="pagination--pager" title="Airflow DAG 선언 유형
+">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/kubernetes/local-storage-class-on-ks/" rel="permalink">Install local storage class to kubernetes
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">kubernetes 에서 storage class가 없는 경우 실습을 목적으로 
+local-storage를 설치하여 실습을 목적으로 하는 경우 사용해 볼 수 있는 provisioner 입니다로
+Install local-storage-class to kubernetes
+Kuberne...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/workflow/dag-type/" rel="permalink">Airflow DAG 선언 유형
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          최대 1 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Install local-storage-class to kubernetes
+Apache Airflow에서 DAG을 선언하는 다음과 같이 3가 유형이 있습니다.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/workflow/apache-airflow-overview/" rel="permalink">Apache Airflow - 개요
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          최대 1 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Airflow는 2014년 10월 Airbnb의 Maxime Beauchemin에 의해 시작되었다. 
+첫 번째 커밋부터 오픈 소스였으며 공식적으로 Airbnb GitHub에 포함되었으며 2015년 6월에 발표되었습니다. 
+이 프로젝트는 2016년 3월 Apache Software ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/workflow/apache-airflow-dag/" rel="permalink">Apache Airflow - DAG
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">DAG (Directed Acyclic Graph)
+DAG(Directed Acyclic Graph)는 Airflow에서 실행할 작업들을 순서에 맞게 구성한 워크플로를 의미합니다.
+DAG을 구성하는 태스크(Task)라고 하며, 화살표 방향으로 순차, 병렬 실행합니다.
+DAG은 Py...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 Jaeguk Yun. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/workflow/apache-airflow-structure/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/workflow/apache-airflow-structure"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://yoonjk-github-io.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+
+  </body>
+</html>
