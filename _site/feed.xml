@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-11-27T17:31:47+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Airflow task</title><link href="http://localhost:4000/workflow/tasks/" rel="alternate" type="text/html" title="Airflow task" /><published>2022-11-27T00:00:00+09:00</published><updated>2022-11-27T00:00:00+09:00</updated><id>http://localhost:4000/workflow/tasks</id><content type="html" xml:base="http://localhost:4000/workflow/tasks/"><![CDATA[<h2 id="airflow-task">Airflow Task</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-11-27T17:40:34+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Airflow task</title><link href="http://localhost:4000/workflow/tasks/" rel="alternate" type="text/html" title="Airflow task" /><published>2022-11-27T00:00:00+09:00</published><updated>2022-11-27T00:00:00+09:00</updated><id>http://localhost:4000/workflow/tasks</id><content type="html" xml:base="http://localhost:4000/workflow/tasks/"><![CDATA[<h2 id="airflow-task">Airflow Task</h2>
 <p>Task는 airflow의 기본 실행단위로 한개 이상의 Task를 이용해서 하나의 DAG을 정의합니다. Task간 순서를 표현하기 위해 작업간 «(스트림업), »(스트림다운) 종속성을 설정하여 합니다.
 Task는</p>
 
@@ -388,7 +388,74 @@ local-storage를 설치하여 실습을 목적으로 하는 경우 사용해 볼
   <span class="na">resources</span><span class="pi">:</span>
     <span class="na">requests</span><span class="pi">:</span>
       <span class="na">storage</span><span class="pi">:</span> <span class="s">128Mi</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="kubernetes" /><category term="kubernetes" /><category term="storageclass" /><summary type="html"><![CDATA[kubernetes 에서 storage class가 없는 경우 실습을 목적으로 local-storage를 설치하여 실습을 목적으로 하는 경우 사용해 볼 수 있는 provisioner 입니다로 Install local-storage-class to kubernetes Kubernetes에 local-storage 를 사용하고자 하는 경우 다음의 설정을 하면 storage class를 사용할 수 있습니다.]]></summary></entry><entry><title type="html">Airflow Xcon</title><link href="http://localhost:4000/workflow/xcon/" rel="alternate" type="text/html" title="Airflow Xcon" /><published>2022-11-27T00:00:00+09:00</published><updated>2022-11-27T00:00:00+09:00</updated><id>http://localhost:4000/workflow/xcon</id><content type="html" xml:base="http://localhost:4000/workflow/xcon/"><![CDATA[<h2 id="airflow-xcon">Airflow Xcon</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="kubernetes" /><category term="kubernetes" /><category term="storageclass" /><summary type="html"><![CDATA[kubernetes 에서 storage class가 없는 경우 실습을 목적으로 local-storage를 설치하여 실습을 목적으로 하는 경우 사용해 볼 수 있는 provisioner 입니다로 Install local-storage-class to kubernetes Kubernetes에 local-storage 를 사용하고자 하는 경우 다음의 설정을 하면 storage class를 사용할 수 있습니다.]]></summary></entry><entry><title type="html">Deploy mysql8.0 to kubernetes</title><link href="http://localhost:4000/kubernetes/deploy-to-kubernetes/" rel="alternate" type="text/html" title="Deploy mysql8.0 to kubernetes" /><published>2022-11-27T00:00:00+09:00</published><updated>2022-11-27T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/deploy-to-kubernetes</id><content type="html" xml:base="http://localhost:4000/kubernetes/deploy-to-kubernetes/"><![CDATA[<h2 id="mysql-yaml-파일">MYSQL YAML 파일</h2>
+<p>Kubernetes에 테스트용으로 Stand-alone으로 배포하여 테스트하기 위한 YAML 파일입니다.</p>
+
+<pre><code class="language-YAML">apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+spec:
+  ports:
+    - port: 3306
+  selector:
+    app: mysql
+  type: NodePort
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim
+  labels:
+    app: mysql
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: nfs-standard
+  volumeMode: Filesystem
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - image: mysql:8.0
+        name: mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-pass
+              key: ROOT_PASSWORD
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim
+</code></pre>]]></content><author><name>Jaeguk Yun</name></author><category term="kubernetes" /><category term="mysql" /><summary type="html"><![CDATA[MYSQL YAML 파일 Kubernetes에 테스트용으로 Stand-alone으로 배포하여 테스트하기 위한 YAML 파일입니다.]]></summary></entry><entry><title type="html">Airflow Xcon</title><link href="http://localhost:4000/workflow/xcon/" rel="alternate" type="text/html" title="Airflow Xcon" /><published>2022-11-27T00:00:00+09:00</published><updated>2022-11-27T00:00:00+09:00</updated><id>http://localhost:4000/workflow/xcon</id><content type="html" xml:base="http://localhost:4000/workflow/xcon/"><![CDATA[<h2 id="airflow-xcon">Airflow Xcon</h2>
 <p>Airflow task간 데이터를 공유가 필요할 때,  데이터를 공유하기 위해 push, pull 을 사용하여 값을 전달하고, 값을 가져오기 위해 사용합니다. Airflow에서는 여러 분산환경에서 서로 다른 Work에서 Task가 실행 될 수 있기 때문에 Xcom을 사용합니다. Variable과 비슷하지만 Xcom은 특정 DAG내부에서만 공유되는 특징이 있습니다. 여러 DAG에서 공유해서 사용하려면 Variable을 사용해야 합니다.  PythonOperator를 사용하면 return값이 자동으로 Xcom에 push됩니다.</p>
 
 <p>예시)</p>
