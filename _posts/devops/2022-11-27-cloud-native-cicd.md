@@ -1,12 +1,12 @@
 ---
-title: Cloud-Native CI/CD 이해 
+title: Cloud-Native CI/CD 이해
 categories:
   - devops 
 tags:
   - tekton
 ---
 
-## cloud-native CI/CD 이해
+## Cloud-Native CI/CD 이해
 클라우드 네이티브 소프트웨어 개발이 무엇을 의미하는지 더 잘 이해 했으므로 CI/CD 파이프 라인의 맥락에서 그것이 무엇을 의미하는지 살펴 보겠습니다.
 
 Cloud-Native CI/CD는 세 가지 원칙을 기반
