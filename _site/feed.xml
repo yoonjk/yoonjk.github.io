@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-11-27T16:44:33+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Install local storage class to kubernetes</title><link href="http://localhost:4000/kubernetes/local-storage-class-on-ks/" rel="alternate" type="text/html" title="Install local storage class to kubernetes" /><published>2022-11-27T00:00:00+09:00</published><updated>2022-11-27T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/local-storage-class-on-ks</id><content type="html" xml:base="http://localhost:4000/kubernetes/local-storage-class-on-ks/"><![CDATA[<p>kubernetes 에서 storage class가 없는 경우 실습을 목적으로 
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-11-27T16:46:47+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Install local storage class to kubernetes</title><link href="http://localhost:4000/kubernetes/local-storage-class-on-ks/" rel="alternate" type="text/html" title="Install local storage class to kubernetes" /><published>2022-11-27T00:00:00+09:00</published><updated>2022-11-27T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/local-storage-class-on-ks</id><content type="html" xml:base="http://localhost:4000/kubernetes/local-storage-class-on-ks/"><![CDATA[<p>kubernetes 에서 storage class가 없는 경우 실습을 목적으로 
 local-storage를 설치하여 실습을 목적으로 하는 경우 사용해 볼 수 있는 provisioner 입니다로</p>
 <h2 id="install-local-storage-class-to-kubernetes">Install local-storage-class to kubernetes</h2>
 <p>Kubernetes에 local-storage 를 사용하고자 하는 경우 다음의 설정을 하면 storage class를 사용할 수 있습니다.</p>
@@ -427,7 +427,7 @@ t1 » t2 » t3</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">t1</span><span class="p">.</span><span class="n">set_downstream</span><span class="p">([</span><span class="n">t2</span><span class="p">,</span> <span class="n">t3</span><span class="p">])</span>
 <span class="n">t1</span> <span class="o">&gt;&gt;</span> <span class="p">[</span><span class="n">t2</span><span class="p">,</span> <span class="n">t3</span><span class="p">]</span>
 <span class="p">[</span><span class="n">t2</span><span class="p">,</span> <span class="n">t3</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">t1</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><category term="task" /><summary type="html"><![CDATA[Airflow Task Task는 airflow의 기본 실행단위로 한개 이상의 Task를 이용해서 하나의 DAG을 정의합니다. Task간 순서를 표현하기 위해 작업간 «(스트림업), »(스트림다운) 종속성을 설정하여 합니다. Task는]]></summary></entry><entry><title type="html">Airflow Xcom</title><link href="http://localhost:4000/workflow/xcom/" rel="alternate" type="text/html" title="Airflow Xcom" /><published>2022-11-27T00:00:00+09:00</published><updated>2022-11-27T00:00:00+09:00</updated><id>http://localhost:4000/workflow/xcom</id><content type="html" xml:base="http://localhost:4000/workflow/xcom/"><![CDATA[<h2 id="airflow-xcon">Airflow Xcon</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><category term="task" /><summary type="html"><![CDATA[Airflow Task Task는 airflow의 기본 실행단위로 한개 이상의 Task를 이용해서 하나의 DAG을 정의합니다. Task간 순서를 표현하기 위해 작업간 «(스트림업), »(스트림다운) 종속성을 설정하여 합니다. Task는]]></summary></entry><entry><title type="html">Airflow Xcon</title><link href="http://localhost:4000/workflow/xcon/" rel="alternate" type="text/html" title="Airflow Xcon" /><published>2022-11-27T00:00:00+09:00</published><updated>2022-11-27T00:00:00+09:00</updated><id>http://localhost:4000/workflow/xcon</id><content type="html" xml:base="http://localhost:4000/workflow/xcon/"><![CDATA[<h2 id="airflow-xcon">Airflow Xcon</h2>
 <p>Airflow task간 데이터를 공유가 필요할 때,  데이터를 공유하기 위해 push, pull 을 사용하여 값을 전달하고, 값을 가져오기 위해 사용합니다. Airflow에서는 여러 분산환경에서 서로 다른 Work에서 Task가 실행 될 수 있기 때문에 Xcom을 사용합니다. Variable과 비슷하지만 Xcom은 특정 DAG내부에서만 공유되는 특징이 있습니다. 여러 DAG에서 공유해서 사용하려면 Variable을 사용해야 합니다.  PythonOperator를 사용하면 return값이 자동으로 Xcom에 push됩니다.</p>
 
 <p>예시)</p>
@@ -437,6 +437,64 @@ t1 » t2 » t3</p>
 <span class="k">def</span> <span class="nf">pull_func</span><span class="p">(</span><span class="o">**</span><span class="n">context</span><span class="p">):</span>
   <span class="n">value</span><span class="o">=</span><span class="n">context</span><span class="p">[</span><span class="err">‘</span><span class="n">ti</span><span class="err">’</span><span class="p">].</span><span class="n">xcom_pull</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">변수명</span><span class="p">,</span> <span class="n">task_ids</span><span class="o">=</span><span class="n">대상</span> <span class="n">Task이름</span><span class="p">)</span>
 
+</code></pre></div></div>
+<ul>
+  <li>Xcon 예시</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span> 
+<span class="kn">from</span> <span class="nn">airflow.operators.python</span> <span class="kn">import</span> <span class="n">PythonOperator</span>
+<span class="kn">from</span> <span class="nn">airflow.operators.bash</span> <span class="kn">import</span> <span class="n">BashOperator</span>
+
+<span class="c1"># Utils 
+</span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span><span class="n">timedelta</span> 
+<span class="kn">from</span> <span class="nn">airflow.utils.dates</span> <span class="kn">import</span> <span class="n">days_ago</span> 
+
+<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'start_date'</span><span class="p">:</span> <span class="n">days_ago</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+  <span class="s">'retries'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s">'retry_delay'</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
+  <span class="s">'schedule_interval'</span><span class="p">:</span> <span class="s">'@daily'</span><span class="p">,</span>
+  <span class="s">'tags'</span><span class="p">:</span> <span class="s">'training'</span><span class="p">,</span>
+  <span class="s">'catchup'</span><span class="p">:</span> <span class="bp">False</span>
+<span class="p">}</span> 
+
+<span class="n">dag</span> <span class="o">=</span> <span class="n">DAG</span><span class="p">(</span>
+  <span class="n">dag_id</span><span class="o">=</span><span class="s">'xcom_dag'</span><span class="p">,</span> 
+  <span class="n">default_args</span> <span class="o">=</span> <span class="n">default_args</span> 
+<span class="p">)</span> 
+
+<span class="k">def</span> <span class="nf">xcom_push</span><span class="p">(</span><span class="o">**</span><span class="n">context</span><span class="p">):</span>
+  <span class="n">context</span><span class="p">[</span><span class="s">'task_instance'</span><span class="p">].</span><span class="n">xcom_push</span><span class="p">(</span>
+    <span class="n">key</span><span class="o">=</span><span class="s">'pushed_value'</span><span class="p">,</span>
+    <span class="n">value</span><span class="o">=</span><span class="s">'xcom_push_test_message!'</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">pull_func</span><span class="p">(</span><span class="o">**</span><span class="n">context</span><span class="p">):</span>
+  <span class="n">value</span><span class="o">=</span><span class="n">context</span><span class="p">[</span><span class="s">'ti'</span><span class="p">].</span><span class="n">xcom_pull</span><span class="p">(</span>
+    <span class="n">key</span><span class="o">=</span><span class="s">'pushed_value'</span><span class="p">,</span> 
+    <span class="n">task_ids</span><span class="o">=</span><span class="s">'push_by_xcom'</span>
+  <span class="p">)</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+<span class="n">push_by_xcom</span> <span class="o">=</span> <span class="n">PythonOperator</span><span class="p">(</span>
+  <span class="n">task_id</span><span class="o">=</span><span class="s">'push_by_xcom'</span><span class="p">,</span>
+  <span class="n">python_callable</span><span class="o">=</span><span class="n">xcom_push</span><span class="p">,</span> 
+  <span class="n">dag</span><span class="o">=</span><span class="n">dag</span>
+<span class="p">)</span>
+
+<span class="n">pull_task1</span> <span class="o">=</span> <span class="n">PythonOperator</span><span class="p">(</span>
+  <span class="n">task_id</span><span class="o">=</span><span class="s">'pull_example1'</span><span class="p">,</span>
+  <span class="n">python_callable</span><span class="o">=</span><span class="n">pull_func</span><span class="p">,</span> 
+  <span class="n">dag</span><span class="o">=</span><span class="n">dag</span>
+<span class="p">)</span>
+
+<span class="n">pull_task2</span> <span class="o">=</span> <span class="n">BashOperator</span><span class="p">(</span>
+  <span class="n">task_id</span><span class="o">=</span><span class="s">'pull_example2'</span><span class="p">,</span>
+  <span class="n">bash_command</span><span class="o">=</span><span class="s">'echo ""'</span><span class="p">,</span> 
+  <span class="n">dag</span><span class="o">=</span><span class="n">dag</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">push_by_xcom</span> <span class="o">&gt;&gt;</span> <span class="n">pull_task1</span> <span class="o">&gt;&gt;</span> <span class="n">pull_task2</span>
 </code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Airflow Xcon Airflow task간 데이터를 공유가 필요할 때, 데이터를 공유하기 위해 push, pull 을 사용하여 값을 전달하고, 값을 가져오기 위해 사용합니다. Airflow에서는 여러 분산환경에서 서로 다른 Work에서 Task가 실행 될 수 있기 때문에 Xcom을 사용합니다. Variable과 비슷하지만 Xcom은 특정 DAG내부에서만 공유되는 특징이 있습니다. 여러 DAG에서 공유해서 사용하려면 Variable을 사용해야 합니다. PythonOperator를 사용하면 return값이 자동으로 Xcom에 push됩니다.]]></summary></entry><entry><title type="html">Apache Airflow - DAG</title><link href="http://localhost:4000/workflow/apache-airflow-dag/" rel="alternate" type="text/html" title="Apache Airflow - DAG" /><published>2022-11-20T00:00:00+09:00</published><updated>2022-11-20T00:00:00+09:00</updated><id>http://localhost:4000/workflow/apache-airflow-dag</id><content type="html" xml:base="http://localhost:4000/workflow/apache-airflow-dag/"><![CDATA[<h2 id="dag-directed-acyclic-graph">DAG (Directed Acyclic Graph)</h2>
 <p>DAG(Directed Acyclic Graph)는 Airflow에서 실행할 작업들을 순서에 맞게 구성한 워크플로를 의미합니다.
 DAG을 구성하는 태스크(Task)라고 하며, 화살표 방향으로 순차, 병렬 실행합니다.
