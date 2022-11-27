@@ -1,7 +1,7 @@
 ---
 title: Tekton 개요 
 categories:
-  - workflow 
+  - devops 
 tags:
   - tekton
 ---
