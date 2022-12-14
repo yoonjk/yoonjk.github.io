@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-14T18:15:30+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Create your first Airflow DAG</title><link href="http://localhost:4000/workflow/myfirst-dag/" rel="alternate" type="text/html" title="Create your first Airflow DAG" /><published>2022-12-14T00:00:00+09:00</published><updated>2022-12-14T00:00:00+09:00</updated><id>http://localhost:4000/workflow/myfirst-dag</id><content type="html" xml:base="http://localhost:4000/workflow/myfirst-dag/"><![CDATA[<h2 id="my-first-dag-개발">My First DAG 개발</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-14T18:19:53+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Create your first Airflow DAG</title><link href="http://localhost:4000/workflow/myfirst-dag/" rel="alternate" type="text/html" title="Create your first Airflow DAG" /><published>2022-12-14T00:00:00+09:00</published><updated>2022-12-14T00:00:00+09:00</updated><id>http://localhost:4000/workflow/myfirst-dag</id><content type="html" xml:base="http://localhost:4000/workflow/myfirst-dag/"><![CDATA[<h2 id="my-first-dag-개발">My First DAG 개발</h2>
 <p>Apache Airflow Dag 개발 절차는 다음의 7단계 절차로 구현합니다.</p>
 
 <ul>
@@ -201,7 +201,7 @@ t1 » t2 » t3</p>
 
 </code></pre></div></div>
 <ul>
-  <li>Xcon 예시</li>
+  <li>Xcom 예시</li>
 </ul>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span> 
