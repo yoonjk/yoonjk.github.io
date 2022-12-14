@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-14T18:05:52+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Create your first Airflow DAG</title><link href="http://localhost:4000/workflow/myfirst-dag/" rel="alternate" type="text/html" title="Create your first Airflow DAG" /><published>2022-12-14T00:00:00+09:00</published><updated>2022-12-14T00:00:00+09:00</updated><id>http://localhost:4000/workflow/myfirst-dag</id><content type="html" xml:base="http://localhost:4000/workflow/myfirst-dag/"><![CDATA[<h2 id="my-first-dag-개발">My First DAG 개발</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-14T18:15:30+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Create your first Airflow DAG</title><link href="http://localhost:4000/workflow/myfirst-dag/" rel="alternate" type="text/html" title="Create your first Airflow DAG" /><published>2022-12-14T00:00:00+09:00</published><updated>2022-12-14T00:00:00+09:00</updated><id>http://localhost:4000/workflow/myfirst-dag</id><content type="html" xml:base="http://localhost:4000/workflow/myfirst-dag/"><![CDATA[<h2 id="my-first-dag-개발">My First DAG 개발</h2>
 <p>Apache Airflow Dag 개발 절차는 다음의 7단계 절차로 구현합니다.</p>
 
 <ul>
@@ -189,7 +189,7 @@ t1 » t2 » t3</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">t1</span><span class="p">.</span><span class="n">set_downstream</span><span class="p">([</span><span class="n">t2</span><span class="p">,</span> <span class="n">t3</span><span class="p">])</span>
 <span class="n">t1</span> <span class="o">&gt;&gt;</span> <span class="p">[</span><span class="n">t2</span><span class="p">,</span> <span class="n">t3</span><span class="p">]</span>
 <span class="p">[</span><span class="n">t2</span><span class="p">,</span> <span class="n">t3</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">t1</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><category term="task" /><summary type="html"><![CDATA[Airflow Task Task는 airflow의 기본 실행단위로 한개 이상의 Task를 이용해서 하나의 DAG을 정의합니다. Task간 순서를 표현하기 위해 작업간 «(스트림업), »(스트림다운) 종속성을 설정하여 합니다. Task는]]></summary></entry><entry><title type="html">Airflow Xcon</title><link href="http://localhost:4000/workflow/xcon/" rel="alternate" type="text/html" title="Airflow Xcon" /><published>2022-11-27T00:00:00+09:00</published><updated>2022-11-27T00:00:00+09:00</updated><id>http://localhost:4000/workflow/xcon</id><content type="html" xml:base="http://localhost:4000/workflow/xcon/"><![CDATA[<h2 id="airflow-xcom">Airflow Xcom</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><category term="task" /><summary type="html"><![CDATA[Airflow Task Task는 airflow의 기본 실행단위로 한개 이상의 Task를 이용해서 하나의 DAG을 정의합니다. Task간 순서를 표현하기 위해 작업간 «(스트림업), »(스트림다운) 종속성을 설정하여 합니다. Task는]]></summary></entry><entry><title type="html">Airflow Xcom</title><link href="http://localhost:4000/workflow/xcom/" rel="alternate" type="text/html" title="Airflow Xcom" /><published>2022-11-27T00:00:00+09:00</published><updated>2022-11-27T00:00:00+09:00</updated><id>http://localhost:4000/workflow/xcom</id><content type="html" xml:base="http://localhost:4000/workflow/xcom/"><![CDATA[<h2 id="airflow-xcom">Airflow Xcom</h2>
 <p>Airflow task간 데이터를 공유가 필요할 때,  데이터를 공유하기 위해 push, pull 을 사용하여 값을 전달하고, 값을 가져오기 위해 사용합니다. Airflow에서는 여러 분산환경에서 서로 다른 Work에서 Task가 실행 될 수 있기 때문에 Xcom을 사용합니다. Variable과 비슷하지만 Xcom은 특정 DAG내부에서만 공유되는 특징이 있습니다. 여러 DAG에서 공유해서 사용하려면 Variable을 사용해야 합니다.  PythonOperator를 사용하면 return값이 자동으로 Xcom에 push됩니다.</p>
 
 <p>예시)</p>
@@ -221,11 +221,6 @@ t1 » t2 » t3</p>
   <span class="s">'catchup'</span><span class="p">:</span> <span class="bp">False</span>
 <span class="p">}</span> 
 
-<span class="n">dag</span> <span class="o">=</span> <span class="n">DAG</span><span class="p">(</span>
-  <span class="n">dag_id</span><span class="o">=</span><span class="s">'xcom_dag'</span><span class="p">,</span> 
-  <span class="n">default_args</span> <span class="o">=</span> <span class="n">default_args</span> 
-<span class="p">)</span> 
-
 <span class="k">def</span> <span class="nf">xcom_push</span><span class="p">(</span><span class="o">**</span><span class="n">context</span><span class="p">):</span>
   <span class="n">context</span><span class="p">[</span><span class="s">'task_instance'</span><span class="p">].</span><span class="n">xcom_push</span><span class="p">(</span>
     <span class="n">key</span><span class="o">=</span><span class="s">'pushed_value'</span><span class="p">,</span>
@@ -237,6 +232,11 @@ t1 » t2 » t3</p>
     <span class="n">task_ids</span><span class="o">=</span><span class="s">'push_by_xcom'</span>
   <span class="p">)</span>
   <span class="k">print</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+<span class="n">dag</span> <span class="o">=</span> <span class="n">DAG</span><span class="p">(</span>
+  <span class="n">dag_id</span><span class="o">=</span><span class="s">'xcom_dag'</span><span class="p">,</span> 
+  <span class="n">default_args</span> <span class="o">=</span> <span class="n">default_args</span> 
+<span class="p">)</span> 
 
 <span class="n">push_by_xcom</span> <span class="o">=</span> <span class="n">PythonOperator</span><span class="p">(</span>
   <span class="n">task_id</span><span class="o">=</span><span class="s">'push_by_xcom'</span><span class="p">,</span>

@@ -65,10 +65,10 @@ var store = [{
         "url": "/workflow/tasks/",
         "teaser": null
       },{
-        "title": "Airflow Xcon",
+        "title": "Airflow Xcom",
         "excerpt":"Airflow Xcom Airflow task간 데이터를 공유가 필요할 때, 데이터를 공유하기 위해 push, pull 을 사용하여 값을 전달하고, 값을 가져오기 위해 사용합니다. Airflow에서는 여러 분산환경에서 서로 다른 Work에서 Task가 실행 될 수 있기 때문에 Xcom을 사용합니다. Variable과 비슷하지만 Xcom은 특정 DAG내부에서만 공유되는 특징이 있습니다. 여러 DAG에서 공유해서 사용하려면 Variable을 사용해야 합니다....","categories": ["workflow"],
         "tags": ["airflow"],
-        "url": "/workflow/xcon/",
+        "url": "/workflow/xcom/",
         "teaser": null
       },{
         "title": "Create your first Airflow DAG",
