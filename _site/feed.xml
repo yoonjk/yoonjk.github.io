@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-14T17:55:23+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Apache Airflow My First DAG 개발</title><link href="http://localhost:4000/workflow/myfirst-dag/" rel="alternate" type="text/html" title="Apache Airflow My First DAG 개발" /><published>2022-12-14T00:00:00+09:00</published><updated>2022-12-14T00:00:00+09:00</updated><id>http://localhost:4000/workflow/myfirst-dag</id><content type="html" xml:base="http://localhost:4000/workflow/myfirst-dag/"><![CDATA[<h2 id="my-first-dag-개발">My First DAG 개발</h2>
-<p>Apache Airflow Dag 개발 절차는 다음의 7단계 절차로 구현됩니다.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-14T18:05:52+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Create your first Airflow DAG</title><link href="http://localhost:4000/workflow/myfirst-dag/" rel="alternate" type="text/html" title="Create your first Airflow DAG" /><published>2022-12-14T00:00:00+09:00</published><updated>2022-12-14T00:00:00+09:00</updated><id>http://localhost:4000/workflow/myfirst-dag</id><content type="html" xml:base="http://localhost:4000/workflow/myfirst-dag/"><![CDATA[<h2 id="my-first-dag-개발">My First DAG 개발</h2>
+<p>Apache Airflow Dag 개발 절차는 다음의 7단계 절차로 구현합니다.</p>
 
 <ul>
   <li>Airflow 관련 Module import</li>
   <li>DAG Arguments 정의</li>
-  <li>Python Function 또는 task 에서 사용하는 Variable 정의</li>
+  <li>Python Function 또는 task 에서 사용하는 Variable 정의 (Optional)</li>
   <li>Instatiate DAG 정의</li>
   <li>Task 정의</li>
   <li>Task간 의존성 정의</li>
@@ -72,7 +72,7 @@
 <h4 id="7-verify-dag">7. Verify DAG</h4>
 
 <p>myFirstDag을 airflow에 배포하여 dag을 테스트합니다. 
-테스트 aifrlow Webserver UI에서 하거나 airflow cli를 사용하여 테스트합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[My First DAG 개발 Apache Airflow Dag 개발 절차는 다음의 7단계 절차로 구현됩니다.]]></summary></entry><entry><title type="html">Airflow Task</title><link href="http://localhost:4000/workflow/tasks/" rel="alternate" type="text/html" title="Airflow Task" /><published>2022-11-27T00:00:00+09:00</published><updated>2022-11-27T00:00:00+09:00</updated><id>http://localhost:4000/workflow/tasks</id><content type="html" xml:base="http://localhost:4000/workflow/tasks/"><![CDATA[<h2 id="airflow-task">Airflow Task</h2>
+테스트 aifrlow Webserver UI에서 하거나 airflow cli를 사용하여 테스트합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[My First DAG 개발 Apache Airflow Dag 개발 절차는 다음의 7단계 절차로 구현합니다.]]></summary></entry><entry><title type="html">Airflow Task</title><link href="http://localhost:4000/workflow/tasks/" rel="alternate" type="text/html" title="Airflow Task" /><published>2022-11-27T00:00:00+09:00</published><updated>2022-11-27T00:00:00+09:00</updated><id>http://localhost:4000/workflow/tasks</id><content type="html" xml:base="http://localhost:4000/workflow/tasks/"><![CDATA[<h2 id="airflow-task">Airflow Task</h2>
 <p>Task는 airflow의 기본 실행단위로 한개 이상의 Task를 이용해서 하나의 DAG을 정의합니다. Task간 순서를 표현하기 위해 작업간 «(스트림업), »(스트림다운) 종속성을 설정하여 합니다.
 Task는</p>
 

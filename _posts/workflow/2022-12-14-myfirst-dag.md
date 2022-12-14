@@ -1,5 +1,5 @@
 ---
-title: Apache Airflow My First DAG 개발
+title: Create your first Airflow DAG
 categories:
   - workflow
 tags: 
@@ -8,11 +8,11 @@ tags:
 ---
 
 ## My First DAG 개발 
-Apache Airflow Dag 개발 절차는 다음의 7단계 절차로 구현됩니다. 
+Apache Airflow Dag 개발 절차는 다음의 7단계 절차로 구현합니다. 
 
 - Airflow 관련 Module import 
 - DAG Arguments 정의
-- Python Function 또는 task 에서 사용하는 Variable 정의
+- Python Function 또는 task 에서 사용하는 Variable 정의 (Optional)
 - Instatiate DAG 정의 
 - Task 정의 
 - Task간 의존성 정의 
