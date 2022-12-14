@@ -34,12 +34,12 @@ from airflow.utils.dates import days_ago
 
 ``` python
 default_args = {
-    'start_date': days_ago(1),
-    'retries': 1,
-    'retry_delay': timedelta(minutes=5),
-    'schedule_interval': '@daily',
-    'tags': 'training',
-    'catchup': False
+  'start_date': days_ago(1),
+  'retries': 1,
+  'retry_delay': timedelta(minutes=5),
+  'schedule_interval': '@daily',
+  'tags': 'training',
+  'catchup': False
 }
 ``` 
 
@@ -47,39 +47,37 @@ default_args = {
 
 ```python
 def hello_airflow():
-    print("Hello airflow")
+  print("Hello airflow")
 ```
 
 #### 4. Instantiate DAG 정의 
 
 ```python
-dag = DAG(
-    dag_id = "myFirstDag",
-    default_args=default_args,
-    schedule_interval="@daily"
-)
+with DAG(
+  dag_id = "myFirstDag",
+  default_args=default_args,
+  schedule_interval="@daily"
+) as dag:
 ```
 
 #### 5.  Task 정의 
 
 ```python
-t1 = BashOperator(
+  t1 = BashOperator(
     task_id="bash",
     bash_command="echo Hello airflow",
-    dag=dag
-)
-
-t2 = PythonOperator(
+  )
+  
+  t2 = PythonOperator(
     task_id="python",
     python_callable=hello_airflow,
-    dag=dag
-)
+  )
 ```
 
 #### 6. Task간 의존성 정의 
 
 ```
-t1 >> t2
+  t1 >> t2
 ```
 
 #### 7. Verify DAG 
