@@ -106,7 +106,9 @@ analytics:
 author:
   name             : "Jaeguk Yun"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "Software Engineer/Architect"
+  bio              : |-
+     "Software Engineer/Architect"
+     "RED HAT Certified Specialist IN OpenShift Administration"
   location         : "Korea"
   email            :
   links:
