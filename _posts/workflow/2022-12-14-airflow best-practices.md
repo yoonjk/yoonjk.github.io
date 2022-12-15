@@ -196,13 +196,20 @@ __start_date__ DAG가 예약되기 시작하는 날짜를 정의합니다.
 ```
 # DON'T
 default_args = {
-'retries': 1,
-'retry_delay': timedelta(minutes=5)
+  'retries': 1,
+  'retry_delay': timedelta(minutes=5)
 }
-with DAG('dag', start_date=datetime(2019, 1, 1), default_args=default_args, schedule_interval='*/10 * * * *', catchup=False):
-t0 = DummyOperator(task_id='t0', start_date=datetime(2019, 1, 15))
-t1 = DummyOperator(task_id='t1', start_date=datetime(2019, 2, 16))
-t2 = DummyOperator(task_id='t2', start_date=datetime(2019, 3, 6))
+with DAG(
+  dag_id = 'dag', 
+  start_date=datetime(2019, 1, 1), 
+  default_args=default_args, 
+  schedule_interval='*/10 * * * *', 
+  catchup=False
+) as dag:
+
+  t0 = DummyOperator(task_id='t0', start_date=datetime(2019, 1, 15))
+  t1 = DummyOperator(task_id='t1', start_date=datetime(2019, 2, 16))
+  t2 = DummyOperator(task_id='t2', start_date=datetime(2019, 3, 6))
 ```
 
 ```
@@ -212,7 +219,11 @@ default_args = {
   'retry_delay': timedelta(minutes=5),
   'start_date': datetime(2019, 1, 1)
 }
-with DAG('dag', default_args=default_args, schedule_interval='*/10 * * * *', catchup=False):
+with DAG(dag_id = 'dag', 
+  default_args=default_args, 
+  schedule_interval='*/10 * * * *', 
+  catchup=False
+) as dag:
   t0 = DummyOperator(task_id='t0')
   t1 = DummyOperator(task_id='t1')
   t2 = DummyOperator(task_id='t2')
