@@ -71,10 +71,10 @@ var store = [{
         "url": "/workflow/xcom/",
         "teaser": null
       },{
-        "title": "Airflow Best Practices",
+        "title": "Airflow Best Practices - I",
         "excerpt":"좀더 낳은 DAG 작성 DAG는 데이터 파이프라인에 해당합니다. DAG는 매일 사용되므로 모범 사례를 따르는 것이 중요합니다. 최적화되고, 이해하기 쉽고, 문서화되고, 잘 조직되어야 합니다. 수백 개의 DAG로 빠르게 끝날 수 있으므로이 부분을 과소 평가하지 마십시오. 그것은 당신에게 많은 고통과 문제를 덜어 줄 것입니다. DAG의 명확한 목적 정의 DAG를 만들기 전에, 당신은...","categories": ["workflow"],
         "tags": ["airflow"],
-        "url": "/workflow/airflow-best-practices/",
+        "url": "/workflow/airflow-best-practices-1/",
         "teaser": null
       },{
         "title": "Create your first Airflow DAG",
