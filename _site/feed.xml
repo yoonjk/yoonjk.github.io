@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-15T09:15:41+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Airflow Best Practices - I</title><link href="http://localhost:4000/workflow/airflow-best-practices-1/" rel="alternate" type="text/html" title="Airflow Best Practices - I" /><published>2022-12-14T00:00:00+09:00</published><updated>2022-12-14T00:00:00+09:00</updated><id>http://localhost:4000/workflow/airflow%20best-practices-1</id><content type="html" xml:base="http://localhost:4000/workflow/airflow-best-practices-1/"><![CDATA[<h2 id="좀더-낳은-dag-작성">좀더 낳은 DAG 작성</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-15T10:47:02+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Airflow Best Practices - I</title><link href="http://localhost:4000/workflow/airflow-best-practices-1/" rel="alternate" type="text/html" title="Airflow Best Practices - I" /><published>2022-12-14T00:00:00+09:00</published><updated>2022-12-14T00:00:00+09:00</updated><id>http://localhost:4000/workflow/airflow%20best-practices-1</id><content type="html" xml:base="http://localhost:4000/workflow/airflow-best-practices-1/"><![CDATA[<h2 id="좀더-낳은-dag-작성">좀더 낳은 DAG 작성</h2>
 <p>DAG는 데이터 파이프라인에 해당합니다. 
 DAG는 매일 사용되므로 모범 사례를 따르는 것이 중요합니다.
 최적화되고, 이해하기 쉽고, 문서화되고, 잘 조직되어야 합니다. 
@@ -36,34 +36,34 @@ DAG에는 데이터를 데이터 웨어하우스로 내보내거나 필요한 �
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># DON'T
 </span><span class="k">def</span> <span class="nf">process_data</span><span class="p">():</span>
-    <span class="n">wrangling</span><span class="p">()</span>
-    <span class="n">cleaning</span><span class="p">()</span>
-    <span class="n">transforming</span><span class="p">()</span>
-    <span class="n">validating</span><span class="p">()</span>
+  <span class="n">wrangling</span><span class="p">()</span>
+  <span class="n">cleaning</span><span class="p">()</span>
+  <span class="n">transforming</span><span class="p">()</span>
+  <span class="n">validating</span><span class="p">()</span>
 
 <span class="n">task</span> <span class="o">=</span> <span class="n">PythonOperator</span><span class="p">(</span>
-    <span class="n">task_id</span><span class="o">=</span><span class="s">"my_task"</span><span class="p">,</span>
-    <span class="n">python_callable</span><span class="o">=</span><span class="n">process_data</span><span class="p">,</span>
-    <span class="n">dag</span><span class="o">=</span><span class="n">dag</span>
+  <span class="n">task_id</span><span class="o">=</span><span class="s">"my_task"</span><span class="p">,</span>
+  <span class="n">python_callable</span><span class="o">=</span><span class="n">process_data</span><span class="p">,</span>
+  <span class="n">dag</span><span class="o">=</span><span class="n">dag</span>
 <span class="p">)</span>
 </code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># DO
 t1 = PythonOperator(
-    task_id="wrangling",
-    python_callable=wrangling,
+  task_id="wrangling",
+  python_callable=wrangling,
 )
 t2 = PythonOperator(
-    task_id="cleaning",
-    python_callable=cleaning,
+  task_id="cleaning",
+  python_callable=cleaning,
 )
 t3 = PythonOperator(
-    task_id="transforming",
-    python_callable=transforming,
+  task_id="transforming",
+  python_callable=transforming,
 )
 t4 = PythonOperator(
-    task_id="validating",
-    python_callable=validating,
+  task_id="validating",
+  python_callable=validating,
 )
 
 </code></pre></div></div>
@@ -89,36 +89,36 @@ PythonOperator에 넣고 싶지만 강력히 권장하지 않습니다.
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># DON'T
 dag = DAG("simple_pipe", default_args=default_args, schedule_interval="*/5 * * * *", catchup=False) as dag:
 t1 = PythonOperator(
-    task_id="t1",
-    python_callable=my_func
-    dag=dag
+  task_id="t1",
+  python_callable=my_func
+  dag=dag
 )
 t2 = PythonOperator(
-    task_id="t2",
-    python_callable=my_func
-    dag=dag
+  task_id="t2",
+  python_callable=my_func
+  dag=dag
 )
 t3 = PythonOperator(
-    task_id="t3",
-    python_callable=my_func
-    dag=dag
+  task_id="t3",
+  python_callable=my_func
+  dag=dag
 )
 </code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># DO
 with DAG("simple_pipe", default_args=default_args, schedule_interval="*/5 * * * *", catchup=False) as dag:
-    t1 = PythonOperator(
-        task_id="t1",
-        python_callable=my_func
-    )
-    t2 = PythonOperator(
-        task_id="t2",
-        python_callable=my_func
-    )
-    t3 = PythonOperator(
-        task_id="t3",
-        python_callable=my_func
-    )
+  t1 = PythonOperator(
+      task_id="t1",
+      python_callable=my_func
+  )
+  t2 = PythonOperator(
+      task_id="t2",
+      python_callable=my_func
+  )
+  t3 = PythonOperator(
+      task_id="t3",
+      python_callable=my_func
+  )
 </code></pre></div></div>
 
 <p><strong>with</strong> 문은  각 작업에 dag 변수를 할당할 필요성을 제거하여 코드를 더 깔끔하게 만듭니다. 
@@ -130,17 +130,21 @@ with DAG("simple_pipe", default_args=default_args, schedule_interval="*/5 * * * 
 <p>Task의 생성자는 이메일, 재시도 횟수, 시작 날짜, 큐 등과 같은 다양한 인수를 허용합니다. 아래와 같이 DAG 개체 정의 바로 앞에 사전이있는 많은 DAG를 이미 보았을 것입니다</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># DON'T
-with DAG('dag', start_date=datetime(2019, 1, 1), schedule_interval='*/10 * * * *', catchup=False):
-t0 = DummyOperator(task_id='t0', retries=2, retry_delay=timedelta(minutes=5))
-t1 = DummyOperator(task_id='t1', retries=2, retry_delay=timedelta(minutes=5))
-t2 = DummyOperator(task_id='t2', retries=2, retry_delay=timedelta(minutes=5))
-t3 = DummyOperator(task_id='t3', retries=2, retry_delay=timedelta(minutes=5))
+with DAG('dag', 
+  start_date=datetime(2019, 1, 1), 
+  schedule_interval='*/10 * * * *', 
+  catchup=False
+):
+  t0 = DummyOperator(task_id='t0', retries=2, retry_delay=timedelta(minutes=5))
+  t1 = DummyOperator(task_id='t1', retries=2, retry_delay=timedelta(minutes=5))
+  t2 = DummyOperator(task_id='t2', retries=2, retry_delay=timedelta(minutes=5))
+  t3 = DummyOperator(task_id='t3', retries=2, retry_delay=timedelta(minutes=5))
 </code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># DO
 default_args = {
-    'retries': 1,
-    'retry_delay': timedelta(minutes=5)
+  'retries': 1,
+  'retry_delay': timedelta(minutes=5)
 }
 
 with DAG('dag', start_date=datetime(2019, 1, 1), default_args=default_args, schedule_interval='*/10 * * * *', catchup=False):
@@ -160,14 +164,17 @@ with DAG('dag', start_date=datetime(2019, 1, 1), default_args=default_args, sche
 <p>DAG 개체를 인스턴스화할 때 DAG ID를 지정해야  합니다.  DAG ID는 모든 DAG에서 고유해야 합니다. DAG ID가 동일한 두 개의 DAG가 있으면 안 되며, 그렇지 않으면 하나의 DAG만 표시되고 예기치 않은 동작이 발생할 수 있습니다. DAG에 대한 설명과 함께 의미 있는 DAG ID를 정의합니다.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># DON'T
-with DAG('dag_1', start_date=datetime(2019, 1 ,1), schedule_interval='*/10 * * * *')
+with DAG(
+  'dag_1', 
+  start_date=datetime(2019, 1 ,1), 
+  schedule_interval='*/10 * * * *')
 </code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># DO
 with DAG('csv_to_datawarehouse', 
-description='Fetch data from CSV, process and load them in the data warehouse' 
-start_date=datetime(2019, 1 ,1), 
-schedule_interval='*/10 * * * *')
+  description='Fetch data from CSV, process and load them in the data warehouse' 
+  start_date=datetime(2019, 1 ,1), 
+  schedule_interval='*/10 * * * *')
 </code></pre></div></div>
 
 <p>수백 개의 서로 다른 DAG가 있을 때를 생각해 보십시오. 의미 있는 DAG ID와 설명을 통해 어떤 DAG가 어떤 작업을 수행하는지 빠르게 알 수 있습니다. 한 가지 더, 여러 DAG가 서로 어느 정도 관련되어있는 경우 모든 DAG에 공통 접두사를 넣는 것이 좋습니다.</p>
@@ -185,6 +192,7 @@ default_args = {
   'retries': 1,
   'retry_delay': timedelta(minutes=5)
 }
+
 with DAG(
   dag_id = 'dag', 
   start_date=datetime(2019, 1, 1), 
@@ -204,6 +212,7 @@ default_args = {
   'retry_delay': timedelta(minutes=5),
   'start_date': datetime(2019, 1, 1)
 }
+
 with DAG(dag_id = 'dag', 
   default_args=default_args, 
   schedule_interval='*/10 * * * *', 
@@ -249,7 +258,8 @@ with DAG(
 CRON 표현식이나 타임 델타 객체로 정의 된 schedule_interval 이미 보셨을 것입니다</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># CRON EXPRESSION
-with DAG('dag', 
+with DAG(
+  'dag', 
   default_args=default_args, 
   schedule_interval='*/10 * * * *', 
   catchup=False
@@ -261,8 +271,8 @@ with DAG('dag',
 with DAG(
   dag_id = 'dag', 
   default_args=default_args, 
-  schedule_interval=timedelta(minutes=10), c
-  atchup=False
+  schedule_interval=timedelta(minutes=10),
+  catchup=False
 ) as dag:
   t0 = DummyOperator(task_id='t0')
 </code></pre></div></div>

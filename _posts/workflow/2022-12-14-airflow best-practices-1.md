@@ -44,35 +44,35 @@ DAG를 통해 실행하려는 작업을 명확하게 파악합니다.
 ```python
 # DON'T
 def process_data():
-    wrangling()
-    cleaning()
-    transforming()
-    validating()
+  wrangling()
+  cleaning()
+  transforming()
+  validating()
 
 task = PythonOperator(
-    task_id="my_task",
-    python_callable=process_data,
-    dag=dag
+  task_id="my_task",
+  python_callable=process_data,
+  dag=dag
 )
 ```
 
 ``` 
 # DO
 t1 = PythonOperator(
-    task_id="wrangling",
-    python_callable=wrangling,
+  task_id="wrangling",
+  python_callable=wrangling,
 )
 t2 = PythonOperator(
-    task_id="cleaning",
-    python_callable=cleaning,
+  task_id="cleaning",
+  python_callable=cleaning,
 )
 t3 = PythonOperator(
-    task_id="transforming",
-    python_callable=transforming,
+  task_id="transforming",
+  python_callable=transforming,
 )
 t4 = PythonOperator(
-    task_id="validating",
-    python_callable=validating,
+  task_id="validating",
+  python_callable=validating,
 )
 
 ```
@@ -97,37 +97,37 @@ Python에서는 컨텍스트 관리자를 활용하여 원할 때 정확하게 �
 # DON'T
 dag = DAG("simple_pipe", default_args=default_args, schedule_interval="*/5 * * * *", catchup=False) as dag:
 t1 = PythonOperator(
-    task_id="t1",
-    python_callable=my_func
-    dag=dag
+  task_id="t1",
+  python_callable=my_func
+  dag=dag
 )
 t2 = PythonOperator(
-    task_id="t2",
-    python_callable=my_func
-    dag=dag
+  task_id="t2",
+  python_callable=my_func
+  dag=dag
 )
 t3 = PythonOperator(
-    task_id="t3",
-    python_callable=my_func
-    dag=dag
+  task_id="t3",
+  python_callable=my_func
+  dag=dag
 )
 ```
 
 ```
 # DO
 with DAG("simple_pipe", default_args=default_args, schedule_interval="*/5 * * * *", catchup=False) as dag:
-    t1 = PythonOperator(
-        task_id="t1",
-        python_callable=my_func
-    )
-    t2 = PythonOperator(
-        task_id="t2",
-        python_callable=my_func
-    )
-    t3 = PythonOperator(
-        task_id="t3",
-        python_callable=my_func
-    )
+  t1 = PythonOperator(
+      task_id="t1",
+      python_callable=my_func
+  )
+  t2 = PythonOperator(
+      task_id="t2",
+      python_callable=my_func
+  )
+  t3 = PythonOperator(
+      task_id="t3",
+      python_callable=my_func
+  )
 ```
  
 __with__ 문은  각 작업에 dag 변수를 할당할 필요성을 제거하여 코드를 더 깔끔하게 만듭니다. 
@@ -140,18 +140,22 @@ Task의 생성자는 이메일, 재시도 횟수, 시작 날짜, 큐 등과 같�
 
 ```
 # DON'T
-with DAG('dag', start_date=datetime(2019, 1, 1), schedule_interval='*/10 * * * *', catchup=False):
-t0 = DummyOperator(task_id='t0', retries=2, retry_delay=timedelta(minutes=5))
-t1 = DummyOperator(task_id='t1', retries=2, retry_delay=timedelta(minutes=5))
-t2 = DummyOperator(task_id='t2', retries=2, retry_delay=timedelta(minutes=5))
-t3 = DummyOperator(task_id='t3', retries=2, retry_delay=timedelta(minutes=5))
+with DAG('dag', 
+  start_date=datetime(2019, 1, 1), 
+  schedule_interval='*/10 * * * *', 
+  catchup=False
+):
+  t0 = DummyOperator(task_id='t0', retries=2, retry_delay=timedelta(minutes=5))
+  t1 = DummyOperator(task_id='t1', retries=2, retry_delay=timedelta(minutes=5))
+  t2 = DummyOperator(task_id='t2', retries=2, retry_delay=timedelta(minutes=5))
+  t3 = DummyOperator(task_id='t3', retries=2, retry_delay=timedelta(minutes=5))
 ```
 
 ```
 # DO
 default_args = {
-    'retries': 1,
-    'retry_delay': timedelta(minutes=5)
+  'retries': 1,
+  'retry_delay': timedelta(minutes=5)
 }
 
 with DAG('dag', start_date=datetime(2019, 1, 1), default_args=default_args, schedule_interval='*/10 * * * *', catchup=False):
@@ -172,15 +176,18 @@ DAG 개체를 인스턴스화할 때 DAG ID를 지정해야  합니다.  DAG ID�
 
 ```
 # DON'T
-with DAG('dag_1', start_date=datetime(2019, 1 ,1), schedule_interval='*/10 * * * *')
+with DAG(
+  'dag_1', 
+  start_date=datetime(2019, 1 ,1), 
+  schedule_interval='*/10 * * * *')
 ```
 
 ```
 # DO
 with DAG('csv_to_datawarehouse', 
-description='Fetch data from CSV, process and load them in the data warehouse' 
-start_date=datetime(2019, 1 ,1), 
-schedule_interval='*/10 * * * *')
+  description='Fetch data from CSV, process and load them in the data warehouse' 
+  start_date=datetime(2019, 1 ,1), 
+  schedule_interval='*/10 * * * *')
 ```
 
 수백 개의 서로 다른 DAG가 있을 때를 생각해 보십시오. 의미 있는 DAG ID와 설명을 통해 어떤 DAG가 어떤 작업을 수행하는지 빠르게 알 수 있습니다. 한 가지 더, 여러 DAG가 서로 어느 정도 관련되어있는 경우 모든 DAG에 공통 접두사를 넣는 것이 좋습니다.
@@ -199,6 +206,7 @@ default_args = {
   'retries': 1,
   'retry_delay': timedelta(minutes=5)
 }
+
 with DAG(
   dag_id = 'dag', 
   start_date=datetime(2019, 1, 1), 
@@ -219,6 +227,7 @@ default_args = {
   'retry_delay': timedelta(minutes=5),
   'start_date': datetime(2019, 1, 1)
 }
+
 with DAG(dag_id = 'dag', 
   default_args=default_args, 
   schedule_interval='*/10 * * * *', 
@@ -266,7 +275,8 @@ CRON 표현식이나 타임 델타 객체로 정의 된 schedule_interval 이미
 
 ```
 # CRON EXPRESSION
-with DAG('dag', 
+with DAG(
+  'dag', 
   default_args=default_args, 
   schedule_interval='*/10 * * * *', 
   catchup=False
@@ -278,12 +288,12 @@ with DAG('dag',
 with DAG(
   dag_id = 'dag', 
   default_args=default_args, 
-  schedule_interval=timedelta(minutes=10), c
-  atchup=False
+  schedule_interval=timedelta(minutes=10),
+  catchup=False
 ) as dag:
   t0 = DummyOperator(task_id='t0')
 ```
-
+ 
 Cron 표현은 매우 강력하지만 처음에는 이해하기 어려울 수 있습니다. 다음 웹 사이트를 살펴보고  일정 간격이 예상한 간격인지 확인하십시오. 
 
 이제 Cron 표현식 대신 Timedelta 객체를 언제 사용해야합니까? 특정 schedule interval은  Cron 표현식으로 표현할 수 없습니다. 3일에 한 번씩 DAG를 트리거하려면 timedelta(일=3)  를 사용하여 시간 델타 개체를 정의해야 합니다. Cron 표현식을 사용하여 수행하려고하면 월말에 해당 DAG가 30 일 또는 31  일에 트리거 된 다음 다음 달 1 일에  트리거되어 3 일 간격을 깨뜨립니다.
