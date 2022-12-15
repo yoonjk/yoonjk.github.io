@@ -38,7 +38,6 @@ default_args = {
   'retries': 1,
   'retry_delay': timedelta(minutes=5),
   'schedule_interval': '@daily',
-  'tags': 'training',
   'catchup': False
 }
 ``` 
@@ -56,7 +55,7 @@ def hello_airflow():
 with DAG(
   dag_id = "myFirstDag",
   default_args=default_args,
-  schedule_interval="@daily"
+  dags = ['training']
 ) as dag:
 ```
 
