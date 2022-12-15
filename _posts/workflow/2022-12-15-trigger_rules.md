@@ -59,3 +59,16 @@ t1 = EmptyOperator(task_id=’end’, trigger_rule=’ none_failed_min_one_succe
   <figcaption></figcaption>
 </figure> 
 
+<figure style="width: 100%" class="align-left">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/08-trigger_rule-all_success3.png" alt="">
+  <figcaption></figcaption>
+</figure> 
+
+#### all_failed
+모든 상위 작업이 실패하면 Task C 는 작업이 Trigger 됩니다
+
+<figure style="width: 100%" class="align-left">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/08-trigger_rule-all_failed.png" alt="">
+  <figcaption></figcaption>
+</figure> 
+
