@@ -65,8 +65,8 @@ var store = [{
         "url": "/workflow/tasks/",
         "teaser": null
       },{
-        "title": "Airflow Xcom",
-        "excerpt":"Airflow Xcom Airflow task간 데이터를 공유가 필요할 때, 데이터를 공유하기 위해 push, pull 을 사용하여 값을 전달하고, 값을 가져오기 위해 사용합니다. Airflow에서는 여러 분산환경에서 서로 다른 Work에서 Task가 실행 될 수 있기 때문에 Xcom을 사용합니다. Variable과 비슷하지만 Xcom은 특정 DAG내부에서만 공유되는 특징이 있습니다. 여러 DAG에서 공유해서 사용하려면 Variable을 사용해야 합니다....","categories": ["workflow"],
+        "title": "Airflow XCom",
+        "excerpt":"Airflow XCom Airflow 작업(Task) 간에 데이터를 전달하는 첫 번째 방법은 작업 데이터를 공유하기 위한 주요 Airflow 기능인 XCom을 사용하는 것입니다. XCom은 task간 데이터를 공유가 필요할 때, 데이터를 공유하기 위해 push, pull 을 사용하여 값을 전달하고, 값을 가져올 수 있습니다.. XComs는 작업에서 보내는 의미의 “푸시” , 작업에서 수신하는 것을 의미하는 “pulled”일...","categories": ["workflow"],
         "tags": ["airflow"],
         "url": "/workflow/xcom/",
         "teaser": null
@@ -81,5 +81,11 @@ var store = [{
         "excerpt":"My First DAG 개발 Apache Airflow Dag 개발 절차는 다음의 7단계 절차로 구현합니다. Airflow 관련 Module import DAG Arguments 정의 Python Function 또는 task 에서 사용하는 Variable 정의 (Optional) Instatiate DAG 정의 Task 정의 Task간 의존성 정의 Verify DAG 개발절차를 예제로 살펴보면 다음과 같습니다. 1. Airflow 관련 Module import from...","categories": ["workflow"],
         "tags": ["airflow"],
         "url": "/workflow/myfirst-dag/",
+        "teaser": null
+      },{
+        "title": "Airflow Trigger_rules",
+        "excerpt":"Airflow Trigger rules 일반적으로 Task는 이전 Task들이 성공할 때만 실행됩니다. trigger rule이 default로 all_success이기 때문입니다. 기본적으로 모든 상위 작업이 성공하면 작업이 실행됩니다. 이 action은 일반적으로 기대하는 것입니다. 그러나 더 복잡한 것을 원한다면 어떻게 해야 할까요? 상위 task 중 한 개 task가 성공하자마자 작업을 수행하고 싶다면 어떻게? 아니면 작업이 실패하면 다른...","categories": ["workflow"],
+        "tags": ["airflow"],
+        "url": "/workflow/trigger_rules/",
         "teaser": null
       }]

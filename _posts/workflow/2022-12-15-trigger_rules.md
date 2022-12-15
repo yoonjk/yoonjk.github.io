@@ -33,7 +33,7 @@ trigger rule이 default로 all_success이기 때문입니다. 기본적으로 �
 아래의 task Graph view 처럼 trigger rule이 all_success인 경우 end task는 실행되지 않고 skip하게 되는 경우도 있습니다. 
 
 <figure style="width: 100%" class="align-left">
-  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/08-trigger_rule-none_ailed_min_one_success.png" alt="">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/08-trigger-rule-none_ailed_min_one_success.png" alt="">
   <figcaption></figcaption>
 </figure> 
 
@@ -41,7 +41,7 @@ trigger rule이 default로 all_success이기 때문입니다. 기본적으로 �
 로 설정하면 다음과 같이 end task를 실행할 수 있습니다.
 
 <figure style="width: 100%" class="align-left">
-  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/08-trigger_rule-none_ailed_min_one_success.png" alt="">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/08-trigger-rule-none_ailed_min_one_success.png" alt="">
   <figcaption></figcaption>
 </figure> 
 
@@ -55,12 +55,12 @@ t1 = EmptyOperator(task_id=’end’, trigger_rule=’ none_failed_min_one_succe
 이것은 매우 간단하고 이미 보았습니다. 모든 업스트림 작업 (부모)이 성공했을 때 작업이 시작됩니다
 
 <figure style="width: 100%" class="align-left">
-  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/08-trigger_rule-all_success2.png" alt="">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/08-trigger-rule-all_success2.png" alt="">
   <figcaption></figcaption>
 </figure> 
 
 <figure style="width: 100%" class="align-left">
-  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/08-trigger_rule-all_success3.png" alt="">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/08-trigger-rule-all_success3.png" alt="">
   <figcaption></figcaption>
 </figure> 
 
@@ -68,7 +68,93 @@ t1 = EmptyOperator(task_id=’end’, trigger_rule=’ none_failed_min_one_succe
 모든 상위 작업이 실패하면 Task C 는 작업이 Trigger 됩니다
 
 <figure style="width: 100%" class="align-left">
-  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/08-trigger_rule-all_failed.png" alt="">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/08-trigger-rule-all_failed.png" alt="">
   <figcaption></figcaption>
 </figure> 
 
+#### all_done
+
+모든 업스트림 작업 (상위)이 자신의 상태에 관계없이 실행을 수행하면 작업을 트리거하고 합니다. 이 트리거 규칙은 업스트림 작업의 상태에 관계없이 항상 실행하려는 작업이 있는 경우 유용 할 수 있습니다.
+
+<figure style="width: 100%" class="align-left">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/08-trigger-rule-all_done.png" alt="">
+  <figcaption></figcaption>
+</figure> 
+
+#### none_failed
+
+모든 업스트림 작업이 성공하거나 skip이면  Task D는 트리거 됩니다
+
+<figure style="width: 100%" class="align-left">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/08-trigger-rule-none_failed.png" alt="">
+  <figcaption></figcaption>
+</figure> 
+
+#### one_success
+
+한 명의 상위 또는 업스트림 작업이 성공하자마자 트리거됩니다. 단 모든 상위 task가 종료될 때까지 기다리지 않습니다.
+
+<figure style="width: 100%" class="align-left">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/08-trigger-rule-one_success.png" alt="">
+  <figcaption></figcaption>
+</figure> 
+
+#### one_failed
+
+한 개의 상위 또는 업스트림 작업이 최소한 1개라도 실패하면 task D는 trigger 됩니다.단 모든 상위 task가 종료될 때까지 기다리지 않습니다
+
+<figure style="width: 100%" class="align-left">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/08--triggerrule-one_failed.png" alt="">
+  <figcaption></figcaption>
+</figure> 
+
+#### none_failed_min_one_success
+
+한 개의 상위 또는 업스트림 작업이 모두 실패가 없고 최소한 1개라도 성공하면 task D는 trigger 됩니다.단 모든 상위 task가 종료될 때까지 기다리지 않습니다
+
+<figure style="width: 100%" class="align-left">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/08-trigger-rule-none_failed_min_one_success.png" alt="">
+  <figcaption></figcaption>
+</figure> 
+
+
+```python
+from airflow import DAG 
+from airflow.operators.bash import BashOperator
+from airflow.operators.empty import EmptyOperator 
+from airflow.operators.python import BranchPythonOperator 
+# Utils 
+from airflow.utils.dates import days_ago 
+from datetime import timedelta 
+import random
+
+default_args = {
+  'start_date': days_ago(1),
+  'retries': 0, 
+  'retry_delay': timedelta(minutes=5),
+  'schedule_interval': '@daily',
+  'catchup': False
+}
+
+def check_condition():
+  num = random.randint(0, 10)
+
+  if num > 6:
+    return 'greater'
+  else:
+    return 'smaller'
+  
+with DAG(
+  dag_id = 'trigger_rule',
+  default_args = default_args,
+  tags = ['training']
+) as dag: 
+  start = EmptyOperator(task_id = 'start')
+  end = EmptyOperator(task_id='end', trigger_rule = 'all_done')
+
+  
+  greater = BashOperator(task_id = 'greater', bash_command='echo "value is greater than 6" && sleep 30')
+  smaller = BashOperator(task_id = 'smaller', bash_command ='echo "value is smaller thant 6" && exit 1')
+
+  start >> [greater, smaller] >> end 
+```
