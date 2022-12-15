@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-15T19:44:46+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Airflow Trigger_rules</title><link href="http://localhost:4000/workflow/trigger_rules/" rel="alternate" type="text/html" title="Airflow Trigger_rules" /><published>2022-12-15T00:00:00+09:00</published><updated>2022-12-15T00:00:00+09:00</updated><id>http://localhost:4000/workflow/trigger_rules</id><content type="html" xml:base="http://localhost:4000/workflow/trigger_rules/"><![CDATA[<h2 id="airflow-trigger-rules">Airflow Trigger rules</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-15T19:49:25+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Airflow Trigger_rules</title><link href="http://localhost:4000/workflow/trigger_rules/" rel="alternate" type="text/html" title="Airflow Trigger_rules" /><published>2022-12-15T00:00:00+09:00</published><updated>2022-12-15T00:00:00+09:00</updated><id>http://localhost:4000/workflow/trigger_rules</id><content type="html" xml:base="http://localhost:4000/workflow/trigger_rules/"><![CDATA[<h2 id="airflow-trigger-rules">Airflow Trigger rules</h2>
 <p>일반적으로 Task는 이전 Task들이 성공할 때만 실행됩니다. 
 trigger rule이 default로 all_success이기 때문입니다. 기본적으로 모든 상위 작업이 성공하면 작업이 실행됩니다. 이 action은 일반적으로 기대하는 것입니다.</p>
 
@@ -95,7 +95,7 @@ trigger rule이 default로 all_success이기 때문입니다. 기본적으로 �
 <p>한 개의 상위 또는 업스트림 작업이 최소한 1개라도 실패하면 task D는 trigger 됩니다.단 모든 상위 task가 종료될 때까지 기다리지 않습니다</p>
 
 <figure style="width: 100%" class="align-left">
-  <img src="http://localhost:4000/assets/images/08--triggerrule-one_failed.png" alt="" />
+  <img src="http://localhost:4000/assets/images/08-trigger-rule-one_failed.png" alt="" />
   <figcaption></figcaption>
 </figure>
 

@@ -104,7 +104,7 @@ t1 = EmptyOperator(task_id=’end’, trigger_rule=’ none_failed_min_one_succe
 한 개의 상위 또는 업스트림 작업이 최소한 1개라도 실패하면 task D는 trigger 됩니다.단 모든 상위 task가 종료될 때까지 기다리지 않습니다
 
 <figure style="width: 100%" class="align-left">
-  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/08--triggerrule-one_failed.png" alt="">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/08-trigger-rule-one_failed.png" alt="">
   <figcaption></figcaption>
 </figure> 
 
