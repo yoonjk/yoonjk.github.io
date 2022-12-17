@@ -88,4 +88,10 @@ var store = [{
         "tags": ["airflow"],
         "url": "/workflow/trigger_rules/",
         "teaser": null
+      },{
+        "title": "Airflow Hooks",
+        "excerpt":"Airflow Hooks Hook은 DB나 서비스 같은 외부 시스템(Database, Storage)과 통신하기 위한 인터페이스를 제공하여 연결상태를 유지하여 작업을 처리하기 위해 사용합니다. Apache Airflow의 Hook에서csv to db를 또는 db to csv 작업을 할 때 대표적인 Hook은 다음과 같은 것이 있습니다. PostgresHook MySqlHook S3 HDFS Apache Airflow Hooks를 실행하는 방법? Airflow Hook을 다음의 4단계로...","categories": ["workflow"],
+        "tags": ["airflow"],
+        "url": "/workflow/Airflow-hooks/",
+        "teaser": null
       }]
