@@ -27,12 +27,12 @@ Operator는
 -	Transfer Operator
 
 로 구분됩니다. 
-여기에서는 대표적인 Operator 
+여기에서는 대표적인 Operator 를 알아보겠습니다.
 -	EmptyOperator
 -	BashOperator
 -	PythonOperator
 
-를 알아보겠습니다. 기외 주요 Operator는 다음과 같습니다.
+기외 주요 Operator는 다음과 같습니다.
 
 | 구분 | 클래스 경로 |  설명 |
 |---|---|---|

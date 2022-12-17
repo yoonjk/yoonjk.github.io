@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-17T16:42:18+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Airflow Operators</title><link href="http://localhost:4000/workflow/Airflow-operators/" rel="alternate" type="text/html" title="Airflow Operators" /><published>2022-12-17T00:00:00+09:00</published><updated>2022-12-17T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20operators</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-operators/"><![CDATA[<h2 id="airflow-operators">Airflow Operators</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-17T16:44:49+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Airflow Operators</title><link href="http://localhost:4000/workflow/Airflow-operators/" rel="alternate" type="text/html" title="Airflow Operators" /><published>2022-12-17T00:00:00+09:00</published><updated>2022-12-17T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20operators</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-operators/"><![CDATA[<h2 id="airflow-operators">Airflow Operators</h2>
 
 <p>DAG을 구성하는 작업을 Task라고 하며, DAG이 수행할 작업을 의미합니다. 한개 이상의 Task를 pipeline으로 연결해서 하나의 DAG을 완성해야 합니다.
 Task에는</p>
@@ -22,14 +22,14 @@ Task에는</p>
 </ul>
 
 <p>로 구분됩니다. 
-여기에서는 대표적인 Operator</p>
+여기에서는 대표적인 Operator 를 알아보겠습니다.</p>
 <ul>
   <li>EmptyOperator</li>
   <li>BashOperator</li>
   <li>PythonOperator</li>
 </ul>
 
-<p>를 알아보겠습니다. 기외 주요 Operator는 다음과 같습니다.</p>
+<p>기외 주요 Operator는 다음과 같습니다.</p>
 
 <table>
   <thead>
