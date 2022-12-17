@@ -61,11 +61,12 @@ serial,first_name,last_name,email
 
 COPY CSV to POD into customer table
 
+Kubernetes 환경인 경우 다음과 같이 customer.csv파일을 복사합니다.
 POD에 customer.csv 파일을 복사합니다.
 
-POSTGRES_POD=$(kubectl get pods -o jsonpath='{.items[0].metadata.name}')
-
-kubectl cp customer.csv $POSTGRES_POD:/tmp 
+- POSTGRES_POD=$(kubectl get pods -o jsonpath='{.items[0].metadata.name}')
+- kubectl cp customer.csv $POSTGRES_POD:/tmp 
+- kubectl exec -it $POSTGRESPOD -- bash 
 
 postgres에 접속합니다.
 
