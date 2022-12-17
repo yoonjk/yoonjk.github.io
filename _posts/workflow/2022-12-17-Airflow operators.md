@@ -8,7 +8,6 @@ tags:
 ---
 
 ## Airflow Operators
-
 DAG을 구성하는 작업을 Task라고 하며, DAG이 수행할 작업을 의미합니다. 한개 이상의 Task를 pipeline으로 연결해서 하나의 DAG을 완성해야 합니다.
 Task에는 
 
