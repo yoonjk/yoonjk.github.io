@@ -106,4 +106,10 @@ var store = [{
         "tags": ["airflow"],
         "url": "/workflow/Airflow-Sensor/",
         "teaser": null
+      },{
+        "title": "Airflow Hooks - MySQL",
+        "excerpt":"Airflow Hooks - MySQL MySqlHook 예제입니다. from airflow import DAG from airflow.operators.python import PythonOperator from airflow.operators.empty import EmptyOperator from airflow.providers.mysql.hooks.mysql import MySqlHook # utils from airflow.utils.dates import days_ago from datetime import timedelta from tempfile import NamedTemporaryFile import csv, logging default_args = { 'start_date': days_ago(1), 'retries': 1, 'retry_delay': timedelta(minutes=5), 'schedule_interval': '@daily',...","categories": ["workflow"],
+        "tags": ["airflow"],
+        "url": "/workflow/Airflow-hooks-mysql/",
+        "teaser": null
       }]
