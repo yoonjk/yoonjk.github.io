@@ -108,7 +108,7 @@ var store = [{
         "teaser": null
       },{
         "title": "Airflow TaskGroup",
-        "excerpt":"Airflow TaskGroup 작업 그룹은 그래프 보기에서 작업을 계층적 그룹으로 구성하는 데 사용할 수 있습니다. 반복되는 패턴을 만들고 시각적 혼란을 줄이는 데 유용합니다.. 작업 그룹을 사용하려면 다음 import 문을 실행합니다. from airflow.utils.task_group import TaskGroup 첫 번째 예에서는 with 문을 사용하여 작업 그룹을 인스턴스화하고 group_id 제공합니다. 작업 그룹 내에서 두 작업인 t1과...","categories": ["workflow"],
+        "excerpt":"Airflow TaskGroup 작업 그룹은 그래프 보기에서 작업을 계층적 그룹으로 구성하는 데 사용할 수 있습니다. 반복되는 패턴을 만들고 시각적 혼란을 줄이는 데 유용합니다.. 작업 그룹을 사용하려면 다음 import 문을 실행합니다. 기존 방식 TaskGroup from airflow.utils.task_group import TaskGroup decorator를 사용하는 경우 from airflow.decorators import task_group, task 첫 번째 예에서는 with 문을 사용하여...","categories": ["workflow"],
         "tags": ["airflow,TaskGroup"],
         "url": "/workflow/Airflow-Task-Group/",
         "teaser": null

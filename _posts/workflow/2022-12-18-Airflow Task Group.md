@@ -13,9 +13,16 @@ tags:
 ![taskgroup decorator](https://airflow.apache.org/docs/apache-airflow/stable/_images/task_group.gif)
 
 #### 작업 그룹을 사용하려면 다음 import 문을 실행합니다.
+- 기존 방식 TaskGroup
 
 ```python
 from airflow.utils.task_group import TaskGroup
+```
+
+- decorator를 사용하는 경우
+
+```python
+from airflow.decorators import task_group, task
 ```
 
 첫 번째 예에서는 with 문을  사용하여 작업 그룹을 인스턴스화하고 group_id 제공합니다. 작업 그룹 내에서 두 작업인 t1과 t2와 해당 종속성을 정의합니다.
