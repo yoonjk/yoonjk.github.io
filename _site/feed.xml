@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-17T19:03:26+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Airflow Operators</title><link href="http://localhost:4000/workflow/Airflow-operators/" rel="alternate" type="text/html" title="Airflow Operators" /><published>2022-12-17T00:00:00+09:00</published><updated>2022-12-17T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20operators</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-operators/"><![CDATA[<h2 id="airflow-operators">Airflow Operators</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-18T10:07:00+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Airflow Operators</title><link href="http://localhost:4000/workflow/Airflow-operators/" rel="alternate" type="text/html" title="Airflow Operators" /><published>2022-12-17T00:00:00+09:00</published><updated>2022-12-17T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20operators</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-operators/"><![CDATA[<h2 id="airflow-operators">Airflow Operators</h2>
 <p>DAG을 구성하는 작업을 Task라고 하며, DAG이 수행할 작업을 의미합니다. 한개 이상의 Task를 pipeline으로 연결해서 하나의 DAG을 완성해야 합니다.
 Task에는</p>
 
@@ -68,9 +68,88 @@ Sensor Operator는 특정 조건에 일치할 때 까지 기다렸다가, 만족
   </tbody>
 </table>
 
-<p>그외 operator들은 다음을 <a href="https://airflow.apache.org/docs/apache-airflow/2.2.3/_api/airflow/operators/index.html">링크</a> 참고합니다.</p>
+<p>그외 operator들은 다음의 <a href="https://airflow.apache.org/docs/apache-airflow/2.2.3/_api/airflow/operators/index.html">링크</a> 참고합니다.</p>
 
-<p><a href="https://airflow.apache.org/docs/apache-airflow/2.2.3/_api/airflow/operators/index.html">https://airflow.apache.org/docs/apache-airflow/2.2.3/_api/airflow/operators/index.html</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Airflow Operators DAG을 구성하는 작업을 Task라고 하며, DAG이 수행할 작업을 의미합니다. 한개 이상의 Task를 pipeline으로 연결해서 하나의 DAG을 완성해야 합니다. Task에는]]></summary></entry><entry><title type="html">Airflow Hooks</title><link href="http://localhost:4000/workflow/Airflow-hooks/" rel="alternate" type="text/html" title="Airflow Hooks" /><published>2022-12-17T00:00:00+09:00</published><updated>2022-12-17T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20hooks</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-hooks/"><![CDATA[<h2 id="airflow-hooks">Airflow Hooks</h2>
+<p><a href="https://airflow.apache.org/docs/apache-airflow/2.2.3/_api/airflow/operators/index.html">https://airflow.apache.org/docs/apache-airflow/2.2.3/_api/airflow/operators/index.html</a></p>
+
+<p>Bash Operator 예제</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span>  
+<span class="kn">from</span> <span class="nn">airflow.operators.bash</span> <span class="kn">import</span> <span class="n">BashOperator</span> 
+<span class="kn">from</span> <span class="nn">airflow.operators.empty</span> <span class="kn">import</span> <span class="n">EmptyOperator</span> 
+<span class="kn">from</span> <span class="nn">airflow.utils.dates</span> <span class="kn">import</span> <span class="n">days_ago</span> 
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span> 
+
+<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'start_date'</span><span class="p">:</span> <span class="n">days_ago</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+  <span class="s">'retries'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s">'retry_delay'</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
+  <span class="s">'schedule_interval'</span><span class="p">:</span> <span class="s">'@daily'</span><span class="p">,</span>
+  <span class="s">'catchup'</span><span class="p">:</span> <span class="bp">False</span>
+<span class="p">}</span>
+
+<span class="k">with</span> <span class="n">DAG</span><span class="p">(</span>
+  <span class="n">dag_id</span> <span class="o">=</span> <span class="s">'bash-op'</span><span class="p">,</span>
+  <span class="n">default_args</span> <span class="o">=</span> <span class="n">default_args</span><span class="p">,</span>
+  <span class="n">tags</span> <span class="o">=</span> <span class="p">[</span><span class="s">'training'</span><span class="p">]</span>
+<span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span> 
+  <span class="n">start</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span>
+    <span class="n">task_id</span> <span class="o">=</span> <span class="s">'start'</span>
+  <span class="p">)</span>
+  
+  <span class="n">end</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span>
+    <span class="n">task_id</span> <span class="o">=</span> <span class="s">'end'</span>
+  <span class="p">)</span>
+  
+  <span class="n">bash_task</span> <span class="o">=</span> <span class="n">BashOperator</span><span class="p">(</span>
+    <span class="n">task_id</span><span class="o">=</span><span class="s">"test_bash"</span><span class="p">,</span>
+    <span class="n">bash_command</span> <span class="o">=</span> <span class="s">"echo 'This is the ds: </span><span class="se">\'</span><span class="s">$msg</span><span class="se">\'</span><span class="s">'"</span><span class="p">,</span>
+    <span class="n">env</span> <span class="o">=</span> <span class="p">{</span> <span class="s">"msg"</span><span class="p">:</span> <span class="s">''</span><span class="p">}</span>
+  <span class="p">)</span>
+  
+  <span class="n">start</span> <span class="o">&gt;&gt;</span> <span class="n">bash_task</span> <span class="o">&gt;&gt;</span> <span class="n">end</span> 
+</code></pre></div></div>
+
+<p>Python Operator 예제</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span> 
+<span class="kn">from</span> <span class="nn">airflow.operators.python</span> <span class="kn">import</span>  <span class="n">PythonOperator</span> 
+<span class="kn">from</span> <span class="nn">airflow.operators.empty</span> <span class="kn">import</span> <span class="n">EmptyOperator</span>
+
+<span class="kn">from</span> <span class="nn">airflow.utils.dates</span> <span class="kn">import</span> <span class="n">days_ago</span> 
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span> 
+
+<span class="kn">import</span> <span class="nn">time</span> 
+
+<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'start_date'</span><span class="p">:</span> <span class="n">days_ago</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+  <span class="s">'retries'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s">'retry_delay'</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
+  <span class="s">'schedule_interval'</span><span class="p">:</span> <span class="s">'@daily'</span><span class="p">,</span>
+  <span class="s">'tags'</span><span class="p">:</span> <span class="p">[</span><span class="s">'training'</span><span class="p">],</span>
+  <span class="s">'catchup'</span><span class="p">:</span> <span class="bp">False</span>
+<span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">_sleep_func</span><span class="p">(</span><span class="n">sleep_time</span><span class="p">):</span>
+  <span class="k">print</span><span class="p">(</span><span class="s">'Start sleep {sleep_time} seconds'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">sleep_time</span> <span class="o">=</span> <span class="n">sleep_time</span><span class="p">))</span>
+  <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">sleep_time</span><span class="p">)</span> 
+
+<span class="k">with</span> <span class="n">DAG</span><span class="p">(</span>
+  <span class="n">dag_id</span> <span class="o">=</span> <span class="s">'python-op'</span><span class="p">,</span>
+  <span class="n">default_args</span><span class="o">=</span><span class="n">default_args</span><span class="p">,</span>
+  <span class="n">tags</span> <span class="o">=</span> <span class="p">[</span><span class="s">'training'</span><span class="p">]</span>
+<span class="p">)</span> <span class="k">as</span> <span class="n">dag</span> <span class="p">:</span>
+  <span class="n">start</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span> <span class="o">=</span> <span class="s">'start_task'</span><span class="p">)</span>
+  <span class="n">end</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span> <span class="o">=</span> <span class="s">'end_task'</span><span class="p">)</span>
+  
+  <span class="n">task1</span> <span class="o">=</span> <span class="n">PythonOperator</span><span class="p">(</span>
+    <span class="n">task_id</span> <span class="o">=</span> <span class="s">'python_callable_task1'</span><span class="p">,</span>
+    <span class="n">python_callable</span> <span class="o">=</span> <span class="n">_sleep_func</span><span class="p">,</span>
+    <span class="n">op_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s">"sleep_time"</span> <span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+  <span class="p">)</span>
+  
+  <span class="n">start</span> <span class="o">&gt;&gt;</span> <span class="n">task1</span> <span class="o">&gt;&gt;</span> <span class="n">end</span>  
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Airflow Operators DAG을 구성하는 작업을 Task라고 하며, DAG이 수행할 작업을 의미합니다. 한개 이상의 Task를 pipeline으로 연결해서 하나의 DAG을 완성해야 합니다. Task에는]]></summary></entry><entry><title type="html">Airflow Hooks</title><link href="http://localhost:4000/workflow/Airflow-hooks/" rel="alternate" type="text/html" title="Airflow Hooks" /><published>2022-12-17T00:00:00+09:00</published><updated>2022-12-17T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20hooks</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-hooks/"><![CDATA[<h2 id="airflow-hooks">Airflow Hooks</h2>
 <p>Hook은 DB나 서비스 같은 외부 시스템(Database, Storage)과 통신하기 위한 인터페이스를 제공하여 연결상태를 유지하여 작업을 처리하기 위해 사용합니다.</p>
 
 <figure style="width: 100%" class="align-left">
