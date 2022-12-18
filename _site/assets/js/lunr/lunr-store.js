@@ -107,6 +107,12 @@ var store = [{
         "url": "/workflow/Airflow-Sensor/",
         "teaser": null
       },{
+        "title": "Airflow TaskGroup",
+        "excerpt":"Airflow TaskGroup 작업 그룹은 그래프 보기에서 작업을 계층적 그룹으로 구성하는 데 사용할 수 있습니다. 반복되는 패턴을 만들고 시각적 혼란을 줄이는 데 유용합니다.. 작업 그룹을 사용하려면 다음 import 문을 실행합니다. from airflow.utils.task_group import TaskGroup 첫 번째 예에서는 with 문을 사용하여 작업 그룹을 인스턴스화하고 group_id 제공합니다. 작업 그룹 내에서 두 작업인 t1과...","categories": ["workflow"],
+        "tags": ["airflow,TaskGroup"],
+        "url": "/workflow/Airflow-Task-Group/",
+        "teaser": null
+      },{
         "title": "Airflow Hooks - MySQL",
         "excerpt":"Airflow Hooks - MySQL MySqlHook 예제입니다. from airflow import DAG from airflow.operators.python import PythonOperator from airflow.operators.empty import EmptyOperator from airflow.providers.mysql.hooks.mysql import MySqlHook # utils from airflow.utils.dates import days_ago from datetime import timedelta from tempfile import NamedTemporaryFile import csv, logging default_args = { 'start_date': days_ago(1), 'retries': 1, 'retry_delay': timedelta(minutes=5), 'schedule_interval': '@daily',...","categories": ["workflow"],
         "tags": ["airflow"],
