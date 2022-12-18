@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-18T12:37:21+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Airflow Sensor</title><link href="http://localhost:4000/workflow/Airflow-Sensor/" rel="alternate" type="text/html" title="Airflow Sensor" /><published>2022-12-18T00:00:00+09:00</published><updated>2022-12-18T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20Sensor</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-Sensor/"><![CDATA[<h2 id="airflow-sensor">Airflow Sensor</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-18T18:29:09+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Airflow Sensor</title><link href="http://localhost:4000/workflow/Airflow-Sensor/" rel="alternate" type="text/html" title="Airflow Sensor" /><published>2022-12-18T00:00:00+09:00</published><updated>2022-12-18T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20Sensor</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-Sensor/"><![CDATA[<h2 id="airflow-sensor">Airflow Sensor</h2>
 <p>센서는 정확히 한 가지 일을 하도록 설계된 특별한 유형의 오퍼레이터입니다  - 무언가가 발생할 때까지 기다립니다. 시간 기반이거나 파일 또는 외부 이벤트를 기다리는 것일 수 있지만 어떤 일이 발생할 때까지 기다렸다가 해당조건을 만족하면  다운스트림 작업(이후 Task)을 실행할 수 있습니다.</p>
 
 <p><a href="https://airflow.apache.org/docs/apache-airflow/2.2.3/_api/airflow/sensors/index.html">https://airflow.apache.org/docs/apache-airflow/2.2.3/_api/airflow/sensors/index.html</a></p>
@@ -132,7 +132,7 @@
   <figcaption></figcaption>
 </figure>
 
-<p>작업 그룹을 사용하려면 다음 import 문을 실행합니다.</p>
+<h4 id="작업-그룹을-사용하려면-다음-import-문을-실행합니다">작업 그룹을 사용하려면 다음 import 문을 실행합니다.</h4>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">airflow.utils.task_group</span> <span class="kn">import</span> <span class="n">TaskGroup</span>
 </code></pre></div></div>
@@ -169,6 +169,140 @@
     <span class="n">t1</span> <span class="o">&gt;&gt;</span> <span class="n">t2</span> 
     
   <span class="n">start</span> <span class="o">&gt;&gt;</span> <span class="n">group1</span> <span class="o">&gt;&gt;</span> <span class="n">end</span> 
+</code></pre></div></div>
+
+<h4 id="taskgroup에-데코레이터-사용">TaskGroup에 데코레이터 사용</h4>
+
+<p>DAG에서 작업 그룹을 정의하는 또 다른 방법은 작업 그룹 데코레이터를 사용하는 것입니다. 작업 그룹 데코레이터는 Airflow 2.1 이상에서 사용할 수 있습니다. 작업 그룹 데코레이터는 다른 Airflow 데코레이터처럼 작동하며  TaskFlow API를 사용하여 작업 그룹을 정의할 수 있습니다. 작업 그룹 데코레이터를 사용해도 작업 그룹의 기능은 변경되지 않지만 DAG에서 이미 작업 그룹 데코레이터를 사용하고 있는 경우 작업 그룹의 코드 서식을 보다 일관되게 만들 수 있습니다.</p>
+
+<p>데코레이터를 사용하려면  작업 그룹에 들어가야 하는 작업의 함수를 호출하는 Python 함수 앞에 @task_group 추가합니다. 예를 들어:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">task_group</span><span class="p">(</span><span class="n">group_id</span><span class="o">=</span><span class="s">"tasks"</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">my_independent_tasks</span><span class="p">():</span>
+    <span class="n">task_a</span><span class="p">()</span>
+    <span class="n">task_b</span><span class="p">()</span>
+    <span class="n">task_c</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">task_group</span><span class="p">(</span><span class="n">group_id</span><span class="o">=</span><span class="s">"tasks"</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">my_dependent_tasks</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">task_a</span><span class="p">(</span><span class="n">task_b</span><span class="p">(</span><span class="n">task_c</span><span class="p">()))</span>
+</code></pre></div></div>
+
+<p>이 함수는 DAG의 다른 위치에 정의된 세 개의 독립적인 작업이 있는 작업 그룹을 만듭니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span> 
+<span class="kn">from</span> <span class="nn">airflow.decorators</span> <span class="kn">import</span> <span class="n">task_group</span><span class="p">,</span> <span class="n">task</span>
+<span class="c1"># Utils 
+</span><span class="kn">from</span> <span class="nn">airflow.utils.dates</span> <span class="kn">import</span> <span class="n">days_ago</span> 
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span> 
+
+<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'start_date'</span><span class="p">:</span> <span class="n">days_ago</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+  <span class="s">'retries'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> 
+  <span class="s">'retry_delay'</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
+  <span class="s">'schedule_interval'</span><span class="p">:</span> <span class="s">'@daily'</span><span class="p">,</span>
+  <span class="s">'catchup'</span><span class="p">:</span> <span class="bp">False</span>
+<span class="p">}</span>
+
+<span class="k">with</span> <span class="n">DAG</span> <span class="p">(</span>
+  <span class="n">dag_id</span> <span class="o">=</span> <span class="s">'taskgroup-decorator'</span><span class="p">,</span>
+  <span class="n">default_args</span><span class="o">=</span><span class="n">default_args</span>
+<span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span> 
+  <span class="o">@</span><span class="n">task</span>
+  <span class="k">def</span> <span class="nf">start</span><span class="p">():</span>
+    <span class="k">pass</span>
+  
+  <span class="o">@</span><span class="n">task</span>
+  <span class="k">def</span> <span class="nf">end</span><span class="p">():</span>
+    <span class="k">pass</span>
+
+  <span class="o">@</span><span class="n">task_group</span><span class="p">(</span><span class="n">group_id</span> <span class="o">=</span> <span class="s">'group1'</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">func_group</span><span class="p">():</span>
+    <span class="o">@</span><span class="n">task</span>
+    <span class="k">def</span> <span class="nf">task1</span><span class="p">():</span>
+      <span class="k">pass</span>
+  
+    <span class="o">@</span><span class="n">task</span>
+    <span class="k">def</span> <span class="nf">task2</span><span class="p">():</span>
+      <span class="k">pass</span> 
+    <span class="n">task1</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">task2</span><span class="p">()</span>
+  <span class="n">group1</span> <span class="o">=</span> <span class="n">func_group</span><span class="p">()</span>  
+  <span class="n">start</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">group1</span> <span class="o">&gt;&gt;</span> <span class="n">end</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h4 id="inner-taskgroup-decorator">inner taskgroup decorator</h4>
+
+<p>좀더 복잡한 Inner TaskGroup 입니다.</p>
+
+<figure style="width: 100%" class="align-left">
+  <img src="http://localhost:4000/assets/images/10-task-inner_taskgroup.git" alt="" />
+  <figcaption></figcaption>
+</figure>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span> 
+<span class="kn">from</span> <span class="nn">airflow.operators.empty</span> <span class="kn">import</span> <span class="n">EmptyOperator</span>
+<span class="kn">from</span> <span class="nn">airflow.decorators</span> <span class="kn">import</span> <span class="n">task_group</span><span class="p">,</span> <span class="n">task</span>
+<span class="c1"># Utils 
+</span><span class="kn">from</span> <span class="nn">airflow.utils.dates</span> <span class="kn">import</span> <span class="n">days_ago</span> 
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span> 
+
+<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'start_date'</span><span class="p">:</span> <span class="n">days_ago</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+  <span class="s">'retries'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> 
+  <span class="s">'retry_delay'</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
+  <span class="s">'schedule_interval'</span><span class="p">:</span> <span class="s">'@daily'</span><span class="p">,</span>
+  <span class="s">'catchup'</span><span class="p">:</span> <span class="bp">False</span>
+<span class="p">}</span>
+
+<span class="k">with</span> <span class="n">DAG</span> <span class="p">(</span>
+  <span class="n">dag_id</span> <span class="o">=</span> <span class="s">'taskgroup-decorator2'</span><span class="p">,</span>
+  <span class="n">default_args</span><span class="o">=</span><span class="n">default_args</span>
+<span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span> 
+  <span class="o">@</span><span class="n">task</span>
+  <span class="k">def</span> <span class="nf">start</span><span class="p">():</span>
+    <span class="k">pass</span>
+  
+  <span class="o">@</span><span class="n">task</span>
+  <span class="k">def</span> <span class="nf">end</span><span class="p">():</span>
+    <span class="k">pass</span>
+
+  <span class="o">@</span><span class="n">task_group</span><span class="p">(</span><span class="n">group_id</span> <span class="o">=</span> <span class="s">'section_1'</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">func_group1</span><span class="p">():</span>
+    <span class="o">@</span><span class="n">task</span>
+    <span class="k">def</span> <span class="nf">task_1</span><span class="p">():</span>
+      <span class="k">pass</span>
+  
+    <span class="o">@</span><span class="n">task</span>
+    <span class="k">def</span> <span class="nf">task_2</span><span class="p">():</span>
+      <span class="k">pass</span> 
+
+    <span class="o">@</span><span class="n">task</span>
+    <span class="k">def</span> <span class="nf">task_3</span><span class="p">():</span>
+      <span class="k">pass</span> 
+    <span class="n">task_1</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="p">[</span><span class="n">task_2</span><span class="p">(),</span> <span class="n">task_3</span><span class="p">()]</span>
+    
+  <span class="o">@</span><span class="n">task_group</span><span class="p">(</span><span class="n">group_id</span> <span class="o">=</span> <span class="s">'section_2'</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">func_group2</span><span class="p">():</span>
+    <span class="o">@</span><span class="n">task</span>
+    <span class="k">def</span> <span class="nf">task_1</span><span class="p">():</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">'task1 of group2'</span><span class="p">)</span>
+
+    <span class="o">@</span><span class="n">task_group</span><span class="p">(</span><span class="n">group_id</span> <span class="o">=</span> <span class="s">'inner_section_2'</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">func_inner_group2</span><span class="p">():</span>
+      
+      <span class="n">task2</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span> <span class="o">=</span> <span class="s">'task_2'</span><span class="p">)</span>
+      <span class="n">task3</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span> <span class="o">=</span> <span class="s">'task_3'</span><span class="p">)</span>
+      <span class="n">task4</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span> <span class="o">=</span> <span class="s">'task_4'</span><span class="p">)</span>
+      
+      <span class="k">return</span> <span class="p">[</span><span class="n">task2</span><span class="p">,</span><span class="n">task3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">task4</span>
+
+    <span class="n">inner_section_2</span> <span class="o">=</span> <span class="n">func_inner_group2</span><span class="p">()</span>
+    <span class="n">task_1</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">inner_section_2</span>
+    
+  <span class="n">section_1</span> <span class="o">=</span> <span class="n">func_group1</span><span class="p">()</span>  
+  <span class="n">section_2</span> <span class="o">=</span> <span class="n">func_group2</span><span class="p">()</span> 
+  <span class="n">start</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">section_1</span> <span class="o">&gt;&gt;</span> <span class="n">section_2</span> <span class="o">&gt;&gt;</span> <span class="n">end</span><span class="p">()</span>
 </code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow,TaskGroup" /><summary type="html"><![CDATA[Airflow TaskGroup 작업 그룹은 그래프 보기에서 작업을 계층적 그룹으로 구성하는 데 사용할 수 있습니다. 반복되는 패턴을 만들고 시각적 혼란을 줄이는 데 유용합니다..]]></summary></entry><entry><title type="html">Airflow Operator</title><link href="http://localhost:4000/workflow/Airflow-operators/" rel="alternate" type="text/html" title="Airflow Operator" /><published>2022-12-17T00:00:00+09:00</published><updated>2022-12-17T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20operators</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-operators/"><![CDATA[<h2 id="airflow-operator">Airflow Operator</h2>
 <p>DAG을 구성하는 작업을 Task라고 하며, DAG이 수행할 작업을 의미합니다. 한개 이상의 Task를 pipeline으로 연결해서 하나의 DAG을 완성해야 합니다.
 Task에는</p>
