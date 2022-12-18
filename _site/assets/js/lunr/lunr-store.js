@@ -95,8 +95,8 @@ var store = [{
         "url": "/workflow/Airflow-hooks/",
         "teaser": null
       },{
-        "title": "Airflow Operators",
-        "excerpt":"Airflow Operators DAG을 구성하는 작업을 Task라고 하며, DAG이 수행할 작업을 의미합니다. 한개 이상의 Task를 pipeline으로 연결해서 하나의 DAG을 완성해야 합니다. Task에는 Operator Sensor Hook 가 있습니다. Operator에서는 대표적인. Bash, Python, Empty 또는 이전버전 Dummy Operator가 있습니다. 상세한 Operator 정보는 다음의 링크를 참고하세요 https://airflow.apache.org/docs/apache-airflow/2.2.3/operators-and-hooks-ref.html Operator는 Action Operator Transfer Operator Sensor Operator...","categories": ["workflow"],
+        "title": "Airflow Operator",
+        "excerpt":"Airflow Operator DAG을 구성하는 작업을 Task라고 하며, DAG이 수행할 작업을 의미합니다. 한개 이상의 Task를 pipeline으로 연결해서 하나의 DAG을 완성해야 합니다. Task에는 Operator Sensor Hook 가 있습니다. Operator에서는 대표적인. Bash, Python, Empty 또는 이전버전 Dummy Operator가 있습니다. 상세한 Operator 정보는 다음의 링크를 참고하세요 https://airflow.apache.org/docs/apache-airflow/2.2.3/operators-and-hooks-ref.html Operator는 Action Operator Transfer Operator Sensor Operator...","categories": ["workflow"],
         "tags": ["airflow"],
         "url": "/workflow/Airflow-operators/",
         "teaser": null
