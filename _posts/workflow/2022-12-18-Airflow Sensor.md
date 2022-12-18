@@ -33,3 +33,36 @@ Sensor의 유형 중에 대표적인 Sensor는
 |DatetimeSensor<br>DateTimeSensorAsync|airflow.sensors.date_time|Sensor의 조건 확인 대기 시간이며 단위 Second|
 |ExternalTaskSensor|airflow.sensors.external_task|다른 DAG의 Task가 종료까지 대기하면서 모니터링하는 DAG의 external Task가 종료되면 ExternalTaskSensor가 실행|
 
+#### FileSensor 예시
+
+```python
+from airflow.operators.empty import EmptyOperator
+from airflow.sensors.filesystem import FileSensor 
+from airflow import DAG 
+from airflow.utils.dates import days_ago
+from datetime import datetime, timedelta  
+
+default_args = {
+  'start_date' : days_ago(1), 
+  'retries': 1,
+  'retry_delay': timedelta(minutes=5),
+  'catchup': False
+}
+
+with DAG (
+  dag_id ='filesensor',
+  default_args = default_args, 
+  schedule_interval='@daily'
+) as dag:
+  start = EmptyOperator(task_id='start')
+  end = EmptyOperator(task_id='end')
+  
+  sensor_task = FileSensor(
+    task_id='file_sensor_task', 
+    poke_interval=10,
+    fs_conn_id='file-conn',
+    filepath='/opt/airflow/data/test1.csv'
+  )
+  
+  start >> sensor_task >> end 
+```

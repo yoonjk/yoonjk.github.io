@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-18T18:55:33+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Airflow Sensor</title><link href="http://localhost:4000/workflow/Airflow-Sensor/" rel="alternate" type="text/html" title="Airflow Sensor" /><published>2022-12-18T00:00:00+09:00</published><updated>2022-12-18T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20Sensor</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-Sensor/"><![CDATA[<h2 id="airflow-sensor">Airflow Sensor</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-18T18:58:54+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Airflow Sensor</title><link href="http://localhost:4000/workflow/Airflow-Sensor/" rel="alternate" type="text/html" title="Airflow Sensor" /><published>2022-12-18T00:00:00+09:00</published><updated>2022-12-18T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20Sensor</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-Sensor/"><![CDATA[<h2 id="airflow-sensor">Airflow Sensor</h2>
 <p>센서는 정확히 한 가지 일을 하도록 설계된 특별한 유형의 오퍼레이터입니다  - 무언가가 발생할 때까지 기다립니다. 시간 기반이거나 파일 또는 외부 이벤트를 기다리는 것일 수 있지만 어떤 일이 발생할 때까지 기다렸다가 해당조건을 만족하면  다운스트림 작업(이후 Task)을 실행할 수 있습니다.</p>
 
 <p><a href="https://airflow.apache.org/docs/apache-airflow/2.2.3/_api/airflow/sensors/index.html">https://airflow.apache.org/docs/apache-airflow/2.2.3/_api/airflow/sensors/index.html</a></p>
@@ -69,7 +69,40 @@
       <td>다른 DAG의 Task가 종료까지 대기하면서 모니터링하는 DAG의 external Task가 종료되면 ExternalTaskSensor가 실행</td>
     </tr>
   </tbody>
-</table>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Airflow Sensor 센서는 정확히 한 가지 일을 하도록 설계된 특별한 유형의 오퍼레이터입니다 - 무언가가 발생할 때까지 기다립니다. 시간 기반이거나 파일 또는 외부 이벤트를 기다리는 것일 수 있지만 어떤 일이 발생할 때까지 기다렸다가 해당조건을 만족하면 다운스트림 작업(이후 Task)을 실행할 수 있습니다.]]></summary></entry><entry><title type="html">Airflow Hooks - MySQL</title><link href="http://localhost:4000/workflow/Airflow-hooks-mysql/" rel="alternate" type="text/html" title="Airflow Hooks - MySQL" /><published>2022-12-18T00:00:00+09:00</published><updated>2022-12-18T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20hooks-mysql</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-hooks-mysql/"><![CDATA[<h2 id="airflow-hooks---mysql">Airflow Hooks - MySQL</h2>
+</table>
+
+<h4 id="filesensor-예시">FileSensor 예시</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">airflow.operators.empty</span> <span class="kn">import</span> <span class="n">EmptyOperator</span>
+<span class="kn">from</span> <span class="nn">airflow.sensors.filesystem</span> <span class="kn">import</span> <span class="n">FileSensor</span> 
+<span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span> 
+<span class="kn">from</span> <span class="nn">airflow.utils.dates</span> <span class="kn">import</span> <span class="n">days_ago</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>  
+
+<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'start_date'</span> <span class="p">:</span> <span class="n">days_ago</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> 
+  <span class="s">'retries'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s">'retry_delay'</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
+  <span class="s">'catchup'</span><span class="p">:</span> <span class="bp">False</span>
+<span class="p">}</span>
+
+<span class="k">with</span> <span class="n">DAG</span> <span class="p">(</span>
+  <span class="n">dag_id</span> <span class="o">=</span><span class="s">'filesensor'</span><span class="p">,</span>
+  <span class="n">default_args</span> <span class="o">=</span> <span class="n">default_args</span><span class="p">,</span> 
+  <span class="n">schedule_interval</span><span class="o">=</span><span class="s">'@daily'</span>
+<span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span>
+  <span class="n">start</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span><span class="o">=</span><span class="s">'start'</span><span class="p">)</span>
+  <span class="n">end</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span><span class="o">=</span><span class="s">'end'</span><span class="p">)</span>
+  
+  <span class="n">sensor_task</span> <span class="o">=</span> <span class="n">FileSensor</span><span class="p">(</span>
+    <span class="n">task_id</span><span class="o">=</span><span class="s">'file_sensor_task'</span><span class="p">,</span> 
+    <span class="n">poke_interval</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">fs_conn_id</span><span class="o">=</span><span class="s">'file-conn'</span><span class="p">,</span>
+    <span class="n">filepath</span><span class="o">=</span><span class="s">'/opt/airflow/data/test1.csv'</span>
+  <span class="p">)</span>
+  
+  <span class="n">start</span> <span class="o">&gt;&gt;</span> <span class="n">sensor_task</span> <span class="o">&gt;&gt;</span> <span class="n">end</span> 
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Airflow Sensor 센서는 정확히 한 가지 일을 하도록 설계된 특별한 유형의 오퍼레이터입니다 - 무언가가 발생할 때까지 기다립니다. 시간 기반이거나 파일 또는 외부 이벤트를 기다리는 것일 수 있지만 어떤 일이 발생할 때까지 기다렸다가 해당조건을 만족하면 다운스트림 작업(이후 Task)을 실행할 수 있습니다.]]></summary></entry><entry><title type="html">Airflow Hooks - MySQL</title><link href="http://localhost:4000/workflow/Airflow-hooks-mysql/" rel="alternate" type="text/html" title="Airflow Hooks - MySQL" /><published>2022-12-18T00:00:00+09:00</published><updated>2022-12-18T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20hooks-mysql</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-hooks-mysql/"><![CDATA[<h2 id="airflow-hooks---mysql">Airflow Hooks - MySQL</h2>
 
 <p>MySqlHook 예제입니다.</p>
 
