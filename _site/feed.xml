@@ -1,4 +1,75 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-18T10:07:00+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Airflow Operators</title><link href="http://localhost:4000/workflow/Airflow-operators/" rel="alternate" type="text/html" title="Airflow Operators" /><published>2022-12-17T00:00:00+09:00</published><updated>2022-12-17T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20operators</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-operators/"><![CDATA[<h2 id="airflow-operators">Airflow Operators</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-18T10:20:26+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Airflow Sensor</title><link href="http://localhost:4000/workflow/Airflow-Sensor/" rel="alternate" type="text/html" title="Airflow Sensor" /><published>2022-12-18T00:00:00+09:00</published><updated>2022-12-18T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20Sensor</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-Sensor/"><![CDATA[<h2 id="airflow-sensor">Airflow Sensor</h2>
+<p>센서는 정확히 한 가지 일을 하도록 설계된 특별한 유형의 오퍼레이터입니다  - 무언가가 발생할 때까지 기다립니다. 시간 기반이거나 파일 또는 외부 이벤트를 기다리는 것일 수 있지만 어떤 일이 발생할 때까지 기다렸다가 해당조건을 만족하면  다운스트림 작업(이후 Task)을 실행할 수 있습니다.</p>
+
+<p><a href="https://airflow.apache.org/docs/apache-airflow/2.2.3/_api/airflow/sensors/index.html">https://airflow.apache.org/docs/apache-airflow/2.2.3/_api/airflow/sensors/index.html</a></p>
+
+<p>Sensor Task는 주기적으로 체크하면 다음 단계로 진행하지 못하고 대기모드로 유지되기 때문에 Airflow DAG에서의 Sensor는 Worker의 슬롯 한 개를 점유합니다. Sensor는 BaseSensorOperator를 상속하여 구현합니다. BaseSensorOperator는 다음의 옵션을 지원합니다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>구분</th>
+      <th>타입</th>
+      <th>기본값</th>
+      <th>설명</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>poke_interval</td>
+      <td>float</td>
+      <td>60</td>
+      <td>조건 확인을 위한 재시도 주기이며 단위는 second</td>
+    </tr>
+    <tr>
+      <td>timeout</td>
+      <td>float</td>
+      <td>60 * 60 * 24 * 7</td>
+      <td>Sesnor의 조건 확인을 위해 대기하는 시간이며 단위는 Second</td>
+    </tr>
+    <tr>
+      <td>mode</td>
+      <td>str</td>
+      <td>“poke”</td>
+      <td>poke는 특정 조건을 만족할 때까지 worker 슬롯 점유 <br /> reschedule은 조건을 확인할때만 worker 슬롯 점유</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Sensor의 유형 중에 대표적인 Sensor는</p>
+
+<ul>
+  <li>FileSensor</li>
+</ul>
+
+<p>이며 그외 다음과 같은 Sensor들이 있습니다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>구분</th>
+      <th>모듈 경로</th>
+      <th>설명</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>BaseSensor</td>
+      <td>airflow.sensors.bash</td>
+      <td>조건 확인의 재시도 주기이며 단위는 Second</td>
+    </tr>
+    <tr>
+      <td>DatetimeSensor<br />DateTimeSensorAsync</td>
+      <td>airflow.sensors.date_time</td>
+      <td>Sensor의 조건 확인 대기 시간이며 단위 Second</td>
+    </tr>
+    <tr>
+      <td>ExternalTaskSensor</td>
+      <td>airflow.sensors.external_task</td>
+      <td>다른 DAG의 Task가 종료까지 대기하면서 모니터링하는 DAG의 external Task가 종료되면 ExternalTaskSensor가 실행</td>
+    </tr>
+  </tbody>
+</table>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Airflow Sensor 센서는 정확히 한 가지 일을 하도록 설계된 특별한 유형의 오퍼레이터입니다 - 무언가가 발생할 때까지 기다립니다. 시간 기반이거나 파일 또는 외부 이벤트를 기다리는 것일 수 있지만 어떤 일이 발생할 때까지 기다렸다가 해당조건을 만족하면 다운스트림 작업(이후 Task)을 실행할 수 있습니다.]]></summary></entry><entry><title type="html">Airflow Operators</title><link href="http://localhost:4000/workflow/Airflow-operators/" rel="alternate" type="text/html" title="Airflow Operators" /><published>2022-12-17T00:00:00+09:00</published><updated>2022-12-17T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20operators</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-operators/"><![CDATA[<h2 id="airflow-operators">Airflow Operators</h2>
 <p>DAG을 구성하는 작업을 Task라고 하며, DAG이 수행할 작업을 의미합니다. 한개 이상의 Task를 pipeline으로 연결해서 하나의 DAG을 완성해야 합니다.
 Task에는</p>
 
@@ -466,78 +537,7 @@ trigger rule이 default로 all_success이기 때문입니다. 기본적으로 �
   <span class="n">smaller</span> <span class="o">=</span> <span class="n">BashOperator</span><span class="p">(</span><span class="n">task_id</span> <span class="o">=</span> <span class="s">'smaller'</span><span class="p">,</span> <span class="n">bash_command</span> <span class="o">=</span><span class="s">'echo "value is smaller thant 6" &amp;&amp; exit 1'</span><span class="p">)</span>
 
   <span class="n">start</span> <span class="o">&gt;&gt;</span> <span class="p">[</span><span class="n">greater</span><span class="p">,</span> <span class="n">smaller</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">end</span> 
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Airflow Trigger rules 일반적으로 Task는 이전 Task들이 성공할 때만 실행됩니다. trigger rule이 default로 all_success이기 때문입니다. 기본적으로 모든 상위 작업이 성공하면 작업이 실행됩니다. 이 action은 일반적으로 기대하는 것입니다.]]></summary></entry><entry><title type="html">Create your first Airflow DAG</title><link href="http://localhost:4000/workflow/myfirst-dag/" rel="alternate" type="text/html" title="Create your first Airflow DAG" /><published>2022-12-14T00:00:00+09:00</published><updated>2022-12-14T00:00:00+09:00</updated><id>http://localhost:4000/workflow/myfirst-dag</id><content type="html" xml:base="http://localhost:4000/workflow/myfirst-dag/"><![CDATA[<h2 id="my-first-dag-개발">My First DAG 개발</h2>
-<p>Apache Airflow Dag 개발 절차는 다음의 7단계 절차로 구현합니다.</p>
-
-<ul>
-  <li>Airflow 관련 Module import</li>
-  <li>DAG Arguments 정의</li>
-  <li>Python Function 또는 task 에서 사용하는 Variable 정의 (Optional)</li>
-  <li>Instatiate DAG 정의</li>
-  <li>Task 정의</li>
-  <li>Task간 의존성 정의</li>
-  <li>Verify DAG</li>
-</ul>
-
-<p>개발절차를 예제로 살펴보면 다음과 같습니다.</p>
-
-<h4 id="1-airflow-관련-module-import">1. Airflow 관련 Module import</h4>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span> 
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span> 
-<span class="kn">from</span> <span class="nn">airflow.operators.bash</span> <span class="kn">import</span> <span class="n">BashOperator</span> 
-<span class="kn">from</span> <span class="nn">airflow.operators.python</span> <span class="kn">import</span> <span class="n">PythonOperator</span> 
-<span class="kn">from</span> <span class="nn">airflow.utils.dates</span> <span class="kn">import</span> <span class="n">days_ago</span> 
-</code></pre></div></div>
-
-<h4 id="2-dag-arguments-정의">2. DAG Arguments 정의</h4>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s">'start_date'</span><span class="p">:</span> <span class="n">days_ago</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
-  <span class="s">'retries'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-  <span class="s">'retry_delay'</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
-  <span class="s">'schedule_interval'</span><span class="p">:</span> <span class="s">'@daily'</span><span class="p">,</span>
-  <span class="s">'catchup'</span><span class="p">:</span> <span class="bp">False</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<h4 id="3-python-function-또는-task-에서-사용하는-variable-정의optional">3. Python Function 또는 task 에서 사용하는 Variable 정의(Optional)</h4>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">hello_airflow</span><span class="p">():</span>
-  <span class="k">print</span><span class="p">(</span><span class="s">"Hello airflow"</span><span class="p">)</span>
-</code></pre></div></div>
-
-<h4 id="4-instantiate-dag-정의">4. Instantiate DAG 정의</h4>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">DAG</span><span class="p">(</span>
-  <span class="n">dag_id</span> <span class="o">=</span> <span class="s">"myFirstDag"</span><span class="p">,</span>
-  <span class="n">default_args</span><span class="o">=</span><span class="n">default_args</span><span class="p">,</span>
-  <span class="n">dags</span> <span class="o">=</span> <span class="p">[</span><span class="s">'training'</span><span class="p">]</span>
-<span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span>
-</code></pre></div></div>
-
-<h4 id="5--task-정의">5.  Task 정의</h4>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">t1</span> <span class="o">=</span> <span class="n">BashOperator</span><span class="p">(</span>
-    <span class="n">task_id</span><span class="o">=</span><span class="s">"bash"</span><span class="p">,</span>
-    <span class="n">bash_command</span><span class="o">=</span><span class="s">"echo Hello airflow"</span><span class="p">,</span>
-  <span class="p">)</span>
-  
-  <span class="n">t2</span> <span class="o">=</span> <span class="n">PythonOperator</span><span class="p">(</span>
-    <span class="n">task_id</span><span class="o">=</span><span class="s">"python"</span><span class="p">,</span>
-    <span class="n">python_callable</span><span class="o">=</span><span class="n">hello_airflow</span><span class="p">,</span>
-  <span class="p">)</span>
-</code></pre></div></div>
-
-<h4 id="6-task간-의존성-정의">6. Task간 의존성 정의</h4>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  t1 &gt;&gt; t2
-</code></pre></div></div>
-
-<h4 id="7-verify-dag">7. Verify DAG</h4>
-
-<p>myFirstDag을 airflow에 배포하여 dag을 테스트합니다. 
-테스트 aifrlow Webserver UI에서 하거나 airflow cli를 사용하여 테스트합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[My First DAG 개발 Apache Airflow Dag 개발 절차는 다음의 7단계 절차로 구현합니다.]]></summary></entry><entry><title type="html">Airflow Best Practices - I</title><link href="http://localhost:4000/workflow/airflow-best-practices-1/" rel="alternate" type="text/html" title="Airflow Best Practices - I" /><published>2022-12-14T00:00:00+09:00</published><updated>2022-12-14T00:00:00+09:00</updated><id>http://localhost:4000/workflow/airflow%20best-practices-1</id><content type="html" xml:base="http://localhost:4000/workflow/airflow-best-practices-1/"><![CDATA[<h2 id="좀더-낳은-dag-작성">좀더 낳은 DAG 작성</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Airflow Trigger rules 일반적으로 Task는 이전 Task들이 성공할 때만 실행됩니다. trigger rule이 default로 all_success이기 때문입니다. 기본적으로 모든 상위 작업이 성공하면 작업이 실행됩니다. 이 action은 일반적으로 기대하는 것입니다.]]></summary></entry><entry><title type="html">Airflow Best Practices - I</title><link href="http://localhost:4000/workflow/airflow-best-practices-1/" rel="alternate" type="text/html" title="Airflow Best Practices - I" /><published>2022-12-14T00:00:00+09:00</published><updated>2022-12-14T00:00:00+09:00</updated><id>http://localhost:4000/workflow/airflow%20best-practices-1</id><content type="html" xml:base="http://localhost:4000/workflow/airflow-best-practices-1/"><![CDATA[<h2 id="좀더-낳은-dag-작성">좀더 낳은 DAG 작성</h2>
 <p>DAG는 데이터 파이프라인에 해당합니다. 
 DAG는 매일 사용되므로 모범 사례를 따르는 것이 중요합니다.
 최적화되고, 이해하기 쉽고, 문서화되고, 잘 조직되어야 합니다. 
@@ -822,153 +822,78 @@ with DAG(
 
 <p>즉 cron expression으로는 3일 간격으로 처리할 수 없습니다.</p>
 
-<p>요약하자면, 이전 간격과 관련하여 일정 간격을 수행해야 한다면 timedelta 객체를 사용하십시오.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[좀더 낳은 DAG 작성 DAG는 데이터 파이프라인에 해당합니다. DAG는 매일 사용되므로 모범 사례를 따르는 것이 중요합니다. 최적화되고, 이해하기 쉽고, 문서화되고, 잘 조직되어야 합니다. 수백 개의 DAG로 빠르게 끝날 수 있으므로이 부분을 과소 평가하지 마십시오. 그것은 당신에게 많은 고통과 문제를 덜어 줄 것입니다.]]></summary></entry><entry><title type="html">Airflow DAG 선언 유형</title><link href="http://localhost:4000/workflow/dag-type/" rel="alternate" type="text/html" title="Airflow DAG 선언 유형" /><published>2022-11-27T00:00:00+09:00</published><updated>2022-11-27T00:00:00+09:00</updated><id>http://localhost:4000/workflow/dag-type</id><content type="html" xml:base="http://localhost:4000/workflow/dag-type/"><![CDATA[<h2 id="install-local-storage-class-to-kubernetes">Install local-storage-class to kubernetes</h2>
-<p>Apache Airflow에서 DAG을 선언하는 다음과 같이 3가 유형이 있습니다.</p>
-
-<ol>
-  <li>with DAG (Recommendation)</li>
-</ol>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">DAG</span> <span class="p">(</span>
-    <span class="n">dag_id</span><span class="o">=</span><span class="err">”</span><span class="n">myFirstDag</span><span class="err">”</span><span class="p">,</span>
-       <span class="n">default_args</span> <span class="o">=</span> <span class="n">default_args</span><span class="p">,</span>
-       <span class="n">schedule_interval</span><span class="o">=</span><span class="err">”</span><span class="o">@</span><span class="n">daily</span><span class="err">”</span><span class="p">,</span>
-       <span class="n">catchup</span><span class="o">=</span><span class="bp">False</span>
-<span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span> 
-  <span class="n">op</span> <span class="o">=</span> <span class="n">DummyOperator</span><span class="p">(</span><span class="n">task_id</span><span class="o">=</span><span class="err">”</span><span class="n">dummy</span><span class="err">”</span><span class="p">)</span>
-
-</code></pre></div></div>
+<p>요약하자면, 이전 간격과 관련하여 일정 간격을 수행해야 한다면 timedelta 객체를 사용하십시오.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[좀더 낳은 DAG 작성 DAG는 데이터 파이프라인에 해당합니다. DAG는 매일 사용되므로 모범 사례를 따르는 것이 중요합니다. 최적화되고, 이해하기 쉽고, 문서화되고, 잘 조직되어야 합니다. 수백 개의 DAG로 빠르게 끝날 수 있으므로이 부분을 과소 평가하지 마십시오. 그것은 당신에게 많은 고통과 문제를 덜어 줄 것입니다.]]></summary></entry><entry><title type="html">Create your first Airflow DAG</title><link href="http://localhost:4000/workflow/myfirst-dag/" rel="alternate" type="text/html" title="Create your first Airflow DAG" /><published>2022-12-14T00:00:00+09:00</published><updated>2022-12-14T00:00:00+09:00</updated><id>http://localhost:4000/workflow/myfirst-dag</id><content type="html" xml:base="http://localhost:4000/workflow/myfirst-dag/"><![CDATA[<h2 id="my-first-dag-개발">My First DAG 개발</h2>
+<p>Apache Airflow Dag 개발 절차는 다음의 7단계 절차로 구현합니다.</p>
 
 <ul>
-  <li>with DAG 예시</li>
+  <li>Airflow 관련 Module import</li>
+  <li>DAG Arguments 정의</li>
+  <li>Python Function 또는 task 에서 사용하는 Variable 정의 (Optional)</li>
+  <li>Instatiate DAG 정의</li>
+  <li>Task 정의</li>
+  <li>Task간 의존성 정의</li>
+  <li>Verify DAG</li>
 </ul>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">airflow.models</span> <span class="kn">import</span> <span class="n">DAG</span> 
-<span class="kn">from</span> <span class="nn">airflow.providers.http.sensors.http</span> <span class="kn">import</span> <span class="n">HttpSensor</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<p>개발절차를 예제로 살펴보면 다음과 같습니다.</p>
 
-<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s">"owner"</span><span class="p">:</span> <span class="s">"airflow"</span><span class="p">,</span>
-    <span class="s">"email_on_failure"</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
-    <span class="s">"email_on_retry"</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
-    <span class="s">"email"</span><span class="p">:</span> <span class="s">"admin@localhost.com"</span><span class="p">,</span>
-    <span class="s">"retries"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="s">"retry_delay"</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="p">}</span>
+<h4 id="1-airflow-관련-module-import">1. Airflow 관련 Module import</h4>
 
-<span class="k">with</span> <span class="n">DAG</span><span class="p">(</span><span class="s">"date_pipeline_ex02"</span><span class="p">,</span> 
-  <span class="n">start_date</span><span class="o">=</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">17</span><span class="p">),</span>
-  <span class="n">schedule_interval</span><span class="o">=</span><span class="s">"@daily"</span><span class="p">,</span>
-  <span class="n">default_args</span> <span class="o">=</span> <span class="n">default_args</span><span class="p">,</span>
-  <span class="n">catchup</span><span class="o">=</span><span class="bp">False</span>
-<span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span>
-  <span class="n">is_api_available</span> <span class="o">=</span> <span class="n">HttpSensor</span><span class="p">(</span>
-    <span class="n">task_id</span><span class="o">=</span><span class="s">'is_api_available'</span><span class="p">,</span>
-    <span class="n">http_conn_id</span><span class="o">=</span><span class="s">'user_api'</span><span class="p">,</span>
-    <span class="n">endpoint</span><span class="o">=</span><span class="s">'api/'</span>
-  <span class="p">)</span>
-
-  <span class="n">is_api_available</span>
-</code></pre></div></div>
-
-<ol>
-  <li>표준 생성자 DAG</li>
-</ol>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dag</span><span class="o">=</span><span class="n">DAG</span> <span class="p">(</span>
-    <span class="n">dag_id</span><span class="o">=</span><span class="err">”</span><span class="n">myFirstDag</span><span class="err">”</span><span class="p">,</span>
-       <span class="n">default_args</span> <span class="o">=</span> <span class="n">default_args</span><span class="p">,</span>
-       <span class="n">schedule_interval</span><span class="o">=</span><span class="err">”</span><span class="o">@</span><span class="n">daily</span><span class="err">”</span><span class="p">,</span>
-       <span class="n">catchup</span><span class="o">=</span><span class="bp">False</span>
-<span class="p">)</span> 
-<span class="n">start</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span><span class="o">=</span><span class="err">”</span><span class="n">start</span><span class="err">”</span><span class="p">,</span> <span class="n">dag</span><span class="o">=</span><span class="n">dag</span><span class="p">)</span>
-
-</code></pre></div></div>
-<ul>
-  <li>표준 생성자 DAG 예시</li>
-</ul>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span> 
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span> 
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span> 
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span> 
 <span class="kn">from</span> <span class="nn">airflow.operators.bash</span> <span class="kn">import</span> <span class="n">BashOperator</span> 
+<span class="kn">from</span> <span class="nn">airflow.operators.python</span> <span class="kn">import</span> <span class="n">PythonOperator</span> 
 <span class="kn">from</span> <span class="nn">airflow.utils.dates</span> <span class="kn">import</span> <span class="n">days_ago</span> 
-<span class="kn">import</span> <span class="nn">pendulum</span>
+</code></pre></div></div>
 
-<span class="c1"># timezone 한국시간으로 변경
-</span><span class="n">kst</span> <span class="o">=</span> <span class="n">pendulum</span><span class="p">.</span><span class="n">timezone</span><span class="p">(</span><span class="s">"Asia/Seoul"</span><span class="p">)</span>
+<h4 id="2-dag-arguments-정의">2. DAG Arguments 정의</h4>
 
-<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s">"start_date"</span><span class="p">:</span> <span class="n">days_ago</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
-    <span class="s">"catchup"</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'start_date'</span><span class="p">:</span> <span class="n">days_ago</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+  <span class="s">'retries'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s">'retry_delay'</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
+  <span class="s">'schedule_interval'</span><span class="p">:</span> <span class="s">'@daily'</span><span class="p">,</span>
+  <span class="s">'catchup'</span><span class="p">:</span> <span class="bp">False</span>
 <span class="p">}</span>
+</code></pre></div></div>
 
-<span class="n">dag</span> <span class="o">=</span> <span class="n">DAG</span><span class="p">(</span>
-    <span class="s">"myFirstDAG"</span><span class="p">,</span>
-    <span class="n">default_args</span><span class="o">=</span><span class="n">default_args</span><span class="p">,</span>
-    <span class="n">schedule_interval</span><span class="o">=</span><span class="s">"@daily"</span>
-<span class="p">)</span>
+<h4 id="3-python-function-또는-task-에서-사용하는-variable-정의optional">3. Python Function 또는 task 에서 사용하는 Variable 정의(Optional)</h4>
 
-<span class="k">def</span> <span class="nf">hello_airflow</span><span class="p">():</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"Hello airflow"</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">hello_airflow</span><span class="p">():</span>
+  <span class="k">print</span><span class="p">(</span><span class="s">"Hello airflow"</span><span class="p">)</span>
+</code></pre></div></div>
 
-<span class="n">t1</span> <span class="o">=</span> <span class="n">BashOperator</span><span class="p">(</span>
+<h4 id="4-instantiate-dag-정의">4. Instantiate DAG 정의</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">DAG</span><span class="p">(</span>
+  <span class="n">dag_id</span> <span class="o">=</span> <span class="s">"myFirstDag"</span><span class="p">,</span>
+  <span class="n">default_args</span><span class="o">=</span><span class="n">default_args</span><span class="p">,</span>
+  <span class="n">dags</span> <span class="o">=</span> <span class="p">[</span><span class="s">'training'</span><span class="p">]</span>
+<span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span>
+</code></pre></div></div>
+
+<h4 id="5--task-정의">5.  Task 정의</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">t1</span> <span class="o">=</span> <span class="n">BashOperator</span><span class="p">(</span>
     <span class="n">task_id</span><span class="o">=</span><span class="s">"bash"</span><span class="p">,</span>
     <span class="n">bash_command</span><span class="o">=</span><span class="s">"echo Hello airflow"</span><span class="p">,</span>
-    <span class="n">dag</span><span class="o">=</span><span class="n">dag</span>
-<span class="p">)</span>
-
-<span class="n">t1</span>
+  <span class="p">)</span>
+  
+  <span class="n">t2</span> <span class="o">=</span> <span class="n">PythonOperator</span><span class="p">(</span>
+    <span class="n">task_id</span><span class="o">=</span><span class="s">"python"</span><span class="p">,</span>
+    <span class="n">python_callable</span><span class="o">=</span><span class="n">hello_airflow</span><span class="p">,</span>
+  <span class="p">)</span>
 </code></pre></div></div>
 
-<ol>
-  <li>데코레이터 DAG(@)</li>
-</ol>
+<h4 id="6-task간-의존성-정의">6. Task간 의존성 정의</h4>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@dag (
-    dag_id='data_pipeline_ex05',
-       default_args = default_args,
-       schedule_interval='@daily'
-) 
-def hello_dag():
-    @task
-    def hello_task1():
-        print('Hello World')
-
-    hello_task1()
-
-# DAG 호출
-dag = hello_dag()
-
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  t1 &gt;&gt; t2
 </code></pre></div></div>
-<ul>
-  <li>데코레이터 예시</li>
-</ul>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from airflow.decorators import dag, task 
-from datetime import datetime, timedelta 
-from airflow.utils.dates import days_ago 
+<h4 id="7-verify-dag">7. Verify DAG</h4>
 
-default_args = {
-    "start_date": days_ago(1),
-    "catchup": False,
-}
-
-@dag (
-    dag_id='data_pipeline_ex05',
-       default_args = default_args,
-       schedule_interval='@daily'
-) 
-def hello_dag():
-    @task
-    def hello_task1():
-        print('Hello World')
-
-    hello_task1()
-
-# DAG 호출
-dag = hello_dag()
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Install local-storage-class to kubernetes Apache Airflow에서 DAG을 선언하는 다음과 같이 3가 유형이 있습니다.]]></summary></entry><entry><title type="html">Airflow Task</title><link href="http://localhost:4000/workflow/tasks/" rel="alternate" type="text/html" title="Airflow Task" /><published>2022-11-27T00:00:00+09:00</published><updated>2022-11-27T00:00:00+09:00</updated><id>http://localhost:4000/workflow/tasks</id><content type="html" xml:base="http://localhost:4000/workflow/tasks/"><![CDATA[<h2 id="airflow-task">Airflow Task</h2>
+<p>myFirstDag을 airflow에 배포하여 dag을 테스트합니다. 
+테스트 aifrlow Webserver UI에서 하거나 airflow cli를 사용하여 테스트합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[My First DAG 개발 Apache Airflow Dag 개발 절차는 다음의 7단계 절차로 구현합니다.]]></summary></entry><entry><title type="html">Airflow Task</title><link href="http://localhost:4000/workflow/tasks/" rel="alternate" type="text/html" title="Airflow Task" /><published>2022-11-27T00:00:00+09:00</published><updated>2022-11-27T00:00:00+09:00</updated><id>http://localhost:4000/workflow/tasks</id><content type="html" xml:base="http://localhost:4000/workflow/tasks/"><![CDATA[<h2 id="airflow-task">Airflow Task</h2>
 <p>Task는 airflow의 기본 실행단위로 한개 이상의 Task를 이용해서 하나의 DAG을 정의합니다. Task간 순서를 표현하기 위해 작업간 «(스트림업), »(스트림다운) 종속성을 설정하여 합니다.
 Task는</p>
 

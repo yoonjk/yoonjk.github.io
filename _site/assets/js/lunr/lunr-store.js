@@ -100,4 +100,10 @@ var store = [{
         "tags": ["airflow"],
         "url": "/workflow/Airflow-operators/",
         "teaser": null
+      },{
+        "title": "Airflow Sensor",
+        "excerpt":"Airflow Sensor 센서는 정확히 한 가지 일을 하도록 설계된 특별한 유형의 오퍼레이터입니다 - 무언가가 발생할 때까지 기다립니다. 시간 기반이거나 파일 또는 외부 이벤트를 기다리는 것일 수 있지만 어떤 일이 발생할 때까지 기다렸다가 해당조건을 만족하면 다운스트림 작업(이후 Task)을 실행할 수 있습니다. https://airflow.apache.org/docs/apache-airflow/2.2.3/_api/airflow/sensors/index.html Sensor Task는 주기적으로 체크하면 다음 단계로 진행하지 못하고 대기모드로...","categories": ["workflow"],
+        "tags": ["airflow"],
+        "url": "/workflow/Airflow-Sensor/",
+        "teaser": null
       }]
