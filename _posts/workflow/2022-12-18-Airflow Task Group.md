@@ -11,7 +11,7 @@ tags:
 작업 그룹은 그래프 보기에서 작업을 계층적 그룹으로 구성하는 데 사용할 수 있습니다. 반복되는 패턴을 만들고 시각적 혼란을 줄이는 데 유용합니다..
 
 <figure style="width: 100%" class="align-left">
-  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/10-task-taskgroup.png" alt="">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/10-task-taskgroup.git" alt="">
   <figcaption></figcaption>
 </figure> 
 
