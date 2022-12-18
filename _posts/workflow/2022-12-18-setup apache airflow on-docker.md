@@ -1,5 +1,5 @@
 ---
-title: Setup Apache Airflow on Oocker
+title: Setup Apache Airflow on Docker
 categories:
   - workflow
 tags: 

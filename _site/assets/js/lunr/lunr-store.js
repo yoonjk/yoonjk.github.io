@@ -119,7 +119,7 @@ var store = [{
         "url": "/workflow/Airflow-hooks-mysql/",
         "teaser": null
       },{
-        "title": "Setup Apache Airflow on Oocker",
+        "title": "Setup Apache Airflow on Docker",
         "excerpt":"Setup Apache Airflow on Docker Apache Airflow를 실습하기 위해서 개발환경을 구성하기 위해 docker를 이용합니다. laptop 이나 Server에 직접 설치하거나 방법도 있으나 학습의 목적으로 쉽고 이곳 저곳 설치하는 것 없이 docker를 이용하면 편리합니다. docker 환경 구성 docker-compose 설치 airflow docker-compose.yaml 파일 downalod 및 환경 구성 docker 환경구성을 위해 기본에는 Docker Desktop을...","categories": ["workflow"],
         "tags": ["airflow"],
         "url": "/workflow/setup-apache-airflow-on-docker/",
