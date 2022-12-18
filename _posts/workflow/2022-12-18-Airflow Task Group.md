@@ -10,10 +10,7 @@ tags:
 ## Airflow TaskGroup
 작업 그룹은 그래프 보기에서 작업을 계층적 그룹으로 구성하는 데 사용할 수 있습니다. 반복되는 패턴을 만들고 시각적 혼란을 줄이는 데 유용합니다..
 
-<figure style="width: 100%" class="align-left">
-  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/10-task-taskgroup.git" alt="">
-  <figcaption></figcaption>
-</figure> 
+![taskgroup decorator](https://airflow.apache.org/docs/apache-airflow/stable/_images/task_group.gif)
 
 #### 작업 그룹을 사용하려면 다음 import 문을 실행합니다.
 
@@ -125,10 +122,8 @@ with DAG (
 
 좀더 복잡한 Inner TaskGroup 입니다.
 
-<figure style="width: 100%" class="align-left">
-  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/10-task-inner_taskgroup.git" alt="">
-  <figcaption></figcaption>
-</figure> 
+
+![taskgroup decorator](https://airflow.apache.org/docs/apache-airflow/stable/_images/task_group.gif)
 
 ```python
 from airflow import DAG 

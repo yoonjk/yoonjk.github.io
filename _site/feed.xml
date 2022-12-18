@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-18T18:29:09+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Airflow Sensor</title><link href="http://localhost:4000/workflow/Airflow-Sensor/" rel="alternate" type="text/html" title="Airflow Sensor" /><published>2022-12-18T00:00:00+09:00</published><updated>2022-12-18T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20Sensor</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-Sensor/"><![CDATA[<h2 id="airflow-sensor">Airflow Sensor</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-18T18:46:21+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Airflow Sensor</title><link href="http://localhost:4000/workflow/Airflow-Sensor/" rel="alternate" type="text/html" title="Airflow Sensor" /><published>2022-12-18T00:00:00+09:00</published><updated>2022-12-18T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20Sensor</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-Sensor/"><![CDATA[<h2 id="airflow-sensor">Airflow Sensor</h2>
 <p>센서는 정확히 한 가지 일을 하도록 설계된 특별한 유형의 오퍼레이터입니다  - 무언가가 발생할 때까지 기다립니다. 시간 기반이거나 파일 또는 외부 이벤트를 기다리는 것일 수 있지만 어떤 일이 발생할 때까지 기다렸다가 해당조건을 만족하면  다운스트림 작업(이후 Task)을 실행할 수 있습니다.</p>
 
 <p><a href="https://airflow.apache.org/docs/apache-airflow/2.2.3/_api/airflow/sensors/index.html">https://airflow.apache.org/docs/apache-airflow/2.2.3/_api/airflow/sensors/index.html</a></p>
@@ -127,10 +127,7 @@
 </code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Airflow Hooks - MySQL]]></summary></entry><entry><title type="html">Airflow TaskGroup</title><link href="http://localhost:4000/workflow/Airflow-Task-Group/" rel="alternate" type="text/html" title="Airflow TaskGroup" /><published>2022-12-18T00:00:00+09:00</published><updated>2022-12-18T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20Task%20Group</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-Task-Group/"><![CDATA[<h2 id="airflow-taskgroup">Airflow TaskGroup</h2>
 <p>작업 그룹은 그래프 보기에서 작업을 계층적 그룹으로 구성하는 데 사용할 수 있습니다. 반복되는 패턴을 만들고 시각적 혼란을 줄이는 데 유용합니다..</p>
 
-<figure style="width: 100%" class="align-left">
-  <img src="http://localhost:4000/assets/images/10-task-taskgroup.git" alt="" />
-  <figcaption></figcaption>
-</figure>
+<p><img src="https://airflow.apache.org/docs/apache-airflow/stable/_images/task_group.gif" alt="taskgroup decorator" /></p>
 
 <h4 id="작업-그룹을-사용하려면-다음-import-문을-실행합니다">작업 그룹을 사용하려면 다음 import 문을 실행합니다.</h4>
 
@@ -235,10 +232,7 @@
 
 <p>좀더 복잡한 Inner TaskGroup 입니다.</p>
 
-<figure style="width: 100%" class="align-left">
-  <img src="http://localhost:4000/assets/images/10-task-inner_taskgroup.git" alt="" />
-  <figcaption></figcaption>
-</figure>
+<p><img src="https://airflow.apache.org/docs/apache-airflow/stable/_images/task_group.gif" alt="taskgroup decorator" /></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span> 
 <span class="kn">from</span> <span class="nn">airflow.operators.empty</span> <span class="kn">import</span> <span class="n">EmptyOperator</span>
