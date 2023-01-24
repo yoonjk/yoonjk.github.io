@@ -9,7 +9,7 @@ tags:
 ## Bitbucket on Docker
 Docker 기반 Jira 입니다.
 
-```YAML
+```yaml
 version: '3'
 networks:
  jenkins-net:
