@@ -20,14 +20,14 @@ Jenkins를 설치하기 전에 사전에 JDK와 Maven을 설치합니다.
 
 https://www.jenkins.io/doc/book/installing/linux/
 
-1. java-11-openjdk을 설치합니다.
+java-11-openjdk을 설치합니다.
 
 ```bash
 sudo dnf upgrade -y
 sudo dnf install -y java-11-openjdk
 ```
 
-2. 다음의 링크를 접속하여 Maven 설치합니다.
+다음의 링크를 접속하여 Maven 설치합니다.
 https://maven.apache.org/download.cgi 에서 최근  maven 링크를 복사합니다
 
 <figure style="width: 100%" class="align-left">
@@ -54,52 +54,52 @@ bash profile을 설정하고 저장하고, bash_profile을 최신으로 적용�
 source ~/.bash_profile 
 ```
 
-5. maven 설정되었는지 다음의 명령어로 수행하여 아래의 내용이 출력되는지 확인합니다.
+maven 설정되었는지 다음의 명령어로 수행하여 아래의 내용이 출력되는지 확인합니다.
 
 mvn
 
 [수행결과]
 ![transparent black overlay]({{ "/assets/images/jenkins/02-jenkins-mvn.png" | relative_url }})
 
-6. 다음과 같이Git 설치합니다.
+다음과 같이Git 설치합니다.
 
 ```bash
 sudo dnf install -y git
 ```
 
-7. 레포지터리에 젠킨스 레드햇 안정화 버전 레포지터리를 추가합니다.
+레포지터리에 젠킨스 레드햇 안정화 버전 레포지터리를 추가합니다.
 
 ```bash
 wget https://pkg.jenkins.io/redhat-stable/jenkins.repo -O /etc/yum.repos.d/jenkins.repo 
 ```
 
-8. rpm에 젠킨스를 추가합니다.
+rpm에 젠킨스를 추가합니다.
 
 ```bash
 sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
 ```
 
-9. Jenkins 를 다음과 같이 설치합니다.
+Jenkins 를 다음과 같이 설치합니다.
 ```bash
 sudo dnf install -y jenkins
 ```
 
-10. OS 부팅 시 Jenkins 서비스가 시작되도록 설정합니다.
+OS 부팅 시 Jenkins 서비스가 시작되도록 설정합니다.
 ```bash
 sudo systemctl enable jenkins
 ```
 
-11. 다음 명령을 사용하여 Jenkins 서비스를 시작합니다.
+다음 명령을 사용하여 Jenkins 서비스를 시작합니다.
 ```bash
 sudo systemctl start jenkins
 ```
 
-12. 다음 명령을 사용하여 Jenkins 서비스의 상태를 확인할 수 있습니다.
+다음 명령을 사용하여 Jenkins 서비스의 상태를 확인할 수 있습니다.
 ```bash
 sudo systemctl status jenkins
 ```
 
-13. docker container image 빌드를 위해 빌드 툴인 Podman을 설치합니다..
+docker container image 빌드를 위해 빌드 툴인 Podman을 설치합니다..
 ```bash
 yum install -y podman 
 ```
