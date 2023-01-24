@@ -6,7 +6,7 @@ tags:
   - jira
 ---
 
-## Bitbucket on Docker
+## Jira on Docker
 Docker 기반 Jira 입니다.
 
 ```YAML

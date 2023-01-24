@@ -150,7 +150,7 @@ var store = [{
         "teaser": null
       },{
         "title": "Jira on docker",
-        "excerpt":"Bitbucket on Docker Docker 기반 Jira 입니다. version: '3' networks: jenkins-net: driver: bridge services: jira: container_name: jira image: atlassian/jira-software:latest networks: - jenkins-net ports: - \"9010:8080\" postgres: container_name: postgres image: postgres:latest volumes: - ./data:/var/lib/postgresql/data environment: - 'POSTGRES_USER=postgres' # CHANGE THE PASSWORD! - 'POSTGRES_PASSWORD=admin1234' - 'POSTGRES_DB=jira' - 'POSTGRES_ENCODING=UTF8' networks: - jenkins-net ports:...","categories": ["docker"],
+        "excerpt":"Jira on Docker Docker 기반 Jira 입니다. version: '3' networks: jenkins-net: driver: bridge services: jira: container_name: jira image: atlassian/jira-software:latest networks: - jenkins-net ports: - \"9010:8080\" postgres: container_name: postgres image: postgres:latest volumes: - ./data:/var/lib/postgresql/data environment: - 'POSTGRES_USER=postgres' # CHANGE THE PASSWORD! - 'POSTGRES_PASSWORD=admin1234' - 'POSTGRES_DB=jira' - 'POSTGRES_ENCODING=UTF8' networks: - jenkins-net ports:...","categories": ["docker"],
         "tags": ["jira"],
         "url": "/docker/altassian-jira/",
         "teaser": null
