@@ -1,31 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-01-24T15:07:09+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Jenkins 시작</title><link href="http://localhost:4000/devops/start-up-jenkins/" rel="alternate" type="text/html" title="Jenkins 시작" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/devops/start-up%20jenkins</id><content type="html" xml:base="http://localhost:4000/devops/start-up-jenkins/"><![CDATA[<h2 id="start-up-jenkins">Start-up Jenkins</h2>
-<p>Jenkins server에 접속하기 brower에서 해당 서버의 http://localhost:8080 포트 접속합니다.</p>
-
-<p>Jenkins에 접속하면 Jenkins admin 초기 패스워드를 입력하는 화면이 출력됩니다</p>
-
-<p>터미널에서 다음과 같이 명령을 수행하여 Jenkins  admin 초기 로그인 비밀번호를 확인하고, 초기 패스워드를 입력합니다.</p>
-
-<p><img src="/assets/images/jenkins/03-jenkins-initial-admin.png" alt="Jenkins Getting started" /></p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> /var/lib/jenkins/secrets/initialAdminPassword
-</code></pre></div></div>
-
-<p>[수행결과]
-a0f289xxxxxxxxxcd8fbb7</p>
-
-<p>Jenkins 패스워드 입력화면에 복사한 패스워드를 입력하고 Continue 버튼을 클릭하고, Install suggested plugins를 선택합니다</p>
-
-<p><img src="/assets/images/jenkins/04-jenkins-getting-started.png" alt="Jenkins Getting started" /></p>
-
-<p>Jenkins Plugins이 다음과 같이 설치됩니다</p>
-
-<p><img src="/assets/images/jenkins/05-jenkins-install-plugins.png" alt="Install Jenkins Plugins" /></p>
-
-<p>Jenkins Admin 계정을 생성합니다. Save and Continue 버튼을 클릭합니다</p>
-
-<p><img src="/assets/images/jenkins/06-jenkins-create-admin.png" alt="Create Admin" /></p>
-
-<p>Instance Configuration 확인하고, Save and Finish 버튼을 클릭하고, Start using Jenkins 버튼을 클릭합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><summary type="html"><![CDATA[Start-up Jenkins Jenkins server에 접속하기 brower에서 해당 서버의 http://localhost:8080 포트 접속합니다.]]></summary></entry><entry><title type="html">Jenkins 설치 따라하기</title><link href="http://localhost:4000/devops/setup-jenkins/" rel="alternate" type="text/html" title="Jenkins 설치 따라하기" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/devops/setup%20jenkins</id><content type="html" xml:base="http://localhost:4000/devops/setup-jenkins/"><![CDATA[<h2 id="jenkins-pipeline-이란">Jenkins Pipeline 이란?</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-01-24T15:42:25+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Jenkins 설치 따라하기</title><link href="http://localhost:4000/devops/setup-jenkins/" rel="alternate" type="text/html" title="Jenkins 설치 따라하기" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/devops/setup%20jenkins</id><content type="html" xml:base="http://localhost:4000/devops/setup-jenkins/"><![CDATA[<h2 id="jenkins-pipeline-이란">Jenkins Pipeline 이란?</h2>
 <p>Jenkins Pipeline은 지속적인 업데이트 파이프라인을 구현하고 Jenkins에 통합하는 것을 지원하는 플러그인의 집합이다. 이 과정에서 소프트웨어를 빌드하고 여러 단계의 테스트, 배포를 진행한다. 
 Pipeline은 Pipeline Domain Specific Language라는 문법을 통해 마치 코드를 작성하는 것과 같이 Pipeline을 통해 간단한 배포 파이프라인부터 복잡한 배포  파이프라인을 코드로 모델링하기 위한 확장 가능한 도구 집합을 제공합니다.
 . 
@@ -110,111 +83,118 @@ bash profile을 설정하고 저장하고, bash_profile을 최신으로 적용�
 
 <p>docker container image 빌드를 위해 빌드 툴인 Podman을 설치합니다.</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum <span class="nb">install</span> <span class="nt">-y</span> podman 
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><summary type="html"><![CDATA[Jenkins Pipeline 이란? Jenkins Pipeline은 지속적인 업데이트 파이프라인을 구현하고 Jenkins에 통합하는 것을 지원하는 플러그인의 집합이다. 이 과정에서 소프트웨어를 빌드하고 여러 단계의 테스트, 배포를 진행한다. Pipeline은 Pipeline Domain Specific Language라는 문법을 통해 마치 코드를 작성하는 것과 같이 Pipeline을 통해 간단한 배포 파이프라인부터 복잡한 배포 파이프라인을 코드로 모델링하기 위한 확장 가능한 도구 집합을 제공합니다. . Jenkins 파이프 라인의 정의는 프로젝트의 소스 제어 저장소에 commit될 수 있는 텍스트 파일 (Jenkinsfile이라고 함)에 저장합니다.]]></summary></entry><entry><title type="html">Airflow Sensor</title><link href="http://localhost:4000/workflow/Airflow-Sensor/" rel="alternate" type="text/html" title="Airflow Sensor" /><published>2022-12-18T00:00:00+09:00</published><updated>2022-12-18T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20Sensor</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-Sensor/"><![CDATA[<h2 id="airflow-sensor">Airflow Sensor</h2>
-<p>센서는 정확히 한 가지 일을 하도록 설계된 특별한 유형의 오퍼레이터입니다  - 무언가가 발생할 때까지 기다립니다. 시간 기반이거나 파일 또는 외부 이벤트를 기다리는 것일 수 있지만 어떤 일이 발생할 때까지 기다렸다가 해당조건을 만족하면  다운스트림 작업(이후 Task)을 실행할 수 있습니다.</p>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><summary type="html"><![CDATA[Jenkins Pipeline 이란? Jenkins Pipeline은 지속적인 업데이트 파이프라인을 구현하고 Jenkins에 통합하는 것을 지원하는 플러그인의 집합이다. 이 과정에서 소프트웨어를 빌드하고 여러 단계의 테스트, 배포를 진행한다. Pipeline은 Pipeline Domain Specific Language라는 문법을 통해 마치 코드를 작성하는 것과 같이 Pipeline을 통해 간단한 배포 파이프라인부터 복잡한 배포 파이프라인을 코드로 모델링하기 위한 확장 가능한 도구 집합을 제공합니다. . Jenkins 파이프 라인의 정의는 프로젝트의 소스 제어 저장소에 commit될 수 있는 텍스트 파일 (Jenkinsfile이라고 함)에 저장합니다.]]></summary></entry><entry><title type="html">Jenkins 시작</title><link href="http://localhost:4000/devops/start-up-jenkins/" rel="alternate" type="text/html" title="Jenkins 시작" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/devops/start-up%20jenkins</id><content type="html" xml:base="http://localhost:4000/devops/start-up-jenkins/"><![CDATA[<h2 id="start-up-jenkins">Start-up Jenkins</h2>
+<p>Jenkins server에 접속하기 brower에서 해당 서버의 http://localhost:8080 포트 접속합니다.</p>
 
-<p><a href="https://airflow.apache.org/docs/apache-airflow/2.2.3/_api/airflow/sensors/index.html">https://airflow.apache.org/docs/apache-airflow/2.2.3/_api/airflow/sensors/index.html</a></p>
+<p>Jenkins에 접속하면 Jenkins admin 초기 패스워드를 입력하는 화면이 출력됩니다</p>
 
-<p>Sensor Task는 주기적으로 체크하면 다음 단계로 진행하지 못하고 대기모드로 유지되기 때문에 Airflow DAG에서의 Sensor는 Worker의 슬롯 한 개를 점유합니다. Sensor는 BaseSensorOperator를 상속하여 구현합니다. BaseSensorOperator는 다음의 옵션을 지원합니다.</p>
+<p>터미널에서 다음과 같이 명령을 수행하여 Jenkins  admin 초기 로그인 비밀번호를 확인하고, 초기 패스워드를 입력합니다.</p>
 
-<table>
-  <thead>
-    <tr>
-      <th>구분</th>
-      <th>타입</th>
-      <th>기본값</th>
-      <th>설명</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>poke_interval</td>
-      <td>float</td>
-      <td>60</td>
-      <td>조건 확인을 위한 재시도 주기이며 단위는 second</td>
-    </tr>
-    <tr>
-      <td>timeout</td>
-      <td>float</td>
-      <td>60 * 60 * 24 * 7</td>
-      <td>Sesnor의 조건 확인을 위해 대기하는 시간이며 단위는 Second</td>
-    </tr>
-    <tr>
-      <td>mode</td>
-      <td>str</td>
-      <td>“poke”</td>
-      <td>poke는 특정 조건을 만족할 때까지 worker 슬롯 점유 <br /> reschedule은 조건을 확인할때만 worker 슬롯 점유</td>
-    </tr>
-  </tbody>
-</table>
+<p><img src="/assets/images/jenkins/03-jenkins-initial-admin.png" alt="Jenkins Getting started" /></p>
 
-<p>Sensor의 유형 중에 대표적인 Sensor는</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> /var/lib/jenkins/secrets/initialAdminPassword
+</code></pre></div></div>
 
-<ul>
-  <li>FileSensor</li>
-</ul>
+<p>[수행결과]
+a0f289xxxxxxxxxcd8fbb7</p>
 
-<p>이며 그외 다음과 같은 Sensor들이 있습니다.</p>
+<p>Jenkins 패스워드 입력화면에 복사한 패스워드를 입력하고 Continue 버튼을 클릭하고, Install suggested plugins를 선택합니다</p>
 
-<table>
-  <thead>
-    <tr>
-      <th>구분</th>
-      <th>모듈 경로</th>
-      <th>설명</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>BaseSensor</td>
-      <td>airflow.sensors.bash</td>
-      <td>조건 확인의 재시도 주기이며 단위는 Second</td>
-    </tr>
-    <tr>
-      <td>DatetimeSensor<br />DateTimeSensorAsync</td>
-      <td>airflow.sensors.date_time</td>
-      <td>Sensor의 조건 확인 대기 시간이며 단위 Second</td>
-    </tr>
-    <tr>
-      <td>ExternalTaskSensor</td>
-      <td>airflow.sensors.external_task</td>
-      <td>다른 DAG의 Task가 종료까지 대기하면서 모니터링하는 DAG의 external Task가 종료되면 ExternalTaskSensor가 실행</td>
-    </tr>
-  </tbody>
-</table>
+<p><img src="/assets/images/jenkins/04-jenkins-getting-started.png" alt="Jenkins Getting started" /></p>
 
-<h4 id="filesensor-예시">FileSensor 예시</h4>
+<p>Jenkins Plugins이 다음과 같이 설치됩니다</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">airflow.operators.empty</span> <span class="kn">import</span> <span class="n">EmptyOperator</span>
-<span class="kn">from</span> <span class="nn">airflow.sensors.filesystem</span> <span class="kn">import</span> <span class="n">FileSensor</span> 
-<span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span> 
-<span class="kn">from</span> <span class="nn">airflow.utils.dates</span> <span class="kn">import</span> <span class="n">days_ago</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>  
+<p><img src="/assets/images/jenkins/05-jenkins-install-plugins.png" alt="Install Jenkins Plugins" /></p>
 
-<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s">'start_date'</span> <span class="p">:</span> <span class="n">days_ago</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> 
-  <span class="s">'retries'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-  <span class="s">'retry_delay'</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
-  <span class="s">'catchup'</span><span class="p">:</span> <span class="bp">False</span>
-<span class="p">}</span>
+<p>Jenkins Admin 계정을 생성합니다. Save and Continue 버튼을 클릭합니다</p>
 
-<span class="k">with</span> <span class="n">DAG</span> <span class="p">(</span>
-  <span class="n">dag_id</span> <span class="o">=</span><span class="s">'filesensor'</span><span class="p">,</span>
-  <span class="n">default_args</span> <span class="o">=</span> <span class="n">default_args</span><span class="p">,</span> 
-  <span class="n">schedule_interval</span><span class="o">=</span><span class="s">'@daily'</span>
-<span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span>
-  <span class="n">start</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span><span class="o">=</span><span class="s">'start'</span><span class="p">)</span>
-  <span class="n">end</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span><span class="o">=</span><span class="s">'end'</span><span class="p">)</span>
-  
-  <span class="n">sensor_task</span> <span class="o">=</span> <span class="n">FileSensor</span><span class="p">(</span>
-    <span class="n">task_id</span><span class="o">=</span><span class="s">'file_sensor_task'</span><span class="p">,</span> 
-    <span class="n">poke_interval</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-    <span class="n">fs_conn_id</span><span class="o">=</span><span class="s">'file-conn'</span><span class="p">,</span>
-    <span class="n">filepath</span><span class="o">=</span><span class="s">'/opt/airflow/data/test1.csv'</span>
-  <span class="p">)</span>
-  
-  <span class="n">start</span> <span class="o">&gt;&gt;</span> <span class="n">sensor_task</span> <span class="o">&gt;&gt;</span> <span class="n">end</span> 
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Airflow Sensor 센서는 정확히 한 가지 일을 하도록 설계된 특별한 유형의 오퍼레이터입니다 - 무언가가 발생할 때까지 기다립니다. 시간 기반이거나 파일 또는 외부 이벤트를 기다리는 것일 수 있지만 어떤 일이 발생할 때까지 기다렸다가 해당조건을 만족하면 다운스트림 작업(이후 Task)을 실행할 수 있습니다.]]></summary></entry><entry><title type="html">Airflow TaskGroup</title><link href="http://localhost:4000/workflow/Airflow-Task-Group/" rel="alternate" type="text/html" title="Airflow TaskGroup" /><published>2022-12-18T00:00:00+09:00</published><updated>2022-12-18T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20Task%20Group</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-Task-Group/"><![CDATA[<h2 id="airflow-taskgroup">Airflow TaskGroup</h2>
+<p><img src="/assets/images/jenkins/06-jenkins-create-admin.png" alt="Create Admin" /></p>
+
+<p>Instance Configuration 확인하고, Save and Finish 버튼을 클릭하고, Start using Jenkins 버튼을 클릭합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><summary type="html"><![CDATA[Start-up Jenkins Jenkins server에 접속하기 brower에서 해당 서버의 http://localhost:8080 포트 접속합니다.]]></summary></entry><entry><title type="html">Install MiniKube</title><link href="http://localhost:4000/kubernetes/install-minikube/" rel="alternate" type="text/html" title="Install MiniKube" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/install-minikube</id><content type="html" xml:base="http://localhost:4000/kubernetes/install-minikube/"><![CDATA[<h2 id="pre-requisites---install-docker">Pre-requisites - Install Docker</h2>
+
+<p>yum utils을 설치합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> yum-utils
+</code></pre></div></div>
+
+<p>Docker repository 정보를 download 받습니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum-config-manager <span class="se">\</span>
+<span class="nt">--add-repo</span> <span class="se">\</span>
+https://download.docker.com/linux/centos/docker-ce.repo
+</code></pre></div></div>
+
+<p>최신 버전의 Docker Engine, containerd를 설치하거나 다음 단계로 이동하여 특정 버전을 설치합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> docker-ce docker-ce-cli containerd.io
+</code></pre></div></div>
+
+<p>docker를 시작합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl start docker
+</code></pre></div></div>
+
+<p>docker daemon이 정상 설치되었는지 hello-world docker image를 pull하기 위해 다음 명령어를 수행하여 확인합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull hello-world 
+</code></pre></div></div>
+
+<p>[수행결과]
+<img src="/assets/images/jenkins/07-jenkins-docker-hello-world.png" alt="docker pull hello-world" /></p>
+
+<p>docker images를 수행하여 아래와 같이 출력되는 확인합니다</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker images
+</code></pre></div></div>
+
+<p>[수행결과]
+<img src="/assets/images/jenkins/08-jenkins-docker-images.png" alt="docker pull hello-world" /></p>
+
+<h2 id="install-minikube">Install MiniKube</h2>
+
+<p>minikube를 download 하고 minikube를 설치합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-LO</span> https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+<span class="nb">tar </span>xvzf 
+<span class="nb">sudo mv </span>minikube-linux-amd64 /usr/local/bin/minikube
+<span class="nb">chmod</span> +x /usr/local/bin/minikube
+</code></pre></div></div>
+
+<p>minikube를 다음과 같이 시작합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>minikube start <span class="nt">--driver</span><span class="o">=</span>docker <span class="nt">--force</span>
+</code></pre></div></div>
+
+<p>kubectl CLI download 합니다</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-L</span> <span class="s2">"https://dl.k8s.io/release/</span><span class="si">$(</span>curl <span class="nt">-L</span> <span class="nt">-s</span> https://dl.k8s.io/release/stable.txt<span class="si">)</span><span class="s2">/bin/linux/amd64/kubectl"</span> <span class="nt">-o</span> /usr/local/bin/kubectl
+
+<span class="nb">chmod</span> +x /usr/local/bin/kubectl
+
+kubectl get po <span class="nt">-A</span>
+</code></pre></div></div>
+
+<h2 id="configure-for-connecting-jenkins">Configure for connecting Jenkins</h2>
+
+<p>jenkins에서 minikube에 접속하기 위해  Kubernetes 의 credentials 정보가 있는 $HOME/.kube/config 파일을 확인합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>less ~/.kube/config
+</code></pre></div></div>
+
+<p><img src="/assets/images/jenkins/09-jenkins-kube-config.png" alt="kube-config" /></p>
+
+<p>위의 cluster CA 정보의 client 인증서 파일 경로를 데이터의 내용으로 변경 합니다
+<img src="/assets/images/jenkins/10-jenkins-kube-config-2.png" alt="kube-config" /></p>
+
+<p>아래의 명령어로 ca.crt, client.crt, client.key 파일의 내용을 다음의 명령어로 변환합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> /root/.minikube/ca.crt|base64 <span class="nt">-w0</span><span class="p">;</span><span class="nb">echo
+cat</span> /root/.minikube/profiles/minikube/client.crt|base64 <span class="nt">-w0</span><span class="p">;</span><span class="nb">echo
+cat</span> /root/.minikube/profiles/minikube/client.key|base64 <span class="nt">-w0</span><span class="p">;</span><span class="nb">echo</span>
+</code></pre></div></div>
+
+<p>certificate-authority =&gt; certificate-authority-data로 변경
+client-certificate =&gt; client-certificate-data 로 변경
+client-key =&gt; client-key-data 로 변경</p>
+
+<p><img src="/assets/images/jenkins/11-jenkins-change-kube-config.png" alt="kube-config" /></p>
+
+<p>default namespace의 pod 목록이 조회되는지 다음과 같이 확인합니다.</p>
+
+<p>kubectl get pods</p>
+
+<p>[수행결과]
+No resources found in default namespace.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="kubernetes" /><category term="minikube" /><summary type="html"><![CDATA[Pre-requisites - Install Docker]]></summary></entry><entry><title type="html">Airflow TaskGroup</title><link href="http://localhost:4000/workflow/Airflow-Task-Group/" rel="alternate" type="text/html" title="Airflow TaskGroup" /><published>2022-12-18T00:00:00+09:00</published><updated>2022-12-18T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20Task%20Group</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-Task-Group/"><![CDATA[<h2 id="airflow-taskgroup">Airflow TaskGroup</h2>
 <p>작업 그룹은 그래프 보기에서 작업을 계층적 그룹으로 구성하는 데 사용할 수 있습니다. 반복되는 패턴을 만들고 시각적 혼란을 줄이는 데 유용합니다..</p>
 
 <p><img src="https://airflow.apache.org/docs/apache-airflow/stable/_images/task_group.gif" alt="taskgroup decorator" /></p>
@@ -527,7 +507,111 @@ docker-compose up <span class="nt">-d</span>
 
 <h2 id="localhost8080-으로-접속">localhost:8080 으로 접속</h2>
 
-<p><a href="http://localhost:8080">http://localhost:8080</a>으로 접속하여 default admin 계정/비밀번호 인 airflow/airflow로 접속합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Setup Apache Airflow on Docker Apache Airflow를 실습하기 위해서 개발환경을 구성하기 위해 docker를 이용합니다.]]></summary></entry><entry><title type="html">Airflow Hooks</title><link href="http://localhost:4000/workflow/Airflow-hooks/" rel="alternate" type="text/html" title="Airflow Hooks" /><published>2022-12-17T00:00:00+09:00</published><updated>2022-12-17T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20hooks</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-hooks/"><![CDATA[<h2 id="airflow-hooks">Airflow Hooks</h2>
+<p><a href="http://localhost:8080">http://localhost:8080</a>으로 접속하여 default admin 계정/비밀번호 인 airflow/airflow로 접속합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Setup Apache Airflow on Docker Apache Airflow를 실습하기 위해서 개발환경을 구성하기 위해 docker를 이용합니다.]]></summary></entry><entry><title type="html">Airflow Sensor</title><link href="http://localhost:4000/workflow/Airflow-Sensor/" rel="alternate" type="text/html" title="Airflow Sensor" /><published>2022-12-18T00:00:00+09:00</published><updated>2022-12-18T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20Sensor</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-Sensor/"><![CDATA[<h2 id="airflow-sensor">Airflow Sensor</h2>
+<p>센서는 정확히 한 가지 일을 하도록 설계된 특별한 유형의 오퍼레이터입니다  - 무언가가 발생할 때까지 기다립니다. 시간 기반이거나 파일 또는 외부 이벤트를 기다리는 것일 수 있지만 어떤 일이 발생할 때까지 기다렸다가 해당조건을 만족하면  다운스트림 작업(이후 Task)을 실행할 수 있습니다.</p>
+
+<p><a href="https://airflow.apache.org/docs/apache-airflow/2.2.3/_api/airflow/sensors/index.html">https://airflow.apache.org/docs/apache-airflow/2.2.3/_api/airflow/sensors/index.html</a></p>
+
+<p>Sensor Task는 주기적으로 체크하면 다음 단계로 진행하지 못하고 대기모드로 유지되기 때문에 Airflow DAG에서의 Sensor는 Worker의 슬롯 한 개를 점유합니다. Sensor는 BaseSensorOperator를 상속하여 구현합니다. BaseSensorOperator는 다음의 옵션을 지원합니다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>구분</th>
+      <th>타입</th>
+      <th>기본값</th>
+      <th>설명</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>poke_interval</td>
+      <td>float</td>
+      <td>60</td>
+      <td>조건 확인을 위한 재시도 주기이며 단위는 second</td>
+    </tr>
+    <tr>
+      <td>timeout</td>
+      <td>float</td>
+      <td>60 * 60 * 24 * 7</td>
+      <td>Sesnor의 조건 확인을 위해 대기하는 시간이며 단위는 Second</td>
+    </tr>
+    <tr>
+      <td>mode</td>
+      <td>str</td>
+      <td>“poke”</td>
+      <td>poke는 특정 조건을 만족할 때까지 worker 슬롯 점유 <br /> reschedule은 조건을 확인할때만 worker 슬롯 점유</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Sensor의 유형 중에 대표적인 Sensor는</p>
+
+<ul>
+  <li>FileSensor</li>
+</ul>
+
+<p>이며 그외 다음과 같은 Sensor들이 있습니다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>구분</th>
+      <th>모듈 경로</th>
+      <th>설명</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>BaseSensor</td>
+      <td>airflow.sensors.bash</td>
+      <td>조건 확인의 재시도 주기이며 단위는 Second</td>
+    </tr>
+    <tr>
+      <td>DatetimeSensor<br />DateTimeSensorAsync</td>
+      <td>airflow.sensors.date_time</td>
+      <td>Sensor의 조건 확인 대기 시간이며 단위 Second</td>
+    </tr>
+    <tr>
+      <td>ExternalTaskSensor</td>
+      <td>airflow.sensors.external_task</td>
+      <td>다른 DAG의 Task가 종료까지 대기하면서 모니터링하는 DAG의 external Task가 종료되면 ExternalTaskSensor가 실행</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="filesensor-예시">FileSensor 예시</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">airflow.operators.empty</span> <span class="kn">import</span> <span class="n">EmptyOperator</span>
+<span class="kn">from</span> <span class="nn">airflow.sensors.filesystem</span> <span class="kn">import</span> <span class="n">FileSensor</span> 
+<span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span> 
+<span class="kn">from</span> <span class="nn">airflow.utils.dates</span> <span class="kn">import</span> <span class="n">days_ago</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>  
+
+<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'start_date'</span> <span class="p">:</span> <span class="n">days_ago</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> 
+  <span class="s">'retries'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s">'retry_delay'</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
+  <span class="s">'catchup'</span><span class="p">:</span> <span class="bp">False</span>
+<span class="p">}</span>
+
+<span class="k">with</span> <span class="n">DAG</span> <span class="p">(</span>
+  <span class="n">dag_id</span> <span class="o">=</span><span class="s">'filesensor'</span><span class="p">,</span>
+  <span class="n">default_args</span> <span class="o">=</span> <span class="n">default_args</span><span class="p">,</span> 
+  <span class="n">schedule_interval</span><span class="o">=</span><span class="s">'@daily'</span>
+<span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span>
+  <span class="n">start</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span><span class="o">=</span><span class="s">'start'</span><span class="p">)</span>
+  <span class="n">end</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span><span class="o">=</span><span class="s">'end'</span><span class="p">)</span>
+  
+  <span class="n">sensor_task</span> <span class="o">=</span> <span class="n">FileSensor</span><span class="p">(</span>
+    <span class="n">task_id</span><span class="o">=</span><span class="s">'file_sensor_task'</span><span class="p">,</span> 
+    <span class="n">poke_interval</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">fs_conn_id</span><span class="o">=</span><span class="s">'file-conn'</span><span class="p">,</span>
+    <span class="n">filepath</span><span class="o">=</span><span class="s">'/opt/airflow/data/test1.csv'</span>
+  <span class="p">)</span>
+  
+  <span class="n">start</span> <span class="o">&gt;&gt;</span> <span class="n">sensor_task</span> <span class="o">&gt;&gt;</span> <span class="n">end</span> 
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Airflow Sensor 센서는 정확히 한 가지 일을 하도록 설계된 특별한 유형의 오퍼레이터입니다 - 무언가가 발생할 때까지 기다립니다. 시간 기반이거나 파일 또는 외부 이벤트를 기다리는 것일 수 있지만 어떤 일이 발생할 때까지 기다렸다가 해당조건을 만족하면 다운스트림 작업(이후 Task)을 실행할 수 있습니다.]]></summary></entry><entry><title type="html">Airflow Hooks</title><link href="http://localhost:4000/workflow/Airflow-hooks/" rel="alternate" type="text/html" title="Airflow Hooks" /><published>2022-12-17T00:00:00+09:00</published><updated>2022-12-17T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20hooks</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-hooks/"><![CDATA[<h2 id="airflow-hooks">Airflow Hooks</h2>
 <p>Hook은 DB나 서비스 같은 외부 시스템(Database, Storage)과 통신하기 위한 인터페이스를 제공하여 연결상태를 유지하여 작업을 처리하기 위해 사용합니다.</p>
 
 <figure style="width: 100%" class="align-left">
@@ -995,289 +1079,4 @@ trigger rule이 default로 all_success이기 때문입니다. 기본적으로 �
   <span class="n">smaller</span> <span class="o">=</span> <span class="n">BashOperator</span><span class="p">(</span><span class="n">task_id</span> <span class="o">=</span> <span class="s">'smaller'</span><span class="p">,</span> <span class="n">bash_command</span> <span class="o">=</span><span class="s">'echo "value is smaller thant 6" &amp;&amp; exit 1'</span><span class="p">)</span>
 
   <span class="n">start</span> <span class="o">&gt;&gt;</span> <span class="p">[</span><span class="n">greater</span><span class="p">,</span> <span class="n">smaller</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">end</span> 
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Airflow Trigger rules 일반적으로 Task는 이전 Task들이 성공할 때만 실행됩니다. trigger rule이 default로 all_success이기 때문입니다. 기본적으로 모든 상위 작업이 성공하면 작업이 실행됩니다. 이 action은 일반적으로 기대하는 것입니다.]]></summary></entry><entry><title type="html">Airflow Best Practices - I</title><link href="http://localhost:4000/workflow/airflow-best-practices-1/" rel="alternate" type="text/html" title="Airflow Best Practices - I" /><published>2022-12-14T00:00:00+09:00</published><updated>2022-12-14T00:00:00+09:00</updated><id>http://localhost:4000/workflow/airflow%20best-practices-1</id><content type="html" xml:base="http://localhost:4000/workflow/airflow-best-practices-1/"><![CDATA[<h2 id="좀더-낳은-dag-작성">좀더 낳은 DAG 작성</h2>
-<p>DAG는 데이터 파이프라인에 해당합니다. 
-DAG는 매일 사용되므로 모범 사례를 따르는 것이 중요합니다.
-최적화되고, 이해하기 쉽고, 문서화되고, 잘 조직되어야 합니다. 
-수백 개의 DAG로 빠르게 끝날 수 있으므로이 부분을 과소 평가하지 마십시오. 
-그것은 당신에게 많은 고통과 문제를 덜어 줄 것입니다.</p>
-
-<h4 id="dag의-명확한-목적-정의">DAG의 명확한 목적 정의</h4>
-
-<p>DAG를 만들기 전에, 당신은 당신이 그것에서 무엇을 기대하는지 생각해야합니다. 
-도움이 될 수 있는 몇 가지 질문이 있습니다.</p>
-
-<ul>
-  <li>입력은 무엇(file, db,…)입니까?</li>
-  <li>무엇이 출력 될까요?</li>
-  <li>언제(hourly, daily, weekly, monthly,…) 트리거해야합니까?</li>
-  <li>어느 시간 간격(<strong>schedule_interval</strong>)으로?</li>
-  <li>상호 작용할 타사 solution 도구는 무엇입니까?</li>
-  <li>작업(Task)은 무엇입니까? (매우 중요)</li>
-  <li>간단하게 DAG을 만들 수 있습니까?</li>
-</ul>
-
-<p>마지막 질문이 중요합니다. 
-원하는 것을 달성하기 위해 DAG를 빌드해야하는지 또는 빌드 및 유지 관리가 
-더 쉬운 다른 솔루션이 있는지 항상 자문 해보십시오.
-데이터 파이프라인을 지나치게 복잡하게 만들지 마십시오.
-DAG에는 데이터를 데이터 웨어하우스로 내보내거나 필요한 경우 프로덕션에서 
-기계 학습 모델을 업데이트하는 것과 같은 명확한 목적이 있어야 합니다.</p>
-
-<h4 id="task에-대한-명확한-목적-정의">Task에 대한 명확한 목적 정의</h4>
-<p>DAG를 통해 실행하려는 작업을 명확하게 파악합니다. 
-하나의 작업(task) = 여러 작업이 아닌 
-하나의 작업 = 하나의 작업을 갖도록 
-가능한 한 설계하십시오. 
-예를 들어 보겠습니다..</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># DON'T
-</span><span class="k">def</span> <span class="nf">process_data</span><span class="p">():</span>
-  <span class="n">wrangling</span><span class="p">()</span>
-  <span class="n">cleaning</span><span class="p">()</span>
-  <span class="n">transforming</span><span class="p">()</span>
-  <span class="n">validating</span><span class="p">()</span>
-
-<span class="n">task</span> <span class="o">=</span> <span class="n">PythonOperator</span><span class="p">(</span>
-  <span class="n">task_id</span><span class="o">=</span><span class="s">"my_task"</span><span class="p">,</span>
-  <span class="n">python_callable</span><span class="o">=</span><span class="n">process_data</span><span class="p">,</span>
-  <span class="n">dag</span><span class="o">=</span><span class="n">dag</span>
-<span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># DO
-t1 = PythonOperator(
-  task_id="wrangling",
-  python_callable=wrangling,
-)
-t2 = PythonOperator(
-  task_id="cleaning",
-  python_callable=cleaning,
-)
-t3 = PythonOperator(
-  task_id="transforming",
-  python_callable=transforming,
-)
-t4 = PythonOperator(
-  task_id="validating",
-  python_callable=validating,
-)
-
-</code></pre></div></div>
-
-<p>위의 예에서 볼 수 있듯이 모든 것을 
-PythonOperator에 넣고 싶지만 강력히 권장하지 않습니다. 
-유효성 검사 함수가  실패하는 반면 wrangling, cleaning및 transforming은 성공한다고 가정 해 봅시다  . 하나의 기능만 실패하기 때문에 Airflow는 전체 작업을 실패로 간주합니다. 따라서 유효성 검사를 수행하는  하나의 함수만 다시 시도하는 합니다. 그러나 모든 작업을 하나의 작업에 넣을 때 모든 함수가 다시 시도됩니다.</p>
-
-<p>그렇기 때문에</p>
-
-<ul>
-  <li>one Task = one Operator</li>
-</ul>
-
-<p>어야합니다. 무언가가 실패하면 이 부분만 다시 실행되고 다른 부분은 실행되지 않습니다. 이렇게 하면 데이터의 불일치를 방지하고 실패한 항목과 그 이유를 더 쉽게 파악할 수 있습니다.</p>
-
-<h4 id="dag-및-컨텍스트-관리자">DAG 및 컨텍스트 관리자</h4>
-<p>Python에서는 컨텍스트 관리자를 활용하여 원할 때 정확하게 리소스를 할당하고 
-해제할 수 있습니다. 
-가장 널리 사용되는 컨텍스트 관리자는 <strong>with</strong> 입니다.
-예를 들어 보겠습니다.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># DON'T
-dag = DAG("simple_pipe", default_args=default_args, schedule_interval="*/5 * * * *", catchup=False) as dag:
-t1 = PythonOperator(
-  task_id="t1",
-  python_callable=my_func
-  dag=dag
-)
-t2 = PythonOperator(
-  task_id="t2",
-  python_callable=my_func
-  dag=dag
-)
-t3 = PythonOperator(
-  task_id="t3",
-  python_callable=my_func
-  dag=dag
-)
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># DO
-with DAG("simple_pipe", default_args=default_args, schedule_interval="*/5 * * * *", catchup=False) as dag:
-  t1 = PythonOperator(
-      task_id="t1",
-      python_callable=my_func
-  )
-  t2 = PythonOperator(
-      task_id="t2",
-      python_callable=my_func
-  )
-  t3 = PythonOperator(
-      task_id="t3",
-      python_callable=my_func
-  )
-</code></pre></div></div>
-
-<p><strong>with</strong> 문은  각 작업에 dag 변수를 할당할 필요성을 제거하여 코드를 더 깔끔하게 만듭니다. 
-이렇게하면 DAG  에 속한 작업을 명확하게 볼 수 있으며 (DAG 파일에 python 함수가있는 경우 
-상황이 빠르게 지저분 해질 수 있음) 컨텍스트 관리자가 DAG 수명주기를 처리하도록합니다</p>
-
-<h4 id="default-arguments">Default arguments</h4>
-
-<p>Task의 생성자는 이메일, 재시도 횟수, 시작 날짜, 큐 등과 같은 다양한 인수를 허용합니다. 아래와 같이 DAG 개체 정의 바로 앞에 사전이있는 많은 DAG를 이미 보았을 것입니다</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># DON'T
-with DAG('dag', 
-  start_date=datetime(2019, 1, 1), 
-  schedule_interval='*/10 * * * *', 
-  catchup=False
-):
-  t0 = DummyOperator(task_id='t0', retries=2, retry_delay=timedelta(minutes=5))
-  t1 = DummyOperator(task_id='t1', retries=2, retry_delay=timedelta(minutes=5))
-  t2 = DummyOperator(task_id='t2', retries=2, retry_delay=timedelta(minutes=5))
-  t3 = DummyOperator(task_id='t3', retries=2, retry_delay=timedelta(minutes=5))
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># DO
-default_args = {
-  'retries': 1,
-  'retry_delay': timedelta(minutes=5)
-}
-
-with DAG('dag', start_date=datetime(2019, 1, 1), default_args=default_args, schedule_interval='*/10 * * * *', catchup=False):
-    t0 = DummyOperator(task_id='t0')
-    t1 = DummyOperator(task_id='t1')
-    t2 = DummyOperator(task_id='t2')
-    t3 = DummyOperator(task_id='t3')
-
-</code></pre></div></div>
-
-<p>일반적으로 default_args 라고 하는 
-이 사전의 목적은 DAG의 모든 작업에 공통적인 매개 변수 집합을 정의하는 것입니다.
-이렇게 하면 동일한 인수를 반복해서 반복하지 않아도 되므로 DAG가 더 명확해지고 오류가 발생할 가능성이 줄어듭니다. 모든 작업에 대한 사전을 사용하여 기본 인수 집합을 정의하고 한 작업에 특정 값이 필요한 경우 연산자 정의에서 해당 인수를 덮어씁니다.</p>
-
-<h4 id="의미있는-고유-식별자-또는-dag-id-정의">의미있는 고유 식별자 또는 DAG ID 정의</h4>
-
-<p>DAG 개체를 인스턴스화할 때 DAG ID를 지정해야  합니다.  DAG ID는 모든 DAG에서 고유해야 합니다. DAG ID가 동일한 두 개의 DAG가 있으면 안 되며, 그렇지 않으면 하나의 DAG만 표시되고 예기치 않은 동작이 발생할 수 있습니다. DAG에 대한 설명과 함께 의미 있는 DAG ID를 정의합니다.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># DON'T
-with DAG(
-  'dag_1', 
-  start_date=datetime(2019, 1 ,1), 
-  schedule_interval='*/10 * * * *')
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># DO
-with DAG('csv_to_datawarehouse', 
-  description='Fetch data from CSV, process and load them in the data warehouse' 
-  start_date=datetime(2019, 1 ,1), 
-  schedule_interval='*/10 * * * *')
-</code></pre></div></div>
-
-<p>수백 개의 서로 다른 DAG가 있을 때를 생각해 보십시오. 의미 있는 DAG ID와 설명을 통해 어떤 DAG가 어떤 작업을 수행하는지 빠르게 알 수 있습니다. 한 가지 더, 여러 DAG가 서로 어느 정도 관련되어있는 경우 모든 DAG에 공통 접두사를 넣는 것이 좋습니다.</p>
-
-<h4 id="start_date">start_date</h4>
-<p>여기에 큰 주제가 있습니다. 
-Airflow에서 DAG를 예약하는 방식은 처음에는 이해하기 다소 어려울 수 있습니다. 
-<strong>start_date</strong> DAG가 예약되기 시작하는 날짜를 정의합니다. 
-한 가지 알아야 할 것은 각 작업 또는 운영자가 다른 <strong>start_date</strong> 가질 수 있다는 것입니다. 예, 동일한 DAG 내의 작업은 다른 날짜를 시작할 수 있습니다. 나는 이것에 대해 강력히 조언합니다. 
-다른 시작 날짜를 정의하지 마십시오. 
-일을 단순하고 규칙적으로 정의 하십시오.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># DON'T
-default_args = {
-  'retries': 1,
-  'retry_delay': timedelta(minutes=5)
-}
-
-with DAG(
-  dag_id = 'dag', 
-  start_date=datetime(2019, 1, 1), 
-  default_args=default_args, 
-  schedule_interval='*/10 * * * *', 
-  catchup=False
-) as dag:
-
-  t0 = DummyOperator(task_id='t0', start_date=datetime(2019, 1, 15))
-  t1 = DummyOperator(task_id='t1', start_date=datetime(2019, 2, 16))
-  t2 = DummyOperator(task_id='t2', start_date=datetime(2019, 3, 6))
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># DO
-default_args = {
-  'retries': 1,
-  'retry_delay': timedelta(minutes=5),
-  'start_date': datetime(2019, 1, 1)
-}
-
-with DAG(dag_id = 'dag', 
-  default_args=default_args, 
-  schedule_interval='*/10 * * * *', 
-  catchup=False
-) as dag:
-  t0 = DummyOperator(task_id='t0')
-  t1 = DummyOperator(task_id='t1')
-  t2 = DummyOperator(task_id='t2')
-  t3 = DummyOperator(task_id='t3')
-
-  t0 &gt;&gt; [t1, t2] &gt;&gt; t3
-</code></pre></div></div>
-
-<p><strong>start_date</strong> 는 정적이어야 합니다. 
- 혼란 스럽기 때문에 datetime.now() 와 같은 함수로 동적 시작 날짜를 정의하지 마십시오. 
- 작업은 start_date + schedule_interval이 전달되면 실행됩니다. 
- 시작 날짜가 now()로 설정되면 이론적으로 날짜가 지속적으로 앞으로 이동하므로 
- 작업이 실행되지 않습니다.</p>
-
-<h4 id="catchup-parameter">catchup parameter</h4>
-
-<p>Airflow는 최근에 실행된 DAG 실행과 현재 날짜 사이에 트리거되지 않은 DAG 실행을 자동으로 실행합니다.  어떤 이유로 DAG를 일시 중지하고 지연을 따라 잡으려는 경우 매우 유용합니다. 그럼에도 불구하고 이 기능에 주의해야 합니다. 실제로 DAG의 start_date 1년 전으로 설정되어 있고 일정 간격이 10분으로 설정되어 있다고 가정해 보겠습니다. 해당 DAG 예약을 시작하면 수천 개의 DAG 실행이 동시에 실행됩니다. 이로 인해 다른 작업이 실행되지 않거나 Airflow 인스턴스 속도가 느려질 수 있습니다. 이를 방지하려면 기본적으로이 매개 변수를 False로 하는 것이 좋습니다. DAG 정의 또는 구성 파일에서 catchup 매개 변수를 False로 설정합니다</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>default_args = {
-  'description': 'Fetch data from CSV, process and load them in the data warehouse',
-  'start_date': datetime(2019, 1 ,1), 
-  'schedule_interval' : '*/10 * * * *',
-  'catchup': False
-}
-
-with DAG(
-  dag_id = 'csv_to_datawarehouse', 
-  default_args = default_args
-)
-</code></pre></div></div>
-
-<p>Airflow CLI에서 에어플로우 백필  명령을 계속 사용할 수 있습니다. 
-제 생각에는 이것이 트리거되지 않은 DAG 실행을 따라 잡는 가장 좋은 방법입니다.</p>
-
-<h4 id="schedule_interval">schedule_interval</h4>
-
-<p>일정 간격은 DAG가 트리거되는 시간 간격을 정의합니다. Airflow는 데이터 스트리밍 솔루션이 아니므로 일정 간격을 1초로 설정하지 마세요.
-CRON 표현식이나 타임 델타 객체로 정의 된 schedule_interval 이미 보셨을 것입니다</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># CRON EXPRESSION
-with DAG(
-  'dag', 
-  default_args=default_args, 
-  schedule_interval='*/10 * * * *', 
-  catchup=False
-) as dag:
-  t0 = DummyOperator(task_id='t0')
-
-# TIMEDELTA OBJECT
-
-with DAG(
-  dag_id = 'dag', 
-  default_args=default_args, 
-  schedule_interval=timedelta(minutes=10),
-  catchup=False
-) as dag:
-  t0 = DummyOperator(task_id='t0')
-</code></pre></div></div>
-
-<p>Cron 표현은 매우 강력하지만 처음에는 이해하기 어려울 수 있습니다. 다음 웹 사이트를 살펴보고  일정 간격이 예상한 간격인지 확인하십시오.</p>
-
-<p>이제 Cron 표현식 대신 Timedelta 객체를 언제 사용해야합니까? 특정 schedule interval은  Cron 표현식으로 표현할 수 없습니다. 3일에 한 번씩 DAG를 트리거하려면 timedelta(일=3)  를 사용하여 시간 델타 개체를 정의해야 합니다. Cron 표현식을 사용하여 수행하려고하면 월말에 해당 DAG가 30 일 또는 31  일에 트리거 된 다음 다음 달 1 일에  트리거되어 3 일 간격을 깨뜨립니다.</p>
-
-<p>즉 cron expression으로는 3일 간격으로 처리할 수 없습니다.</p>
-
-<p>요약하자면, 이전 간격과 관련하여 일정 간격을 수행해야 한다면 timedelta 객체를 사용하십시오.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[좀더 낳은 DAG 작성 DAG는 데이터 파이프라인에 해당합니다. DAG는 매일 사용되므로 모범 사례를 따르는 것이 중요합니다. 최적화되고, 이해하기 쉽고, 문서화되고, 잘 조직되어야 합니다. 수백 개의 DAG로 빠르게 끝날 수 있으므로이 부분을 과소 평가하지 마십시오. 그것은 당신에게 많은 고통과 문제를 덜어 줄 것입니다.]]></summary></entry></feed>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Airflow Trigger rules 일반적으로 Task는 이전 Task들이 성공할 때만 실행됩니다. trigger rule이 default로 all_success이기 때문입니다. 기본적으로 모든 상위 작업이 성공하면 작업이 실행됩니다. 이 action은 일반적으로 기대하는 것입니다.]]></summary></entry></feed>
