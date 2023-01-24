@@ -143,6 +143,18 @@ var store = [{
         "url": "/devops/start-up-jenkins/",
         "teaser": null
       },{
+        "title": "Bitbucket on docker",
+        "excerpt":"Bitbucket on Docker Docker 기반 Bitbucket 입니다. version: '3' networks: jenkins-net: driver: bridge services: bitbucket: container_name: bitbucket image: atlassian/bitbucket-server:latest environment: - 'BITBUCKET_PROXY_PORT=' - 'BITBUCKET_PROXY_SCHEME=' - 'BITBUCKET_DELAYED_START=' - 'DOCKER_WAIT_HOST=postgres' - 'DOCKER_WAIT_PORT=5432' networks: - jenkins-net ports: - \"8990:7990\" postgres: container_name: postgres image: postgres:latest volumes: - ./data:/var/lib/postgresql/data environment: - 'POSTGRES_USER=postgres' # CHANGE THE...","categories": ["docker"],
+        "tags": ["bitbucket"],
+        "url": "/docker/altassian-bitbucket-jira/",
+        "teaser": null
+      },{
+        "title": "Jira on docker",
+        "excerpt":"Bitbucket on Docker Docker 기반 Jira 입니다. version: '3' networks: jenkins-net: driver: bridge services: jira: container_name: jira image: atlassian/jira-software:latest networks: - jenkins-net ports: - \"9010:8080\" postgres: container_name: postgres image: postgres:latest volumes: - ./data:/var/lib/postgresql/data environment: - 'POSTGRES_USER=postgres' # CHANGE THE PASSWORD! - 'POSTGRES_PASSWORD=admin1234' - 'POSTGRES_DB=jira' - 'POSTGRES_ENCODING=UTF8' networks: - jenkins-net ports:...","categories": ["docker"],
+        "tags": ["jira"],
+        "url": "/docker/altassian-jira/",
+        "teaser": null
+      },{
         "title": "Install MiniKube",
         "excerpt":"Pre-requisites - Install Docker yum utils을 설치합니다. sudo yum install -y yum-utils Docker repository 정보를 download 받습니다. sudo yum-config-manager \\ --add-repo \\ https://download.docker.com/linux/centos/docker-ce.repo 최신 버전의 Docker Engine, containerd를 설치하거나 다음 단계로 이동하여 특정 버전을 설치합니다. sudo yum install -y docker-ce docker-ce-cli containerd.io docker를 시작합니다. sudo systemctl start docker docker daemon이...","categories": ["kubernetes"],
         "tags": ["minikube"],

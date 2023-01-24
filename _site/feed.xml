@@ -1,88 +1,101 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-01-24T19:46:05+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Install MiniKube</title><link href="http://localhost:4000/kubernetes/install-minikube/" rel="alternate" type="text/html" title="Install MiniKube" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/install-minikube</id><content type="html" xml:base="http://localhost:4000/kubernetes/install-minikube/"><![CDATA[<h2 id="pre-requisites---install-docker">Pre-requisites - Install Docker</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-01-24T19:56:27+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Jira on docker</title><link href="http://localhost:4000/docker/altassian-jira/" rel="alternate" type="text/html" title="Jira on docker" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/docker/altassian-jira</id><content type="html" xml:base="http://localhost:4000/docker/altassian-jira/"><![CDATA[<h2 id="bitbucket-on-docker">Bitbucket on Docker</h2>
+<p>Docker 기반 Jira 입니다.</p>
 
-<p>yum utils을 설치합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> yum-utils
-</code></pre></div></div>
+<pre><code class="language-YAML">version: '3'
+networks:
+ jenkins-net:
+    driver: bridge
 
-<p>Docker repository 정보를 download 받습니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum-config-manager <span class="se">\</span>
-<span class="nt">--add-repo</span> <span class="se">\</span>
-https://download.docker.com/linux/centos/docker-ce.repo
-</code></pre></div></div>
+services:
+  jira:
+    container_name: jira
+    image: atlassian/jira-software:latest
+    networks:
+      - jenkins-net
+    ports:
+      - "9010:8080"
 
-<p>최신 버전의 Docker Engine, containerd를 설치하거나 다음 단계로 이동하여 특정 버전을 설치합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> docker-ce docker-ce-cli containerd.io
-</code></pre></div></div>
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    environment:
+      - 'POSTGRES_USER=postgres'
+      # CHANGE THE PASSWORD!
+      - 'POSTGRES_PASSWORD=admin1234'
+      - 'POSTGRES_DB=jira'
+      - 'POSTGRES_ENCODING=UTF8'
+    networks:
+      - jenkins-net
+    ports:
+      - "5432:5432"
+</code></pre>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="jira" /><summary type="html"><![CDATA[Bitbucket on Docker Docker 기반 Jira 입니다.]]></summary></entry><entry><title type="html">Bitbucket on docker</title><link href="http://localhost:4000/docker/altassian-bitbucket-jira/" rel="alternate" type="text/html" title="Bitbucket on docker" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/docker/altassian-bitbucket-jira</id><content type="html" xml:base="http://localhost:4000/docker/altassian-bitbucket-jira/"><![CDATA[<h2 id="bitbucket-on-docker">Bitbucket on Docker</h2>
+<p>Docker 기반 Bitbucket 입니다.</p>
 
-<p>docker를 시작합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl start docker
-</code></pre></div></div>
+<pre><code class="language-YAML">version: '3'
+networks:
+ jenkins-net:
+    driver: bridge
 
-<p>docker daemon이 정상 설치되었는지 hello-world docker image를 pull하기 위해 다음 명령어를 수행하여 확인합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull hello-world 
+services:
+  bitbucket:
+    container_name: bitbucket
+    image: atlassian/bitbucket-server:latest
+    environment:
+      - 'BITBUCKET_PROXY_PORT='
+      - 'BITBUCKET_PROXY_SCHEME='
+      - 'BITBUCKET_DELAYED_START='
+      - 'DOCKER_WAIT_HOST=postgres'
+      - 'DOCKER_WAIT_PORT=5432'
+    networks:
+      - jenkins-net
+    ports:
+      - "8990:7990"
+
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    environment:
+      - 'POSTGRES_USER=postgres'
+      # CHANGE THE PASSWORD!
+      - 'POSTGRES_PASSWORD=admin1234'
+      - 'POSTGRES_DB=bitbucket'
+      - 'POSTGRES_ENCODING=UTF8'
+    networks:
+      - jenkins-net
+    ports:
+      - "5432:5432"
+</code></pre>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="bitbucket" /><summary type="html"><![CDATA[Bitbucket on Docker Docker 기반 Bitbucket 입니다.]]></summary></entry><entry><title type="html">Jenkins 시작</title><link href="http://localhost:4000/devops/start-up-jenkins/" rel="alternate" type="text/html" title="Jenkins 시작" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/devops/start-up%20jenkins</id><content type="html" xml:base="http://localhost:4000/devops/start-up-jenkins/"><![CDATA[<h2 id="start-up-jenkins">Start-up Jenkins</h2>
+<p>Jenkins server에 접속하기 brower에서 해당 서버의 http://localhost:8080 포트 접속합니다.</p>
+
+<p>Jenkins에 접속하면 Jenkins admin 초기 패스워드를 입력하는 화면이 출력됩니다</p>
+
+<p>터미널에서 다음과 같이 명령을 수행하여 Jenkins  admin 초기 로그인 비밀번호를 확인하고, 초기 패스워드를 입력합니다.</p>
+
+<p><img src="/assets/images/jenkins/03-jenkins-initial-admin.png" alt="Jenkins Getting started" /></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> /var/lib/jenkins/secrets/initialAdminPassword
 </code></pre></div></div>
 
 <p>[수행결과]
-<img src="/assets/images/jenkins/07-jenkins-docker-hello-world.png" alt="docker pull hello-world" /></p>
+a0f289xxxxxxxxxcd8fbb7</p>
 
-<p>docker images를 수행하여 아래와 같이 출력되는 확인합니다</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker images
-</code></pre></div></div>
+<p>Jenkins 패스워드 입력화면에 복사한 패스워드를 입력하고 Continue 버튼을 클릭하고, Install suggested plugins를 선택합니다</p>
 
-<p>[수행결과]
-<img src="/assets/images/jenkins/08-jenkins-docker-images.png" alt="docker pull hello-world" /></p>
+<p><img src="/assets/images/jenkins/04-jenkins-getting-started.png" alt="Jenkins Getting started" /></p>
 
-<h2 id="install-minikube">Install MiniKube</h2>
+<p>Jenkins Plugins이 다음과 같이 설치됩니다</p>
 
-<p>minikube를 download 하고 minikube를 설치합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-LO</span> https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-<span class="nb">tar </span>xvzf 
-<span class="nb">sudo mv </span>minikube-linux-amd64 /usr/local/bin/minikube
-<span class="nb">chmod</span> +x /usr/local/bin/minikube
-</code></pre></div></div>
+<p><img src="/assets/images/jenkins/05-jenkins-install-plugins.png" alt="Install Jenkins Plugins" /></p>
 
-<p>minikube를 다음과 같이 시작합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>minikube start <span class="nt">--driver</span><span class="o">=</span>docker <span class="nt">--force</span>
-</code></pre></div></div>
+<p>Jenkins Admin 계정을 생성합니다. Save and Continue 버튼을 클릭합니다</p>
 
-<p>kubectl CLI download 합니다</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-L</span> <span class="s2">"https://dl.k8s.io/release/</span><span class="si">$(</span>curl <span class="nt">-L</span> <span class="nt">-s</span> https://dl.k8s.io/release/stable.txt<span class="si">)</span><span class="s2">/bin/linux/amd64/kubectl"</span> <span class="nt">-o</span> /usr/local/bin/kubectl
+<p><img src="/assets/images/jenkins/06-jenkins-create-admin.png" alt="Create Admin" /></p>
 
-<span class="nb">chmod</span> +x /usr/local/bin/kubectl
-
-kubectl get po <span class="nt">-A</span>
-</code></pre></div></div>
-
-<h2 id="configure-for-connecting-jenkins">Configure for connecting Jenkins</h2>
-
-<p>jenkins에서 minikube에 접속하기 위해  Kubernetes 의 credentials 정보가 있는 $HOME/.kube/config 파일을 확인합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>less ~/.kube/config
-</code></pre></div></div>
-
-<p><img src="/assets/images/jenkins/09-jenkins-kube-config.png" alt="kube-config" /></p>
-
-<p>위의 cluster CA 정보의 client 인증서 파일 경로를 데이터의 내용으로 변경 합니다
-<img src="/assets/images/jenkins/10-jenkins-kube-config-2.png" alt="kube-config" /></p>
-
-<p>아래의 명령어로 ca.crt, client.crt, client.key 파일의 내용을 다음의 명령어로 변환합니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> /root/.minikube/ca.crt|base64 <span class="nt">-w0</span><span class="p">;</span><span class="nb">echo
-cat</span> /root/.minikube/profiles/minikube/client.crt|base64 <span class="nt">-w0</span><span class="p">;</span><span class="nb">echo
-cat</span> /root/.minikube/profiles/minikube/client.key|base64 <span class="nt">-w0</span><span class="p">;</span><span class="nb">echo</span>
-</code></pre></div></div>
-
-<p>certificate-authority =&gt; certificate-authority-data로 변경
-client-certificate =&gt; client-certificate-data 로 변경
-client-key =&gt; client-key-data 로 변경</p>
-
-<p><img src="/assets/images/jenkins/11-jenkins-change-kube-config.png" alt="kube-config" /></p>
-
-<p>default namespace의 pod 목록이 조회되는지 다음과 같이 확인합니다.</p>
-
-<p>kubectl get pods</p>
-
-<p>[수행결과]
-No resources found in default namespace.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="kubernetes" /><category term="minikube" /><summary type="html"><![CDATA[Pre-requisites - Install Docker]]></summary></entry><entry><title type="html">Jenkins 설치 따라하기</title><link href="http://localhost:4000/devops/setup-jenkins/" rel="alternate" type="text/html" title="Jenkins 설치 따라하기" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/devops/setup%20jenkins</id><content type="html" xml:base="http://localhost:4000/devops/setup-jenkins/"><![CDATA[<h2 id="jenkins-pipeline-이란">Jenkins Pipeline 이란?</h2>
+<p>Instance Configuration 확인하고, Save and Finish 버튼을 클릭하고, Start using Jenkins 버튼을 클릭합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><summary type="html"><![CDATA[Start-up Jenkins Jenkins server에 접속하기 brower에서 해당 서버의 http://localhost:8080 포트 접속합니다.]]></summary></entry><entry><title type="html">Jenkins 설치 따라하기</title><link href="http://localhost:4000/devops/setup-jenkins/" rel="alternate" type="text/html" title="Jenkins 설치 따라하기" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/devops/setup%20jenkins</id><content type="html" xml:base="http://localhost:4000/devops/setup-jenkins/"><![CDATA[<h2 id="jenkins-pipeline-이란">Jenkins Pipeline 이란?</h2>
 <p>Jenkins Pipeline은 지속적인 업데이트 파이프라인을 구현하고 Jenkins에 통합하는 것을 지원하는 플러그인의 집합이다. 이 과정에서 소프트웨어를 빌드하고 여러 단계의 테스트, 배포를 진행한다. 
 Pipeline은 Pipeline Domain Specific Language라는 문법을 통해 마치 코드를 작성하는 것과 같이 Pipeline을 통해 간단한 배포 파이프라인부터 복잡한 배포  파이프라인을 코드로 모델링하기 위한 확장 가능한 도구 집합을 제공합니다.
 . 
@@ -242,34 +255,91 @@ Command to run : /bin/sh -c .</p>
 <p>Jenkins Console Output 화면에서 다음과 같은 메시지가 출력되면 “Message: namespaces “jenkins” not found”  위 Jenkins namespace를 생성하지 않아서 발생하는 에러입니다.</p>
 
 <p>터미널창에서 default namespace에 app을 설치할 수 있는 권한을 cluster-admin 권한으로 jenkins에 부여합니다.
-kubectl create clusterrolebinding jenkins-admin  –clusterrole cluster-admin –serviceaccount jenkins:default</p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><summary type="html"><![CDATA[Jenkins Kubernetes Plugin 설치 Jenkins Agent로 Kubernetes에 실행하기 위해 Kubernetes Plugin을 Jenkins에 설치하여 환경을 구성합니다.]]></summary></entry><entry><title type="html">Jenkins 시작</title><link href="http://localhost:4000/devops/start-up-jenkins/" rel="alternate" type="text/html" title="Jenkins 시작" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/devops/start-up%20jenkins</id><content type="html" xml:base="http://localhost:4000/devops/start-up-jenkins/"><![CDATA[<h2 id="start-up-jenkins">Start-up Jenkins</h2>
-<p>Jenkins server에 접속하기 brower에서 해당 서버의 http://localhost:8080 포트 접속합니다.</p>
+kubectl create clusterrolebinding jenkins-admin  –clusterrole cluster-admin –serviceaccount jenkins:default</p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><summary type="html"><![CDATA[Jenkins Kubernetes Plugin 설치 Jenkins Agent로 Kubernetes에 실행하기 위해 Kubernetes Plugin을 Jenkins에 설치하여 환경을 구성합니다.]]></summary></entry><entry><title type="html">Install MiniKube</title><link href="http://localhost:4000/kubernetes/install-minikube/" rel="alternate" type="text/html" title="Install MiniKube" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/install-minikube</id><content type="html" xml:base="http://localhost:4000/kubernetes/install-minikube/"><![CDATA[<h2 id="pre-requisites---install-docker">Pre-requisites - Install Docker</h2>
 
-<p>Jenkins에 접속하면 Jenkins admin 초기 패스워드를 입력하는 화면이 출력됩니다</p>
+<p>yum utils을 설치합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> yum-utils
+</code></pre></div></div>
 
-<p>터미널에서 다음과 같이 명령을 수행하여 Jenkins  admin 초기 로그인 비밀번호를 확인하고, 초기 패스워드를 입력합니다.</p>
+<p>Docker repository 정보를 download 받습니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum-config-manager <span class="se">\</span>
+<span class="nt">--add-repo</span> <span class="se">\</span>
+https://download.docker.com/linux/centos/docker-ce.repo
+</code></pre></div></div>
 
-<p><img src="/assets/images/jenkins/03-jenkins-initial-admin.png" alt="Jenkins Getting started" /></p>
+<p>최신 버전의 Docker Engine, containerd를 설치하거나 다음 단계로 이동하여 특정 버전을 설치합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> docker-ce docker-ce-cli containerd.io
+</code></pre></div></div>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> /var/lib/jenkins/secrets/initialAdminPassword
+<p>docker를 시작합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl start docker
+</code></pre></div></div>
+
+<p>docker daemon이 정상 설치되었는지 hello-world docker image를 pull하기 위해 다음 명령어를 수행하여 확인합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull hello-world 
 </code></pre></div></div>
 
 <p>[수행결과]
-a0f289xxxxxxxxxcd8fbb7</p>
+<img src="/assets/images/jenkins/07-jenkins-docker-hello-world.png" alt="docker pull hello-world" /></p>
 
-<p>Jenkins 패스워드 입력화면에 복사한 패스워드를 입력하고 Continue 버튼을 클릭하고, Install suggested plugins를 선택합니다</p>
+<p>docker images를 수행하여 아래와 같이 출력되는 확인합니다</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker images
+</code></pre></div></div>
 
-<p><img src="/assets/images/jenkins/04-jenkins-getting-started.png" alt="Jenkins Getting started" /></p>
+<p>[수행결과]
+<img src="/assets/images/jenkins/08-jenkins-docker-images.png" alt="docker pull hello-world" /></p>
 
-<p>Jenkins Plugins이 다음과 같이 설치됩니다</p>
+<h2 id="install-minikube">Install MiniKube</h2>
 
-<p><img src="/assets/images/jenkins/05-jenkins-install-plugins.png" alt="Install Jenkins Plugins" /></p>
+<p>minikube를 download 하고 minikube를 설치합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-LO</span> https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+<span class="nb">tar </span>xvzf 
+<span class="nb">sudo mv </span>minikube-linux-amd64 /usr/local/bin/minikube
+<span class="nb">chmod</span> +x /usr/local/bin/minikube
+</code></pre></div></div>
 
-<p>Jenkins Admin 계정을 생성합니다. Save and Continue 버튼을 클릭합니다</p>
+<p>minikube를 다음과 같이 시작합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>minikube start <span class="nt">--driver</span><span class="o">=</span>docker <span class="nt">--force</span>
+</code></pre></div></div>
 
-<p><img src="/assets/images/jenkins/06-jenkins-create-admin.png" alt="Create Admin" /></p>
+<p>kubectl CLI download 합니다</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-L</span> <span class="s2">"https://dl.k8s.io/release/</span><span class="si">$(</span>curl <span class="nt">-L</span> <span class="nt">-s</span> https://dl.k8s.io/release/stable.txt<span class="si">)</span><span class="s2">/bin/linux/amd64/kubectl"</span> <span class="nt">-o</span> /usr/local/bin/kubectl
 
-<p>Instance Configuration 확인하고, Save and Finish 버튼을 클릭하고, Start using Jenkins 버튼을 클릭합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><summary type="html"><![CDATA[Start-up Jenkins Jenkins server에 접속하기 brower에서 해당 서버의 http://localhost:8080 포트 접속합니다.]]></summary></entry><entry><title type="html">Airflow Hooks - MySQL</title><link href="http://localhost:4000/workflow/Airflow-hooks-mysql/" rel="alternate" type="text/html" title="Airflow Hooks - MySQL" /><published>2022-12-18T00:00:00+09:00</published><updated>2022-12-18T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20hooks-mysql</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-hooks-mysql/"><![CDATA[<h2 id="airflow-hooks---mysql">Airflow Hooks - MySQL</h2>
+<span class="nb">chmod</span> +x /usr/local/bin/kubectl
+
+kubectl get po <span class="nt">-A</span>
+</code></pre></div></div>
+
+<h2 id="configure-for-connecting-jenkins">Configure for connecting Jenkins</h2>
+
+<p>jenkins에서 minikube에 접속하기 위해  Kubernetes 의 credentials 정보가 있는 $HOME/.kube/config 파일을 확인합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>less ~/.kube/config
+</code></pre></div></div>
+
+<p><img src="/assets/images/jenkins/09-jenkins-kube-config.png" alt="kube-config" /></p>
+
+<p>위의 cluster CA 정보의 client 인증서 파일 경로를 데이터의 내용으로 변경 합니다
+<img src="/assets/images/jenkins/10-jenkins-kube-config-2.png" alt="kube-config" /></p>
+
+<p>아래의 명령어로 ca.crt, client.crt, client.key 파일의 내용을 다음의 명령어로 변환합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> /root/.minikube/ca.crt|base64 <span class="nt">-w0</span><span class="p">;</span><span class="nb">echo
+cat</span> /root/.minikube/profiles/minikube/client.crt|base64 <span class="nt">-w0</span><span class="p">;</span><span class="nb">echo
+cat</span> /root/.minikube/profiles/minikube/client.key|base64 <span class="nt">-w0</span><span class="p">;</span><span class="nb">echo</span>
+</code></pre></div></div>
+
+<p>certificate-authority =&gt; certificate-authority-data로 변경
+client-certificate =&gt; client-certificate-data 로 변경
+client-key =&gt; client-key-data 로 변경</p>
+
+<p><img src="/assets/images/jenkins/11-jenkins-change-kube-config.png" alt="kube-config" /></p>
+
+<p>default namespace의 pod 목록이 조회되는지 다음과 같이 확인합니다.</p>
+
+<p>kubectl get pods</p>
+
+<p>[수행결과]
+No resources found in default namespace.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="kubernetes" /><category term="minikube" /><summary type="html"><![CDATA[Pre-requisites - Install Docker]]></summary></entry><entry><title type="html">Airflow Hooks - MySQL</title><link href="http://localhost:4000/workflow/Airflow-hooks-mysql/" rel="alternate" type="text/html" title="Airflow Hooks - MySQL" /><published>2022-12-18T00:00:00+09:00</published><updated>2022-12-18T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20hooks-mysql</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-hooks-mysql/"><![CDATA[<h2 id="airflow-hooks---mysql">Airflow Hooks - MySQL</h2>
 
 <p>MySqlHook 예제입니다.</p>
 
@@ -686,322 +756,4 @@ docker-compose up <span class="nt">-d</span>
 
 <h2 id="localhost8080-으로-접속">localhost:8080 으로 접속</h2>
 
-<p><a href="http://localhost:8080">http://localhost:8080</a>으로 접속하여 default admin 계정/비밀번호 인 airflow/airflow로 접속합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Setup Apache Airflow on Docker Apache Airflow를 실습하기 위해서 개발환경을 구성하기 위해 docker를 이용합니다.]]></summary></entry><entry><title type="html">Airflow Operator</title><link href="http://localhost:4000/workflow/Airflow-operators/" rel="alternate" type="text/html" title="Airflow Operator" /><published>2022-12-17T00:00:00+09:00</published><updated>2022-12-17T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20operators</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-operators/"><![CDATA[<h2 id="airflow-operator">Airflow Operator</h2>
-<p>DAG을 구성하는 작업을 Task라고 하며, DAG이 수행할 작업을 의미합니다. 한개 이상의 Task를 pipeline으로 연결해서 하나의 DAG을 완성해야 합니다.
-Task에는</p>
-
-<ul>
-  <li>Operator</li>
-  <li>Sensor</li>
-  <li>Hook</li>
-</ul>
-
-<p>가 있습니다.<br />
-Operator에서는 대표적인. Bash, Python, Empty 또는 이전버전 Dummy Operator가 있습니다. 
-상세한 Operator 정보는 다음의 <a href="https://airflow.apache.org/docs/apache-airflow/2.2.3/operators-and-hooks-ref.html">링크</a>를 참고하세요</p>
-
-<p><a href="https://airflow.apache.org/docs/apache-airflow/2.2.3/operators-and-hooks-ref.html">https://airflow.apache.org/docs/apache-airflow/2.2.3/operators-and-hooks-ref.html</a></p>
-
-<p>Operator는</p>
-
-<ul>
-  <li>Action Operator</li>
-  <li>Transfer Operator</li>
-  <li>Sensor Operator</li>
-</ul>
-
-<p>로 구분됩니다. <br />
-Action Operator 는 작업을 수행하거나 다른 작업을 수행하도록 trigger합니다.<br />
-Transfer Operator는 특정 시스템에 다른 시스템으로 데이터를 이동합니다.<br />
-Sensor Operator는 특정 조건에 일치할 때 까지 기다렸다가, 만족되면 이후 과정을 진행하도록 기다려는 Operator.</p>
-
-<p>여기에서는 대표적인 Operator 를 알아보겠습니다.</p>
-<ul>
-  <li>EmptyOperator</li>
-  <li>BashOperator</li>
-  <li>PythonOperator</li>
-</ul>
-
-<p>기외 주요 Operator는 다음과 같습니다.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>구분</th>
-      <th>클래스 경로</th>
-      <th>설명</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>BranchPythonOperator</td>
-      <td>airflow.operators.branch</td>
-      <td>파이션 실행결과에 따른 분기를 설정하는 Operator</td>
-    </tr>
-    <tr>
-      <td>TriggerDagRunOperator</td>
-      <td>airflow.operators.trigger_dagrun</td>
-      <td>지정한 dag을 실행</td>
-    </tr>
-    <tr>
-      <td>ShortCircuitOperator</td>
-      <td>airflow.operators.python</td>
-      <td>bool 조건에 맞을 때만 실행 <br /> bool 연산 로직은 python_callable로 전달</td>
-    </tr>
-    <tr>
-      <td>EmailOperator</td>
-      <td>airflow.operators.email</td>
-      <td>이메일 전송</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>그외 operator들은 다음의 <a href="https://airflow.apache.org/docs/apache-airflow/2.2.3/_api/airflow/operators/index.html">링크</a> 참고합니다.</p>
-
-<p><a href="https://airflow.apache.org/docs/apache-airflow/2.2.3/_api/airflow/operators/index.html">https://airflow.apache.org/docs/apache-airflow/2.2.3/_api/airflow/operators/index.html</a></p>
-
-<p>Bash Operator 예제</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span>  
-<span class="kn">from</span> <span class="nn">airflow.operators.bash</span> <span class="kn">import</span> <span class="n">BashOperator</span> 
-<span class="kn">from</span> <span class="nn">airflow.operators.empty</span> <span class="kn">import</span> <span class="n">EmptyOperator</span> 
-<span class="kn">from</span> <span class="nn">airflow.utils.dates</span> <span class="kn">import</span> <span class="n">days_ago</span> 
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span> 
-
-<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s">'start_date'</span><span class="p">:</span> <span class="n">days_ago</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
-  <span class="s">'retries'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-  <span class="s">'retry_delay'</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
-  <span class="s">'schedule_interval'</span><span class="p">:</span> <span class="s">'@daily'</span><span class="p">,</span>
-  <span class="s">'catchup'</span><span class="p">:</span> <span class="bp">False</span>
-<span class="p">}</span>
-
-<span class="k">with</span> <span class="n">DAG</span><span class="p">(</span>
-  <span class="n">dag_id</span> <span class="o">=</span> <span class="s">'bash-op'</span><span class="p">,</span>
-  <span class="n">default_args</span> <span class="o">=</span> <span class="n">default_args</span><span class="p">,</span>
-  <span class="n">tags</span> <span class="o">=</span> <span class="p">[</span><span class="s">'training'</span><span class="p">]</span>
-<span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span> 
-  <span class="n">start</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span>
-    <span class="n">task_id</span> <span class="o">=</span> <span class="s">'start'</span>
-  <span class="p">)</span>
-  
-  <span class="n">end</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span>
-    <span class="n">task_id</span> <span class="o">=</span> <span class="s">'end'</span>
-  <span class="p">)</span>
-  
-  <span class="n">bash_task</span> <span class="o">=</span> <span class="n">BashOperator</span><span class="p">(</span>
-    <span class="n">task_id</span><span class="o">=</span><span class="s">"test_bash"</span><span class="p">,</span>
-    <span class="n">bash_command</span> <span class="o">=</span> <span class="s">"echo 'This is the ds: </span><span class="se">\'</span><span class="s">$msg</span><span class="se">\'</span><span class="s">'"</span><span class="p">,</span>
-    <span class="n">env</span> <span class="o">=</span> <span class="p">{</span> <span class="s">"msg"</span><span class="p">:</span> <span class="s">''</span><span class="p">}</span>
-  <span class="p">)</span>
-  
-  <span class="n">start</span> <span class="o">&gt;&gt;</span> <span class="n">bash_task</span> <span class="o">&gt;&gt;</span> <span class="n">end</span> 
-</code></pre></div></div>
-
-<p>Python Operator 예제</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span> 
-<span class="kn">from</span> <span class="nn">airflow.operators.python</span> <span class="kn">import</span>  <span class="n">PythonOperator</span> 
-<span class="kn">from</span> <span class="nn">airflow.operators.empty</span> <span class="kn">import</span> <span class="n">EmptyOperator</span>
-
-<span class="kn">from</span> <span class="nn">airflow.utils.dates</span> <span class="kn">import</span> <span class="n">days_ago</span> 
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span> 
-
-<span class="kn">import</span> <span class="nn">time</span> 
-
-<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s">'start_date'</span><span class="p">:</span> <span class="n">days_ago</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
-  <span class="s">'retries'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-  <span class="s">'retry_delay'</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
-  <span class="s">'schedule_interval'</span><span class="p">:</span> <span class="s">'@daily'</span><span class="p">,</span>
-  <span class="s">'tags'</span><span class="p">:</span> <span class="p">[</span><span class="s">'training'</span><span class="p">],</span>
-  <span class="s">'catchup'</span><span class="p">:</span> <span class="bp">False</span>
-<span class="p">}</span>
-
-<span class="k">def</span> <span class="nf">_sleep_func</span><span class="p">(</span><span class="n">sleep_time</span><span class="p">):</span>
-  <span class="k">print</span><span class="p">(</span><span class="s">'Start sleep {sleep_time} seconds'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">sleep_time</span> <span class="o">=</span> <span class="n">sleep_time</span><span class="p">))</span>
-  <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">sleep_time</span><span class="p">)</span> 
-
-<span class="k">with</span> <span class="n">DAG</span><span class="p">(</span>
-  <span class="n">dag_id</span> <span class="o">=</span> <span class="s">'python-op'</span><span class="p">,</span>
-  <span class="n">default_args</span><span class="o">=</span><span class="n">default_args</span><span class="p">,</span>
-  <span class="n">tags</span> <span class="o">=</span> <span class="p">[</span><span class="s">'training'</span><span class="p">]</span>
-<span class="p">)</span> <span class="k">as</span> <span class="n">dag</span> <span class="p">:</span>
-  <span class="n">start</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span> <span class="o">=</span> <span class="s">'start_task'</span><span class="p">)</span>
-  <span class="n">end</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span> <span class="o">=</span> <span class="s">'end_task'</span><span class="p">)</span>
-  
-  <span class="n">task1</span> <span class="o">=</span> <span class="n">PythonOperator</span><span class="p">(</span>
-    <span class="n">task_id</span> <span class="o">=</span> <span class="s">'python_callable_task1'</span><span class="p">,</span>
-    <span class="n">python_callable</span> <span class="o">=</span> <span class="n">_sleep_func</span><span class="p">,</span>
-    <span class="n">op_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s">"sleep_time"</span> <span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
-  <span class="p">)</span>
-  
-  <span class="n">start</span> <span class="o">&gt;&gt;</span> <span class="n">task1</span> <span class="o">&gt;&gt;</span> <span class="n">end</span>  
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Airflow Operator DAG을 구성하는 작업을 Task라고 하며, DAG이 수행할 작업을 의미합니다. 한개 이상의 Task를 pipeline으로 연결해서 하나의 DAG을 완성해야 합니다. Task에는]]></summary></entry><entry><title type="html">Airflow Hooks</title><link href="http://localhost:4000/workflow/Airflow-hooks/" rel="alternate" type="text/html" title="Airflow Hooks" /><published>2022-12-17T00:00:00+09:00</published><updated>2022-12-17T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20hooks</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-hooks/"><![CDATA[<h2 id="airflow-hooks">Airflow Hooks</h2>
-<p>Hook은 DB나 서비스 같은 외부 시스템(Database, Storage)과 통신하기 위한 인터페이스를 제공하여 연결상태를 유지하여 작업을 처리하기 위해 사용합니다.</p>
-
-<figure style="width: 100%" class="align-left">
-  <img src="http://localhost:4000/assets/images/09-hooks-component-arch.png" alt="" />
-  <figcaption></figcaption>
-</figure>
-
-<p>Apache Airflow의 Hook에서csv to db를 또는 db to csv 작업을 할 때 대표적인 Hook은 다음과 같은 것이 있습니다.</p>
-
-<ul>
-  <li>PostgresHook</li>
-  <li>MySqlHook</li>
-  <li>S3</li>
-  <li>HDFS</li>
-</ul>
-
-<h2 id="apache-airflow-hooks를-실행하는-방법">Apache Airflow Hooks를 실행하는 방법?</h2>
-
-<p>Airflow Hook을 다음의 4단계로 작성합니다 .</p>
-
-<ul>
-  <li>Prepare your PostgreSQL Environment</li>
-  <li>Create a CSV file using the format</li>
-  <li>PostgreSQL 연결 설정 정보 작성</li>
-  <li>Airflow PostgresHook DAG 작성</li>
-</ul>
-
-<p>Airflow가 제공 한 PostgreSQL Hooks를 사용하여 테이블의 내용을 CSV 파일로 추출합니다.</p>
-
-<p>우선 PostgreSQL에서 테이블을 만들고 일부 데이터를 로드 합니다. 이렇게 하려면 PSQL 쉘로 가서 아래 명령을 실행합니다.</p>
-
-<p>그리고 PostgresHook을 처리하는 DAG을 작성합니다.</p>
-
-<h4 id="prepare-your-postgresql-environment">Prepare your PostgreSQL Environment</h4>
-
-<p>우선 PostgreSQL에서 테이블을 만들고 일부 데이터를로드 해야합니다. 이렇게 하려면 PSQL 쉘에서  아래 명령을 실행합니다.</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">customer</span><span class="p">(</span>
-  <span class="n">id</span> <span class="nb">serial</span><span class="p">,</span>
-  <span class="n">first_name</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>
-  <span class="n">last_name</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>
-  <span class="n">email</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
-<span class="p">);</span>
-</code></pre></div></div>
-
-<p>여기에서는 4 개의 열 ID, First_Name, Last_name 및 email 이 있는 고객 테이블을 작성하고 있습니다</p>
-
-<h4 id="create-a-csv-file-using-the-format">Create a CSV file using the format</h4>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>serial,first_name,last_name,email
-1,john,michael,john@gmail.com
-2,mary,cooper,mcooper@gmail.com
-3,sheldon,cooper,scopper@gmail.com
-4,john,michael,john@gmail.com
-5,mary,cooper,mcooper@gmail.com
-6,sheldon,cooper,scopper@gmail.com
-</code></pre></div></div>
-
-<p>COPY CSV to POD into customer table</p>
-
-<p>Kubernetes 환경인 경우 다음과 같이 customer.csv파일을 복사합니다.
-POD에 customer.csv 파일을 복사합니다.</p>
-
-<ul>
-  <li>POSTGRES_POD=$(kubectl get pods -o jsonpath=’{.items[0].metadata.name}’)</li>
-  <li>kubectl cp customer.csv $POSTGRES_POD:/tmp</li>
-  <li>kubectl exec -it $POSTGRESPOD – bash</li>
-</ul>
-
-<p>postgres에 접속합니다.</p>
-
-<p>psql -U postgres</p>
-
-<p>COPY customer FROM ‘/tmp/customer.csv’ DELIMITER ‘,’ CSV HEADER;</p>
-
-<h4 id="postgresql-연결-설정-정보-작성">PostgreSQL 연결 설정 정보 작성</h4>
-
-<p>Airflow UI에서 Admin &gt; Connections 메뉴를 선택하고, Connection Type이 Postgres를 선택하고 Postgres 접속정보를 입력하고 저장합니다.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Key</th>
-      <th>Value</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Connection Type :</td>
-      <td>Postgres</td>
-    </tr>
-    <tr>
-      <td>Host</td>
-      <td>ip address</td>
-    </tr>
-    <tr>
-      <td>Schema</td>
-      <td>database</td>
-    </tr>
-    <tr>
-      <td>Login</td>
-      <td>postgres account</td>
-    </tr>
-    <tr>
-      <td>Password</td>
-      <td>postgres password</td>
-    </tr>
-    <tr>
-      <td>Port</td>
-      <td>postgres port</td>
-    </tr>
-  </tbody>
-</table>
-
-<figure style="width: 100%" class="align-left">
-  <img src="http://localhost:4000/assets/images/09-hooks-postgres-conn.png" alt="" />
-  <figcaption></figcaption>
-</figure>
-
-<h4 id="airflow-postgreshook-dag-작성">Airflow PostgresHook DAG 작성</h4>
-
-<p>PostgresHook을 다음과 같이 구현하고 테스트합니다</p>
-
-<p>성공적으로 실행되면 파일 저장을 위해 구성된 디렉토리로 이동하면 출력 CSV 파일을 찾을 수 있습니다</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span> 
-<span class="kn">from</span> <span class="nn">airflow.operators.python</span> <span class="kn">import</span> <span class="n">PythonOperator</span>
-<span class="kn">from</span> <span class="nn">airflow.operators.empty</span> <span class="kn">import</span> <span class="n">EmptyOperator</span>
-<span class="kn">from</span> <span class="nn">airflow.providers.postgres.hooks.postgres</span> <span class="kn">import</span> <span class="n">PostgresHook</span> 
-
-<span class="kn">from</span> <span class="nn">airflow.utils.dates</span> <span class="kn">import</span> <span class="n">days_ago</span> 
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span> 
-
-<span class="kn">import</span> <span class="nn">logging</span> 
-
-<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s">'start_date'</span><span class="p">:</span> <span class="n">days_ago</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
-  <span class="s">'retries'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-  <span class="s">'retry_delay'</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
-  <span class="s">'schedule_interval'</span><span class="p">:</span> <span class="s">'@daily'</span><span class="p">,</span>
-  <span class="s">'catchup'</span><span class="p">:</span> <span class="bp">False</span>
-<span class="p">}</span>
-
-<span class="n">POSTGRES_CONN_ID</span> <span class="o">=</span><span class="s">'postgres-conn'</span>
-
-<span class="k">def</span> <span class="nf">export_db_to_csv</span><span class="p">(</span><span class="n">sql</span><span class="p">):</span>
-  <span class="n">pg_hook</span> <span class="o">=</span> <span class="n">PostgresHook</span><span class="p">.</span><span class="n">get_hook</span><span class="p">(</span><span class="n">POSTGRES_CONN_ID</span><span class="p">)</span>
-  <span class="n">logging</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s">'Exporting query to file:{}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">sql</span><span class="p">))</span>
-  <span class="n">pg_hook</span><span class="p">.</span><span class="n">copy_expert</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s">'/opt/airflow/data/customer.csv'</span><span class="p">)</span>
-  
-<span class="k">with</span> <span class="n">DAG</span><span class="p">(</span>
-  <span class="n">dag_id</span> <span class="o">=</span> <span class="s">'postgres-hook-db-to-csv'</span><span class="p">,</span>
-  <span class="n">default_args</span> <span class="o">=</span> <span class="n">default_args</span><span class="p">,</span>
-  <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s">'training'</span><span class="p">]</span>
-<span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span> 
-  <span class="n">start</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span><span class="o">=</span><span class="s">'start'</span><span class="p">)</span>
-  <span class="n">end</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span><span class="o">=</span><span class="s">'end'</span><span class="p">)</span> 
-  <span class="n">export_task</span> <span class="o">=</span> <span class="n">PythonOperator</span><span class="p">(</span>
-    <span class="n">task_id</span> <span class="o">=</span> <span class="s">'export-task'</span><span class="p">,</span>
-    <span class="n">python_callable</span><span class="o">=</span><span class="n">export_db_to_csv</span><span class="p">,</span>
-    <span class="n">op_kwargs</span> <span class="o">=</span> <span class="p">{</span>
-      <span class="s">'sql'</span><span class="p">:</span> <span class="s">"COPY (SELECT * FROM CUSTOMER WHERE first_name = 'john' ) TO STDOUT WITH CSV HEADER"</span>
-    <span class="p">}</span>
-  <span class="p">)</span>
-  
-  <span class="n">start</span> <span class="o">&gt;&gt;</span> <span class="n">export_task</span> <span class="o">&gt;&gt;</span> <span class="n">end</span> 
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Airflow Hooks Hook은 DB나 서비스 같은 외부 시스템(Database, Storage)과 통신하기 위한 인터페이스를 제공하여 연결상태를 유지하여 작업을 처리하기 위해 사용합니다.]]></summary></entry></feed>
+<p><a href="http://localhost:8080">http://localhost:8080</a>으로 접속하여 default admin 계정/비밀번호 인 airflow/airflow로 접속합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Setup Apache Airflow on Docker Apache Airflow를 실습하기 위해서 개발환경을 구성하기 위해 docker를 이용합니다.]]></summary></entry></feed>
