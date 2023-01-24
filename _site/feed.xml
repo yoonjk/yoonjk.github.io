@@ -1,4 +1,88 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-01-24T15:42:25+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Jenkins 설치 따라하기</title><link href="http://localhost:4000/devops/setup-jenkins/" rel="alternate" type="text/html" title="Jenkins 설치 따라하기" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/devops/setup%20jenkins</id><content type="html" xml:base="http://localhost:4000/devops/setup-jenkins/"><![CDATA[<h2 id="jenkins-pipeline-이란">Jenkins Pipeline 이란?</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-01-24T16:18:46+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Install MiniKube</title><link href="http://localhost:4000/kubernetes/install-minikube/" rel="alternate" type="text/html" title="Install MiniKube" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/install-minikube</id><content type="html" xml:base="http://localhost:4000/kubernetes/install-minikube/"><![CDATA[<h2 id="pre-requisites---install-docker">Pre-requisites - Install Docker</h2>
+
+<p>yum utils을 설치합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> yum-utils
+</code></pre></div></div>
+
+<p>Docker repository 정보를 download 받습니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum-config-manager <span class="se">\</span>
+<span class="nt">--add-repo</span> <span class="se">\</span>
+https://download.docker.com/linux/centos/docker-ce.repo
+</code></pre></div></div>
+
+<p>최신 버전의 Docker Engine, containerd를 설치하거나 다음 단계로 이동하여 특정 버전을 설치합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> docker-ce docker-ce-cli containerd.io
+</code></pre></div></div>
+
+<p>docker를 시작합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl start docker
+</code></pre></div></div>
+
+<p>docker daemon이 정상 설치되었는지 hello-world docker image를 pull하기 위해 다음 명령어를 수행하여 확인합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull hello-world 
+</code></pre></div></div>
+
+<p>[수행결과]
+<img src="/assets/images/jenkins/07-jenkins-docker-hello-world.png" alt="docker pull hello-world" /></p>
+
+<p>docker images를 수행하여 아래와 같이 출력되는 확인합니다</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker images
+</code></pre></div></div>
+
+<p>[수행결과]
+<img src="/assets/images/jenkins/08-jenkins-docker-images.png" alt="docker pull hello-world" /></p>
+
+<h2 id="install-minikube">Install MiniKube</h2>
+
+<p>minikube를 download 하고 minikube를 설치합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-LO</span> https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+<span class="nb">tar </span>xvzf 
+<span class="nb">sudo mv </span>minikube-linux-amd64 /usr/local/bin/minikube
+<span class="nb">chmod</span> +x /usr/local/bin/minikube
+</code></pre></div></div>
+
+<p>minikube를 다음과 같이 시작합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>minikube start <span class="nt">--driver</span><span class="o">=</span>docker <span class="nt">--force</span>
+</code></pre></div></div>
+
+<p>kubectl CLI download 합니다</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-L</span> <span class="s2">"https://dl.k8s.io/release/</span><span class="si">$(</span>curl <span class="nt">-L</span> <span class="nt">-s</span> https://dl.k8s.io/release/stable.txt<span class="si">)</span><span class="s2">/bin/linux/amd64/kubectl"</span> <span class="nt">-o</span> /usr/local/bin/kubectl
+
+<span class="nb">chmod</span> +x /usr/local/bin/kubectl
+
+kubectl get po <span class="nt">-A</span>
+</code></pre></div></div>
+
+<h2 id="configure-for-connecting-jenkins">Configure for connecting Jenkins</h2>
+
+<p>jenkins에서 minikube에 접속하기 위해  Kubernetes 의 credentials 정보가 있는 $HOME/.kube/config 파일을 확인합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>less ~/.kube/config
+</code></pre></div></div>
+
+<p><img src="/assets/images/jenkins/09-jenkins-kube-config.png" alt="kube-config" /></p>
+
+<p>위의 cluster CA 정보의 client 인증서 파일 경로를 데이터의 내용으로 변경 합니다
+<img src="/assets/images/jenkins/10-jenkins-kube-config-2.png" alt="kube-config" /></p>
+
+<p>아래의 명령어로 ca.crt, client.crt, client.key 파일의 내용을 다음의 명령어로 변환합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> /root/.minikube/ca.crt|base64 <span class="nt">-w0</span><span class="p">;</span><span class="nb">echo
+cat</span> /root/.minikube/profiles/minikube/client.crt|base64 <span class="nt">-w0</span><span class="p">;</span><span class="nb">echo
+cat</span> /root/.minikube/profiles/minikube/client.key|base64 <span class="nt">-w0</span><span class="p">;</span><span class="nb">echo</span>
+</code></pre></div></div>
+
+<p>certificate-authority =&gt; certificate-authority-data로 변경
+client-certificate =&gt; client-certificate-data 로 변경
+client-key =&gt; client-key-data 로 변경</p>
+
+<p><img src="/assets/images/jenkins/11-jenkins-change-kube-config.png" alt="kube-config" /></p>
+
+<p>default namespace의 pod 목록이 조회되는지 다음과 같이 확인합니다.</p>
+
+<p>kubectl get pods</p>
+
+<p>[수행결과]
+No resources found in default namespace.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="kubernetes" /><category term="minikube" /><summary type="html"><![CDATA[Pre-requisites - Install Docker]]></summary></entry><entry><title type="html">Jenkins 설치 따라하기</title><link href="http://localhost:4000/devops/setup-jenkins/" rel="alternate" type="text/html" title="Jenkins 설치 따라하기" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/devops/setup%20jenkins</id><content type="html" xml:base="http://localhost:4000/devops/setup-jenkins/"><![CDATA[<h2 id="jenkins-pipeline-이란">Jenkins Pipeline 이란?</h2>
 <p>Jenkins Pipeline은 지속적인 업데이트 파이프라인을 구현하고 Jenkins에 통합하는 것을 지원하는 플러그인의 집합이다. 이 과정에서 소프트웨어를 빌드하고 여러 단계의 테스트, 배포를 진행한다. 
 Pipeline은 Pipeline Domain Specific Language라는 문법을 통해 마치 코드를 작성하는 것과 같이 Pipeline을 통해 간단한 배포 파이프라인부터 복잡한 배포  파이프라인을 코드로 모델링하기 위한 확장 가능한 도구 집합을 제공합니다.
 . 
@@ -83,7 +167,37 @@ bash profile을 설정하고 저장하고, bash_profile을 최신으로 적용�
 
 <p>docker container image 빌드를 위해 빌드 툴인 Podman을 설치합니다.</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum <span class="nb">install</span> <span class="nt">-y</span> podman 
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><summary type="html"><![CDATA[Jenkins Pipeline 이란? Jenkins Pipeline은 지속적인 업데이트 파이프라인을 구현하고 Jenkins에 통합하는 것을 지원하는 플러그인의 집합이다. 이 과정에서 소프트웨어를 빌드하고 여러 단계의 테스트, 배포를 진행한다. Pipeline은 Pipeline Domain Specific Language라는 문법을 통해 마치 코드를 작성하는 것과 같이 Pipeline을 통해 간단한 배포 파이프라인부터 복잡한 배포 파이프라인을 코드로 모델링하기 위한 확장 가능한 도구 집합을 제공합니다. . Jenkins 파이프 라인의 정의는 프로젝트의 소스 제어 저장소에 commit될 수 있는 텍스트 파일 (Jenkinsfile이라고 함)에 저장합니다.]]></summary></entry><entry><title type="html">Jenkins 시작</title><link href="http://localhost:4000/devops/start-up-jenkins/" rel="alternate" type="text/html" title="Jenkins 시작" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/devops/start-up%20jenkins</id><content type="html" xml:base="http://localhost:4000/devops/start-up-jenkins/"><![CDATA[<h2 id="start-up-jenkins">Start-up Jenkins</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><summary type="html"><![CDATA[Jenkins Pipeline 이란? Jenkins Pipeline은 지속적인 업데이트 파이프라인을 구현하고 Jenkins에 통합하는 것을 지원하는 플러그인의 집합이다. 이 과정에서 소프트웨어를 빌드하고 여러 단계의 테스트, 배포를 진행한다. Pipeline은 Pipeline Domain Specific Language라는 문법을 통해 마치 코드를 작성하는 것과 같이 Pipeline을 통해 간단한 배포 파이프라인부터 복잡한 배포 파이프라인을 코드로 모델링하기 위한 확장 가능한 도구 집합을 제공합니다. . Jenkins 파이프 라인의 정의는 프로젝트의 소스 제어 저장소에 commit될 수 있는 텍스트 파일 (Jenkinsfile이라고 함)에 저장합니다.]]></summary></entry><entry><title type="html">Kubernetes Plugin 설치 및 환경구성</title><link href="http://localhost:4000/devops/install-kubernetes-plugin/" rel="alternate" type="text/html" title="Kubernetes Plugin 설치 및 환경구성" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/devops/install%20kubernetes%20plugin</id><content type="html" xml:base="http://localhost:4000/devops/install-kubernetes-plugin/"><![CDATA[<h2 id="kubernetes-plugin-설치">Kubernetes Plugin 설치</h2>
+<p>Jenkins Agent로 Kubernetes에 실행하기 위해 Kubernetes Plugin을 Jenkins에 설치하여 환경을 구성합니다.</p>
+
+<p>Jenkins UI에서 Manage Jenkins &gt; System Configuration &gt; Manage Plugins &gt;Available plugins 메뉴를 클릭합니다</p>
+
+<p>Plugins 검색 입력 필드에서 Kubernetes 입력하고 다음과 같은 첫번째  Kubernetes [V] 선택, 왼쪽 하단에 Install without restart 버튼을 클릭합니다</p>
+
+<p><img src="/assets/images/jenkins/12-jenkins-install-kubernetes-plugin.png" alt="Install Kubernetes Plugin" /></p>
+
+<p>아래의 [v] “Restart Jenkins when installation is complete and no jobs are running” 버튼을 선택하여 jenkins를 재시작 합니다. admin 계정으로 로드인을 합니다</p>
+
+<p>Manage Jenkins &gt; System Configuration &gt; Manage Nodes and Clouds를 선택합니다.</p>
+
+<p>Configure Clouds를 선택하고, Combo 박스에서 Kubernetes를 선택합니다.</p>
+
+<p><img src="/assets/images/jenkins/13-jenkins-add-new-cloud.png" alt="Install Kubernetes Plugin" /></p>
+
+<p>Kubernetes 접속하기 위한 Credentials 정보를 입력하면이 다음과 같이 출력됩니다.
+<img src="/assets/images/jenkins/14-jenkins-configure-clouds.png" alt="Configure Clouds" /></p>
+
+<p>Kubernetes Cloud details 버튼을 클릭하면 상세 입력창이 출력됩니다.
+Kubernetes Namespace section에 jenkins 를 입력합니다
+<img src="/assets/images/jenkins/15-jenkins-kubernetes-namespace.png" alt="Kubernetes Namespace" /></p>
+
+<p>Configure Clouds에서 Credentials &gt; Add 버튼을 클릭합니다
+<img src="/assets/images/jenkins/16-jenkins-add-jenkins.png" alt="add jenkins in Credentials" /></p>
+
+<p>Add Credentials 입력창에서 credentials 정보를 다음과 같이 입력합니다.
+File은 자신의 VM 서버의 root 계정의. $HOME/.kube/config 파일을 선택합니다.
+.kube/config을 자신의. laptop에 download받아서 choose file 버튼을 클릭하여 download 받은 config파일을 선택합니다.
+<img src="/assets/images/jenkins/17-jenkins-add-credentials.png" alt="add Credentials" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><summary type="html"><![CDATA[Kubernetes Plugin 설치 Jenkins Agent로 Kubernetes에 실행하기 위해 Kubernetes Plugin을 Jenkins에 설치하여 환경을 구성합니다.]]></summary></entry><entry><title type="html">Jenkins 시작</title><link href="http://localhost:4000/devops/start-up-jenkins/" rel="alternate" type="text/html" title="Jenkins 시작" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/devops/start-up%20jenkins</id><content type="html" xml:base="http://localhost:4000/devops/start-up-jenkins/"><![CDATA[<h2 id="start-up-jenkins">Start-up Jenkins</h2>
 <p>Jenkins server에 접속하기 brower에서 해당 서버의 http://localhost:8080 포트 접속합니다.</p>
 
 <p>Jenkins에 접속하면 Jenkins admin 초기 패스워드를 입력하는 화면이 출력됩니다</p>
@@ -110,91 +224,62 @@ a0f289xxxxxxxxxcd8fbb7</p>
 
 <p><img src="/assets/images/jenkins/06-jenkins-create-admin.png" alt="Create Admin" /></p>
 
-<p>Instance Configuration 확인하고, Save and Finish 버튼을 클릭하고, Start using Jenkins 버튼을 클릭합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><summary type="html"><![CDATA[Start-up Jenkins Jenkins server에 접속하기 brower에서 해당 서버의 http://localhost:8080 포트 접속합니다.]]></summary></entry><entry><title type="html">Install MiniKube</title><link href="http://localhost:4000/kubernetes/install-minikube/" rel="alternate" type="text/html" title="Install MiniKube" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/install-minikube</id><content type="html" xml:base="http://localhost:4000/kubernetes/install-minikube/"><![CDATA[<h2 id="pre-requisites---install-docker">Pre-requisites - Install Docker</h2>
+<p>Instance Configuration 확인하고, Save and Finish 버튼을 클릭하고, Start using Jenkins 버튼을 클릭합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><summary type="html"><![CDATA[Start-up Jenkins Jenkins server에 접속하기 brower에서 해당 서버의 http://localhost:8080 포트 접속합니다.]]></summary></entry><entry><title type="html">Airflow Hooks - MySQL</title><link href="http://localhost:4000/workflow/Airflow-hooks-mysql/" rel="alternate" type="text/html" title="Airflow Hooks - MySQL" /><published>2022-12-18T00:00:00+09:00</published><updated>2022-12-18T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20hooks-mysql</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-hooks-mysql/"><![CDATA[<h2 id="airflow-hooks---mysql">Airflow Hooks - MySQL</h2>
 
-<p>yum utils을 설치합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> yum-utils
-</code></pre></div></div>
+<p>MySqlHook 예제입니다.</p>
 
-<p>Docker repository 정보를 download 받습니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum-config-manager <span class="se">\</span>
-<span class="nt">--add-repo</span> <span class="se">\</span>
-https://download.docker.com/linux/centos/docker-ce.repo
-</code></pre></div></div>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span> 
+<span class="kn">from</span> <span class="nn">airflow.operators.python</span> <span class="kn">import</span> <span class="n">PythonOperator</span>
+<span class="kn">from</span> <span class="nn">airflow.operators.empty</span> <span class="kn">import</span> <span class="n">EmptyOperator</span> 
+<span class="kn">from</span> <span class="nn">airflow.providers.mysql.hooks.mysql</span> <span class="kn">import</span> <span class="n">MySqlHook</span> 
+<span class="c1"># utils
+</span><span class="kn">from</span> <span class="nn">airflow.utils.dates</span> <span class="kn">import</span> <span class="n">days_ago</span> 
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span> 
+<span class="kn">from</span> <span class="nn">tempfile</span> <span class="kn">import</span> <span class="n">NamedTemporaryFile</span> 
+<span class="kn">import</span> <span class="nn">csv</span><span class="p">,</span> <span class="n">logging</span> 
 
-<p>최신 버전의 Docker Engine, containerd를 설치하거나 다음 단계로 이동하여 특정 버전을 설치합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> docker-ce docker-ce-cli containerd.io
-</code></pre></div></div>
+<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'start_date'</span><span class="p">:</span> <span class="n">days_ago</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+  <span class="s">'retries'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s">'retry_delay'</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
+  <span class="s">'schedule_interval'</span><span class="p">:</span> <span class="s">'@daily'</span><span class="p">,</span>
+  <span class="s">'catchup'</span><span class="p">:</span> <span class="bp">False</span>
+<span class="p">}</span>
 
-<p>docker를 시작합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl start docker
-</code></pre></div></div>
+<span class="n">MYSQL_CONN_ID</span> <span class="o">=</span><span class="s">'mysql-conn'</span>
 
-<p>docker daemon이 정상 설치되었는지 hello-world docker image를 pull하기 위해 다음 명령어를 수행하여 확인합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull hello-world 
-</code></pre></div></div>
-
-<p>[수행결과]
-<img src="/assets/images/jenkins/07-jenkins-docker-hello-world.png" alt="docker pull hello-world" /></p>
-
-<p>docker images를 수행하여 아래와 같이 출력되는 확인합니다</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker images
-</code></pre></div></div>
-
-<p>[수행결과]
-<img src="/assets/images/jenkins/08-jenkins-docker-images.png" alt="docker pull hello-world" /></p>
-
-<h2 id="install-minikube">Install MiniKube</h2>
-
-<p>minikube를 download 하고 minikube를 설치합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-LO</span> https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-<span class="nb">tar </span>xvzf 
-<span class="nb">sudo mv </span>minikube-linux-amd64 /usr/local/bin/minikube
-<span class="nb">chmod</span> +x /usr/local/bin/minikube
-</code></pre></div></div>
-
-<p>minikube를 다음과 같이 시작합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>minikube start <span class="nt">--driver</span><span class="o">=</span>docker <span class="nt">--force</span>
-</code></pre></div></div>
-
-<p>kubectl CLI download 합니다</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-L</span> <span class="s2">"https://dl.k8s.io/release/</span><span class="si">$(</span>curl <span class="nt">-L</span> <span class="nt">-s</span> https://dl.k8s.io/release/stable.txt<span class="si">)</span><span class="s2">/bin/linux/amd64/kubectl"</span> <span class="nt">-o</span> /usr/local/bin/kubectl
-
-<span class="nb">chmod</span> +x /usr/local/bin/kubectl
-
-kubectl get po <span class="nt">-A</span>
-</code></pre></div></div>
-
-<h2 id="configure-for-connecting-jenkins">Configure for connecting Jenkins</h2>
-
-<p>jenkins에서 minikube에 접속하기 위해  Kubernetes 의 credentials 정보가 있는 $HOME/.kube/config 파일을 확인합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>less ~/.kube/config
-</code></pre></div></div>
-
-<p><img src="/assets/images/jenkins/09-jenkins-kube-config.png" alt="kube-config" /></p>
-
-<p>위의 cluster CA 정보의 client 인증서 파일 경로를 데이터의 내용으로 변경 합니다
-<img src="/assets/images/jenkins/10-jenkins-kube-config-2.png" alt="kube-config" /></p>
-
-<p>아래의 명령어로 ca.crt, client.crt, client.key 파일의 내용을 다음의 명령어로 변환합니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> /root/.minikube/ca.crt|base64 <span class="nt">-w0</span><span class="p">;</span><span class="nb">echo
-cat</span> /root/.minikube/profiles/minikube/client.crt|base64 <span class="nt">-w0</span><span class="p">;</span><span class="nb">echo
-cat</span> /root/.minikube/profiles/minikube/client.key|base64 <span class="nt">-w0</span><span class="p">;</span><span class="nb">echo</span>
-</code></pre></div></div>
-
-<p>certificate-authority =&gt; certificate-authority-data로 변경
-client-certificate =&gt; client-certificate-data 로 변경
-client-key =&gt; client-key-data 로 변경</p>
-
-<p><img src="/assets/images/jenkins/11-jenkins-change-kube-config.png" alt="kube-config" /></p>
-
-<p>default namespace의 pod 목록이 조회되는지 다음과 같이 확인합니다.</p>
-
-<p>kubectl get pods</p>
-
-<p>[수행결과]
-No resources found in default namespace.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="kubernetes" /><category term="minikube" /><summary type="html"><![CDATA[Pre-requisites - Install Docker]]></summary></entry><entry><title type="html">Airflow TaskGroup</title><link href="http://localhost:4000/workflow/Airflow-Task-Group/" rel="alternate" type="text/html" title="Airflow TaskGroup" /><published>2022-12-18T00:00:00+09:00</published><updated>2022-12-18T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20Task%20Group</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-Task-Group/"><![CDATA[<h2 id="airflow-taskgroup">Airflow TaskGroup</h2>
+<span class="k">def</span> <span class="nf">export_db_to_dsv</span><span class="p">():</span>
+  <span class="n">logging</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s">"Staring mysql_hook"</span><span class="p">)</span>
+  <span class="n">hook</span> <span class="o">=</span> <span class="n">MySqlHook</span><span class="p">(</span><span class="n">conn_id</span> <span class="o">=</span> <span class="n">MYSQL_CONN_ID</span><span class="p">)</span>
+  <span class="n">conn</span> <span class="o">=</span> <span class="n">hook</span><span class="p">.</span><span class="n">get_conn</span><span class="p">()</span> 
+  <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="p">.</span><span class="n">cursor</span><span class="p">()</span>
+  <span class="n">cursor</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">'use demo'</span><span class="p">)</span>
+  <span class="n">cursor</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">'select * from users'</span><span class="p">)</span>
+  
+  <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'/opt/airflow/data/employee.csv'</span><span class="p">,</span> <span class="s">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span> 
+    <span class="n">csv_writer</span> <span class="o">=</span> <span class="n">csv</span><span class="p">.</span><span class="n">writer</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> 
+    <span class="n">csv_writer</span><span class="p">.</span><span class="n">writerow</span><span class="p">([</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cursor</span><span class="p">.</span><span class="n">dscription</span><span class="p">])</span>
+    <span class="n">csv_writer</span><span class="p">.</span><span class="n">writerows</span><span class="p">(</span><span class="n">cursor</span><span class="p">)</span>
+    <span class="n">f</span><span class="p">.</span><span class="n">flush</span><span class="p">()</span>
+    <span class="n">cursor</span><span class="p">.</span><span class="n">close</span><span class="p">()</span> 
+    <span class="n">conn</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">logging</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s">'Saved data in csv file: %s'</span><span class="p">,</span> <span class="s">'/opt/airflow/data/employee.csv'</span><span class="p">)</span>
+    
+<span class="k">with</span> <span class="n">DAG</span><span class="p">(</span>
+  <span class="n">dag_id</span> <span class="o">=</span> <span class="s">'mysql-hook-db-to-csv'</span><span class="p">,</span>
+  <span class="n">default_args</span> <span class="o">=</span> <span class="n">default_args</span><span class="p">,</span>
+  <span class="n">tags</span> <span class="o">=</span> <span class="p">[</span><span class="s">'training'</span><span class="p">]</span>
+<span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span> 
+  <span class="n">export_task</span> <span class="o">=</span> <span class="n">PythonOperator</span><span class="p">(</span>
+        <span class="n">task_id</span><span class="o">=</span><span class="s">"mysql_to_csv"</span><span class="p">,</span>
+        <span class="n">python_callable</span><span class="o">=</span><span class="n">export_db_to_dsv</span>
+  <span class="p">)</span>
+  
+  <span class="n">start</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span><span class="o">=</span><span class="s">'start'</span><span class="p">)</span>
+  <span class="n">end</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span><span class="o">=</span><span class="s">'end'</span><span class="p">)</span> 
+  
+  <span class="n">start</span> <span class="o">&gt;&gt;</span> <span class="n">export_task</span> <span class="o">&gt;&gt;</span> <span class="n">end</span>  
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Airflow Hooks - MySQL]]></summary></entry><entry><title type="html">Airflow TaskGroup</title><link href="http://localhost:4000/workflow/Airflow-Task-Group/" rel="alternate" type="text/html" title="Airflow TaskGroup" /><published>2022-12-18T00:00:00+09:00</published><updated>2022-12-18T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20Task%20Group</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-Task-Group/"><![CDATA[<h2 id="airflow-taskgroup">Airflow TaskGroup</h2>
 <p>작업 그룹은 그래프 보기에서 작업을 계층적 그룹으로 구성하는 데 사용할 수 있습니다. 반복되는 패턴을 만들고 시각적 혼란을 줄이는 데 유용합니다..</p>
 
 <p><img src="https://airflow.apache.org/docs/apache-airflow/stable/_images/task_group.gif" alt="taskgroup decorator" /></p>
@@ -377,137 +462,7 @@ No resources found in default namespace.</p>]]></content><author><name>Jaeguk Yu
   <span class="n">section_1</span> <span class="o">=</span> <span class="n">func_group1</span><span class="p">()</span>  
   <span class="n">section_2</span> <span class="o">=</span> <span class="n">func_group2</span><span class="p">()</span> 
   <span class="n">start</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">section_1</span> <span class="o">&gt;&gt;</span> <span class="n">section_2</span> <span class="o">&gt;&gt;</span> <span class="n">end</span><span class="p">()</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow,TaskGroup" /><summary type="html"><![CDATA[Airflow TaskGroup 작업 그룹은 그래프 보기에서 작업을 계층적 그룹으로 구성하는 데 사용할 수 있습니다. 반복되는 패턴을 만들고 시각적 혼란을 줄이는 데 유용합니다..]]></summary></entry><entry><title type="html">Airflow Hooks - MySQL</title><link href="http://localhost:4000/workflow/Airflow-hooks-mysql/" rel="alternate" type="text/html" title="Airflow Hooks - MySQL" /><published>2022-12-18T00:00:00+09:00</published><updated>2022-12-18T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20hooks-mysql</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-hooks-mysql/"><![CDATA[<h2 id="airflow-hooks---mysql">Airflow Hooks - MySQL</h2>
-
-<p>MySqlHook 예제입니다.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span> 
-<span class="kn">from</span> <span class="nn">airflow.operators.python</span> <span class="kn">import</span> <span class="n">PythonOperator</span>
-<span class="kn">from</span> <span class="nn">airflow.operators.empty</span> <span class="kn">import</span> <span class="n">EmptyOperator</span> 
-<span class="kn">from</span> <span class="nn">airflow.providers.mysql.hooks.mysql</span> <span class="kn">import</span> <span class="n">MySqlHook</span> 
-<span class="c1"># utils
-</span><span class="kn">from</span> <span class="nn">airflow.utils.dates</span> <span class="kn">import</span> <span class="n">days_ago</span> 
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span> 
-<span class="kn">from</span> <span class="nn">tempfile</span> <span class="kn">import</span> <span class="n">NamedTemporaryFile</span> 
-<span class="kn">import</span> <span class="nn">csv</span><span class="p">,</span> <span class="n">logging</span> 
-
-<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s">'start_date'</span><span class="p">:</span> <span class="n">days_ago</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
-  <span class="s">'retries'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-  <span class="s">'retry_delay'</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
-  <span class="s">'schedule_interval'</span><span class="p">:</span> <span class="s">'@daily'</span><span class="p">,</span>
-  <span class="s">'catchup'</span><span class="p">:</span> <span class="bp">False</span>
-<span class="p">}</span>
-
-<span class="n">MYSQL_CONN_ID</span> <span class="o">=</span><span class="s">'mysql-conn'</span>
-
-<span class="k">def</span> <span class="nf">export_db_to_dsv</span><span class="p">():</span>
-  <span class="n">logging</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s">"Staring mysql_hook"</span><span class="p">)</span>
-  <span class="n">hook</span> <span class="o">=</span> <span class="n">MySqlHook</span><span class="p">(</span><span class="n">conn_id</span> <span class="o">=</span> <span class="n">MYSQL_CONN_ID</span><span class="p">)</span>
-  <span class="n">conn</span> <span class="o">=</span> <span class="n">hook</span><span class="p">.</span><span class="n">get_conn</span><span class="p">()</span> 
-  <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="p">.</span><span class="n">cursor</span><span class="p">()</span>
-  <span class="n">cursor</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">'use demo'</span><span class="p">)</span>
-  <span class="n">cursor</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">'select * from users'</span><span class="p">)</span>
-  
-  <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'/opt/airflow/data/employee.csv'</span><span class="p">,</span> <span class="s">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span> 
-    <span class="n">csv_writer</span> <span class="o">=</span> <span class="n">csv</span><span class="p">.</span><span class="n">writer</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> 
-    <span class="n">csv_writer</span><span class="p">.</span><span class="n">writerow</span><span class="p">([</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cursor</span><span class="p">.</span><span class="n">dscription</span><span class="p">])</span>
-    <span class="n">csv_writer</span><span class="p">.</span><span class="n">writerows</span><span class="p">(</span><span class="n">cursor</span><span class="p">)</span>
-    <span class="n">f</span><span class="p">.</span><span class="n">flush</span><span class="p">()</span>
-    <span class="n">cursor</span><span class="p">.</span><span class="n">close</span><span class="p">()</span> 
-    <span class="n">conn</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
-    <span class="n">logging</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s">'Saved data in csv file: %s'</span><span class="p">,</span> <span class="s">'/opt/airflow/data/employee.csv'</span><span class="p">)</span>
-    
-<span class="k">with</span> <span class="n">DAG</span><span class="p">(</span>
-  <span class="n">dag_id</span> <span class="o">=</span> <span class="s">'mysql-hook-db-to-csv'</span><span class="p">,</span>
-  <span class="n">default_args</span> <span class="o">=</span> <span class="n">default_args</span><span class="p">,</span>
-  <span class="n">tags</span> <span class="o">=</span> <span class="p">[</span><span class="s">'training'</span><span class="p">]</span>
-<span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span> 
-  <span class="n">export_task</span> <span class="o">=</span> <span class="n">PythonOperator</span><span class="p">(</span>
-        <span class="n">task_id</span><span class="o">=</span><span class="s">"mysql_to_csv"</span><span class="p">,</span>
-        <span class="n">python_callable</span><span class="o">=</span><span class="n">export_db_to_dsv</span>
-  <span class="p">)</span>
-  
-  <span class="n">start</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span><span class="o">=</span><span class="s">'start'</span><span class="p">)</span>
-  <span class="n">end</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span><span class="o">=</span><span class="s">'end'</span><span class="p">)</span> 
-  
-  <span class="n">start</span> <span class="o">&gt;&gt;</span> <span class="n">export_task</span> <span class="o">&gt;&gt;</span> <span class="n">end</span>  
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Airflow Hooks - MySQL]]></summary></entry><entry><title type="html">Setup Apache Airflow on Docker</title><link href="http://localhost:4000/workflow/setup-apache-airflow-on-docker/" rel="alternate" type="text/html" title="Setup Apache Airflow on Docker" /><published>2022-12-18T00:00:00+09:00</published><updated>2022-12-18T00:00:00+09:00</updated><id>http://localhost:4000/workflow/setup%20apache%20airflow%20on-docker</id><content type="html" xml:base="http://localhost:4000/workflow/setup-apache-airflow-on-docker/"><![CDATA[<h2 id="setup-apache-airflow-on-docker">Setup Apache Airflow on Docker</h2>
-<p>Apache Airflow를 실습하기 위해서 개발환경을 구성하기 위해 docker를 이용합니다.</p>
-
-<p>laptop 이나 Server에 직접 설치하거나 방법도 있으나 학습의 목적으로 쉽고 이곳 저곳 설치하는 것 없이
-docker를 이용하면 편리합니다.</p>
-
-<ul>
-  <li>docker 환경 구성</li>
-  <li>docker-compose 설치</li>
-  <li>airflow docker-compose.yaml 파일 downalod 및 환경 구성</li>
-</ul>
-
-<p>docker 환경구성을 위해 기본에는 Docker Desktop을 사용했으나 라이선스 이슈로 대체 솔루션을 구성해서 사용하고 있습니다.
-그중에 rancher desktop을 추천합니다. docker 와 docker-compose를 기존과 동일하게 사용이 가능하는 장점이 있습니다.</p>
-
-<p>Rancher Desktop은 아래 링크에서 자신의 laptop 환경에 맞는 것을 설치하시면 됩니다.</p>
-
-<p><a href="https://rancherdesktop.io/">https://rancherdesktop.io/</a></p>
-
-<p>Rancher Desktop을 설치하고 시작하고, 다음과 같이 설정해서 Docker Destop에서 사용했던 것 같이 동일하게 사용할 수 있습니다.</p>
-
-<figure style="width: 100%" class="align-left">
-  <img src="http://localhost:4000/assets/images/11-rancher-desktop.png" alt="" />
-  <figcaption></figcaption>
-</figure>
-
-<h2 id="docker-composeyaml-다운로드">docker-compose.yaml 다운로드</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-LfO</span> <span class="s1">'https://airflow.apache.org/docs/apache-airflow/2.5.0/docker-compose.yaml'</span>
-</code></pre></div></div>
-
-<h2 id="환경구성">환경구성</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> ./dags ./logs ./plugins
-<span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"AIRFLOW_UID=</span><span class="si">$(</span><span class="nb">id</span> <span class="nt">-u</span><span class="si">)</span><span class="s2">"</span> <span class="o">&gt;</span> .env
-</code></pre></div></div>
-
-<h2 id="initialize-the-database">Initialize the database</h2>
-
-<p>Airflow example을 원하지 않는 경우 docker-compose.yaml 파일의 airflow-common의 AIRFLOW__CORE__LOAD_EXAMPLES: ‘false’ 추가합니다.</p>
-
-<pre><code class="language-YAML">  environment:
-      :
-      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
-</code></pre>
-
-<p>모든 운영 체제에서 데이터베이스 마이그레이션을 실행하고 첫 번째 사용자 계정을 만들어야합니다.이</p>
-
-<p>다음과 같이 실행하십시오</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker compose up airflow-init
-</code></pre></div></div>
-
-<p>초기화가 완료되면 이와 같은 메시지가 표시됩니다</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>airflow-init_1       | Upgrades <span class="k">done
-</span>airflow-init_1       | Admin user airflow created
-airflow-init_1       | 2.5.0
-start_airflow-init_1 exited with code 0
-</code></pre></div></div>
-<h2 id="airflow-시작">Airflow 시작</h2>
-
-<p>이제 모든 서비스를 시작하기 위해 다음과 같이 수행합니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># foreground 로 수행</span>
-docker-compose up
-
-<span class="c"># 또는 </span>
-<span class="c"># background 로 수행</span>
-
-docker-compose up <span class="nt">-d</span>
-</code></pre></div></div>
-
-<h2 id="localhost8080-으로-접속">localhost:8080 으로 접속</h2>
-
-<p><a href="http://localhost:8080">http://localhost:8080</a>으로 접속하여 default admin 계정/비밀번호 인 airflow/airflow로 접속합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Setup Apache Airflow on Docker Apache Airflow를 실습하기 위해서 개발환경을 구성하기 위해 docker를 이용합니다.]]></summary></entry><entry><title type="html">Airflow Sensor</title><link href="http://localhost:4000/workflow/Airflow-Sensor/" rel="alternate" type="text/html" title="Airflow Sensor" /><published>2022-12-18T00:00:00+09:00</published><updated>2022-12-18T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20Sensor</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-Sensor/"><![CDATA[<h2 id="airflow-sensor">Airflow Sensor</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow,TaskGroup" /><summary type="html"><![CDATA[Airflow TaskGroup 작업 그룹은 그래프 보기에서 작업을 계층적 그룹으로 구성하는 데 사용할 수 있습니다. 반복되는 패턴을 만들고 시각적 혼란을 줄이는 데 유용합니다..]]></summary></entry><entry><title type="html">Airflow Sensor</title><link href="http://localhost:4000/workflow/Airflow-Sensor/" rel="alternate" type="text/html" title="Airflow Sensor" /><published>2022-12-18T00:00:00+09:00</published><updated>2022-12-18T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20Sensor</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-Sensor/"><![CDATA[<h2 id="airflow-sensor">Airflow Sensor</h2>
 <p>센서는 정확히 한 가지 일을 하도록 설계된 특별한 유형의 오퍼레이터입니다  - 무언가가 발생할 때까지 기다립니다. 시간 기반이거나 파일 또는 외부 이벤트를 기다리는 것일 수 있지만 어떤 일이 발생할 때까지 기다렸다가 해당조건을 만족하면  다운스트림 작업(이후 Task)을 실행할 수 있습니다.</p>
 
 <p><a href="https://airflow.apache.org/docs/apache-airflow/2.2.3/_api/airflow/sensors/index.html">https://airflow.apache.org/docs/apache-airflow/2.2.3/_api/airflow/sensors/index.html</a></p>
@@ -611,7 +566,233 @@ docker-compose up <span class="nt">-d</span>
   <span class="p">)</span>
   
   <span class="n">start</span> <span class="o">&gt;&gt;</span> <span class="n">sensor_task</span> <span class="o">&gt;&gt;</span> <span class="n">end</span> 
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Airflow Sensor 센서는 정확히 한 가지 일을 하도록 설계된 특별한 유형의 오퍼레이터입니다 - 무언가가 발생할 때까지 기다립니다. 시간 기반이거나 파일 또는 외부 이벤트를 기다리는 것일 수 있지만 어떤 일이 발생할 때까지 기다렸다가 해당조건을 만족하면 다운스트림 작업(이후 Task)을 실행할 수 있습니다.]]></summary></entry><entry><title type="html">Airflow Hooks</title><link href="http://localhost:4000/workflow/Airflow-hooks/" rel="alternate" type="text/html" title="Airflow Hooks" /><published>2022-12-17T00:00:00+09:00</published><updated>2022-12-17T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20hooks</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-hooks/"><![CDATA[<h2 id="airflow-hooks">Airflow Hooks</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Airflow Sensor 센서는 정확히 한 가지 일을 하도록 설계된 특별한 유형의 오퍼레이터입니다 - 무언가가 발생할 때까지 기다립니다. 시간 기반이거나 파일 또는 외부 이벤트를 기다리는 것일 수 있지만 어떤 일이 발생할 때까지 기다렸다가 해당조건을 만족하면 다운스트림 작업(이후 Task)을 실행할 수 있습니다.]]></summary></entry><entry><title type="html">Setup Apache Airflow on Docker</title><link href="http://localhost:4000/workflow/setup-apache-airflow-on-docker/" rel="alternate" type="text/html" title="Setup Apache Airflow on Docker" /><published>2022-12-18T00:00:00+09:00</published><updated>2022-12-18T00:00:00+09:00</updated><id>http://localhost:4000/workflow/setup%20apache%20airflow%20on-docker</id><content type="html" xml:base="http://localhost:4000/workflow/setup-apache-airflow-on-docker/"><![CDATA[<h2 id="setup-apache-airflow-on-docker">Setup Apache Airflow on Docker</h2>
+<p>Apache Airflow를 실습하기 위해서 개발환경을 구성하기 위해 docker를 이용합니다.</p>
+
+<p>laptop 이나 Server에 직접 설치하거나 방법도 있으나 학습의 목적으로 쉽고 이곳 저곳 설치하는 것 없이
+docker를 이용하면 편리합니다.</p>
+
+<ul>
+  <li>docker 환경 구성</li>
+  <li>docker-compose 설치</li>
+  <li>airflow docker-compose.yaml 파일 downalod 및 환경 구성</li>
+</ul>
+
+<p>docker 환경구성을 위해 기본에는 Docker Desktop을 사용했으나 라이선스 이슈로 대체 솔루션을 구성해서 사용하고 있습니다.
+그중에 rancher desktop을 추천합니다. docker 와 docker-compose를 기존과 동일하게 사용이 가능하는 장점이 있습니다.</p>
+
+<p>Rancher Desktop은 아래 링크에서 자신의 laptop 환경에 맞는 것을 설치하시면 됩니다.</p>
+
+<p><a href="https://rancherdesktop.io/">https://rancherdesktop.io/</a></p>
+
+<p>Rancher Desktop을 설치하고 시작하고, 다음과 같이 설정해서 Docker Destop에서 사용했던 것 같이 동일하게 사용할 수 있습니다.</p>
+
+<figure style="width: 100%" class="align-left">
+  <img src="http://localhost:4000/assets/images/11-rancher-desktop.png" alt="" />
+  <figcaption></figcaption>
+</figure>
+
+<h2 id="docker-composeyaml-다운로드">docker-compose.yaml 다운로드</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-LfO</span> <span class="s1">'https://airflow.apache.org/docs/apache-airflow/2.5.0/docker-compose.yaml'</span>
+</code></pre></div></div>
+
+<h2 id="환경구성">환경구성</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> ./dags ./logs ./plugins
+<span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"AIRFLOW_UID=</span><span class="si">$(</span><span class="nb">id</span> <span class="nt">-u</span><span class="si">)</span><span class="s2">"</span> <span class="o">&gt;</span> .env
+</code></pre></div></div>
+
+<h2 id="initialize-the-database">Initialize the database</h2>
+
+<p>Airflow example을 원하지 않는 경우 docker-compose.yaml 파일의 airflow-common의 AIRFLOW__CORE__LOAD_EXAMPLES: ‘false’ 추가합니다.</p>
+
+<pre><code class="language-YAML">  environment:
+      :
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+</code></pre>
+
+<p>모든 운영 체제에서 데이터베이스 마이그레이션을 실행하고 첫 번째 사용자 계정을 만들어야합니다.이</p>
+
+<p>다음과 같이 실행하십시오</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker compose up airflow-init
+</code></pre></div></div>
+
+<p>초기화가 완료되면 이와 같은 메시지가 표시됩니다</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>airflow-init_1       | Upgrades <span class="k">done
+</span>airflow-init_1       | Admin user airflow created
+airflow-init_1       | 2.5.0
+start_airflow-init_1 exited with code 0
+</code></pre></div></div>
+<h2 id="airflow-시작">Airflow 시작</h2>
+
+<p>이제 모든 서비스를 시작하기 위해 다음과 같이 수행합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># foreground 로 수행</span>
+docker-compose up
+
+<span class="c"># 또는 </span>
+<span class="c"># background 로 수행</span>
+
+docker-compose up <span class="nt">-d</span>
+</code></pre></div></div>
+
+<h2 id="localhost8080-으로-접속">localhost:8080 으로 접속</h2>
+
+<p><a href="http://localhost:8080">http://localhost:8080</a>으로 접속하여 default admin 계정/비밀번호 인 airflow/airflow로 접속합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Setup Apache Airflow on Docker Apache Airflow를 실습하기 위해서 개발환경을 구성하기 위해 docker를 이용합니다.]]></summary></entry><entry><title type="html">Airflow Operator</title><link href="http://localhost:4000/workflow/Airflow-operators/" rel="alternate" type="text/html" title="Airflow Operator" /><published>2022-12-17T00:00:00+09:00</published><updated>2022-12-17T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20operators</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-operators/"><![CDATA[<h2 id="airflow-operator">Airflow Operator</h2>
+<p>DAG을 구성하는 작업을 Task라고 하며, DAG이 수행할 작업을 의미합니다. 한개 이상의 Task를 pipeline으로 연결해서 하나의 DAG을 완성해야 합니다.
+Task에는</p>
+
+<ul>
+  <li>Operator</li>
+  <li>Sensor</li>
+  <li>Hook</li>
+</ul>
+
+<p>가 있습니다.<br />
+Operator에서는 대표적인. Bash, Python, Empty 또는 이전버전 Dummy Operator가 있습니다. 
+상세한 Operator 정보는 다음의 <a href="https://airflow.apache.org/docs/apache-airflow/2.2.3/operators-and-hooks-ref.html">링크</a>를 참고하세요</p>
+
+<p><a href="https://airflow.apache.org/docs/apache-airflow/2.2.3/operators-and-hooks-ref.html">https://airflow.apache.org/docs/apache-airflow/2.2.3/operators-and-hooks-ref.html</a></p>
+
+<p>Operator는</p>
+
+<ul>
+  <li>Action Operator</li>
+  <li>Transfer Operator</li>
+  <li>Sensor Operator</li>
+</ul>
+
+<p>로 구분됩니다. <br />
+Action Operator 는 작업을 수행하거나 다른 작업을 수행하도록 trigger합니다.<br />
+Transfer Operator는 특정 시스템에 다른 시스템으로 데이터를 이동합니다.<br />
+Sensor Operator는 특정 조건에 일치할 때 까지 기다렸다가, 만족되면 이후 과정을 진행하도록 기다려는 Operator.</p>
+
+<p>여기에서는 대표적인 Operator 를 알아보겠습니다.</p>
+<ul>
+  <li>EmptyOperator</li>
+  <li>BashOperator</li>
+  <li>PythonOperator</li>
+</ul>
+
+<p>기외 주요 Operator는 다음과 같습니다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>구분</th>
+      <th>클래스 경로</th>
+      <th>설명</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>BranchPythonOperator</td>
+      <td>airflow.operators.branch</td>
+      <td>파이션 실행결과에 따른 분기를 설정하는 Operator</td>
+    </tr>
+    <tr>
+      <td>TriggerDagRunOperator</td>
+      <td>airflow.operators.trigger_dagrun</td>
+      <td>지정한 dag을 실행</td>
+    </tr>
+    <tr>
+      <td>ShortCircuitOperator</td>
+      <td>airflow.operators.python</td>
+      <td>bool 조건에 맞을 때만 실행 <br /> bool 연산 로직은 python_callable로 전달</td>
+    </tr>
+    <tr>
+      <td>EmailOperator</td>
+      <td>airflow.operators.email</td>
+      <td>이메일 전송</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>그외 operator들은 다음의 <a href="https://airflow.apache.org/docs/apache-airflow/2.2.3/_api/airflow/operators/index.html">링크</a> 참고합니다.</p>
+
+<p><a href="https://airflow.apache.org/docs/apache-airflow/2.2.3/_api/airflow/operators/index.html">https://airflow.apache.org/docs/apache-airflow/2.2.3/_api/airflow/operators/index.html</a></p>
+
+<p>Bash Operator 예제</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span>  
+<span class="kn">from</span> <span class="nn">airflow.operators.bash</span> <span class="kn">import</span> <span class="n">BashOperator</span> 
+<span class="kn">from</span> <span class="nn">airflow.operators.empty</span> <span class="kn">import</span> <span class="n">EmptyOperator</span> 
+<span class="kn">from</span> <span class="nn">airflow.utils.dates</span> <span class="kn">import</span> <span class="n">days_ago</span> 
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span> 
+
+<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'start_date'</span><span class="p">:</span> <span class="n">days_ago</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+  <span class="s">'retries'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s">'retry_delay'</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
+  <span class="s">'schedule_interval'</span><span class="p">:</span> <span class="s">'@daily'</span><span class="p">,</span>
+  <span class="s">'catchup'</span><span class="p">:</span> <span class="bp">False</span>
+<span class="p">}</span>
+
+<span class="k">with</span> <span class="n">DAG</span><span class="p">(</span>
+  <span class="n">dag_id</span> <span class="o">=</span> <span class="s">'bash-op'</span><span class="p">,</span>
+  <span class="n">default_args</span> <span class="o">=</span> <span class="n">default_args</span><span class="p">,</span>
+  <span class="n">tags</span> <span class="o">=</span> <span class="p">[</span><span class="s">'training'</span><span class="p">]</span>
+<span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span> 
+  <span class="n">start</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span>
+    <span class="n">task_id</span> <span class="o">=</span> <span class="s">'start'</span>
+  <span class="p">)</span>
+  
+  <span class="n">end</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span>
+    <span class="n">task_id</span> <span class="o">=</span> <span class="s">'end'</span>
+  <span class="p">)</span>
+  
+  <span class="n">bash_task</span> <span class="o">=</span> <span class="n">BashOperator</span><span class="p">(</span>
+    <span class="n">task_id</span><span class="o">=</span><span class="s">"test_bash"</span><span class="p">,</span>
+    <span class="n">bash_command</span> <span class="o">=</span> <span class="s">"echo 'This is the ds: </span><span class="se">\'</span><span class="s">$msg</span><span class="se">\'</span><span class="s">'"</span><span class="p">,</span>
+    <span class="n">env</span> <span class="o">=</span> <span class="p">{</span> <span class="s">"msg"</span><span class="p">:</span> <span class="s">''</span><span class="p">}</span>
+  <span class="p">)</span>
+  
+  <span class="n">start</span> <span class="o">&gt;&gt;</span> <span class="n">bash_task</span> <span class="o">&gt;&gt;</span> <span class="n">end</span> 
+</code></pre></div></div>
+
+<p>Python Operator 예제</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span> 
+<span class="kn">from</span> <span class="nn">airflow.operators.python</span> <span class="kn">import</span>  <span class="n">PythonOperator</span> 
+<span class="kn">from</span> <span class="nn">airflow.operators.empty</span> <span class="kn">import</span> <span class="n">EmptyOperator</span>
+
+<span class="kn">from</span> <span class="nn">airflow.utils.dates</span> <span class="kn">import</span> <span class="n">days_ago</span> 
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span> 
+
+<span class="kn">import</span> <span class="nn">time</span> 
+
+<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'start_date'</span><span class="p">:</span> <span class="n">days_ago</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+  <span class="s">'retries'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s">'retry_delay'</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
+  <span class="s">'schedule_interval'</span><span class="p">:</span> <span class="s">'@daily'</span><span class="p">,</span>
+  <span class="s">'tags'</span><span class="p">:</span> <span class="p">[</span><span class="s">'training'</span><span class="p">],</span>
+  <span class="s">'catchup'</span><span class="p">:</span> <span class="bp">False</span>
+<span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">_sleep_func</span><span class="p">(</span><span class="n">sleep_time</span><span class="p">):</span>
+  <span class="k">print</span><span class="p">(</span><span class="s">'Start sleep {sleep_time} seconds'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">sleep_time</span> <span class="o">=</span> <span class="n">sleep_time</span><span class="p">))</span>
+  <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">sleep_time</span><span class="p">)</span> 
+
+<span class="k">with</span> <span class="n">DAG</span><span class="p">(</span>
+  <span class="n">dag_id</span> <span class="o">=</span> <span class="s">'python-op'</span><span class="p">,</span>
+  <span class="n">default_args</span><span class="o">=</span><span class="n">default_args</span><span class="p">,</span>
+  <span class="n">tags</span> <span class="o">=</span> <span class="p">[</span><span class="s">'training'</span><span class="p">]</span>
+<span class="p">)</span> <span class="k">as</span> <span class="n">dag</span> <span class="p">:</span>
+  <span class="n">start</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span> <span class="o">=</span> <span class="s">'start_task'</span><span class="p">)</span>
+  <span class="n">end</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span> <span class="o">=</span> <span class="s">'end_task'</span><span class="p">)</span>
+  
+  <span class="n">task1</span> <span class="o">=</span> <span class="n">PythonOperator</span><span class="p">(</span>
+    <span class="n">task_id</span> <span class="o">=</span> <span class="s">'python_callable_task1'</span><span class="p">,</span>
+    <span class="n">python_callable</span> <span class="o">=</span> <span class="n">_sleep_func</span><span class="p">,</span>
+    <span class="n">op_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s">"sleep_time"</span> <span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+  <span class="p">)</span>
+  
+  <span class="n">start</span> <span class="o">&gt;&gt;</span> <span class="n">task1</span> <span class="o">&gt;&gt;</span> <span class="n">end</span>  
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Airflow Operator DAG을 구성하는 작업을 Task라고 하며, DAG이 수행할 작업을 의미합니다. 한개 이상의 Task를 pipeline으로 연결해서 하나의 DAG을 완성해야 합니다. Task에는]]></summary></entry><entry><title type="html">Airflow Hooks</title><link href="http://localhost:4000/workflow/Airflow-hooks/" rel="alternate" type="text/html" title="Airflow Hooks" /><published>2022-12-17T00:00:00+09:00</published><updated>2022-12-17T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20hooks</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-hooks/"><![CDATA[<h2 id="airflow-hooks">Airflow Hooks</h2>
 <p>Hook은 DB나 서비스 같은 외부 시스템(Database, Storage)과 통신하기 위한 인터페이스를 제공하여 연결상태를 유지하여 작업을 처리하기 위해 사용합니다.</p>
 
 <figure style="width: 100%" class="align-left">
@@ -778,305 +959,4 @@ POD에 customer.csv 파일을 복사합니다.</p>
   <span class="p">)</span>
   
   <span class="n">start</span> <span class="o">&gt;&gt;</span> <span class="n">export_task</span> <span class="o">&gt;&gt;</span> <span class="n">end</span> 
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Airflow Hooks Hook은 DB나 서비스 같은 외부 시스템(Database, Storage)과 통신하기 위한 인터페이스를 제공하여 연결상태를 유지하여 작업을 처리하기 위해 사용합니다.]]></summary></entry><entry><title type="html">Airflow Operator</title><link href="http://localhost:4000/workflow/Airflow-operators/" rel="alternate" type="text/html" title="Airflow Operator" /><published>2022-12-17T00:00:00+09:00</published><updated>2022-12-17T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20operators</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-operators/"><![CDATA[<h2 id="airflow-operator">Airflow Operator</h2>
-<p>DAG을 구성하는 작업을 Task라고 하며, DAG이 수행할 작업을 의미합니다. 한개 이상의 Task를 pipeline으로 연결해서 하나의 DAG을 완성해야 합니다.
-Task에는</p>
-
-<ul>
-  <li>Operator</li>
-  <li>Sensor</li>
-  <li>Hook</li>
-</ul>
-
-<p>가 있습니다.<br />
-Operator에서는 대표적인. Bash, Python, Empty 또는 이전버전 Dummy Operator가 있습니다. 
-상세한 Operator 정보는 다음의 <a href="https://airflow.apache.org/docs/apache-airflow/2.2.3/operators-and-hooks-ref.html">링크</a>를 참고하세요</p>
-
-<p><a href="https://airflow.apache.org/docs/apache-airflow/2.2.3/operators-and-hooks-ref.html">https://airflow.apache.org/docs/apache-airflow/2.2.3/operators-and-hooks-ref.html</a></p>
-
-<p>Operator는</p>
-
-<ul>
-  <li>Action Operator</li>
-  <li>Transfer Operator</li>
-  <li>Sensor Operator</li>
-</ul>
-
-<p>로 구분됩니다. <br />
-Action Operator 는 작업을 수행하거나 다른 작업을 수행하도록 trigger합니다.<br />
-Transfer Operator는 특정 시스템에 다른 시스템으로 데이터를 이동합니다.<br />
-Sensor Operator는 특정 조건에 일치할 때 까지 기다렸다가, 만족되면 이후 과정을 진행하도록 기다려는 Operator.</p>
-
-<p>여기에서는 대표적인 Operator 를 알아보겠습니다.</p>
-<ul>
-  <li>EmptyOperator</li>
-  <li>BashOperator</li>
-  <li>PythonOperator</li>
-</ul>
-
-<p>기외 주요 Operator는 다음과 같습니다.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>구분</th>
-      <th>클래스 경로</th>
-      <th>설명</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>BranchPythonOperator</td>
-      <td>airflow.operators.branch</td>
-      <td>파이션 실행결과에 따른 분기를 설정하는 Operator</td>
-    </tr>
-    <tr>
-      <td>TriggerDagRunOperator</td>
-      <td>airflow.operators.trigger_dagrun</td>
-      <td>지정한 dag을 실행</td>
-    </tr>
-    <tr>
-      <td>ShortCircuitOperator</td>
-      <td>airflow.operators.python</td>
-      <td>bool 조건에 맞을 때만 실행 <br /> bool 연산 로직은 python_callable로 전달</td>
-    </tr>
-    <tr>
-      <td>EmailOperator</td>
-      <td>airflow.operators.email</td>
-      <td>이메일 전송</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>그외 operator들은 다음의 <a href="https://airflow.apache.org/docs/apache-airflow/2.2.3/_api/airflow/operators/index.html">링크</a> 참고합니다.</p>
-
-<p><a href="https://airflow.apache.org/docs/apache-airflow/2.2.3/_api/airflow/operators/index.html">https://airflow.apache.org/docs/apache-airflow/2.2.3/_api/airflow/operators/index.html</a></p>
-
-<p>Bash Operator 예제</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span>  
-<span class="kn">from</span> <span class="nn">airflow.operators.bash</span> <span class="kn">import</span> <span class="n">BashOperator</span> 
-<span class="kn">from</span> <span class="nn">airflow.operators.empty</span> <span class="kn">import</span> <span class="n">EmptyOperator</span> 
-<span class="kn">from</span> <span class="nn">airflow.utils.dates</span> <span class="kn">import</span> <span class="n">days_ago</span> 
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span> 
-
-<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s">'start_date'</span><span class="p">:</span> <span class="n">days_ago</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
-  <span class="s">'retries'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-  <span class="s">'retry_delay'</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
-  <span class="s">'schedule_interval'</span><span class="p">:</span> <span class="s">'@daily'</span><span class="p">,</span>
-  <span class="s">'catchup'</span><span class="p">:</span> <span class="bp">False</span>
-<span class="p">}</span>
-
-<span class="k">with</span> <span class="n">DAG</span><span class="p">(</span>
-  <span class="n">dag_id</span> <span class="o">=</span> <span class="s">'bash-op'</span><span class="p">,</span>
-  <span class="n">default_args</span> <span class="o">=</span> <span class="n">default_args</span><span class="p">,</span>
-  <span class="n">tags</span> <span class="o">=</span> <span class="p">[</span><span class="s">'training'</span><span class="p">]</span>
-<span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span> 
-  <span class="n">start</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span>
-    <span class="n">task_id</span> <span class="o">=</span> <span class="s">'start'</span>
-  <span class="p">)</span>
-  
-  <span class="n">end</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span>
-    <span class="n">task_id</span> <span class="o">=</span> <span class="s">'end'</span>
-  <span class="p">)</span>
-  
-  <span class="n">bash_task</span> <span class="o">=</span> <span class="n">BashOperator</span><span class="p">(</span>
-    <span class="n">task_id</span><span class="o">=</span><span class="s">"test_bash"</span><span class="p">,</span>
-    <span class="n">bash_command</span> <span class="o">=</span> <span class="s">"echo 'This is the ds: </span><span class="se">\'</span><span class="s">$msg</span><span class="se">\'</span><span class="s">'"</span><span class="p">,</span>
-    <span class="n">env</span> <span class="o">=</span> <span class="p">{</span> <span class="s">"msg"</span><span class="p">:</span> <span class="s">''</span><span class="p">}</span>
-  <span class="p">)</span>
-  
-  <span class="n">start</span> <span class="o">&gt;&gt;</span> <span class="n">bash_task</span> <span class="o">&gt;&gt;</span> <span class="n">end</span> 
-</code></pre></div></div>
-
-<p>Python Operator 예제</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span> 
-<span class="kn">from</span> <span class="nn">airflow.operators.python</span> <span class="kn">import</span>  <span class="n">PythonOperator</span> 
-<span class="kn">from</span> <span class="nn">airflow.operators.empty</span> <span class="kn">import</span> <span class="n">EmptyOperator</span>
-
-<span class="kn">from</span> <span class="nn">airflow.utils.dates</span> <span class="kn">import</span> <span class="n">days_ago</span> 
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span> 
-
-<span class="kn">import</span> <span class="nn">time</span> 
-
-<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s">'start_date'</span><span class="p">:</span> <span class="n">days_ago</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
-  <span class="s">'retries'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-  <span class="s">'retry_delay'</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
-  <span class="s">'schedule_interval'</span><span class="p">:</span> <span class="s">'@daily'</span><span class="p">,</span>
-  <span class="s">'tags'</span><span class="p">:</span> <span class="p">[</span><span class="s">'training'</span><span class="p">],</span>
-  <span class="s">'catchup'</span><span class="p">:</span> <span class="bp">False</span>
-<span class="p">}</span>
-
-<span class="k">def</span> <span class="nf">_sleep_func</span><span class="p">(</span><span class="n">sleep_time</span><span class="p">):</span>
-  <span class="k">print</span><span class="p">(</span><span class="s">'Start sleep {sleep_time} seconds'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">sleep_time</span> <span class="o">=</span> <span class="n">sleep_time</span><span class="p">))</span>
-  <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">sleep_time</span><span class="p">)</span> 
-
-<span class="k">with</span> <span class="n">DAG</span><span class="p">(</span>
-  <span class="n">dag_id</span> <span class="o">=</span> <span class="s">'python-op'</span><span class="p">,</span>
-  <span class="n">default_args</span><span class="o">=</span><span class="n">default_args</span><span class="p">,</span>
-  <span class="n">tags</span> <span class="o">=</span> <span class="p">[</span><span class="s">'training'</span><span class="p">]</span>
-<span class="p">)</span> <span class="k">as</span> <span class="n">dag</span> <span class="p">:</span>
-  <span class="n">start</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span> <span class="o">=</span> <span class="s">'start_task'</span><span class="p">)</span>
-  <span class="n">end</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span> <span class="o">=</span> <span class="s">'end_task'</span><span class="p">)</span>
-  
-  <span class="n">task1</span> <span class="o">=</span> <span class="n">PythonOperator</span><span class="p">(</span>
-    <span class="n">task_id</span> <span class="o">=</span> <span class="s">'python_callable_task1'</span><span class="p">,</span>
-    <span class="n">python_callable</span> <span class="o">=</span> <span class="n">_sleep_func</span><span class="p">,</span>
-    <span class="n">op_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s">"sleep_time"</span> <span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
-  <span class="p">)</span>
-  
-  <span class="n">start</span> <span class="o">&gt;&gt;</span> <span class="n">task1</span> <span class="o">&gt;&gt;</span> <span class="n">end</span>  
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Airflow Operator DAG을 구성하는 작업을 Task라고 하며, DAG이 수행할 작업을 의미합니다. 한개 이상의 Task를 pipeline으로 연결해서 하나의 DAG을 완성해야 합니다. Task에는]]></summary></entry><entry><title type="html">Airflow Trigger_rules</title><link href="http://localhost:4000/workflow/trigger_rules/" rel="alternate" type="text/html" title="Airflow Trigger_rules" /><published>2022-12-15T00:00:00+09:00</published><updated>2022-12-15T00:00:00+09:00</updated><id>http://localhost:4000/workflow/trigger_rules</id><content type="html" xml:base="http://localhost:4000/workflow/trigger_rules/"><![CDATA[<h2 id="airflow-trigger-rules">Airflow Trigger rules</h2>
-<p>일반적으로 Task는 이전 Task들이 성공할 때만 실행됩니다. 
-trigger rule이 default로 all_success이기 때문입니다. 기본적으로 모든 상위 작업이 성공하면 작업이 실행됩니다. 이 action은 일반적으로 기대하는 것입니다.</p>
-
-<p>그러나 더 복잡한 것을 원한다면 어떻게 해야 할까요?
-상위 task 중 한 개 task가 성공하자마자 작업을 수행하고 싶다면 어떻게? 
-아니면 작업이 실패하면 다른 작업 세트를 실행하고 싶습니까?
-또는 작업이 성공하거나 실패하거나 이벤트가 건너 뛸 경우에 따라 다르게 action 을 해야 하는 경우?</p>
-
-<p>좀더 복잡한 workflow는 Task간 다양한 의존성이 존재합니다. 일반적인 워크플로 동작은  모든 직접 업스트림 작업이 성공할 때 작업을 트리거하는 것이지만 Airflow는 더 복잡한 종속성 설정을 허용합니다.
-이러한 다양한 의존성을 지원하기 위한 Trigger Rule들이 다음과 같이 존재합니다</p>
-
-<p>모든 Operator 에는  생성된 작업이 트리거되는 규칙을 정의하는 trigger_rule 인수가 있습니다. trigger_rule  의 기본값은 all_success이며 “모든 직접 업스트림 작업이 성공하면 이 작업 트리거”로 정의할 수 있습니다. 여기에 설명된 다른 모든 규칙은 직접 상위 작업을 기반으로 하며 작업을 만드는 동안 모든위 Operator에게 전달할 수 있는 값입니다.</p>
-
-<ul>
-  <li>all_success: (default) 모든 상위 Task가 성공한 경우</li>
-  <li>all_failed: 모든 Parent Task가 실패 또는 upstream_failed 상태일 떄 하위 Task가 실행</li>
-  <li>all_done: 모든 상위 Task가 완료된 경우 하위 Task 실행.</li>
-  <li>one_failed: 적어도 한 부모가 실패하자마자 모든 부모가 완료 될 때까지 기다리지 않고 실행됩니다.</li>
-  <li>one_success: 적어도 한 부모가 성공하자마자 모든 부모가 완료 될 때까지 기다리지 않고 Trigger 됩니다.</li>
-  <li>none_failed: 모든 상위 Task가 실패가 없는 경우(failed or upstream_failed) i.e. 모든 부모가 성공했거나 skip인 경우 하위 Task 실행.</li>
-  <li>none_skipped:상위 Task의 상태가 Skip이 없는 경우 하위 Task 실행, i.e. all parents are in a success, failed, or upstream_failed state</li>
-</ul>
-
-<p>아래의 task Graph view 처럼 trigger rule이 all_success인 경우 end task는 실행되지 않고 skip하게 되는 경우도 있습니다.</p>
-
-<figure style="width: 100%" class="align-left">
-  <img src="http://localhost:4000/assets/images/08-trigger-rule-none_ailed_min_one_success.png" alt="" />
-  <figcaption></figcaption>
-</figure>
-
-<p>어떤 dag은 이전 Task에 실패가 없고 최소한 한개 이상 성공한 경우end task를 항상 실행하고자 할 때 end task에 trigger rule을 none_failed_min_one_success
-로 설정하면 다음과 같이 end task를 실행할 수 있습니다.</p>
-
-<figure style="width: 100%" class="align-left">
-  <img src="http://localhost:4000/assets/images/08-trigger-rule-none_ailed_min_one_success.png" alt="" />
-  <figcaption></figcaption>
-</figure>
-
-<p>예시)</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">t1</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span><span class="o">=</span><span class="err">’</span><span class="n">end</span><span class="err">’</span><span class="p">,</span> <span class="n">trigger_rule</span><span class="o">=</span><span class="err">’</span> <span class="n">none_failed_min_one_success</span><span class="err">’</span><span class="p">)</span>
-</code></pre></div></div>
-
-<h4 id="all_success">all_success</h4>
-<p>이것은 매우 간단하고 이미 보았습니다. 모든 업스트림 작업 (부모)이 성공했을 때 작업이 시작됩니다</p>
-
-<figure style="width: 100%" class="align-left">
-  <img src="http://localhost:4000/assets/images/08-trigger-rule-all_success2.png" alt="" />
-  <figcaption></figcaption>
-</figure>
-
-<figure style="width: 100%" class="align-left">
-  <img src="http://localhost:4000/assets/images/08-trigger-rule-all_success3.png" alt="" />
-  <figcaption></figcaption>
-</figure>
-
-<h4 id="all_failed">all_failed</h4>
-<p>모든 상위 작업이 실패하면 Task C 는 작업이 Trigger 됩니다</p>
-
-<figure style="width: 100%" class="align-left">
-  <img src="http://localhost:4000/assets/images/08-trigger-rule-all_failed.png" alt="" />
-  <figcaption></figcaption>
-</figure>
-
-<h4 id="all_done">all_done</h4>
-
-<p>모든 업스트림 작업 (상위)이 자신의 상태에 관계없이 실행을 수행하면 작업을 트리거하고 합니다. 이 트리거 규칙은 업스트림 작업의 상태에 관계없이 항상 실행하려는 작업이 있는 경우 유용 할 수 있습니다.</p>
-
-<figure style="width: 100%" class="align-left">
-  <img src="http://localhost:4000/assets/images/08-trigger-rule-all_done.png" alt="" />
-  <figcaption></figcaption>
-</figure>
-
-<h4 id="none_failed">none_failed</h4>
-
-<p>모든 업스트림 작업이 성공하거나 skip이면  Task D는 트리거 됩니다</p>
-
-<figure style="width: 100%" class="align-left">
-  <img src="http://localhost:4000/assets/images/08-trigger-rule-none_failed.png" alt="" />
-  <figcaption></figcaption>
-</figure>
-
-<h4 id="one_success">one_success</h4>
-
-<p>한 명의 상위 또는 업스트림 작업이 성공하자마자 트리거됩니다. 단 모든 상위 task가 종료될 때까지 기다리지 않습니다.</p>
-
-<figure style="width: 100%" class="align-left">
-  <img src="http://localhost:4000/assets/images/08-trigger-rule-one_success.png" alt="" />
-  <figcaption></figcaption>
-</figure>
-
-<h4 id="one_failed">one_failed</h4>
-
-<p>한 개의 상위 또는 업스트림 작업이 최소한 1개라도 실패하면 task D는 trigger 됩니다.단 모든 상위 task가 종료될 때까지 기다리지 않습니다</p>
-
-<figure style="width: 100%" class="align-left">
-  <img src="http://localhost:4000/assets/images/08-trigger-rule-one_failed.png" alt="" />
-  <figcaption></figcaption>
-</figure>
-
-<h4 id="none_failed_min_one_success">none_failed_min_one_success</h4>
-
-<p>한 개의 상위 또는 업스트림 작업이 모두 실패가 없고 최소한 1개라도 성공하면 task D는 trigger 됩니다.단 모든 상위 task가 종료될 때까지 기다리지 않습니다</p>
-
-<figure style="width: 100%" class="align-left">
-  <img src="http://localhost:4000/assets/images/08-trigger-rule-none_failed_min_one_success.png" alt="" />
-  <figcaption></figcaption>
-</figure>
-
-<p>예제 )</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span> 
-<span class="kn">from</span> <span class="nn">airflow.operators.bash</span> <span class="kn">import</span> <span class="n">BashOperator</span>
-<span class="kn">from</span> <span class="nn">airflow.operators.empty</span> <span class="kn">import</span> <span class="n">EmptyOperator</span> 
-<span class="kn">from</span> <span class="nn">airflow.operators.python</span> <span class="kn">import</span> <span class="n">BranchPythonOperator</span> 
-<span class="c1"># Utils 
-</span><span class="kn">from</span> <span class="nn">airflow.utils.dates</span> <span class="kn">import</span> <span class="n">days_ago</span> 
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span> 
-<span class="kn">import</span> <span class="nn">random</span>
-
-<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s">'start_date'</span><span class="p">:</span> <span class="n">days_ago</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
-  <span class="s">'retries'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> 
-  <span class="s">'retry_delay'</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
-  <span class="s">'schedule_interval'</span><span class="p">:</span> <span class="s">'@daily'</span><span class="p">,</span>
-  <span class="s">'catchup'</span><span class="p">:</span> <span class="bp">False</span>
-<span class="p">}</span>
-
-<span class="k">def</span> <span class="nf">check_condition</span><span class="p">():</span>
-  <span class="n">num</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-
-  <span class="k">if</span> <span class="n">num</span> <span class="o">&gt;</span> <span class="mi">6</span><span class="p">:</span>
-    <span class="k">return</span> <span class="s">'greater'</span>
-  <span class="k">else</span><span class="p">:</span>
-    <span class="k">return</span> <span class="s">'smaller'</span>
-  
-<span class="k">with</span> <span class="n">DAG</span><span class="p">(</span>
-  <span class="n">dag_id</span> <span class="o">=</span> <span class="s">'trigger_rule'</span><span class="p">,</span>
-  <span class="n">default_args</span> <span class="o">=</span> <span class="n">default_args</span><span class="p">,</span>
-  <span class="n">tags</span> <span class="o">=</span> <span class="p">[</span><span class="s">'training'</span><span class="p">]</span>
-<span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span> 
-  <span class="n">start</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span> <span class="o">=</span> <span class="s">'start'</span><span class="p">)</span>
-  <span class="n">end</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span><span class="o">=</span><span class="s">'end'</span><span class="p">,</span> <span class="n">trigger_rule</span> <span class="o">=</span> <span class="s">'all_done'</span><span class="p">)</span>
-
-  
-  <span class="n">greater</span> <span class="o">=</span> <span class="n">BashOperator</span><span class="p">(</span><span class="n">task_id</span> <span class="o">=</span> <span class="s">'greater'</span><span class="p">,</span> <span class="n">bash_command</span><span class="o">=</span><span class="s">'echo "value is greater than 6" &amp;&amp; sleep 30'</span><span class="p">)</span>
-  <span class="n">smaller</span> <span class="o">=</span> <span class="n">BashOperator</span><span class="p">(</span><span class="n">task_id</span> <span class="o">=</span> <span class="s">'smaller'</span><span class="p">,</span> <span class="n">bash_command</span> <span class="o">=</span><span class="s">'echo "value is smaller thant 6" &amp;&amp; exit 1'</span><span class="p">)</span>
-
-  <span class="n">start</span> <span class="o">&gt;&gt;</span> <span class="p">[</span><span class="n">greater</span><span class="p">,</span> <span class="n">smaller</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">end</span> 
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Airflow Trigger rules 일반적으로 Task는 이전 Task들이 성공할 때만 실행됩니다. trigger rule이 default로 all_success이기 때문입니다. 기본적으로 모든 상위 작업이 성공하면 작업이 실행됩니다. 이 action은 일반적으로 기대하는 것입니다.]]></summary></entry></feed>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Airflow Hooks Hook은 DB나 서비스 같은 외부 시스템(Database, Storage)과 통신하기 위한 인터페이스를 제공하여 연결상태를 유지하여 작업을 처리하기 위해 사용합니다.]]></summary></entry></feed>

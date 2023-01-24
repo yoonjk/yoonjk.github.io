@@ -125,6 +125,12 @@ var store = [{
         "url": "/workflow/setup-apache-airflow-on-docker/",
         "teaser": null
       },{
+        "title": "Kubernetes Plugin 설치 및 환경구성",
+        "excerpt":"Kubernetes Plugin 설치 Jenkins Agent로 Kubernetes에 실행하기 위해 Kubernetes Plugin을 Jenkins에 설치하여 환경을 구성합니다. Jenkins UI에서 Manage Jenkins &gt; System Configuration &gt; Manage Plugins &gt;Available plugins 메뉴를 클릭합니다 Plugins 검색 입력 필드에서 Kubernetes 입력하고 다음과 같은 첫번째 Kubernetes [V] 선택, 왼쪽 하단에 Install without restart 버튼을 클릭합니다 아래의 [v] “Restart...","categories": ["devops"],
+        "tags": ["jenkins"],
+        "url": "/devops/install-kubernetes-plugin/",
+        "teaser": null
+      },{
         "title": "Jenkins 설치 따라하기",
         "excerpt":"Jenkins Pipeline 이란? Jenkins Pipeline은 지속적인 업데이트 파이프라인을 구현하고 Jenkins에 통합하는 것을 지원하는 플러그인의 집합이다. 이 과정에서 소프트웨어를 빌드하고 여러 단계의 테스트, 배포를 진행한다. Pipeline은 Pipeline Domain Specific Language라는 문법을 통해 마치 코드를 작성하는 것과 같이 Pipeline을 통해 간단한 배포 파이프라인부터 복잡한 배포 파이프라인을 코드로 모델링하기 위한 확장 가능한 도구...","categories": ["devops"],
         "tags": ["jenkins"],
