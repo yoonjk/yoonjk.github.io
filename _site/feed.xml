@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-01-24T16:18:46+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Install MiniKube</title><link href="http://localhost:4000/kubernetes/install-minikube/" rel="alternate" type="text/html" title="Install MiniKube" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/install-minikube</id><content type="html" xml:base="http://localhost:4000/kubernetes/install-minikube/"><![CDATA[<h2 id="pre-requisites---install-docker">Pre-requisites - Install Docker</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-01-24T19:43:50+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Install MiniKube</title><link href="http://localhost:4000/kubernetes/install-minikube/" rel="alternate" type="text/html" title="Install MiniKube" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/install-minikube</id><content type="html" xml:base="http://localhost:4000/kubernetes/install-minikube/"><![CDATA[<h2 id="pre-requisites---install-docker">Pre-requisites - Install Docker</h2>
 
 <p>yum utils을 설치합니다.</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> yum-utils
@@ -184,20 +184,65 @@ bash profile을 설정하고 저장하고, bash_profile을 최신으로 적용�
 
 <p><img src="/assets/images/jenkins/13-jenkins-add-new-cloud.png" alt="Install Kubernetes Plugin" /></p>
 
-<p>Kubernetes 접속하기 위한 Credentials 정보를 입력하면이 다음과 같이 출력됩니다.
-<img src="/assets/images/jenkins/14-jenkins-configure-clouds.png" alt="Configure Clouds" /></p>
+<p>Kubernetes 접속하기 위한 Credentials 정보를 입력하면이 다음과 같이 출력됩니다. Kubernetes Cloud details 버튼을 클릭하면 상세 입력창이 출력됩니다.</p>
+<figure style="width: 5%; height: 20%; " class="align-center">
+  <img src="http://localhost:4000/assets/images/jenkins/14-jenkins-configure-clouds.png " alt="" />
+  <figcaption></figcaption>
+</figure>
 
-<p>Kubernetes Cloud details 버튼을 클릭하면 상세 입력창이 출력됩니다.
-Kubernetes Namespace section에 jenkins 를 입력합니다
+<p>Kubernetes Namespace section에 jenkins 를 입력합니다
 <img src="/assets/images/jenkins/15-jenkins-kubernetes-namespace.png" alt="Kubernetes Namespace" /></p>
 
 <p>Configure Clouds에서 Credentials &gt; Add 버튼을 클릭합니다
 <img src="/assets/images/jenkins/16-jenkins-add-jenkins.png" alt="add jenkins in Credentials" /></p>
 
-<p>Add Credentials 입력창에서 credentials 정보를 다음과 같이 입력합니다.
-File은 자신의 VM 서버의 root 계정의. $HOME/.kube/config 파일을 선택합니다.
-.kube/config을 자신의. laptop에 download받아서 choose file 버튼을 클릭하여 download 받은 config파일을 선택합니다.
-<img src="/assets/images/jenkins/17-jenkins-add-credentials.png" alt="add Credentials" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><summary type="html"><![CDATA[Kubernetes Plugin 설치 Jenkins Agent로 Kubernetes에 실행하기 위해 Kubernetes Plugin을 Jenkins에 설치하여 환경을 구성합니다.]]></summary></entry><entry><title type="html">Jenkins 시작</title><link href="http://localhost:4000/devops/start-up-jenkins/" rel="alternate" type="text/html" title="Jenkins 시작" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/devops/start-up%20jenkins</id><content type="html" xml:base="http://localhost:4000/devops/start-up-jenkins/"><![CDATA[<h2 id="start-up-jenkins">Start-up Jenkins</h2>
+<p>Add Credentials 입력창에서 credentials 정보를 다음과 같이 입력합니다.<br />
+File은 자신의 VM 서버의 root 계정의. $HOME/.kube/config 파일을 선택합니다.<br />
+.kube/config 파일을 자신의 laptop에 download 받아서 choose file 버튼을 클릭하여 download 받은 config파일을 선택합니다.<br />
+<img src="/assets/images/jenkins/17-jenkins-add-credentials.png" alt="add Credentials" /></p>
+
+<p>Credentials Section 에서 위에서 입력한 mykubeconfig를 선택하고, Test Connection버튼을 클릭하여 minikube 연결을 테스트합니다. 다음의 메시지처럼 정상 출력되는지 확인합니다.
+“Connected to Kubernetes v1.xx.x”로 표시 되는지 확인합니다</p>
+<figure style="width: 50%; height: 20%; " class="align-center">
+  <img src="http://localhost:4000/assets/images/jenkins/18-jenkins-connected.png " alt="" />
+  <figcaption></figcaption>
+</figure>
+
+<p>WebSocket 항목을 선택합니다.<br />
+[v] WebSocket</p>
+
+<p>Pod Label Section에서key / value값을 다음과 같이 입력합니다.</p>
+
+<figure style="width: 100%; height: 100%; " class="align-center">
+  <img src="http://localhost:4000/assets/images/jenkins/19-jenkins-pod-labels.png " alt="" />
+  <figcaption></figcaption>
+</figure>
+
+<p>Pod Templates Section 다음과 같이 입력합니다</p>
+<figure style="width: 50%; height: 100%; " class="align-center">
+  <img src="http://localhost:4000/assets/images/jenkins/20-jenkins-pod-templates.png " alt="" />
+  <figcaption></figcaption>
+</figure>
+
+<p>Container Section은 다음과 같이 입력하고 저장버튼을 클릭합니다.<br />
+Name : jnlp-slave<br />
+Docker image : jenkinsci/jnlp-slave:latest<br />
+Working directory : /home/jenkins/agent<br />
+Command to run : /bin/sh -c .</p>
+
+<figure style="width: 50%; height: 100%; " class="align-center">
+  <img src="http://localhost:4000/assets/images/jenkins/21-jenkins-container-templates.png " alt="" />
+  <figcaption></figcaption>
+</figure>
+
+<p>Jenkins agent가 실행할 jenkins namespace를 다음과 같이 생성합니다.</p>
+
+<p>kubectl create ns jenkins</p>
+
+<p>Jenkins Console Output 화면에서 다음과 같은 메시지가 출력되면 “Message: namespaces “jenkins” not found”  위 Jenkins namespace를 생성하지 않아서 발생하는 에러입니다.</p>
+
+<p>터미널창에서 default namespace에 app을 설치할 수 있는 권한을 cluster-admin 권한으로 jenkins에 부여합니다.
+kubectl create clusterrolebinding jenkins-admin  –clusterrole cluster-admin –serviceaccount jenkins:default</p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><summary type="html"><![CDATA[Kubernetes Plugin 설치 Jenkins Agent로 Kubernetes에 실행하기 위해 Kubernetes Plugin을 Jenkins에 설치하여 환경을 구성합니다.]]></summary></entry><entry><title type="html">Jenkins 시작</title><link href="http://localhost:4000/devops/start-up-jenkins/" rel="alternate" type="text/html" title="Jenkins 시작" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/devops/start-up%20jenkins</id><content type="html" xml:base="http://localhost:4000/devops/start-up-jenkins/"><![CDATA[<h2 id="start-up-jenkins">Start-up Jenkins</h2>
 <p>Jenkins server에 접속하기 brower에서 해당 서버의 http://localhost:8080 포트 접속합니다.</p>
 
 <p>Jenkins에 접속하면 Jenkins admin 초기 패스워드를 입력하는 화면이 출력됩니다</p>
