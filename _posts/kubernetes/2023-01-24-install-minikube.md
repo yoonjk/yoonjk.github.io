@@ -1,5 +1,5 @@
 ---
-title: Install MiniKube
+title: Install MiniKube for Jenkins
 categories:
   - kubernetes
 tags: 

@@ -155,7 +155,7 @@ var store = [{
         "url": "/docker/altassian-jira/",
         "teaser": null
       },{
-        "title": "Install MiniKube",
+        "title": "Install MiniKube for Jenkins",
         "excerpt":"Pre-requisites - Install Docker yum utils을 설치합니다. sudo yum install -y yum-utils Docker repository 정보를 download 받습니다. sudo yum-config-manager \\ --add-repo \\ https://download.docker.com/linux/centos/docker-ce.repo 최신 버전의 Docker Engine, containerd를 설치하거나 다음 단계로 이동하여 특정 버전을 설치합니다. sudo yum install -y docker-ce docker-ce-cli containerd.io docker를 시작합니다. sudo systemctl start docker docker daemon이...","categories": ["kubernetes"],
         "tags": ["minikube"],
         "url": "/kubernetes/install-minikube/",
