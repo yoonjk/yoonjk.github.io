@@ -1,74 +1,74 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-01-24T20:07:11+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Jira on docker</title><link href="http://localhost:4000/docker/altassian-jira/" rel="alternate" type="text/html" title="Jira on docker" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/docker/altassian-jira</id><content type="html" xml:base="http://localhost:4000/docker/altassian-jira/"><![CDATA[<h2 id="bitbucket-on-docker">Bitbucket on Docker</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-01-24T20:10:01+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Jira on docker</title><link href="http://localhost:4000/docker/altassian-jira/" rel="alternate" type="text/html" title="Jira on docker" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/docker/altassian-jira</id><content type="html" xml:base="http://localhost:4000/docker/altassian-jira/"><![CDATA[<h2 id="bitbucket-on-docker">Bitbucket on Docker</h2>
 <p>Docker 기반 Jira 입니다.</p>
 
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="s1">'</span><span class="s">3'</span>
-<span class="na">networks</span><span class="pi">:</span>
- <span class="na">jenkins-net</span><span class="pi">:</span>
-    <span class="na">driver</span><span class="pi">:</span> <span class="s">bridge</span>
+<pre><code class="language-YAML">version: '3'
+networks:
+ jenkins-net:
+    driver: bridge
 
-<span class="na">services</span><span class="pi">:</span>
-  <span class="na">jira</span><span class="pi">:</span>
-    <span class="na">container_name</span><span class="pi">:</span> <span class="s">jira</span>
-    <span class="na">image</span><span class="pi">:</span> <span class="s">atlassian/jira-software:latest</span>
-    <span class="na">networks</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">jenkins-net</span>
-    <span class="na">ports</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">9010:8080"</span>
+services:
+  jira:
+    container_name: jira
+    image: atlassian/jira-software:latest
+    networks:
+      - jenkins-net
+    ports:
+      - "9010:8080"
 
-  <span class="na">postgres</span><span class="pi">:</span>
-    <span class="na">container_name</span><span class="pi">:</span> <span class="s">postgres</span>
-    <span class="na">image</span><span class="pi">:</span> <span class="s">postgres:latest</span>
-    <span class="na">volumes</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">./data:/var/lib/postgresql/data</span>
-    <span class="na">environment</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s1">'</span><span class="s">POSTGRES_USER=postgres'</span>
-      <span class="c1"># CHANGE THE PASSWORD!</span>
-      <span class="pi">-</span> <span class="s1">'</span><span class="s">POSTGRES_PASSWORD=admin1234'</span>
-      <span class="pi">-</span> <span class="s1">'</span><span class="s">POSTGRES_DB=jira'</span>
-      <span class="pi">-</span> <span class="s1">'</span><span class="s">POSTGRES_ENCODING=UTF8'</span>
-    <span class="na">networks</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">jenkins-net</span>
-    <span class="na">ports</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">5432:5432"</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="jira" /><summary type="html"><![CDATA[Bitbucket on Docker Docker 기반 Jira 입니다.]]></summary></entry><entry><title type="html">Bitbucket on docker</title><link href="http://localhost:4000/docker/altassian-bitbucket-jira/" rel="alternate" type="text/html" title="Bitbucket on docker" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/docker/altassian-bitbucket-jira</id><content type="html" xml:base="http://localhost:4000/docker/altassian-bitbucket-jira/"><![CDATA[<h2 id="bitbucket-on-docker">Bitbucket on Docker</h2>
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    environment:
+      - 'POSTGRES_USER=postgres'
+      # CHANGE THE PASSWORD!
+      - 'POSTGRES_PASSWORD=admin1234'
+      - 'POSTGRES_DB=jira'
+      - 'POSTGRES_ENCODING=UTF8'
+    networks:
+      - jenkins-net
+    ports:
+      - "5432:5432"
+</code></pre>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="jira" /><summary type="html"><![CDATA[Bitbucket on Docker Docker 기반 Jira 입니다.]]></summary></entry><entry><title type="html">Bitbucket on docker</title><link href="http://localhost:4000/docker/altassian-bitbucket-jira/" rel="alternate" type="text/html" title="Bitbucket on docker" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/docker/altassian-bitbucket-jira</id><content type="html" xml:base="http://localhost:4000/docker/altassian-bitbucket-jira/"><![CDATA[<h2 id="bitbucket-on-docker">Bitbucket on Docker</h2>
 <p>Docker 기반 Bitbucket 입니다.</p>
 
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="s1">'</span><span class="s">3'</span>
-<span class="na">networks</span><span class="pi">:</span>
- <span class="na">jenkins-net</span><span class="pi">:</span>
-    <span class="na">driver</span><span class="pi">:</span> <span class="s">bridge</span>
+<pre><code class="language-YAML">version: '3'
+networks:
+ jenkins-net:
+    driver: bridge
 
-<span class="na">services</span><span class="pi">:</span>
-  <span class="na">bitbucket</span><span class="pi">:</span>
-    <span class="na">container_name</span><span class="pi">:</span> <span class="s">bitbucket</span>
-    <span class="na">image</span><span class="pi">:</span> <span class="s">atlassian/bitbucket-server:latest</span>
-    <span class="na">environment</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s1">'</span><span class="s">BITBUCKET_PROXY_PORT='</span>
-      <span class="pi">-</span> <span class="s1">'</span><span class="s">BITBUCKET_PROXY_SCHEME='</span>
-      <span class="pi">-</span> <span class="s1">'</span><span class="s">BITBUCKET_DELAYED_START='</span>
-      <span class="pi">-</span> <span class="s1">'</span><span class="s">DOCKER_WAIT_HOST=postgres'</span>
-      <span class="pi">-</span> <span class="s1">'</span><span class="s">DOCKER_WAIT_PORT=5432'</span>
-    <span class="na">networks</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">jenkins-net</span>
-    <span class="na">ports</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">8990:7990"</span>
+services:
+  bitbucket:
+    container_name: bitbucket
+    image: atlassian/bitbucket-server:latest
+    environment:
+      - 'BITBUCKET_PROXY_PORT='
+      - 'BITBUCKET_PROXY_SCHEME='
+      - 'BITBUCKET_DELAYED_START='
+      - 'DOCKER_WAIT_HOST=postgres'
+      - 'DOCKER_WAIT_PORT=5432'
+    networks:
+      - jenkins-net
+    ports:
+      - "8990:7990"
 
-  <span class="na">postgres</span><span class="pi">:</span>
-    <span class="na">container_name</span><span class="pi">:</span> <span class="s">postgres</span>
-    <span class="na">image</span><span class="pi">:</span> <span class="s">postgres:latest</span>
-    <span class="na">volumes</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">./data:/var/lib/postgresql/data</span>
-    <span class="na">environment</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s1">'</span><span class="s">POSTGRES_USER=postgres'</span>
-      <span class="c1"># CHANGE THE PASSWORD!</span>
-      <span class="pi">-</span> <span class="s1">'</span><span class="s">POSTGRES_PASSWORD=admin1234'</span>
-      <span class="pi">-</span> <span class="s1">'</span><span class="s">POSTGRES_DB=bitbucket'</span>
-      <span class="pi">-</span> <span class="s1">'</span><span class="s">POSTGRES_ENCODING=UTF8'</span>
-    <span class="na">networks</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">jenkins-net</span>
-    <span class="na">ports</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">5432:5432"</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="bitbucket" /><summary type="html"><![CDATA[Bitbucket on Docker Docker 기반 Bitbucket 입니다.]]></summary></entry><entry><title type="html">Jenkins 시작</title><link href="http://localhost:4000/devops/start-up-jenkins/" rel="alternate" type="text/html" title="Jenkins 시작" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/devops/start-up%20jenkins</id><content type="html" xml:base="http://localhost:4000/devops/start-up-jenkins/"><![CDATA[<h2 id="start-up-jenkins">Start-up Jenkins</h2>
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    environment:
+      - 'POSTGRES_USER=postgres'
+      # CHANGE THE PASSWORD!
+      - 'POSTGRES_PASSWORD=admin1234'
+      - 'POSTGRES_DB=bitbucket'
+      - 'POSTGRES_ENCODING=UTF8'
+    networks:
+      - jenkins-net
+    ports:
+      - "5432:5432"
+</code></pre>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="bitbucket" /><summary type="html"><![CDATA[Bitbucket on Docker Docker 기반 Bitbucket 입니다.]]></summary></entry><entry><title type="html">Jenkins 시작</title><link href="http://localhost:4000/devops/start-up-jenkins/" rel="alternate" type="text/html" title="Jenkins 시작" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/devops/start-up%20jenkins</id><content type="html" xml:base="http://localhost:4000/devops/start-up-jenkins/"><![CDATA[<h2 id="start-up-jenkins">Start-up Jenkins</h2>
 <p>Jenkins server에 접속하기 brower에서 해당 서버의 http://localhost:8080 포트 접속합니다.</p>
 
 <p>Jenkins에 접속하면 Jenkins admin 초기 패스워드를 입력하는 화면이 출력됩니다</p>
