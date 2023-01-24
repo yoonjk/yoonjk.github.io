@@ -99,7 +99,7 @@ sudo systemctl start jenkins
 sudo systemctl status jenkins
 ```
 
-docker container image 빌드를 위해 빌드 툴인 Podman을 설치합니다..
+docker container image 빌드를 위해 빌드 툴인 Podman을 설치합니다.
 ```bash
 yum install -y podman 
 ```
