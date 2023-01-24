@@ -124,4 +124,16 @@ var store = [{
         "tags": ["airflow"],
         "url": "/workflow/setup-apache-airflow-on-docker/",
         "teaser": null
+      },{
+        "title": "Jenkins 설치 따라하기",
+        "excerpt":"Jenkins Pipeline 이란? Jenkins Pipeline은 지속적인 업데이트 파이프라인을 구현하고 Jenkins에 통합하는 것을 지원하는 플러그인의 집합이다. 이 과정에서 소프트웨어를 빌드하고 여러 단계의 테스트, 배포를 진행한다. Pipeline은 Pipeline Domain Specific Language라는 문법을 통해 마치 코드를 작성하는 것과 같이 Pipeline을 통해 간단한 배포 파이프라인부터 복잡한 배포 파이프라인을 코드로 모델링하기 위한 확장 가능한 도구...","categories": ["devops"],
+        "tags": ["jenkins"],
+        "url": "/devops/setup-jenkins/",
+        "teaser": null
+      },{
+        "title": "Jenkins 시작",
+        "excerpt":"Start-up Jenkins Jenkins server에 접속하기 brower에서 해당 서버의 http://localhost:8080 포트 접속합니다. Jenkins에 접속하면 Jenkins admin 초기 패스워드를 입력하는 화면이 출력됩니다 터미널에서 다음과 같이 명령을 수행하여 Jenkins admin 초기 로그인 비밀번호를 확인하고, 초기 패스워드를 입력합니다. cat /var/lib/jenkins/secrets/initialAdminPassword [수행결과] a0f289xxxxxxxxxcd8fbb7 Jenkins 패스워드 입력화면에 복사한 패스워드를 입력하고 Continue 버튼을 클릭하고, Install suggested plugins를...","categories": ["devops"],
+        "tags": ["jenkins"],
+        "url": "/devops/start-up-jenkins/",
+        "teaser": null
       }]

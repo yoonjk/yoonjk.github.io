@@ -1,4 +1,118 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-18T19:34:32+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Airflow Sensor</title><link href="http://localhost:4000/workflow/Airflow-Sensor/" rel="alternate" type="text/html" title="Airflow Sensor" /><published>2022-12-18T00:00:00+09:00</published><updated>2022-12-18T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20Sensor</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-Sensor/"><![CDATA[<h2 id="airflow-sensor">Airflow Sensor</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-01-24T15:02:44+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Jenkins 시작</title><link href="http://localhost:4000/devops/start-up-jenkins/" rel="alternate" type="text/html" title="Jenkins 시작" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/devops/start-up%20jenkins</id><content type="html" xml:base="http://localhost:4000/devops/start-up-jenkins/"><![CDATA[<h2 id="start-up-jenkins">Start-up Jenkins</h2>
+<p>Jenkins server에 접속하기 brower에서 해당 서버의 http://localhost:8080 포트 접속합니다.</p>
+
+<p>Jenkins에 접속하면 Jenkins admin 초기 패스워드를 입력하는 화면이 출력됩니다</p>
+
+<p><img src="/assets/images/jenkins/02-jenkins-mvn.png" alt="Jenkins Admin login" /></p>
+
+<p>터미널에서 다음과 같이 명령을 수행하여 Jenkins  admin 초기 로그인 비밀번호를 확인하고, 초기 패스워드를 입력합니다.</p>
+
+<p><img src="/assets/images/jenkins/03-jenkins-initial-admin.png" alt="Jenkins Getting started" /></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> /var/lib/jenkins/secrets/initialAdminPassword
+</code></pre></div></div>
+
+<p>[수행결과]
+a0f289xxxxxxxxxcd8fbb7</p>
+
+<p>Jenkins 패스워드 입력화면에 복사한 패스워드를 입력하고 Continue 버튼을 클릭하고, Install suggested plugins를 선택합니다</p>
+
+<p><img src="/assets/images/jenkins/04-jenkins-getting-started.png" alt="Jenkins Getting started" /></p>
+
+<p>Jenkins Plugins이 다음과 같이 설치됩니다</p>
+
+<p><img src="/assets/images/jenkins/05-jenkins-install-plugins.png" alt="Install Jenkins Plugins" /></p>
+
+<p>Jenkins Admin 계정을 생성합니다. Save and Continue 버튼을 클릭합니다</p>
+
+<p><img src="/assets/images/jenkins/06-jenkins-create-admin.png" alt="Create Admin" /></p>
+
+<p>Instance Configuration 확인하고, Save and Finish 버튼을 클릭하고, Start using Jenkins 버튼을 클릭합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><summary type="html"><![CDATA[Start-up Jenkins Jenkins server에 접속하기 brower에서 해당 서버의 http://localhost:8080 포트 접속합니다.]]></summary></entry><entry><title type="html">Jenkins 설치 따라하기</title><link href="http://localhost:4000/devops/setup-jenkins/" rel="alternate" type="text/html" title="Jenkins 설치 따라하기" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/devops/setup%20jenkins</id><content type="html" xml:base="http://localhost:4000/devops/setup-jenkins/"><![CDATA[<h2 id="jenkins-pipeline-이란">Jenkins Pipeline 이란?</h2>
+<p>Jenkins Pipeline은 지속적인 업데이트 파이프라인을 구현하고 Jenkins에 통합하는 것을 지원하는 플러그인의 집합이다. 이 과정에서 소프트웨어를 빌드하고 여러 단계의 테스트, 배포를 진행한다. 
+Pipeline은 Pipeline Domain Specific Language라는 문법을 통해 마치 코드를 작성하는 것과 같이 Pipeline을 통해 간단한 배포 파이프라인부터 복잡한 배포  파이프라인을 코드로 모델링하기 위한 확장 가능한 도구 집합을 제공합니다.
+. 
+Jenkins 파이프 라인의 정의는 프로젝트의 소스 제어 저장소에 commit될 수 있는 텍스트 파일 (Jenkinsfile이라고 함)에 저장합니다.</p>
+
+<ul>
+  <li><strong>Install Jenkins on Linux(Centos)</strong></li>
+</ul>
+
+<p>Jenkins를 설치하기 전에 사전에 JDK와 Maven을 설치합니다. 
+상세한 설치 정보는 다음의 링크를 참조합니다.</p>
+
+<p>https://www.jenkins.io/doc/book/installing/linux/</p>
+
+<p>java-11-openjdk을 설치합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>dnf upgrade <span class="nt">-y</span>
+<span class="nb">sudo </span>dnf <span class="nb">install</span> <span class="nt">-y</span> java-11-openjdk
+</code></pre></div></div>
+
+<p>다음의 링크를 접속하여 Maven 설치합니다.
+https://maven.apache.org/download.cgi 에서 최근  maven 링크를 복사합니다</p>
+
+<figure style="width: 100%" class="align-left">
+  <img src="http://localhost:4000/assets/images/jenkins/01-jenkins-install-maven.png" alt="" />
+  <figcaption></figcaption>
+</figure>
+
+<p>설치하고자 하는 경로에 압축파일을 다운 받아 압축을 해제한 후, 해당 폴더가 위치한 곳을 MAVEN_HOME으로 설정합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://dlcdn.apache.org/maven/maven-3/3.8.7/binaries/apache-maven-3.8.7-bin.tar.gz
+
+<span class="nb">tar </span>xvzf apache-maven-3.8.7-bin.tar.gz <span class="nt">-C</span> /usr/local
+</code></pre></div></div>
+
+<p>~/.bash_profile을 vi editor로 열어MAVEN_HOME 환경정보를 추가합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">MAVEN_HOME</span><span class="o">=</span>/usr/local/apache-maven-3.8.7 
+<span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$MAVEN_HOME</span>/bin 
+
+bash profile을 설정하고 저장하고, bash_profile을 최신으로 적용합니다.
+<span class="nb">source</span> ~/.bash_profile 
+</code></pre></div></div>
+
+<p>maven 설정되었는지 다음의 명령어로 수행하여 아래의 내용이 출력되는지 확인합니다.</p>
+
+<p>mvn</p>
+
+<p>[수행결과]
+<img src="/assets/images/jenkins/02-jenkins-mvn.png" alt="transparent black overlay" /></p>
+
+<p>다음과 같이Git 설치합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>dnf <span class="nb">install</span> <span class="nt">-y</span> git
+</code></pre></div></div>
+
+<p>레포지터리에 젠킨스 레드햇 안정화 버전 레포지터리를 추가합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://pkg.jenkins.io/redhat-stable/jenkins.repo <span class="nt">-O</span> /etc/yum.repos.d/jenkins.repo 
+</code></pre></div></div>
+
+<p>rpm에 젠킨스를 추가합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>rpm <span class="nt">--import</span> https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+</code></pre></div></div>
+
+<p>Jenkins 를 다음과 같이 설치합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>dnf <span class="nb">install</span> <span class="nt">-y</span> jenkins
+</code></pre></div></div>
+
+<p>OS 부팅 시 Jenkins 서비스가 시작되도록 설정합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl <span class="nb">enable </span>jenkins
+</code></pre></div></div>
+
+<p>다음 명령을 사용하여 Jenkins 서비스를 시작합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl start jenkins
+</code></pre></div></div>
+
+<p>다음 명령을 사용하여 Jenkins 서비스의 상태를 확인할 수 있습니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl status jenkins
+</code></pre></div></div>
+
+<p>docker container image 빌드를 위해 빌드 툴인 Podman을 설치합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum <span class="nb">install</span> <span class="nt">-y</span> podman 
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><summary type="html"><![CDATA[Jenkins Pipeline 이란? Jenkins Pipeline은 지속적인 업데이트 파이프라인을 구현하고 Jenkins에 통합하는 것을 지원하는 플러그인의 집합이다. 이 과정에서 소프트웨어를 빌드하고 여러 단계의 테스트, 배포를 진행한다. Pipeline은 Pipeline Domain Specific Language라는 문법을 통해 마치 코드를 작성하는 것과 같이 Pipeline을 통해 간단한 배포 파이프라인부터 복잡한 배포 파이프라인을 코드로 모델링하기 위한 확장 가능한 도구 집합을 제공합니다. . Jenkins 파이프 라인의 정의는 프로젝트의 소스 제어 저장소에 commit될 수 있는 텍스트 파일 (Jenkinsfile이라고 함)에 저장합니다.]]></summary></entry><entry><title type="html">Airflow Sensor</title><link href="http://localhost:4000/workflow/Airflow-Sensor/" rel="alternate" type="text/html" title="Airflow Sensor" /><published>2022-12-18T00:00:00+09:00</published><updated>2022-12-18T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20Sensor</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-Sensor/"><![CDATA[<h2 id="airflow-sensor">Airflow Sensor</h2>
 <p>센서는 정확히 한 가지 일을 하도록 설계된 특별한 유형의 오퍼레이터입니다  - 무언가가 발생할 때까지 기다립니다. 시간 기반이거나 파일 또는 외부 이벤트를 기다리는 것일 수 있지만 어떤 일이 발생할 때까지 기다렸다가 해당조건을 만족하면  다운스트림 작업(이후 Task)을 실행할 수 있습니다.</p>
 
 <p><a href="https://airflow.apache.org/docs/apache-airflow/2.2.3/_api/airflow/sensors/index.html">https://airflow.apache.org/docs/apache-airflow/2.2.3/_api/airflow/sensors/index.html</a></p>
@@ -102,82 +216,7 @@
   <span class="p">)</span>
   
   <span class="n">start</span> <span class="o">&gt;&gt;</span> <span class="n">sensor_task</span> <span class="o">&gt;&gt;</span> <span class="n">end</span> 
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Airflow Sensor 센서는 정확히 한 가지 일을 하도록 설계된 특별한 유형의 오퍼레이터입니다 - 무언가가 발생할 때까지 기다립니다. 시간 기반이거나 파일 또는 외부 이벤트를 기다리는 것일 수 있지만 어떤 일이 발생할 때까지 기다렸다가 해당조건을 만족하면 다운스트림 작업(이후 Task)을 실행할 수 있습니다.]]></summary></entry><entry><title type="html">Setup Apache Airflow on Docker</title><link href="http://localhost:4000/workflow/setup-apache-airflow-on-docker/" rel="alternate" type="text/html" title="Setup Apache Airflow on Docker" /><published>2022-12-18T00:00:00+09:00</published><updated>2022-12-18T00:00:00+09:00</updated><id>http://localhost:4000/workflow/setup%20apache%20airflow%20on-docker</id><content type="html" xml:base="http://localhost:4000/workflow/setup-apache-airflow-on-docker/"><![CDATA[<h2 id="setup-apache-airflow-on-docker">Setup Apache Airflow on Docker</h2>
-<p>Apache Airflow를 실습하기 위해서 개발환경을 구성하기 위해 docker를 이용합니다.</p>
-
-<p>laptop 이나 Server에 직접 설치하거나 방법도 있으나 학습의 목적으로 쉽고 이곳 저곳 설치하는 것 없이
-docker를 이용하면 편리합니다.</p>
-
-<ul>
-  <li>docker 환경 구성</li>
-  <li>docker-compose 설치</li>
-  <li>airflow docker-compose.yaml 파일 downalod 및 환경 구성</li>
-</ul>
-
-<p>docker 환경구성을 위해 기본에는 Docker Desktop을 사용했으나 라이선스 이슈로 대체 솔루션을 구성해서 사용하고 있습니다.
-그중에 rancher desktop을 추천합니다. docker 와 docker-compose를 기존과 동일하게 사용이 가능하는 장점이 있습니다.</p>
-
-<p>Rancher Desktop은 아래 링크에서 자신의 laptop 환경에 맞는 것을 설치하시면 됩니다.</p>
-
-<p><a href="https://rancherdesktop.io/">https://rancherdesktop.io/</a></p>
-
-<p>Rancher Desktop을 설치하고 시작하고, 다음과 같이 설정해서 Docker Destop에서 사용했던 것 같이 동일하게 사용할 수 있습니다.</p>
-
-<figure style="width: 100%" class="align-left">
-  <img src="http://localhost:4000/assets/images/11-rancher-desktop.png" alt="" />
-  <figcaption></figcaption>
-</figure>
-
-<h2 id="docker-composeyaml-다운로드">docker-compose.yaml 다운로드</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-LfO</span> <span class="s1">'https://airflow.apache.org/docs/apache-airflow/2.5.0/docker-compose.yaml'</span>
-</code></pre></div></div>
-
-<h2 id="환경구성">환경구성</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> ./dags ./logs ./plugins
-<span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"AIRFLOW_UID=</span><span class="si">$(</span><span class="nb">id</span> <span class="nt">-u</span><span class="si">)</span><span class="s2">"</span> <span class="o">&gt;</span> .env
-</code></pre></div></div>
-
-<h2 id="initialize-the-database">Initialize the database</h2>
-
-<p>Airflow example을 원하지 않는 경우 docker-compose.yaml 파일의 airflow-common의 AIRFLOW__CORE__LOAD_EXAMPLES: ‘false’ 추가합니다.</p>
-
-<pre><code class="language-YAML">  environment:
-      :
-      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
-</code></pre>
-
-<p>모든 운영 체제에서 데이터베이스 마이그레이션을 실행하고 첫 번째 사용자 계정을 만들어야합니다.이</p>
-
-<p>다음과 같이 실행하십시오</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker compose up airflow-init
-</code></pre></div></div>
-
-<p>초기화가 완료되면 이와 같은 메시지가 표시됩니다</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>airflow-init_1       | Upgrades <span class="k">done
-</span>airflow-init_1       | Admin user airflow created
-airflow-init_1       | 2.5.0
-start_airflow-init_1 exited with code 0
-</code></pre></div></div>
-<h2 id="airflow-시작">Airflow 시작</h2>
-
-<p>이제 모든 서비스를 시작하기 위해 다음과 같이 수행합니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># foreground 로 수행</span>
-docker-compose up
-
-<span class="c"># 또는 </span>
-<span class="c"># background 로 수행</span>
-
-docker-compose up <span class="nt">-d</span>
-</code></pre></div></div>
-
-<h2 id="localhost8080-으로-접속">localhost:8080 으로 접속</h2>
-
-<p><a href="http://localhost:8080">http://localhost:8080</a>으로 접속하여 default admin 계정/비밀번호 인 airflow/airflow로 접속합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Setup Apache Airflow on Docker Apache Airflow를 실습하기 위해서 개발환경을 구성하기 위해 docker를 이용합니다.]]></summary></entry><entry><title type="html">Airflow TaskGroup</title><link href="http://localhost:4000/workflow/Airflow-Task-Group/" rel="alternate" type="text/html" title="Airflow TaskGroup" /><published>2022-12-18T00:00:00+09:00</published><updated>2022-12-18T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20Task%20Group</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-Task-Group/"><![CDATA[<h2 id="airflow-taskgroup">Airflow TaskGroup</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Airflow Sensor 센서는 정확히 한 가지 일을 하도록 설계된 특별한 유형의 오퍼레이터입니다 - 무언가가 발생할 때까지 기다립니다. 시간 기반이거나 파일 또는 외부 이벤트를 기다리는 것일 수 있지만 어떤 일이 발생할 때까지 기다렸다가 해당조건을 만족하면 다운스트림 작업(이후 Task)을 실행할 수 있습니다.]]></summary></entry><entry><title type="html">Airflow TaskGroup</title><link href="http://localhost:4000/workflow/Airflow-Task-Group/" rel="alternate" type="text/html" title="Airflow TaskGroup" /><published>2022-12-18T00:00:00+09:00</published><updated>2022-12-18T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20Task%20Group</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-Task-Group/"><![CDATA[<h2 id="airflow-taskgroup">Airflow TaskGroup</h2>
 <p>작업 그룹은 그래프 보기에서 작업을 계층적 그룹으로 구성하는 데 사용할 수 있습니다. 반복되는 패턴을 만들고 시각적 혼란을 줄이는 데 유용합니다..</p>
 
 <p><img src="https://airflow.apache.org/docs/apache-airflow/stable/_images/task_group.gif" alt="taskgroup decorator" /></p>
@@ -415,7 +454,82 @@ docker-compose up <span class="nt">-d</span>
   <span class="n">end</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span><span class="o">=</span><span class="s">'end'</span><span class="p">)</span> 
   
   <span class="n">start</span> <span class="o">&gt;&gt;</span> <span class="n">export_task</span> <span class="o">&gt;&gt;</span> <span class="n">end</span>  
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Airflow Hooks - MySQL]]></summary></entry><entry><title type="html">Airflow Hooks</title><link href="http://localhost:4000/workflow/Airflow-hooks/" rel="alternate" type="text/html" title="Airflow Hooks" /><published>2022-12-17T00:00:00+09:00</published><updated>2022-12-17T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20hooks</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-hooks/"><![CDATA[<h2 id="airflow-hooks">Airflow Hooks</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Airflow Hooks - MySQL]]></summary></entry><entry><title type="html">Setup Apache Airflow on Docker</title><link href="http://localhost:4000/workflow/setup-apache-airflow-on-docker/" rel="alternate" type="text/html" title="Setup Apache Airflow on Docker" /><published>2022-12-18T00:00:00+09:00</published><updated>2022-12-18T00:00:00+09:00</updated><id>http://localhost:4000/workflow/setup%20apache%20airflow%20on-docker</id><content type="html" xml:base="http://localhost:4000/workflow/setup-apache-airflow-on-docker/"><![CDATA[<h2 id="setup-apache-airflow-on-docker">Setup Apache Airflow on Docker</h2>
+<p>Apache Airflow를 실습하기 위해서 개발환경을 구성하기 위해 docker를 이용합니다.</p>
+
+<p>laptop 이나 Server에 직접 설치하거나 방법도 있으나 학습의 목적으로 쉽고 이곳 저곳 설치하는 것 없이
+docker를 이용하면 편리합니다.</p>
+
+<ul>
+  <li>docker 환경 구성</li>
+  <li>docker-compose 설치</li>
+  <li>airflow docker-compose.yaml 파일 downalod 및 환경 구성</li>
+</ul>
+
+<p>docker 환경구성을 위해 기본에는 Docker Desktop을 사용했으나 라이선스 이슈로 대체 솔루션을 구성해서 사용하고 있습니다.
+그중에 rancher desktop을 추천합니다. docker 와 docker-compose를 기존과 동일하게 사용이 가능하는 장점이 있습니다.</p>
+
+<p>Rancher Desktop은 아래 링크에서 자신의 laptop 환경에 맞는 것을 설치하시면 됩니다.</p>
+
+<p><a href="https://rancherdesktop.io/">https://rancherdesktop.io/</a></p>
+
+<p>Rancher Desktop을 설치하고 시작하고, 다음과 같이 설정해서 Docker Destop에서 사용했던 것 같이 동일하게 사용할 수 있습니다.</p>
+
+<figure style="width: 100%" class="align-left">
+  <img src="http://localhost:4000/assets/images/11-rancher-desktop.png" alt="" />
+  <figcaption></figcaption>
+</figure>
+
+<h2 id="docker-composeyaml-다운로드">docker-compose.yaml 다운로드</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-LfO</span> <span class="s1">'https://airflow.apache.org/docs/apache-airflow/2.5.0/docker-compose.yaml'</span>
+</code></pre></div></div>
+
+<h2 id="환경구성">환경구성</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> ./dags ./logs ./plugins
+<span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"AIRFLOW_UID=</span><span class="si">$(</span><span class="nb">id</span> <span class="nt">-u</span><span class="si">)</span><span class="s2">"</span> <span class="o">&gt;</span> .env
+</code></pre></div></div>
+
+<h2 id="initialize-the-database">Initialize the database</h2>
+
+<p>Airflow example을 원하지 않는 경우 docker-compose.yaml 파일의 airflow-common의 AIRFLOW__CORE__LOAD_EXAMPLES: ‘false’ 추가합니다.</p>
+
+<pre><code class="language-YAML">  environment:
+      :
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+</code></pre>
+
+<p>모든 운영 체제에서 데이터베이스 마이그레이션을 실행하고 첫 번째 사용자 계정을 만들어야합니다.이</p>
+
+<p>다음과 같이 실행하십시오</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker compose up airflow-init
+</code></pre></div></div>
+
+<p>초기화가 완료되면 이와 같은 메시지가 표시됩니다</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>airflow-init_1       | Upgrades <span class="k">done
+</span>airflow-init_1       | Admin user airflow created
+airflow-init_1       | 2.5.0
+start_airflow-init_1 exited with code 0
+</code></pre></div></div>
+<h2 id="airflow-시작">Airflow 시작</h2>
+
+<p>이제 모든 서비스를 시작하기 위해 다음과 같이 수행합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># foreground 로 수행</span>
+docker-compose up
+
+<span class="c"># 또는 </span>
+<span class="c"># background 로 수행</span>
+
+docker-compose up <span class="nt">-d</span>
+</code></pre></div></div>
+
+<h2 id="localhost8080-으로-접속">localhost:8080 으로 접속</h2>
+
+<p><a href="http://localhost:8080">http://localhost:8080</a>으로 접속하여 default admin 계정/비밀번호 인 airflow/airflow로 접속합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Setup Apache Airflow on Docker Apache Airflow를 실습하기 위해서 개발환경을 구성하기 위해 docker를 이용합니다.]]></summary></entry><entry><title type="html">Airflow Hooks</title><link href="http://localhost:4000/workflow/Airflow-hooks/" rel="alternate" type="text/html" title="Airflow Hooks" /><published>2022-12-17T00:00:00+09:00</published><updated>2022-12-17T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20hooks</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-hooks/"><![CDATA[<h2 id="airflow-hooks">Airflow Hooks</h2>
 <p>Hook은 DB나 서비스 같은 외부 시스템(Database, Storage)과 통신하기 위한 인터페이스를 제공하여 연결상태를 유지하여 작업을 처리하기 위해 사용합니다.</p>
 
 <figure style="width: 100%" class="align-left">
@@ -883,78 +997,7 @@ trigger rule이 default로 all_success이기 때문입니다. 기본적으로 �
   <span class="n">smaller</span> <span class="o">=</span> <span class="n">BashOperator</span><span class="p">(</span><span class="n">task_id</span> <span class="o">=</span> <span class="s">'smaller'</span><span class="p">,</span> <span class="n">bash_command</span> <span class="o">=</span><span class="s">'echo "value is smaller thant 6" &amp;&amp; exit 1'</span><span class="p">)</span>
 
   <span class="n">start</span> <span class="o">&gt;&gt;</span> <span class="p">[</span><span class="n">greater</span><span class="p">,</span> <span class="n">smaller</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">end</span> 
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Airflow Trigger rules 일반적으로 Task는 이전 Task들이 성공할 때만 실행됩니다. trigger rule이 default로 all_success이기 때문입니다. 기본적으로 모든 상위 작업이 성공하면 작업이 실행됩니다. 이 action은 일반적으로 기대하는 것입니다.]]></summary></entry><entry><title type="html">Create your first Airflow DAG</title><link href="http://localhost:4000/workflow/myfirst-dag/" rel="alternate" type="text/html" title="Create your first Airflow DAG" /><published>2022-12-14T00:00:00+09:00</published><updated>2022-12-14T00:00:00+09:00</updated><id>http://localhost:4000/workflow/myfirst-dag</id><content type="html" xml:base="http://localhost:4000/workflow/myfirst-dag/"><![CDATA[<h2 id="my-first-dag-개발">My First DAG 개발</h2>
-<p>Apache Airflow Dag 개발 절차는 다음의 7단계 절차로 구현합니다.</p>
-
-<ul>
-  <li>Airflow 관련 Module import</li>
-  <li>DAG Arguments 정의</li>
-  <li>Python Function 또는 task 에서 사용하는 Variable 정의 (Optional)</li>
-  <li>Instatiate DAG 정의</li>
-  <li>Task 정의</li>
-  <li>Task간 의존성 정의</li>
-  <li>Verify DAG</li>
-</ul>
-
-<p>개발절차를 예제로 살펴보면 다음과 같습니다.</p>
-
-<h4 id="1-airflow-관련-module-import">1. Airflow 관련 Module import</h4>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span> 
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span> 
-<span class="kn">from</span> <span class="nn">airflow.operators.bash</span> <span class="kn">import</span> <span class="n">BashOperator</span> 
-<span class="kn">from</span> <span class="nn">airflow.operators.python</span> <span class="kn">import</span> <span class="n">PythonOperator</span> 
-<span class="kn">from</span> <span class="nn">airflow.utils.dates</span> <span class="kn">import</span> <span class="n">days_ago</span> 
-</code></pre></div></div>
-
-<h4 id="2-dag-arguments-정의">2. DAG Arguments 정의</h4>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s">'start_date'</span><span class="p">:</span> <span class="n">days_ago</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
-  <span class="s">'retries'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-  <span class="s">'retry_delay'</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
-  <span class="s">'schedule_interval'</span><span class="p">:</span> <span class="s">'@daily'</span><span class="p">,</span>
-  <span class="s">'catchup'</span><span class="p">:</span> <span class="bp">False</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<h4 id="3-python-function-또는-task-에서-사용하는-variable-정의optional">3. Python Function 또는 task 에서 사용하는 Variable 정의(Optional)</h4>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">hello_airflow</span><span class="p">():</span>
-  <span class="k">print</span><span class="p">(</span><span class="s">"Hello airflow"</span><span class="p">)</span>
-</code></pre></div></div>
-
-<h4 id="4-instantiate-dag-정의">4. Instantiate DAG 정의</h4>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">DAG</span><span class="p">(</span>
-  <span class="n">dag_id</span> <span class="o">=</span> <span class="s">"myFirstDag"</span><span class="p">,</span>
-  <span class="n">default_args</span><span class="o">=</span><span class="n">default_args</span><span class="p">,</span>
-  <span class="n">dags</span> <span class="o">=</span> <span class="p">[</span><span class="s">'training'</span><span class="p">]</span>
-<span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span>
-</code></pre></div></div>
-
-<h4 id="5--task-정의">5.  Task 정의</h4>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">t1</span> <span class="o">=</span> <span class="n">BashOperator</span><span class="p">(</span>
-    <span class="n">task_id</span><span class="o">=</span><span class="s">"bash"</span><span class="p">,</span>
-    <span class="n">bash_command</span><span class="o">=</span><span class="s">"echo Hello airflow"</span><span class="p">,</span>
-  <span class="p">)</span>
-  
-  <span class="n">t2</span> <span class="o">=</span> <span class="n">PythonOperator</span><span class="p">(</span>
-    <span class="n">task_id</span><span class="o">=</span><span class="s">"python"</span><span class="p">,</span>
-    <span class="n">python_callable</span><span class="o">=</span><span class="n">hello_airflow</span><span class="p">,</span>
-  <span class="p">)</span>
-</code></pre></div></div>
-
-<h4 id="6-task간-의존성-정의">6. Task간 의존성 정의</h4>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  t1 &gt;&gt; t2
-</code></pre></div></div>
-
-<h4 id="7-verify-dag">7. Verify DAG</h4>
-
-<p>myFirstDag을 airflow에 배포하여 dag을 테스트합니다. 
-테스트 aifrlow Webserver UI에서 하거나 airflow cli를 사용하여 테스트합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[My First DAG 개발 Apache Airflow Dag 개발 절차는 다음의 7단계 절차로 구현합니다.]]></summary></entry><entry><title type="html">Airflow Best Practices - I</title><link href="http://localhost:4000/workflow/airflow-best-practices-1/" rel="alternate" type="text/html" title="Airflow Best Practices - I" /><published>2022-12-14T00:00:00+09:00</published><updated>2022-12-14T00:00:00+09:00</updated><id>http://localhost:4000/workflow/airflow%20best-practices-1</id><content type="html" xml:base="http://localhost:4000/workflow/airflow-best-practices-1/"><![CDATA[<h2 id="좀더-낳은-dag-작성">좀더 낳은 DAG 작성</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Airflow Trigger rules 일반적으로 Task는 이전 Task들이 성공할 때만 실행됩니다. trigger rule이 default로 all_success이기 때문입니다. 기본적으로 모든 상위 작업이 성공하면 작업이 실행됩니다. 이 action은 일반적으로 기대하는 것입니다.]]></summary></entry><entry><title type="html">Airflow Best Practices - I</title><link href="http://localhost:4000/workflow/airflow-best-practices-1/" rel="alternate" type="text/html" title="Airflow Best Practices - I" /><published>2022-12-14T00:00:00+09:00</published><updated>2022-12-14T00:00:00+09:00</updated><id>http://localhost:4000/workflow/airflow%20best-practices-1</id><content type="html" xml:base="http://localhost:4000/workflow/airflow-best-practices-1/"><![CDATA[<h2 id="좀더-낳은-dag-작성">좀더 낳은 DAG 작성</h2>
 <p>DAG는 데이터 파이프라인에 해당합니다. 
 DAG는 매일 사용되므로 모범 사례를 따르는 것이 중요합니다.
 최적화되고, 이해하기 쉽고, 문서화되고, 잘 조직되어야 합니다. 
@@ -1239,33 +1282,4 @@ with DAG(
 
 <p>즉 cron expression으로는 3일 간격으로 처리할 수 없습니다.</p>
 
-<p>요약하자면, 이전 간격과 관련하여 일정 간격을 수행해야 한다면 timedelta 객체를 사용하십시오.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[좀더 낳은 DAG 작성 DAG는 데이터 파이프라인에 해당합니다. DAG는 매일 사용되므로 모범 사례를 따르는 것이 중요합니다. 최적화되고, 이해하기 쉽고, 문서화되고, 잘 조직되어야 합니다. 수백 개의 DAG로 빠르게 끝날 수 있으므로이 부분을 과소 평가하지 마십시오. 그것은 당신에게 많은 고통과 문제를 덜어 줄 것입니다.]]></summary></entry><entry><title type="html">Cloud-Native CI/CD 이해</title><link href="http://localhost:4000/devops/cloud-native-cicd/" rel="alternate" type="text/html" title="Cloud-Native CI/CD 이해" /><published>2022-11-27T00:00:00+09:00</published><updated>2022-11-27T00:00:00+09:00</updated><id>http://localhost:4000/devops/cloud-native-cicd</id><content type="html" xml:base="http://localhost:4000/devops/cloud-native-cicd/"><![CDATA[<h2 id="cloud-native-cicd-이해">Cloud-Native CI/CD 이해</h2>
-<p>클라우드 네이티브 소프트웨어 개발이 무엇을 의미하는지 더 잘 이해 했으므로 CI/CD 파이프 라인의 맥락에서 그것이 무엇을 의미하는지 살펴 보겠습니다.</p>
-
-<p>Cloud-Native CI/CD는 세 가지 원칙을 기반</p>
-
-<ul>
-  <li><strong>Containers</strong></li>
-  <li><strong>Serverless</strong></li>
-  <li><strong>DevOps</strong></li>
-</ul>
-
-<p><strong>Containers</strong></p>
-
-<p>CI/CD의 컨텍스트에서 클라우드 네이티브는 모든 것이 컨테이너 내에서 실행되어야 함을 의미합니다. 응용 프로그램을 테스트하거나 패키지하기 위해 코드베이스에서 완료되는 각 작업은 자체 격리된 컨테이너에서 수행해야 합니다.
-이러한 컨테이너를 사용하면 모든 팀 멤버 또는 자동화된 시스템이 동일한 작업을 실행하고 동일한 예측 가능한 최종 결과를 얻을 수 있습니다.
-이는 또한 일부 소스 코드에서 특정 작업을 실행하는 데 필요한 모든 런타임 및 구성이 파이프라인이 실행될 때마다 항상 동일하다는 것을 의미합니다. 이렇게 하면 파이프라인의 안정성이 향상되며 필요한 도구를 설치하는 데 시스템 관리자의 도움이 필요하지 않습니다.</p>
-
-<p><strong>Serverless</strong></p>
-
-<p>클라우드 네이티브 CI/CD에 대해 이야기할 때 서버리스는 Azure 함수 또는 AWS 람다와 같은 서비스로서의 함수를 의미하지 않습니다. 중앙 CI 엔진을 유지 관리하고 관리할 필요 없이 온디맨드로 실행하고 확장하는 것입니다.
-소프트웨어 개발자는 리소스 할당 내에서 파이프라인을 효율적이고 신속하게 편집하고 실행할 수 있어야 합니다. 파이프라인을 관리하는 중앙 시스템에서 관리자 권한이 필요하지 않습니다. 클라우드 네이티브 CI/CD 솔루션이 성공하려면 모든 시스템 사용자가 액세스하고 관리할 수 있어야 합니다.</p>
-
-<p>Tekton은 CI/CD(지속적 통합 및 지속적 전달) 시스템을 만들기 위한 Kubernetes 네이티브 오픈 소스 프레임워크입니다. 여러 클라우드 공급자 또는 하이브리드 환경에서 애플리케이션을 구축, 테스트 및 배포하는 데 최적화되어 있습니다.
-Tekton은 CI/CD 파이프라인을 구축하기 위한 클라우드 네이티브 솔루션입니다. 빌딩 블록을 제공하는 Tekton 파이프 라인과 Tekton Cli 및 Tekton 카탈로그와 같은 지원 구성 요소로 구성되어 Tekton을 완벽한 생태계로 만듭니다. Tekton은 Linux Foundation 프로젝트인 CD Foundation의 일부입니다.</p>
-
-<p><strong>DevOps</strong></p>
-
-<p>클라우드 네이티브 CI/CD는 DevOps를 염두에 두고 구축해야 합니다. 팀이 다른 팀을 대신하여 배달 파이프라인을 관리하는 중앙 우수 센터 팀에 의존하지 않고 애플리케이션과 함께 배달 파이프라인을 소유할 수 있도록 해야 합니다.
-소프트웨어 개발 팀이 파이프라인을 담당하도록 하면 파이프라인을 관리하고 항상 필요한 최신 소프트웨어를 사용하여 작업을 수행할 수 있습니다.
-이것이 바로 Kubernetes에서 기본적으로 실행되는 클라우드 네이티브 CI/CD 솔루션인 Tekton을 만들게 된 원칙입니다. 다음 섹션에서는 Tekton에 대해 자세히 알아보고 클라우드 네이티브 사고 방식으로 CI/CD에 접근한 방법을 알아봅니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="tekton" /><summary type="html"><![CDATA[Cloud-Native CI/CD 이해 클라우드 네이티브 소프트웨어 개발이 무엇을 의미하는지 더 잘 이해 했으므로 CI/CD 파이프 라인의 맥락에서 그것이 무엇을 의미하는지 살펴 보겠습니다.]]></summary></entry></feed>
+<p>요약하자면, 이전 간격과 관련하여 일정 간격을 수행해야 한다면 timedelta 객체를 사용하십시오.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[좀더 낳은 DAG 작성 DAG는 데이터 파이프라인에 해당합니다. DAG는 매일 사용되므로 모범 사례를 따르는 것이 중요합니다. 최적화되고, 이해하기 쉽고, 문서화되고, 잘 조직되어야 합니다. 수백 개의 DAG로 빠르게 끝날 수 있으므로이 부분을 과소 평가하지 마십시오. 그것은 당신에게 많은 고통과 문제를 덜어 줄 것입니다.]]></summary></entry></feed>
