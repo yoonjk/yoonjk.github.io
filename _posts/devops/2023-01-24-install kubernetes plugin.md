@@ -1,12 +1,12 @@
 ---
-title: Kubernetes Plugin 설치 및 환경구성 
+title: Jenkins Kubernetes Plugin 설치 및 환경구성 
 categories:
   - devops 
 tags:
   - jenkins
 ---
 
-## Kubernetes Plugin 설치
+## Jenkins Kubernetes Plugin 설치
 Jenkins Agent로 Kubernetes에 실행하기 위해 Kubernetes Plugin을 Jenkins에 설치하여 환경을 구성합니다.
 
 Jenkins UI에서 Manage Jenkins > System Configuration > Manage Plugins >Available plugins 메뉴를 클릭합니다

@@ -125,8 +125,8 @@ var store = [{
         "url": "/workflow/setup-apache-airflow-on-docker/",
         "teaser": null
       },{
-        "title": "Kubernetes Plugin 설치 및 환경구성",
-        "excerpt":"Kubernetes Plugin 설치 Jenkins Agent로 Kubernetes에 실행하기 위해 Kubernetes Plugin을 Jenkins에 설치하여 환경을 구성합니다. Jenkins UI에서 Manage Jenkins &gt; System Configuration &gt; Manage Plugins &gt;Available plugins 메뉴를 클릭합니다 Plugins 검색 입력 필드에서 Kubernetes 입력하고 다음과 같은 첫번째 Kubernetes [V] 선택, 왼쪽 하단에 Install without restart 버튼을 클릭합니다 아래의 [v] “Restart...","categories": ["devops"],
+        "title": "Jenkins Kubernetes Plugin 설치 및 환경구성",
+        "excerpt":"Jenkins Kubernetes Plugin 설치 Jenkins Agent로 Kubernetes에 실행하기 위해 Kubernetes Plugin을 Jenkins에 설치하여 환경을 구성합니다. Jenkins UI에서 Manage Jenkins &gt; System Configuration &gt; Manage Plugins &gt;Available plugins 메뉴를 클릭합니다 Plugins 검색 입력 필드에서 Kubernetes 입력하고 다음과 같은 첫번째 Kubernetes [V] 선택, 왼쪽 하단에 Install without restart 버튼을 클릭합니다 아래의 [v]...","categories": ["devops"],
         "tags": ["jenkins"],
         "url": "/devops/install-kubernetes-plugin/",
         "teaser": null
