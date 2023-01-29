@@ -1,4 +1,99 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-01-29T16:09:14+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Docker 기반 JFrog 설치</title><link href="http://localhost:4000/docker/jfrog/" rel="alternate" type="text/html" title="Docker 기반 JFrog 설치" /><published>2023-01-29T00:00:00+09:00</published><updated>2023-01-29T00:00:00+09:00</updated><id>http://localhost:4000/docker/jfrog</id><content type="html" xml:base="http://localhost:4000/docker/jfrog/"><![CDATA[<h2 id="jfrog-on-docker">JFrog on Docker</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-01-29T16:35:41+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">리모트 서버에서 Harbor 서버에 docker login</title><link href="http://localhost:4000/docker/%EB%A6%AC%EB%AA%A8%ED%8A%B8-%EC%84%9C%EB%B2%84%EC%97%90%EC%84%9C-Harbor-%EC%97%90-%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%95%98%EA%B8%B0/" rel="alternate" type="text/html" title="리모트 서버에서 Harbor 서버에 docker login" /><published>2023-01-29T00:00:00+09:00</published><updated>2023-01-29T00:00:00+09:00</updated><id>http://localhost:4000/docker/%EB%A6%AC%EB%AA%A8%ED%8A%B8%20%EC%84%9C%EB%B2%84%EC%97%90%EC%84%9C%20Harbor%20%EC%97%90%20%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%95%98%EA%B8%B0</id><content type="html" xml:base="http://localhost:4000/docker/%EB%A6%AC%EB%AA%A8%ED%8A%B8-%EC%84%9C%EB%B2%84%EC%97%90%EC%84%9C-Harbor-%EC%97%90-%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%95%98%EA%B8%B0/"><![CDATA[<h2 id="리모트-서버에서-harbor-서버에-docker-login">리모트 서버에서 Harbor 서버에 docker login</h2>
+
+<p>리모트 서버는 Centos7을 기준으로 합니다.</p>
+
+<p>Harbor Container Registry를 구축하고 리모트 서버에서 docker login 하기 위해 환경을 설정합니다.</p>
+
+<h2 id="step-1-setup-docker-engine">Step 1: Setup Docker Engine</h2>
+
+<p>Docker Engine 설치는 아래 링크를 따라 설치과정을 참고해주세요</p>
+
+<p><a href="https://yoonjk.github.io/docker/docker/">Docker Engine 설치</a></p>
+
+<h2 id="step-2--jfrog-artifactory-docker-image-를-download">Step 2 : JFrog Artifactory Docker Image 를 download</h2>
+
+<p>hosts file 파일에 domain을 등록합니다.</p>
+
+<p>Harbor 설치서버의 사설 도메인 서버 이름이 server1.example.com 라고 가정하고 경우</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"119.81.103.68 server1.example.com"</span> <span class="o">&gt;&gt;</span> /etc/hosts
+</code></pre></div></div>
+
+<h2 id="step-3--harbor-에서-제공하는-ca-인증서를-복사">Step 3 : Harbor 에서 제공하는 CA 인증서를 복사</h2>
+
+<p>Harbor 에서 제공하는 CA 인증서를 복사하고, 인증서 참조 디렉토리에 복사합니다.<br />
+ca 인증서가 /root/certs 폴더에 있다고 가정합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>scp root@119.81.103.68:/root/certs/ca.crt <span class="nb">.</span>
+
+<span class="nb">sudo cp </span>ca.crt /etc/pki/ca-trust/source/anchors/
+
+update-ca-trust extract
+</code></pre></div></div>
+
+<h2 id="step-4-restart-docker-engine-및-로그인">Step 4: Restart Docker Engine 및 로그인</h2>
+<p>Docker Engine을 재시작합니다.</p>
+
+<p>Harbor Domain 이 server1.example.com 이라고 가정하고,<br />
+로그인 사용자가 user01로 생성되어 있다면 다음과 같이 수행합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl restart docker
+docker login <span class="nt">-u</span> user01 <span class="nt">-p</span> XXXX server1.example.com
+
+WARNING! Using <span class="nt">--password</span> via the CLI is insecure. Use <span class="nt">--password-stdin</span><span class="nb">.</span>
+WARNING! Your password will be stored unencrypted <span class="k">in</span> /root/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="Harbor" /><summary type="html"><![CDATA[리모트 서버에서 Harbor 서버에 docker login]]></summary></entry><entry><title type="html">Docker Engine 설치 on Centos7</title><link href="http://localhost:4000/docker/docker/" rel="alternate" type="text/html" title="Docker Engine 설치 on Centos7" /><published>2023-01-29T00:00:00+09:00</published><updated>2023-01-29T00:00:00+09:00</updated><id>http://localhost:4000/docker/docker</id><content type="html" xml:base="http://localhost:4000/docker/docker/"><![CDATA[<h2 id="jfrog-on-docker">JFrog on Docker</h2>
+<p>Centos7 기반 Docker Engine을 설치합니다.</p>
+
+<h2 id="step-1-upgrade-os-package">Step 1: Upgrade OS package</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dnf upgrade <span class="nt">-y</span>
+</code></pre></div></div>
+
+<h2 id="step-2--install-docker-engine">Step 2 : Install Docker engine</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> yum-utils
+
+</code></pre></div></div>
+<p>Docker CE repsoitory정보를 download 합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum-config-manager <span class="nt">--add-repo</span> https://download.docker.com/linux/centos/docker-ce.repo
+</code></pre></div></div>
+<p>For Docker CE edition:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull docker.bintray.io/jfrog/artifactory-cpp-ce
+
+yum <span class="nb">install</span> <span class="nt">-y</span> docker-ce docker-ce-cli containerd
+</code></pre></div></div>
+
+<p>Docker 를 시작합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl start docker
+</code></pre></div></div>
+
+<p>Docker가 정상 설치되었는지 확인하기 위해 hello-world docker image를 download 받습니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull hello-world
+</code></pre></div></div>
+
+<h2 id="step-3--install-docker-compose">Step 3 : Install docker-compose</h2>
+<p>Docker compose를 download 받아서 설정합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">DOCKER_CONFIG</span><span class="o">=</span>/usr/local/lib/docker 
+<span class="nb">mkdir</span> <span class="nt">-p</span> <span class="nv">$DOCKER_CONFIG</span>/cli-plugins
+
+curl <span class="nt">-SL</span> https://github.com/docker/compose/releases/download/v2.14.2/docker-compose-linux-x86_64 <span class="nt">-o</span> <span class="nv">$DOCKER_CONFIG</span>/cli-plugins/docker-compose
+
+<span class="nb">chmod</span> +x <span class="nv">$DOCKER_CONFIG</span>/cli-plugins/docker-compose
+</code></pre></div></div>
+
+<p>~/.bash_profile에  DOCER_CONFIG 환경변수를 추가하고 path에 DOCKER_CONFIG를 추가하고 저장합니다</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi ~/.bash_profile 
+
+<span class="nv">DOCKER_CONFIG</span><span class="o">=</span>/usr/local/lib/docker
+<span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$HOME</span>/bin:<span class="nv">$DOCKER_CONFIG</span>/cli-plugins
+</code></pre></div></div>
+
+<p>docker-compose가  정상적으로 설치되었는지 docker-compose 명령어를 실행해 봅니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose version
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="docker" /><category term="docker-compose" /><summary type="html"><![CDATA[JFrog on Docker Centos7 기반 Docker Engine을 설치합니다.]]></summary></entry><entry><title type="html">Docker 기반 JFrog 설치</title><link href="http://localhost:4000/docker/jfrog/" rel="alternate" type="text/html" title="Docker 기반 JFrog 설치" /><published>2023-01-29T00:00:00+09:00</published><updated>2023-01-29T00:00:00+09:00</updated><id>http://localhost:4000/docker/jfrog</id><content type="html" xml:base="http://localhost:4000/docker/jfrog/"><![CDATA[<h2 id="jfrog-on-docker">JFrog on Docker</h2>
 <p>Docker 기반 JFrog를 설치합니다.</p>
 
 <h2 id="step-1-install-docker-engine-on-centos7">Step 1: Install Docker Engine on Centos7</h2>
@@ -99,56 +194,7 @@ CONTAINER ID   IMAGE                                            COMMAND         
 
 <p>JFrog Artifactory에 접근하기 위해 브라우저 URL에서 8081 포트로 접근합니다.</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://자신의 서버 IP 또는 localhost:8081/artifactory
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="JFrog" /><summary type="html"><![CDATA[JFrog on Docker Docker 기반 JFrog를 설치합니다.]]></summary></entry><entry><title type="html">Docker Engine 설치 on Centos7</title><link href="http://localhost:4000/docker/docker/" rel="alternate" type="text/html" title="Docker Engine 설치 on Centos7" /><published>2023-01-29T00:00:00+09:00</published><updated>2023-01-29T00:00:00+09:00</updated><id>http://localhost:4000/docker/docker</id><content type="html" xml:base="http://localhost:4000/docker/docker/"><![CDATA[<h2 id="jfrog-on-docker">JFrog on Docker</h2>
-<p>Centos7 기반 Docker Engine을 설치합니다.</p>
-
-<h2 id="step-1-upgrade-os-package">Step 1: Upgrade OS package</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dnf upgrade <span class="nt">-y</span>
-</code></pre></div></div>
-
-<h2 id="step-2--install-docker-engine">Step 2 : Install Docker engine</h2>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> yum-utils
-
-</code></pre></div></div>
-<p>Docker CE repsoitory정보를 download 합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum-config-manager <span class="nt">--add-repo</span> https://download.docker.com/linux/centos/docker-ce.repo
-</code></pre></div></div>
-<p>For Docker CE edition:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull docker.bintray.io/jfrog/artifactory-cpp-ce
-
-yum <span class="nb">install</span> <span class="nt">-y</span> docker-ce docker-ce-cli containerd
-</code></pre></div></div>
-
-<p>Docker 를 시작합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl start docker
-</code></pre></div></div>
-
-<p>Docker가 정상 설치되었는지 확인하기 위해 hello-world docker image를 download 받습니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull hello-world
-</code></pre></div></div>
-
-<h2 id="step-3--install-docker-compose">Step 3 : Install docker-compose</h2>
-<p>Docker compose를 download 받아서 설정합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">DOCKER_CONFIG</span><span class="o">=</span>/usr/local/lib/docker 
-<span class="nb">mkdir</span> <span class="nt">-p</span> <span class="nv">$DOCKER_CONFIG</span>/cli-plugins
-
-curl <span class="nt">-SL</span> https://github.com/docker/compose/releases/download/v2.14.2/docker-compose-linux-x86_64 <span class="nt">-o</span> <span class="nv">$DOCKER_CONFIG</span>/cli-plugins/docker-compose
-
-<span class="nb">chmod</span> +x <span class="nv">$DOCKER_CONFIG</span>/cli-plugins/docker-compose
-</code></pre></div></div>
-
-<p>~/.bash_profile에  DOCER_CONFIG 환경변수를 추가하고 path에 DOCKER_CONFIG를 추가하고 저장합니다</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi ~/.bash_profile 
-
-<span class="nv">DOCKER_CONFIG</span><span class="o">=</span>/usr/local/lib/docker
-<span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$HOME</span>/bin:<span class="nv">$DOCKER_CONFIG</span>/cli-plugins
-</code></pre></div></div>
-
-<p>docker-compose가  정상적으로 설치되었는지 docker-compose 명령어를 실행해 봅니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose version
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="docker" /><category term="docker-compose" /><summary type="html"><![CDATA[JFrog on Docker Centos7 기반 Docker Engine을 설치합니다.]]></summary></entry><entry><title type="html">Install MiniKube for Jenkins</title><link href="http://localhost:4000/kubernetes/install-minikube/" rel="alternate" type="text/html" title="Install MiniKube for Jenkins" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/install-minikube</id><content type="html" xml:base="http://localhost:4000/kubernetes/install-minikube/"><![CDATA[<h2 id="pre-requisites---install-docker">Pre-requisites - Install Docker</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="JFrog" /><summary type="html"><![CDATA[JFrog on Docker Docker 기반 JFrog를 설치합니다.]]></summary></entry><entry><title type="html">Install MiniKube for Jenkins</title><link href="http://localhost:4000/kubernetes/install-minikube/" rel="alternate" type="text/html" title="Install MiniKube for Jenkins" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/install-minikube</id><content type="html" xml:base="http://localhost:4000/kubernetes/install-minikube/"><![CDATA[<h2 id="pre-requisites---install-docker">Pre-requisites - Install Docker</h2>
 
 <p>yum utils을 설치합니다.</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> yum-utils
@@ -544,187 +590,4 @@ services:
   <span class="n">end</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span><span class="o">=</span><span class="s">'end'</span><span class="p">)</span> 
   
   <span class="n">start</span> <span class="o">&gt;&gt;</span> <span class="n">export_task</span> <span class="o">&gt;&gt;</span> <span class="n">end</span>  
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Airflow Hooks - MySQL]]></summary></entry><entry><title type="html">Airflow TaskGroup</title><link href="http://localhost:4000/workflow/Airflow-Task-Group/" rel="alternate" type="text/html" title="Airflow TaskGroup" /><published>2022-12-18T00:00:00+09:00</published><updated>2022-12-18T00:00:00+09:00</updated><id>http://localhost:4000/workflow/Airflow%20Task%20Group</id><content type="html" xml:base="http://localhost:4000/workflow/Airflow-Task-Group/"><![CDATA[<h2 id="airflow-taskgroup">Airflow TaskGroup</h2>
-<p>작업 그룹은 그래프 보기에서 작업을 계층적 그룹으로 구성하는 데 사용할 수 있습니다. 반복되는 패턴을 만들고 시각적 혼란을 줄이는 데 유용합니다..</p>
-
-<p><img src="https://airflow.apache.org/docs/apache-airflow/stable/_images/task_group.gif" alt="taskgroup decorator" /></p>
-
-<h4 id="작업-그룹을-사용하려면-다음-import-문을-실행합니다">작업 그룹을 사용하려면 다음 import 문을 실행합니다.</h4>
-<ul>
-  <li>기존 방식 TaskGroup</li>
-</ul>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">airflow.utils.task_group</span> <span class="kn">import</span> <span class="n">TaskGroup</span>
-</code></pre></div></div>
-
-<ul>
-  <li>decorator를 사용하는 경우</li>
-</ul>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">airflow.decorators</span> <span class="kn">import</span> <span class="n">task_group</span><span class="p">,</span> <span class="n">task</span>
-</code></pre></div></div>
-
-<p>첫 번째 예에서는 with 문을  사용하여 작업 그룹을 인스턴스화하고 group_id 제공합니다. 작업 그룹 내에서 두 작업인 t1과 t2와 해당 종속성을 정의합니다.</p>
-
-<p>개별 작업에서 사용할 수 있는 것과 동일한 방식으로 작업 그룹에서 종속성 연산자(« 및 »)를 사용할 수 있습니다. 작업 그룹에 적용된 종속성은 해당 작업 전체에 적용됩니다. 다음 코드에서는 start 및 end 에 대한 추가 종속성을 작업 그룹에 추가하여 t1 및 t2에  동일한 종속성을 자동으로 적용합니다. :</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span> 
-<span class="kn">from</span> <span class="nn">airflow.operators.empty</span> <span class="kn">import</span> <span class="n">EmptyOperator</span> 
-<span class="kn">from</span> <span class="nn">airflow.utils.task_group</span> <span class="kn">import</span> <span class="n">TaskGroup</span> 
-<span class="c1"># Utils 
-</span><span class="kn">from</span> <span class="nn">airflow.utils.dates</span> <span class="kn">import</span> <span class="n">days_ago</span> 
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span> 
-
-<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s">'start_date'</span><span class="p">:</span> <span class="n">days_ago</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
-  <span class="s">'retries'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> 
-  <span class="s">'retry_delay'</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
-  <span class="s">'schedule_interval'</span><span class="p">:</span> <span class="s">'@daily'</span><span class="p">,</span>
-  <span class="s">'catchup'</span><span class="p">:</span> <span class="bp">False</span>
-<span class="p">}</span>
-
-<span class="k">with</span> <span class="n">DAG</span> <span class="p">(</span>
-  <span class="n">dag_id</span> <span class="o">=</span> <span class="s">'taskgroup2'</span><span class="p">,</span>
-  <span class="n">default_args</span><span class="o">=</span><span class="n">default_args</span>
-<span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span> 
-  <span class="n">start</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span> <span class="o">=</span> <span class="s">'start'</span><span class="p">)</span>
-  <span class="n">end</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span> <span class="o">=</span> <span class="s">'end'</span><span class="p">)</span>
-  
-  <span class="k">with</span> <span class="n">TaskGroup</span><span class="p">(</span><span class="n">group_id</span> <span class="o">=</span> <span class="s">'group1'</span><span class="p">)</span> <span class="k">as</span> <span class="n">group1</span><span class="p">:</span>
-    <span class="n">t1</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span> <span class="o">=</span> <span class="s">'task1'</span><span class="p">)</span>
-    <span class="n">t2</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span> <span class="o">=</span> <span class="s">'task2'</span><span class="p">)</span>
-    <span class="n">t1</span> <span class="o">&gt;&gt;</span> <span class="n">t2</span> 
-    
-  <span class="n">start</span> <span class="o">&gt;&gt;</span> <span class="n">group1</span> <span class="o">&gt;&gt;</span> <span class="n">end</span> 
-</code></pre></div></div>
-
-<h4 id="taskgroup에-데코레이터-사용">TaskGroup에 데코레이터 사용</h4>
-
-<p>DAG에서 작업 그룹을 정의하는 또 다른 방법은 작업 그룹 데코레이터를 사용하는 것입니다. 작업 그룹 데코레이터는 Airflow 2.1 이상에서 사용할 수 있습니다. 작업 그룹 데코레이터는 다른 Airflow 데코레이터처럼 작동하며  TaskFlow API를 사용하여 작업 그룹을 정의할 수 있습니다. 작업 그룹 데코레이터를 사용해도 작업 그룹의 기능은 변경되지 않지만 DAG에서 이미 작업 그룹 데코레이터를 사용하고 있는 경우 작업 그룹의 코드 서식을 보다 일관되게 만들 수 있습니다.</p>
-
-<p>데코레이터를 사용하려면  작업 그룹에 들어가야 하는 작업의 함수를 호출하는 Python 함수 앞에 @task_group 추가합니다. 예를 들어:</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">task_group</span><span class="p">(</span><span class="n">group_id</span><span class="o">=</span><span class="s">"tasks"</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">my_independent_tasks</span><span class="p">():</span>
-    <span class="n">task_a</span><span class="p">()</span>
-    <span class="n">task_b</span><span class="p">()</span>
-    <span class="n">task_c</span><span class="p">()</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">task_group</span><span class="p">(</span><span class="n">group_id</span><span class="o">=</span><span class="s">"tasks"</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">my_dependent_tasks</span><span class="p">():</span>
-    <span class="k">return</span> <span class="n">task_a</span><span class="p">(</span><span class="n">task_b</span><span class="p">(</span><span class="n">task_c</span><span class="p">()))</span>
-</code></pre></div></div>
-
-<p>이 함수는 DAG의 다른 위치에 정의된 세 개의 독립적인 작업이 있는 작업 그룹을 만듭니다.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span> 
-<span class="kn">from</span> <span class="nn">airflow.decorators</span> <span class="kn">import</span> <span class="n">task_group</span><span class="p">,</span> <span class="n">task</span>
-<span class="c1"># Utils 
-</span><span class="kn">from</span> <span class="nn">airflow.utils.dates</span> <span class="kn">import</span> <span class="n">days_ago</span> 
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span> 
-
-<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s">'start_date'</span><span class="p">:</span> <span class="n">days_ago</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
-  <span class="s">'retries'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> 
-  <span class="s">'retry_delay'</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
-  <span class="s">'schedule_interval'</span><span class="p">:</span> <span class="s">'@daily'</span><span class="p">,</span>
-  <span class="s">'catchup'</span><span class="p">:</span> <span class="bp">False</span>
-<span class="p">}</span>
-
-<span class="k">with</span> <span class="n">DAG</span> <span class="p">(</span>
-  <span class="n">dag_id</span> <span class="o">=</span> <span class="s">'taskgroup-decorator'</span><span class="p">,</span>
-  <span class="n">default_args</span><span class="o">=</span><span class="n">default_args</span>
-<span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span> 
-  <span class="o">@</span><span class="n">task</span>
-  <span class="k">def</span> <span class="nf">start</span><span class="p">():</span>
-    <span class="k">pass</span>
-  
-  <span class="o">@</span><span class="n">task</span>
-  <span class="k">def</span> <span class="nf">end</span><span class="p">():</span>
-    <span class="k">pass</span>
-
-  <span class="o">@</span><span class="n">task_group</span><span class="p">(</span><span class="n">group_id</span> <span class="o">=</span> <span class="s">'group1'</span><span class="p">)</span>
-  <span class="k">def</span> <span class="nf">func_group</span><span class="p">():</span>
-    <span class="o">@</span><span class="n">task</span>
-    <span class="k">def</span> <span class="nf">task1</span><span class="p">():</span>
-      <span class="k">pass</span>
-  
-    <span class="o">@</span><span class="n">task</span>
-    <span class="k">def</span> <span class="nf">task2</span><span class="p">():</span>
-      <span class="k">pass</span> 
-    <span class="n">task1</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">task2</span><span class="p">()</span>
-  <span class="n">group1</span> <span class="o">=</span> <span class="n">func_group</span><span class="p">()</span>  
-  <span class="n">start</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">group1</span> <span class="o">&gt;&gt;</span> <span class="n">end</span><span class="p">()</span>
-</code></pre></div></div>
-
-<h4 id="inner-taskgroup-decorator">inner taskgroup decorator</h4>
-
-<p>좀더 복잡한 Inner TaskGroup 입니다.</p>
-
-<p><img src="https://airflow.apache.org/docs/apache-airflow/stable/_images/task_group.gif" alt="taskgroup decorator" /></p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span> 
-<span class="kn">from</span> <span class="nn">airflow.operators.empty</span> <span class="kn">import</span> <span class="n">EmptyOperator</span>
-<span class="kn">from</span> <span class="nn">airflow.decorators</span> <span class="kn">import</span> <span class="n">task_group</span><span class="p">,</span> <span class="n">task</span>
-<span class="c1"># Utils 
-</span><span class="kn">from</span> <span class="nn">airflow.utils.dates</span> <span class="kn">import</span> <span class="n">days_ago</span> 
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span> 
-
-<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s">'start_date'</span><span class="p">:</span> <span class="n">days_ago</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
-  <span class="s">'retries'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> 
-  <span class="s">'retry_delay'</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
-  <span class="s">'schedule_interval'</span><span class="p">:</span> <span class="s">'@daily'</span><span class="p">,</span>
-  <span class="s">'catchup'</span><span class="p">:</span> <span class="bp">False</span>
-<span class="p">}</span>
-
-<span class="k">with</span> <span class="n">DAG</span> <span class="p">(</span>
-  <span class="n">dag_id</span> <span class="o">=</span> <span class="s">'taskgroup-decorator2'</span><span class="p">,</span>
-  <span class="n">default_args</span><span class="o">=</span><span class="n">default_args</span>
-<span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span> 
-  <span class="o">@</span><span class="n">task</span>
-  <span class="k">def</span> <span class="nf">start</span><span class="p">():</span>
-    <span class="k">pass</span>
-  
-  <span class="o">@</span><span class="n">task</span>
-  <span class="k">def</span> <span class="nf">end</span><span class="p">():</span>
-    <span class="k">pass</span>
-
-  <span class="o">@</span><span class="n">task_group</span><span class="p">(</span><span class="n">group_id</span> <span class="o">=</span> <span class="s">'section_1'</span><span class="p">)</span>
-  <span class="k">def</span> <span class="nf">func_group1</span><span class="p">():</span>
-    <span class="o">@</span><span class="n">task</span>
-    <span class="k">def</span> <span class="nf">task_1</span><span class="p">():</span>
-      <span class="k">pass</span>
-  
-    <span class="o">@</span><span class="n">task</span>
-    <span class="k">def</span> <span class="nf">task_2</span><span class="p">():</span>
-      <span class="k">pass</span> 
-
-    <span class="o">@</span><span class="n">task</span>
-    <span class="k">def</span> <span class="nf">task_3</span><span class="p">():</span>
-      <span class="k">pass</span> 
-    <span class="n">task_1</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="p">[</span><span class="n">task_2</span><span class="p">(),</span> <span class="n">task_3</span><span class="p">()]</span>
-    
-  <span class="o">@</span><span class="n">task_group</span><span class="p">(</span><span class="n">group_id</span> <span class="o">=</span> <span class="s">'section_2'</span><span class="p">)</span>
-  <span class="k">def</span> <span class="nf">func_group2</span><span class="p">():</span>
-    <span class="o">@</span><span class="n">task</span>
-    <span class="k">def</span> <span class="nf">task_1</span><span class="p">():</span>
-      <span class="k">print</span><span class="p">(</span><span class="s">'task1 of group2'</span><span class="p">)</span>
-
-    <span class="o">@</span><span class="n">task_group</span><span class="p">(</span><span class="n">group_id</span> <span class="o">=</span> <span class="s">'inner_section_2'</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">func_inner_group2</span><span class="p">():</span>
-      
-      <span class="n">task2</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span> <span class="o">=</span> <span class="s">'task_2'</span><span class="p">)</span>
-      <span class="n">task3</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span> <span class="o">=</span> <span class="s">'task_3'</span><span class="p">)</span>
-      <span class="n">task4</span> <span class="o">=</span> <span class="n">EmptyOperator</span><span class="p">(</span><span class="n">task_id</span> <span class="o">=</span> <span class="s">'task_4'</span><span class="p">)</span>
-      
-      <span class="k">return</span> <span class="p">[</span><span class="n">task2</span><span class="p">,</span><span class="n">task3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">task4</span>
-
-    <span class="n">inner_section_2</span> <span class="o">=</span> <span class="n">func_inner_group2</span><span class="p">()</span>
-    <span class="n">task_1</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">inner_section_2</span>
-    
-  <span class="n">section_1</span> <span class="o">=</span> <span class="n">func_group1</span><span class="p">()</span>  
-  <span class="n">section_2</span> <span class="o">=</span> <span class="n">func_group2</span><span class="p">()</span> 
-  <span class="n">start</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">section_1</span> <span class="o">&gt;&gt;</span> <span class="n">section_2</span> <span class="o">&gt;&gt;</span> <span class="n">end</span><span class="p">()</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow,TaskGroup" /><summary type="html"><![CDATA[Airflow TaskGroup 작업 그룹은 그래프 보기에서 작업을 계층적 그룹으로 구성하는 데 사용할 수 있습니다. 반복되는 패턴을 만들고 시각적 혼란을 줄이는 데 유용합니다..]]></summary></entry></feed>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="workflow" /><category term="airflow" /><summary type="html"><![CDATA[Airflow Hooks - MySQL]]></summary></entry></feed>

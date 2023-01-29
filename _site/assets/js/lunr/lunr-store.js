@@ -172,4 +172,10 @@ var store = [{
         "tags": ["JFrog"],
         "url": "/docker/jfrog/",
         "teaser": null
+      },{
+        "title": "리모트 서버에서 Harbor 서버에 docker login",
+        "excerpt":"리모트 서버에서 Harbor 서버에 docker login 리모트 서버는 Centos7을 기준으로 합니다. Harbor Container Registry를 구축하고 리모트 서버에서 docker login 하기 위해 환경을 설정합니다. Step 1: Setup Docker Engine Docker Engine 설치는 아래 링크를 따라 설치과정을 참고해주세요 Docker Engine 설치 Step 2 : JFrog Artifactory Docker Image 를 download hosts file...","categories": ["docker"],
+        "tags": ["Harbor"],
+        "url": "/docker/%EB%A6%AC%EB%AA%A8%ED%8A%B8-%EC%84%9C%EB%B2%84%EC%97%90%EC%84%9C-Harbor-%EC%97%90-%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%95%98%EA%B8%B0/",
+        "teaser": null
       }]
