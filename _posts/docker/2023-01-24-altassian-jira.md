@@ -1,5 +1,5 @@
 ---
-title: Jira on docker 
+title: docker 기반 Jira 설치 
 categories:
   - docker 
 tags:
