@@ -178,4 +178,10 @@ var store = [{
         "tags": ["Harbor"],
         "url": "/docker/%EB%A6%AC%EB%AA%A8%ED%8A%B8-%EC%84%9C%EB%B2%84%EC%97%90%EC%84%9C-Harbor-%EC%97%90-%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%95%98%EA%B8%B0/",
         "teaser": null
+      },{
+        "title": "Harbor로 Docker Private Registry 구축하기",
+        "excerpt":"Harbor 로 Docker Private Registry 구축하기 Harbor는 Offline Install과 Online Install 두 가지 방식으로 설치를 지원하고 있습니다. 이 실습에서는 Offline Install 을 기준으로 설치하도록 합니다. Harbor는 아래 github 사이트에 릴리즈 정보를 확인하고 download 받습니다. Harbor 설치 Step 1: Root CA Certificates 생성 Docker Engine 설치는 아래 링크를 따라 설치과정을 참고해주세요...","categories": ["docker"],
+        "tags": ["Harbor"],
+        "url": "/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/",
+        "teaser": null
       }]
