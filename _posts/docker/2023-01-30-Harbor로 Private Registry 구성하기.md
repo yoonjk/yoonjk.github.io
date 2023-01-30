@@ -66,7 +66,6 @@ certificates 업데이트 합니다.
 # server.example.com
 mkdir -p /etc/docker/certs.d/server1.example.com
 mkdir -p /etc/pki/ca-trust/source/anchors/
-mkdir -p /etc/pki/ca-trust/source/anchors/
 
 cp -u server.cert /etc/docker/certs.d/server1.example.com
 cp -u server.key  /etc/docker/certs.d/server1.example.com
