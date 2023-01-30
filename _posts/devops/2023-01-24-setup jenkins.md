@@ -49,8 +49,11 @@ tar xvzf apache-maven-3.8.7-bin.tar.gz -C /usr/local
 ```bash
 export MAVEN_HOME=/usr/local/apache-maven-3.8.7 
 PATH=$PATH:$MAVEN_HOME/bin 
+```
 
-bash profile을 설정하고 저장하고, bash_profile을 최신으로 적용합니다.
+bash profile을 설정하고 저장하고, bash_profile을 최신으로 적용합니다.  
+
+```bash
 source ~/.bash_profile 
 ```
 

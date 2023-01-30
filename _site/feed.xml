@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-01-29T16:42:42+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">리모트 서버에서 Harbor 서버에 docker login</title><link href="http://localhost:4000/docker/%EB%A6%AC%EB%AA%A8%ED%8A%B8-%EC%84%9C%EB%B2%84%EC%97%90%EC%84%9C-Harbor-%EC%97%90-%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%95%98%EA%B8%B0/" rel="alternate" type="text/html" title="리모트 서버에서 Harbor 서버에 docker login" /><published>2023-01-29T00:00:00+09:00</published><updated>2023-01-29T00:00:00+09:00</updated><id>http://localhost:4000/docker/%EB%A6%AC%EB%AA%A8%ED%8A%B8%20%EC%84%9C%EB%B2%84%EC%97%90%EC%84%9C%20Harbor%20%EC%97%90%20%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%95%98%EA%B8%B0</id><content type="html" xml:base="http://localhost:4000/docker/%EB%A6%AC%EB%AA%A8%ED%8A%B8-%EC%84%9C%EB%B2%84%EC%97%90%EC%84%9C-Harbor-%EC%97%90-%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%95%98%EA%B8%B0/"><![CDATA[<h2 id="리모트-서버에서-harbor-서버에-docker-login">리모트 서버에서 Harbor 서버에 docker login</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-01-30T20:35:46+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">리모트 서버에서 Harbor 서버에 docker login</title><link href="http://localhost:4000/docker/%EB%A6%AC%EB%AA%A8%ED%8A%B8-%EC%84%9C%EB%B2%84%EC%97%90%EC%84%9C-Harbor-%EC%97%90-%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%95%98%EA%B8%B0/" rel="alternate" type="text/html" title="리모트 서버에서 Harbor 서버에 docker login" /><published>2023-01-29T00:00:00+09:00</published><updated>2023-01-29T00:00:00+09:00</updated><id>http://localhost:4000/docker/%EB%A6%AC%EB%AA%A8%ED%8A%B8%20%EC%84%9C%EB%B2%84%EC%97%90%EC%84%9C%20Harbor%20%EC%97%90%20%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%95%98%EA%B8%B0</id><content type="html" xml:base="http://localhost:4000/docker/%EB%A6%AC%EB%AA%A8%ED%8A%B8-%EC%84%9C%EB%B2%84%EC%97%90%EC%84%9C-Harbor-%EC%97%90-%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%95%98%EA%B8%B0/"><![CDATA[<h2 id="리모트-서버에서-harbor-서버에-docker-login">리모트 서버에서 Harbor 서버에 docker login</h2>
 
 <p>리모트 서버는 Centos7을 기준으로 합니다.</p>
 
@@ -232,7 +232,6 @@ https://download.docker.com/linux/centos/docker-ce.repo
 
 <p>minikube를 download 하고 minikube를 설치합니다.</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-LO</span> https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-<span class="nb">tar </span>xvzf 
 <span class="nb">sudo mv </span>minikube-linux-amd64 /usr/local/bin/minikube
 <span class="nb">chmod</span> +x /usr/local/bin/minikube
 </code></pre></div></div>
@@ -383,9 +382,11 @@ https://maven.apache.org/download.cgi 에서 최근  maven 링크를 복사합�
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">MAVEN_HOME</span><span class="o">=</span>/usr/local/apache-maven-3.8.7 
 <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$MAVEN_HOME</span>/bin 
+</code></pre></div></div>
 
-bash profile을 설정하고 저장하고, bash_profile을 최신으로 적용합니다.
-<span class="nb">source</span> ~/.bash_profile 
+<p>bash profile을 설정하고 저장하고, bash_profile을 최신으로 적용합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">source</span> ~/.bash_profile 
 </code></pre></div></div>
 
 <p>maven 설정되었는지 다음의 명령어로 수행하여 아래의 내용이 출력되는지 확인합니다.</p>

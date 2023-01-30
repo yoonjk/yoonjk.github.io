@@ -51,7 +51,6 @@ docker images
 minikube를 download 하고 minikube를 설치합니다.
 ```bash
 curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-tar xvzf 
 sudo mv minikube-linux-amd64 /usr/local/bin/minikube
 chmod +x /usr/local/bin/minikube
 ```
