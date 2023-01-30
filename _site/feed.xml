@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-01-30T23:35:10+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Harbor로 Docker Private Registry 구축하기</title><link href="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/" rel="alternate" type="text/html" title="Harbor로 Docker Private Registry 구축하기" /><published>2023-01-30T00:00:00+09:00</published><updated>2023-01-30T00:00:00+09:00</updated><id>http://localhost:4000/docker/Harbor%EB%A1%9C%20Private%20Registry%20%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0</id><content type="html" xml:base="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/"><![CDATA[<h2 id="harbor-로-docker-private-registry-구축하기">Harbor 로 Docker Private Registry 구축하기</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-01-30T23:42:35+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Harbor로 Docker Private Registry 구축하기</title><link href="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/" rel="alternate" type="text/html" title="Harbor로 Docker Private Registry 구축하기" /><published>2023-01-30T00:00:00+09:00</published><updated>2023-01-30T00:00:00+09:00</updated><id>http://localhost:4000/docker/Harbor%EB%A1%9C%20Private%20Registry%20%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0</id><content type="html" xml:base="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/"><![CDATA[<h2 id="harbor-로-docker-private-registry-구축하기">Harbor 로 Docker Private Registry 구축하기</h2>
 
 <p>Harbor는 Offline Install과 Online Install 두 가지 방식으로 설치를 지원하고 있습니다. 이 실습에서는 Offline Install 을 기준으로 설치하도록 합니다. Harbor는 아래 github 사이트에 릴리즈 정보를 확인하고 download 받습니다.</p>
 
@@ -54,6 +54,85 @@ openssl genrsa <span class="nt">-out</span> server.key 4096
 <span class="nb">cp</span> <span class="nt">-u</span> ca.crt      /etc/docker/certs.d/server1.example.com
 <span class="nb">cp</span> <span class="nt">-u</span> ca.crt      /etc/pki/ca-trust/source/anchors/
 <span class="nb">cp</span> <span class="nt">-u</span> server.crt  /etc/pki/ca-trust/source/anchors/
+
+update-ca-trust
+</code></pre></div></div>
+
+<h2 id="step-7-호스트에-도메인-등록">Step 7: 호스트에 도메인 등록</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"119.81.103.68 server1.example.com"</span> <span class="o">&gt;&gt;</span> /etc/hosts
+</code></pre></div></div>
+
+<h2 id="step-8-download-harbor">Step 8: Download Harbor</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://github.com/goharbor/harbor/releases/download/v2.7.0/harbor-offline-installer-v2.7.0.tgz
+<span class="nb">tar </span>xzvf harbor-offline-installer-v2.7.0.tgz
+</code></pre></div></div>
+
+<h2 id="step-9-configure-harbor-in-harboryml">Step 9: Configure harbor in harbor.yml</h2>
+<p>Harbor 폴더로 이동하고 harbor.yml 을 수정합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># harbor.yml 작성</span>
+<span class="nb">cd </span>harbor
+<span class="nb">cp </span>harbor.yml.tmpl harbor.yml
+
+<span class="c"># harbor.yml 편집</span>
+vi harbor.yml
+<span class="c"># ---------------------</span>
+by external clients.
+<span class="nb">hostname</span>: server1.example.com
+
+<span class="c"># http related config</span>
+http:
+  <span class="c"># port for http, default is 80. If https enabled, this port will redirect to https port</span>
+  port: 80
+
+<span class="c"># https related config</span>
+https:
+  <span class="c"># https port for harbor, default is 443</span>
+  port: 443
+  <span class="c"># The path of cert and key files for nginx</span>
+  certificate: /etc/docker/certs.d/server1.example.com/server.cert
+  private_key: /etc/docker/certs.d/server1.example.com/server.key
+</code></pre></div></div>
+
+<h2 id="step-10-install-harbor">Step 10: Install Harbor</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./prepare
+./install.sh
+
+<span class="c"># 수행결과</span>
+<span class="o">[</span>Step 0]: checking <span class="k">if </span>docker is installed ...
+
+Note: docker version: 20.10.23
+
+<span class="o">[</span>Step 1]: checking docker-compose is installed ...
+
+Note: Docker Compose version v2.14.2
+
+<span class="o">[</span>Step 2]: loading Harbor images ...
+Loaded image: goharbor/prepare:v2.7.0
+716575e41c45: Loading layer  145.8MB/145.8MB
+
+<span class="o">[</span>Step 3]: preparing environment ...
+
+<span class="o">[</span>Step 4]: preparing harbor configs ...
+prepare base <span class="nb">dir </span>is <span class="nb">set </span>to /root/harbor
+Clearing the configuration file: /config/registry/passwd
+Clearing the configuration file: /config/registry/config.yml
+
+<span class="o">[</span>Step 5]: starting Harbor ...
+<span class="o">[</span>+] Running 10/10
+ ⠿ Network harbor_harbor        Created       0.1s
+ ⠿ Container harbor-log         Started                                         0.8s
+ ⠿ Container harbor-db          Started                                         2.2s
+ ⠿ Container registry           Started                                         2.2s
+ ⠿ Container registryctl        Started                                         1.7s
+ ⠿ Container redis              Started                                         1.8s
+ ⠿ Container harbor-portal      Started                                         2.2s
+ ⠿ Container harbor-core        Started                                         2.7s
+ ⠿ Container harbor-jobservice  Started                                         3.8s
+ ⠿ Container nginx              Started                                         3.9s
+
+<span class="nt">----Harbor</span> has been installed and started successfully.----
 </code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="Harbor" /><summary type="html"><![CDATA[Harbor 로 Docker Private Registry 구축하기]]></summary></entry><entry><title type="html">Docker 기반 JFrog 설치</title><link href="http://localhost:4000/docker/jfrog/" rel="alternate" type="text/html" title="Docker 기반 JFrog 설치" /><published>2023-01-29T00:00:00+09:00</published><updated>2023-01-29T00:00:00+09:00</updated><id>http://localhost:4000/docker/jfrog</id><content type="html" xml:base="http://localhost:4000/docker/jfrog/"><![CDATA[<h2 id="jfrog-on-docker">JFrog on Docker</h2>
 <p>Docker 기반 JFrog를 설치합니다.</p>
 
