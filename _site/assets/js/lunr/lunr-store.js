@@ -168,7 +168,7 @@ var store = [{
         "teaser": null
       },{
         "title": "Docker 기반 JFrog 설치",
-        "excerpt":"JFrog on Docker Docker 기반 JFrog를 설치합니다. Step 1: Install Docker Engine on Centos7 Docker 설치 방법은 다음을 참고하세요. https://docs.docker.com/engine/install/ Step 2 : JFrog Artifactory Docker Image 를 download docker pull docker.bintray.io/jfrog/artifactory-oss:latest For CE edition: docker pull docker.bintray.io/jfrog/artifactory-cpp-ce docker images docker images \"*/jfrog/*\" ------------------------------------------------------------------------------------------- REPOSITORY TAG IMAGE ID CREATED SIZE...","categories": ["docker"],
+        "excerpt":"JFrog on Docker Docker 기반 JFrog를 설치합니다. Step 1: Install Docker Engine on Centos7 Docker 설치 방법은 다음을 참고하세요. https://docs.docker.com/engine/install/ Step 2 : JFrog Artifactory Docker Image 를 download docker pull docker.bintray.io/jfrog/artifactory-pro:latest For CE edition: docker pull docker.bintray.io/jfrog/artifactory-cpp-ce docker images docker images \"*/jfrog/*\" ------------------------------------------------------------------------------------------- REPOSITORY TAG IMAGE ID CREATED SIZE...","categories": ["docker"],
         "tags": ["JFrog"],
         "url": "/docker/jfrog/",
         "teaser": null
