@@ -168,9 +168,15 @@ var store = [{
         "teaser": null
       },{
         "title": "Docker 기반 JFrog 설치",
-        "excerpt":"JFrog on Docker Docker 기반 JFrog를 설치합니다. Step 1: Install Docker Engine on Centos7 Docker 설치 방법은 다음을 참고하세요. https://docs.docker.com/engine/install/ Step 2 : JFrog Artifactory Docker Image 를 download docker pull docker.bintray.io/jfrog/artifactory-pro:latest For CE edition: docker pull docker.bintray.io/jfrog/artifactory-cpp-ce docker images docker images \"*/jfrog/*\" ------------------------------------------------------------------------------------------- REPOSITORY TAG IMAGE ID CREATED SIZE...","categories": ["docker"],
+        "excerpt":"JFrog on Docker Docker 기반 JFrog를 설치합니다. Step 1: Install Docker Engine on Centos7 Docker 설치 방법은 다음을 참고하세요. https://docs.docker.com/engine/install/ Step 2 : JFrog Artifactory Docker Image 를 download For CE edition: docker pull docker.bintray.io/jfrog/artifactory-cpp-ce docker images docker images \"*/jfrog/*\" ------------------------------------------------------------------------------------------- REPOSITORY TAG IMAGE ID CREATED SIZE docker.bintray.io/jfrog/artifactory-cpp-ce latest 82ca33a84e75...","categories": ["docker"],
         "tags": ["JFrog"],
         "url": "/docker/jfrog/",
+        "teaser": null
+      },{
+        "title": "Nexus 설치 using docker",
+        "excerpt":"Sonartype Nexus on Docker Centos7 기반 Docker Engine을 설치합니다. 성 Step 1: docker-compose 파일 작성 vi editor 로 docker-compose.yaml 파일을 아래와 같이 작성합니다. vi docker-compose.yaml version: '3.7' services: nexus3: image: sonatype/nexus3 restart: unless-stopped container_name: nexus3 # privileged: true user: root volumes: - ./nexus-data:/nexus-data healthcheck: test: [\"CMD\", \"nc\", \"-zv\", \"localhost\", \"8000\"...","categories": ["docker"],
+        "tags": ["nexus"],
+        "url": "/docker/nexus/",
         "teaser": null
       },{
         "title": "리모트 서버에서 Harbor 서버에 docker login",

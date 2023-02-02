@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-01-31T22:23:13+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Harbor로 Docker Private Registry 구축하기</title><link href="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/" rel="alternate" type="text/html" title="Harbor로 Docker Private Registry 구축하기" /><published>2023-01-30T00:00:00+09:00</published><updated>2023-01-30T00:00:00+09:00</updated><id>http://localhost:4000/docker/Harbor%EB%A1%9C%20Private%20Registry%20%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0</id><content type="html" xml:base="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/"><![CDATA[<h2 id="harbor-로-docker-private-registry-구축하기">Harbor 로 Docker Private Registry 구축하기</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-02T21:33:18+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Harbor로 Docker Private Registry 구축하기</title><link href="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/" rel="alternate" type="text/html" title="Harbor로 Docker Private Registry 구축하기" /><published>2023-01-30T00:00:00+09:00</published><updated>2023-01-30T00:00:00+09:00</updated><id>http://localhost:4000/docker/Harbor%EB%A1%9C%20Private%20Registry%20%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0</id><content type="html" xml:base="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/"><![CDATA[<h2 id="harbor-로-docker-private-registry-구축하기">Harbor 로 Docker Private Registry 구축하기</h2>
 
 <p>Harbor는 Offline Install과 Online Install 두 가지 방식으로 설치를 지원하고 있습니다. 이 실습에서는 Offline Install 을 기준으로 설치하도록 합니다. Harbor는 아래 github 사이트에 릴리즈 정보를 확인하고 download 받습니다.</p>
 
@@ -132,7 +132,39 @@ Clearing the configuration file: /config/registry/config.yml
  ⠿ Container nginx              Started                                         3.9s
 
 <span class="nt">----Harbor</span> has been installed and started successfully.----
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="Harbor" /><summary type="html"><![CDATA[Harbor 로 Docker Private Registry 구축하기]]></summary></entry><entry><title type="html">Docker 기반 JFrog 설치</title><link href="http://localhost:4000/docker/jfrog/" rel="alternate" type="text/html" title="Docker 기반 JFrog 설치" /><published>2023-01-29T00:00:00+09:00</published><updated>2023-01-29T00:00:00+09:00</updated><id>http://localhost:4000/docker/jfrog</id><content type="html" xml:base="http://localhost:4000/docker/jfrog/"><![CDATA[<h2 id="jfrog-on-docker">JFrog on Docker</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="Harbor" /><summary type="html"><![CDATA[Harbor 로 Docker Private Registry 구축하기]]></summary></entry><entry><title type="html">Nexus 설치 using docker</title><link href="http://localhost:4000/docker/nexus/" rel="alternate" type="text/html" title="Nexus 설치 using docker" /><published>2023-01-29T00:00:00+09:00</published><updated>2023-01-29T00:00:00+09:00</updated><id>http://localhost:4000/docker/nexus</id><content type="html" xml:base="http://localhost:4000/docker/nexus/"><![CDATA[<h2 id="sonartype-nexus-on-docker">Sonartype Nexus on Docker</h2>
+<p>Centos7 기반 Docker Engine을 설치합니다.<br />
+성</p>
+<h2 id="step-1-docker-compose-파일-작성">Step 1: docker-compose 파일 작성</h2>
+<p>vi editor 로 docker-compose.yaml 파일을 아래와 같이 작성합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi docker-compose.yaml
+
+version: <span class="s1">'3.7'</span>
+services:
+   nexus3:
+      image: sonatype/nexus3
+      restart: unless-stopped
+      container_name: nexus3
+      <span class="c"># privileged: true</span>
+      user: root
+      volumes:
+         - ./nexus-data:/nexus-data
+      healthcheck:
+         <span class="nb">test</span>: <span class="o">[</span><span class="s2">"CMD"</span>, <span class="s2">"nc"</span>, <span class="s2">"-zv"</span>, <span class="s2">"localhost"</span>, <span class="s2">"8000"</span> <span class="o">]</span>
+         interval: 5s
+         <span class="nb">timeout</span>: 2s
+         retries: 3
+      ports:
+         - 8081:8081
+         - 5000:5000
+</code></pre></div></div>
+
+<h2 id="step-2--docker-compose-실행">Step 2 : docker-compose 실행</h2>
+<p>docker-compose up 을 background 로 실행합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose up <span class="nt">-d</span>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="nexus" /><summary type="html"><![CDATA[Sonartype Nexus on Docker Centos7 기반 Docker Engine을 설치합니다. 성 Step 1: docker-compose 파일 작성 vi editor 로 docker-compose.yaml 파일을 아래와 같이 작성합니다.]]></summary></entry><entry><title type="html">Docker 기반 JFrog 설치</title><link href="http://localhost:4000/docker/jfrog/" rel="alternate" type="text/html" title="Docker 기반 JFrog 설치" /><published>2023-01-29T00:00:00+09:00</published><updated>2023-01-29T00:00:00+09:00</updated><id>http://localhost:4000/docker/jfrog</id><content type="html" xml:base="http://localhost:4000/docker/jfrog/"><![CDATA[<h2 id="jfrog-on-docker">JFrog on Docker</h2>
 <p>Docker 기반 JFrog를 설치합니다.</p>
 
 <h2 id="step-1-install-docker-engine-on-centos7">Step 1: Install Docker Engine on Centos7</h2>
@@ -142,8 +174,6 @@ Clearing the configuration file: /config/registry/config.yml
 <p><a href="https://docs.docker.com/engine/install/">https://docs.docker.com/engine/install/</a></p>
 
 <h2 id="step-2--jfrog-artifactory-docker-image-를-download">Step 2 : JFrog Artifactory Docker Image 를 download</h2>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> docker pull docker.bintray.io/jfrog/artifactory-pro:latest
-</code></pre></div></div>
 
 <p>For CE edition:</p>
 
@@ -631,42 +661,4 @@ client-key =&gt; client-key-data 로 변경</p>
 <p>kubectl get pods</p>
 
 <p>[수행결과]
-No resources found in default namespace.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="kubernetes" /><category term="minikube" /><summary type="html"><![CDATA[Pre-requisites - Install Docker]]></summary></entry><entry><title type="html">Docker 기반 Bitbucket 설치</title><link href="http://localhost:4000/docker/altassian-bitbucket-jira/" rel="alternate" type="text/html" title="Docker 기반 Bitbucket 설치" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/docker/altassian-bitbucket-jira</id><content type="html" xml:base="http://localhost:4000/docker/altassian-bitbucket-jira/"><![CDATA[<h2 id="bitbucket-on-docker">Bitbucket on Docker</h2>
-<p>Docker 기반 Bitbucket 입니다.</p>
-
-<pre><code class="language-YAML">version: '3'
-networks:
- jenkins-net:
-    driver: bridge
-
-services:
-  bitbucket:
-    container_name: bitbucket
-    image: atlassian/bitbucket-server:latest
-    environment:
-      - 'BITBUCKET_PROXY_PORT='
-      - 'BITBUCKET_PROXY_SCHEME='
-      - 'BITBUCKET_DELAYED_START='
-      - 'DOCKER_WAIT_HOST=postgres'
-      - 'DOCKER_WAIT_PORT=5432'
-    networks:
-      - jenkins-net
-    ports:
-      - "8990:7990"
-
-  postgres:
-    container_name: postgres
-    image: postgres:latest
-    volumes:
-      - ./data:/var/lib/postgresql/data
-    environment:
-      - 'POSTGRES_USER=postgres'
-      # CHANGE THE PASSWORD!
-      - 'POSTGRES_PASSWORD=admin1234'
-      - 'POSTGRES_DB=bitbucket'
-      - 'POSTGRES_ENCODING=UTF8'
-    networks:
-      - jenkins-net
-    ports:
-      - "5432:5432"
-</code></pre>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="bitbucket" /><summary type="html"><![CDATA[Bitbucket on Docker Docker 기반 Bitbucket 입니다.]]></summary></entry></feed>
+No resources found in default namespace.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="kubernetes" /><category term="minikube" /><summary type="html"><![CDATA[Pre-requisites - Install Docker]]></summary></entry></feed>
