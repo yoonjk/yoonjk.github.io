@@ -13,7 +13,7 @@ Jenkins에 접속하면 Jenkins admin 초기 패스워드를 입력하는 화면
 
 터미널에서 다음과 같이 명령을 수행하여 Jenkins  admin 초기 로그인 비밀번호를 확인하고, 초기 패스워드를 입력합니다.
 
-![Jenkins Getting started]({{ "/assets/images/jenkins/03-jenkins-initial-admin.png" |relative_url }})
+![Jenkins Getting started]({{ "/assets/images/jenkins/03-jenkins-initial-admin.png" }})
 
 ```bash
 cat /var/lib/jenkins/secrets/initialAdminPassword
