@@ -1,4 +1,38 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-04T15:20:27+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Harbor로 Docker Private Registry 구축하기</title><link href="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/" rel="alternate" type="text/html" title="Harbor로 Docker Private Registry 구축하기" /><published>2023-01-30T00:00:00+09:00</published><updated>2023-01-30T00:00:00+09:00</updated><id>http://localhost:4000/docker/Harbor%EB%A1%9C%20Private%20Registry%20%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0</id><content type="html" xml:base="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/"><![CDATA[<h2 id="harbor-로-docker-private-registry-구축하기">Harbor 로 Docker Private Registry 구축하기</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-04T20:06:57+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Nexus를 docker container repository로 사용하기</title><link href="http://localhost:4000/devops/push-container-image-to-nexus/" rel="alternate" type="text/html" title="Nexus를 docker container repository로 사용하기" /><published>2023-02-04T00:00:00+09:00</published><updated>2023-02-04T00:00:00+09:00</updated><id>http://localhost:4000/devops/push%20container%20image%20to%20nexus</id><content type="html" xml:base="http://localhost:4000/devops/push-container-image-to-nexus/"><![CDATA[<h2 id="nexus를-docker-container-repository로-사용하기">Nexus를 docker container repository로 사용하기</h2>
+<p>Nexus를 docker container image의 repository로 사용하는 위한 설정입니다.
+Harbor 같은 전용 Docker container Registry로 사용하는 Open Source 솔루션도 있으나
+애플리케이션 수가 몇개 되지 않는 것은 Nexus를 Container Image Repository로 사용할 수 있습니다.</p>
+
+<p>Nexus 설치는 블로그 목록을 참고해 주시고, 설정이 끝나고 추가적으로 container Image Repository를 추가하는 부분만 소개합니다.</p>
+
+<h2 id="step-1--docker-유형-repository-생성">Step 1 : docker 유형 Repository 생성</h2>
+<p>create repository를 선택합니다.<br />
+<img src="/assets/images/nexus/06-jenkins-nexus-create-repository.png" alt="nexus docker repository" /></p>
+
+<p>Repository 유형중에 docker(hosted) repository를 선택합니다.<br />
+<img src="/assets/images/nexus/07-jenkins-nexus-select-docker-repository.png" alt="nexus docker repository" /></p>
+
+<p>docker-repo 이름으로 다음과 같이 정보를 선택하고 repository를 생성합니다.<br />
+<img src="/assets/images/nexus/08-jenkins-nexus-docker-repository.png" alt="nexus docker repository" /></p>
+
+<h2 id="step-2-add-docker-bearer-token-to-realms">Step 2: Add docker bearer token to Realms</h2>
+
+<p>Realms 에 Docker Bearer token을 추가하고, 저장합니다.</p>
+
+<p><img src="/assets/images/nexus/08-jenkins-nexus-realms-docker-bearer-token.png" alt="add realm" /></p>
+
+<h2 id="step-2-podman-을-사용하여-nexus에-로그인">Step 2: podman 을 사용하여 nexus에 로그인</h2>
+
+<p>Podman을 사용하여 http로 login 합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># nexus-server-ip : remote server ip 또는 localhost</span>
+podman login <span class="nt">-u</span> deploy-user <span class="nt">-p</span> Passw0rd@ <span class="nt">--tls-verify</span><span class="o">=</span><span class="nb">false </span>nexus-server-ip:5000
+</code></pre></div></div>
+
+<p>Nexus 가 local에 있는 경우 nexus-server-id를 localhost로 지정합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman login <span class="nt">-u</span> deploy-user <span class="nt">-p</span> Passw0rd@ <span class="nt">--tls-verify</span><span class="o">=</span><span class="nb">false </span>localhost:5000
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="nexus" /><category term="podman" /><summary type="html"><![CDATA[Nexus를 docker container repository로 사용하기 Nexus를 docker container image의 repository로 사용하는 위한 설정입니다. Harbor 같은 전용 Docker container Registry로 사용하는 Open Source 솔루션도 있으나 애플리케이션 수가 몇개 되지 않는 것은 Nexus를 Container Image Repository로 사용할 수 있습니다.]]></summary></entry><entry><title type="html">Harbor로 Docker Private Registry 구축하기</title><link href="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/" rel="alternate" type="text/html" title="Harbor로 Docker Private Registry 구축하기" /><published>2023-01-30T00:00:00+09:00</published><updated>2023-01-30T00:00:00+09:00</updated><id>http://localhost:4000/docker/Harbor%EB%A1%9C%20Private%20Registry%20%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0</id><content type="html" xml:base="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/"><![CDATA[<h2 id="harbor-로-docker-private-registry-구축하기">Harbor 로 Docker Private Registry 구축하기</h2>
 
 <p>Harbor는 Offline Install과 Online Install 두 가지 방식으로 설치를 지원하고 있습니다. 이 실습에서는 Offline Install 을 기준으로 설치하도록 합니다. Harbor는 아래 github 사이트에 릴리즈 정보를 확인하고 download 받습니다.</p>
 
@@ -132,108 +166,7 @@ Clearing the configuration file: /config/registry/config.yml
  ⠿ Container nginx              Started                                         3.9s
 
 <span class="nt">----Harbor</span> has been installed and started successfully.----
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="Harbor" /><summary type="html"><![CDATA[Harbor 로 Docker Private Registry 구축하기]]></summary></entry><entry><title type="html">Nexus 설치 using docker</title><link href="http://localhost:4000/docker/nexus/" rel="alternate" type="text/html" title="Nexus 설치 using docker" /><published>2023-01-29T00:00:00+09:00</published><updated>2023-01-29T00:00:00+09:00</updated><id>http://localhost:4000/docker/nexus</id><content type="html" xml:base="http://localhost:4000/docker/nexus/"><![CDATA[<h2 id="sonartype-nexus-on-docker">Sonartype Nexus on Docker</h2>
-<p>Centos7 기반 Docker Engine을 설치합니다.<br />
-성</p>
-<h2 id="step-1-docker-compose-파일-작성">Step 1: docker-compose 파일 작성</h2>
-<p>nexus container 의 데이터를 저장할 폴더를 생성합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> ./nexus-data
-</code></pre></div></div>
-
-<p>vi editor 로 docker-compose.yaml 파일을 아래와 같이 작성합니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi docker-compose.yaml
-
-version: <span class="s1">'3.7'</span>
-services:
-   nexus3:
-      image: sonatype/nexus3
-      restart: unless-stopped
-      container_name: nexus3
-      <span class="c"># privileged: true</span>
-      user: root
-      volumes:
-         - ./nexus-data:/nexus-data
-      healthcheck:
-         <span class="nb">test</span>: <span class="o">[</span><span class="s2">"CMD"</span>, <span class="s2">"nc"</span>, <span class="s2">"-zv"</span>, <span class="s2">"localhost"</span>, <span class="s2">"8000"</span> <span class="o">]</span>
-         interval: 5s
-         <span class="nb">timeout</span>: 2s
-         retries: 3
-      ports:
-         - 8081:8081
-         - 5000:5000
-</code></pre></div></div>
-
-<h2 id="step-2--docker-compose-실행">Step 2 : docker-compose 실행</h2>
-<p>docker-compose up 을 background 로 실행합니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose up <span class="nt">-d</span>
-</code></pre></div></div>
-
-<h2 id="step-3--nexus-admin-로그인">step 3 : nexus admin 로그인</h2>
-<p>브라우저에서 nexus 8081 포트를 접속하여 오른쪽 상단위 로그인(signin) 버튼을 클릭하여 admin으로 접속합니다.</p>
-
-<p><img src="/assets/images/nexus/01-jenkins-nexus-home.png" alt="nexus home" /></p>
-
-<p>Setup 화면에서 Next 버튼을 클릭합니다.</p>
-
-<p><img src="/assets/images/nexus/02-jenkins-nexus-admin-1.png" alt="nexus admin" /></p>
-
-<p>admin 사용자의 비밀번호를 입력하고, Next 버튼을 클릭합니다.</p>
-
-<p><img src="/assets/images/nexus/02-jenkins-nexus-admin-2.png" alt="nexus admin" /></p>
-
-<p>admin 사용자의 새로운 비밀번호를 입력하고, Next 버튼을 클릭합니다.</p>
-
-<p><img src="/assets/images/nexus/02-jenkins-nexus-admin-3.png" alt="nexus admin" /></p>
-
-<p>Anonymous 접근을 허용하지 않기 위해 Disable anonymous access 를 선택하고, Next 버튼을 클릭합니다.</p>
-
-<p><img src="/assets/images/nexus/02-jenkins-nexus-admin-anonymous.png" alt="nexus admin" /></p>
-
-<p>Complete 화면에서 finish 버튼을 클릭합니다.</p>
-
-<h2 id="step-4--create-role-and-user">step 4 : Create Role and User</h2>
-
-<p><img src="/assets/images/nexus/02-jenkins-nexus-admin-4.png" alt="nexus admin" /></p>
-
-<p>Create Role 을 클릭합니다.</p>
-
-<p><img src="/assets/images/nexus/03-jenkins-nexus-create-role.png" alt="nexus admin" /></p>
-
-<p>Create Role을 생성합니다.</p>
-
-<p><img src="/assets/images/nexus/03-jenkins-nexus-role.png" alt="nexus admin" /></p>
-
-<p>Role 생성 결과입니다.</p>
-
-<p><img src="/assets/images/nexus/03-jenkins-nexus-role-2.png" alt="nexus admin" /></p>
-
-<p>Create Local User를 클릭하고 Create Local User를 생성합니다.</p>
-
-<p><img src="/assets/images/nexus/03-jenkins-nexus-create-user.png" alt="nexus admin" /></p>
-
-<p>Create Local User를 생성 결과입니다.</p>
-
-<p><img src="/assets/images/nexus/03-jenkins-nexus-create-user-1.png" alt="nexus admin" /></p>
-<h2 id="step-4--pomxml-에-nexus-정보를-추가">step 4 : pom.xml 에 nexus 정보를 추가</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://gitlab.com/nexweb/sample-service <span class="nt">-b</span> hello 
-
-<span class="nb">cd </span>sample-service
-
-vi pom.xml
-</code></pre></div></div>
-
-<p><img src="/assets/images/nexus/04-jenkins-nexus-pom.png" alt="nexus admin" /></p>
-
-<h2 id="step-5--settingsxml-에-nexus-정보를-추가">step 5 : settings.xml 에 nexus 정보를 추가</h2>
-
-<p>settings.xml에 nexus 정보를 추가합니다. id 값은 위의 pom.xml 파일에 있는 id값과 동일하게 설정합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi ~/.m2/settings.xml
-</code></pre></div></div>
-
-<p><img src="/assets/images/nexus/05-jenkins-nexus-settings.png" alt="nexus admin" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="nexus" /><summary type="html"><![CDATA[Sonartype Nexus on Docker Centos7 기반 Docker Engine을 설치합니다. 성 Step 1: docker-compose 파일 작성 nexus container 의 데이터를 저장할 폴더를 생성합니다. mkdir ./nexus-data]]></summary></entry><entry><title type="html">Docker 기반 JFrog 설치</title><link href="http://localhost:4000/docker/jfrog/" rel="alternate" type="text/html" title="Docker 기반 JFrog 설치" /><published>2023-01-29T00:00:00+09:00</published><updated>2023-01-29T00:00:00+09:00</updated><id>http://localhost:4000/docker/jfrog</id><content type="html" xml:base="http://localhost:4000/docker/jfrog/"><![CDATA[<h2 id="jfrog-on-docker">JFrog on Docker</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="Harbor" /><summary type="html"><![CDATA[Harbor 로 Docker Private Registry 구축하기]]></summary></entry><entry><title type="html">Docker 기반 JFrog 설치</title><link href="http://localhost:4000/docker/jfrog/" rel="alternate" type="text/html" title="Docker 기반 JFrog 설치" /><published>2023-01-29T00:00:00+09:00</published><updated>2023-01-29T00:00:00+09:00</updated><id>http://localhost:4000/docker/jfrog</id><content type="html" xml:base="http://localhost:4000/docker/jfrog/"><![CDATA[<h2 id="jfrog-on-docker">JFrog on Docker</h2>
 <p>Docker 기반 JFrog를 설치합니다.</p>
 
 <h2 id="step-1-install-docker-engine-on-centos7">Step 1: Install Docker Engine on Centos7</h2>
@@ -426,34 +359,261 @@ Configure a credential helper to remove this warning. See
 https://docs.docker.com/engine/reference/commandline/login/#credentials-store
 
 Login Succeeded
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="Harbor" /><summary type="html"><![CDATA[리모트 서버에서 Harbor 서버에 docker login]]></summary></entry><entry><title type="html">Jenkins 시작</title><link href="http://localhost:4000/devops/start-up-jenkins/" rel="alternate" type="text/html" title="Jenkins 시작" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/devops/start-up%20jenkins</id><content type="html" xml:base="http://localhost:4000/devops/start-up-jenkins/"><![CDATA[<h2 id="start-up-jenkins">Start-up Jenkins</h2>
-<p>Jenkins server에 접속하기 brower에서 해당 서버의 http://localhost:8080 포트 접속합니다.</p>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="Harbor" /><summary type="html"><![CDATA[리모트 서버에서 Harbor 서버에 docker login]]></summary></entry><entry><title type="html">Nexus 설치 using docker</title><link href="http://localhost:4000/docker/nexus/" rel="alternate" type="text/html" title="Nexus 설치 using docker" /><published>2023-01-29T00:00:00+09:00</published><updated>2023-01-29T00:00:00+09:00</updated><id>http://localhost:4000/docker/nexus</id><content type="html" xml:base="http://localhost:4000/docker/nexus/"><![CDATA[<h2 id="sonartype-nexus-on-docker">Sonartype Nexus on Docker</h2>
+<p>Centos7 기반 Docker Engine을 설치합니다.<br />
+성</p>
+<h2 id="step-1-docker-compose-파일-작성">Step 1: docker-compose 파일 작성</h2>
+<p>nexus container 의 데이터를 저장할 폴더를 생성합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> ./nexus-data
+</code></pre></div></div>
 
-<p>Jenkins에 접속하면 Jenkins admin 초기 패스워드를 입력하는 화면이 출력됩니다</p>
+<p>vi editor 로 docker-compose.yaml 파일을 아래와 같이 작성합니다.</p>
 
-<p>터미널에서 다음과 같이 명령을 수행하여 Jenkins  admin 초기 로그인 비밀번호를 확인하고, 초기 패스워드를 입력합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi docker-compose.yaml
 
-<p><img src="/assets/images/jenkins/03-jenkins-initial-admin.png" alt="Jenkins Getting started" /></p>
+version: <span class="s1">'3.7'</span>
+services:
+   nexus3:
+      image: sonatype/nexus3
+      restart: unless-stopped
+      container_name: nexus3
+      <span class="c"># privileged: true</span>
+      user: root
+      volumes:
+         - ./nexus-data:/nexus-data
+      healthcheck:
+         <span class="nb">test</span>: <span class="o">[</span><span class="s2">"CMD"</span>, <span class="s2">"nc"</span>, <span class="s2">"-zv"</span>, <span class="s2">"localhost"</span>, <span class="s2">"8000"</span> <span class="o">]</span>
+         interval: 5s
+         <span class="nb">timeout</span>: 2s
+         retries: 3
+      ports:
+         - 8081:8081
+         - 5000:5000
+</code></pre></div></div>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> /var/lib/jenkins/secrets/initialAdminPassword
+<h2 id="step-2--docker-compose-실행">Step 2 : docker-compose 실행</h2>
+<p>docker-compose up 을 background 로 실행합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose up <span class="nt">-d</span>
+</code></pre></div></div>
+
+<h2 id="step-3--nexus-admin-로그인">step 3 : nexus admin 로그인</h2>
+<p>브라우저에서 nexus 8081 포트를 접속하여 오른쪽 상단위 로그인(signin) 버튼을 클릭하여 admin으로 접속합니다.</p>
+
+<p><img src="/assets/images/nexus/01-jenkins-nexus-home.png" alt="nexus home" /></p>
+
+<p>Setup 화면에서 Next 버튼을 클릭합니다.</p>
+
+<p><img src="/assets/images/nexus/02-jenkins-nexus-admin-1.png" alt="nexus admin" /></p>
+
+<p>admin 사용자의 비밀번호를 입력하고, Next 버튼을 클릭합니다.</p>
+
+<p><img src="/assets/images/nexus/02-jenkins-nexus-admin-2.png" alt="nexus admin" /></p>
+
+<p>admin 사용자의 새로운 비밀번호를 입력하고, Next 버튼을 클릭합니다.</p>
+
+<p><img src="/assets/images/nexus/02-jenkins-nexus-admin-3.png" alt="nexus admin" /></p>
+
+<p>Anonymous 접근을 허용하지 않기 위해 Disable anonymous access 를 선택하고, Next 버튼을 클릭합니다.</p>
+
+<p><img src="/assets/images/nexus/02-jenkins-nexus-admin-anonymous.png" alt="nexus admin" /></p>
+
+<p>Complete 화면에서 finish 버튼을 클릭합니다.</p>
+
+<h2 id="step-4--create-role-and-user">step 4 : Create Role and User</h2>
+
+<p><img src="/assets/images/nexus/02-jenkins-nexus-admin-4.png" alt="nexus admin" /></p>
+
+<p>Create Role 을 클릭합니다.</p>
+
+<p><img src="/assets/images/nexus/03-jenkins-nexus-create-role.png" alt="nexus admin" /></p>
+
+<p>Create Role을 생성합니다.</p>
+
+<p><img src="/assets/images/nexus/03-jenkins-nexus-role.png" alt="nexus admin" /></p>
+
+<p>Role 생성 결과입니다.</p>
+
+<p><img src="/assets/images/nexus/03-jenkins-nexus-role-2.png" alt="nexus admin" /></p>
+
+<p>Create Local User를 클릭하고 Create Local User를 생성합니다.</p>
+
+<p><img src="/assets/images/nexus/03-jenkins-nexus-create-user.png" alt="nexus admin" /></p>
+
+<p>Create Local User를 생성 결과입니다.</p>
+
+<p><img src="/assets/images/nexus/03-jenkins-nexus-create-user-1.png" alt="nexus admin" /></p>
+<h2 id="step-4--pomxml-에-nexus-정보를-추가">step 4 : pom.xml 에 nexus 정보를 추가</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://gitlab.com/nexweb/sample-service <span class="nt">-b</span> hello 
+
+<span class="nb">cd </span>sample-service
+
+vi pom.xml
+</code></pre></div></div>
+
+<p><img src="/assets/images/nexus/04-jenkins-nexus-pom.png" alt="nexus admin" /></p>
+
+<h2 id="step-5--settingsxml-에-nexus-정보를-추가">step 5 : settings.xml 에 nexus 정보를 추가</h2>
+
+<p>settings.xml에 nexus 정보를 추가합니다. id 값은 위의 pom.xml 파일에 있는 id값과 동일하게 설정합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi ~/.m2/settings.xml
+</code></pre></div></div>
+
+<p><img src="/assets/images/nexus/05-jenkins-nexus-settings.png" alt="nexus admin" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="nexus" /><summary type="html"><![CDATA[Sonartype Nexus on Docker Centos7 기반 Docker Engine을 설치합니다. 성 Step 1: docker-compose 파일 작성 nexus container 의 데이터를 저장할 폴더를 생성합니다. mkdir ./nexus-data]]></summary></entry><entry><title type="html">Install MiniKube for Jenkins</title><link href="http://localhost:4000/kubernetes/install-minikube/" rel="alternate" type="text/html" title="Install MiniKube for Jenkins" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/install-minikube</id><content type="html" xml:base="http://localhost:4000/kubernetes/install-minikube/"><![CDATA[<h2 id="pre-requisites---install-docker">Pre-requisites - Install Docker</h2>
+
+<p>yum utils을 설치합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> yum-utils
+</code></pre></div></div>
+
+<p>Docker repository 정보를 download 받습니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum-config-manager <span class="se">\</span>
+<span class="nt">--add-repo</span> <span class="se">\</span>
+https://download.docker.com/linux/centos/docker-ce.repo
+</code></pre></div></div>
+
+<p>최신 버전의 Docker Engine, containerd를 설치하거나 다음 단계로 이동하여 특정 버전을 설치합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> docker-ce docker-ce-cli containerd.io
+</code></pre></div></div>
+
+<p>docker를 시작합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl start docker
+</code></pre></div></div>
+
+<p>docker daemon이 정상 설치되었는지 hello-world docker image를 pull하기 위해 다음 명령어를 수행하여 확인합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull hello-world 
 </code></pre></div></div>
 
 <p>[수행결과]
-a0f289xxxxxxxxxcd8fbb7</p>
+<img src="/assets/images/jenkins/07-jenkins-docker-hello-world.png" alt="docker pull hello-world" /></p>
 
-<p>Jenkins 패스워드 입력화면에 복사한 패스워드를 입력하고 Continue 버튼을 클릭하고, Install suggested plugins를 선택합니다</p>
+<p>docker images를 수행하여 아래와 같이 출력되는 확인합니다</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker images
+</code></pre></div></div>
 
-<p><img src="/assets/images/jenkins/04-jenkins-getting-started.png" alt="Jenkins Getting started" /></p>
+<p>[수행결과]
+<img src="/assets/images/jenkins/08-jenkins-docker-images.png" alt="docker pull hello-world" /></p>
 
-<p>Jenkins Plugins이 다음과 같이 설치됩니다</p>
+<h2 id="install-minikube">Install MiniKube</h2>
 
-<p><img src="/assets/images/jenkins/05-jenkins-install-plugins.png" alt="Install Jenkins Plugins" /></p>
+<p>minikube를 download 하고 minikube를 설치합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-LO</span> https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+<span class="nb">sudo mv </span>minikube-linux-amd64 /usr/local/bin/minikube
+<span class="nb">chmod</span> +x /usr/local/bin/minikube
+</code></pre></div></div>
 
-<p>Jenkins Admin 계정을 생성합니다. Save and Continue 버튼을 클릭합니다</p>
+<p>minikube를 다음과 같이 시작합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>minikube start <span class="nt">--driver</span><span class="o">=</span>docker <span class="nt">--force</span>
+</code></pre></div></div>
 
-<p><img src="/assets/images/jenkins/06-jenkins-create-admin.png" alt="Create Admin" /></p>
+<p>kubectl CLI download 합니다</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-L</span> <span class="s2">"https://dl.k8s.io/release/</span><span class="si">$(</span>curl <span class="nt">-L</span> <span class="nt">-s</span> https://dl.k8s.io/release/stable.txt<span class="si">)</span><span class="s2">/bin/linux/amd64/kubectl"</span> <span class="nt">-o</span> /usr/local/bin/kubectl
 
-<p>Instance Configuration 확인하고, Save and Finish 버튼을 클릭하고, Start using Jenkins 버튼을 클릭합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><summary type="html"><![CDATA[Start-up Jenkins Jenkins server에 접속하기 brower에서 해당 서버의 http://localhost:8080 포트 접속합니다.]]></summary></entry><entry><title type="html">Jenkins 설치 따라하기</title><link href="http://localhost:4000/devops/setup-jenkins/" rel="alternate" type="text/html" title="Jenkins 설치 따라하기" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/devops/setup%20jenkins</id><content type="html" xml:base="http://localhost:4000/devops/setup-jenkins/"><![CDATA[<h2 id="jenkins-pipeline-이란">Jenkins Pipeline 이란?</h2>
+<span class="nb">chmod</span> +x /usr/local/bin/kubectl
+
+kubectl get po <span class="nt">-A</span>
+</code></pre></div></div>
+
+<h2 id="configure-for-connecting-jenkins">Configure for connecting Jenkins</h2>
+
+<p>jenkins에서 minikube에 접속하기 위해  Kubernetes 의 credentials 정보가 있는 $HOME/.kube/config 파일을 확인합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>less ~/.kube/config
+</code></pre></div></div>
+
+<p><img src="/assets/images/jenkins/09-jenkins-kube-config.png" alt="kube-config" /></p>
+
+<p>위의 cluster CA 정보의 client 인증서 파일 경로를 데이터의 내용으로 변경 합니다
+<img src="/assets/images/jenkins/10-jenkins-kube-config-2.png" alt="kube-config" /></p>
+
+<p>아래의 명령어로 ca.crt, client.crt, client.key 파일의 내용을 다음의 명령어로 변환합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> /root/.minikube/ca.crt|base64 <span class="nt">-w0</span><span class="p">;</span><span class="nb">echo
+cat</span> /root/.minikube/profiles/minikube/client.crt|base64 <span class="nt">-w0</span><span class="p">;</span><span class="nb">echo
+cat</span> /root/.minikube/profiles/minikube/client.key|base64 <span class="nt">-w0</span><span class="p">;</span><span class="nb">echo</span>
+</code></pre></div></div>
+
+<p>certificate-authority =&gt; certificate-authority-data로 변경
+client-certificate =&gt; client-certificate-data 로 변경
+client-key =&gt; client-key-data 로 변경</p>
+
+<p><img src="/assets/images/jenkins/11-jenkins-change-kube-config.png" alt="kube-config" /></p>
+
+<p>default namespace의 pod 목록이 조회되는지 다음과 같이 확인합니다.</p>
+
+<p>kubectl get pods</p>
+
+<p>[수행결과]
+No resources found in default namespace.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="kubernetes" /><category term="minikube" /><summary type="html"><![CDATA[Pre-requisites - Install Docker]]></summary></entry><entry><title type="html">Docker 기반 Jira 설치</title><link href="http://localhost:4000/docker/altassian-jira/" rel="alternate" type="text/html" title="Docker 기반 Jira 설치" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/docker/altassian-jira</id><content type="html" xml:base="http://localhost:4000/docker/altassian-jira/"><![CDATA[<h2 id="jira-on-docker">Jira on Docker</h2>
+<p>Docker 기반 Jira 입니다.</p>
+
+<pre><code class="language-YAML">version: '3'
+networks:
+ jenkins-net:
+    driver: bridge
+
+services:
+  jira:
+    container_name: jira
+    image: atlassian/jira-software:latest
+    networks:
+      - jenkins-net
+    ports:
+      - "9010:8080"
+
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    environment:
+      - 'POSTGRES_USER=postgres'
+      # CHANGE THE PASSWORD!
+      - 'POSTGRES_PASSWORD=admin1234'
+      - 'POSTGRES_DB=jira'
+      - 'POSTGRES_ENCODING=UTF8'
+    networks:
+      - jenkins-net
+    ports:
+      - "5432:5432"
+</code></pre>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="jira" /><summary type="html"><![CDATA[Jira on Docker Docker 기반 Jira 입니다.]]></summary></entry><entry><title type="html">Docker 기반 Bitbucket 설치</title><link href="http://localhost:4000/docker/altassian-bitbucket-jira/" rel="alternate" type="text/html" title="Docker 기반 Bitbucket 설치" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/docker/altassian-bitbucket-jira</id><content type="html" xml:base="http://localhost:4000/docker/altassian-bitbucket-jira/"><![CDATA[<h2 id="bitbucket-on-docker">Bitbucket on Docker</h2>
+<p>Docker 기반 Bitbucket 입니다.</p>
+
+<pre><code class="language-YAML">version: '3'
+networks:
+ jenkins-net:
+    driver: bridge
+
+services:
+  bitbucket:
+    container_name: bitbucket
+    image: atlassian/bitbucket-server:latest
+    environment:
+      - 'BITBUCKET_PROXY_PORT='
+      - 'BITBUCKET_PROXY_SCHEME='
+      - 'BITBUCKET_DELAYED_START='
+      - 'DOCKER_WAIT_HOST=postgres'
+      - 'DOCKER_WAIT_PORT=5432'
+    networks:
+      - jenkins-net
+    ports:
+      - "8990:7990"
+
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    environment:
+      - 'POSTGRES_USER=postgres'
+      # CHANGE THE PASSWORD!
+      - 'POSTGRES_PASSWORD=admin1234'
+      - 'POSTGRES_DB=bitbucket'
+      - 'POSTGRES_ENCODING=UTF8'
+    networks:
+      - jenkins-net
+    ports:
+      - "5432:5432"
+</code></pre>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="bitbucket" /><summary type="html"><![CDATA[Bitbucket on Docker Docker 기반 Bitbucket 입니다.]]></summary></entry><entry><title type="html">Jenkins 설치 따라하기</title><link href="http://localhost:4000/devops/setup-jenkins/" rel="alternate" type="text/html" title="Jenkins 설치 따라하기" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/devops/setup%20jenkins</id><content type="html" xml:base="http://localhost:4000/devops/setup-jenkins/"><![CDATA[<h2 id="jenkins-pipeline-이란">Jenkins Pipeline 이란?</h2>
 <p>Jenkins Pipeline은 지속적인 업데이트 파이프라인을 구현하고 Jenkins에 통합하는 것을 지원하는 플러그인의 집합이다. 이 과정에서 소프트웨어를 빌드하고 여러 단계의 테스트, 배포를 진행한다. 
 Pipeline은 Pipeline Domain Specific Language라는 문법을 통해 마치 코드를 작성하는 것과 같이 Pipeline을 통해 간단한 배포 파이프라인부터 복잡한 배포  파이프라인을 코드로 모델링하기 위한 확장 가능한 도구 집합을 제공합니다.
 . 
@@ -540,194 +700,4 @@ https://maven.apache.org/download.cgi 에서 최근  maven 링크를 복사합�
 
 <p>docker container image 빌드를 위해 빌드 툴인 Podman을 설치합니다.</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum <span class="nb">install</span> <span class="nt">-y</span> podman 
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><summary type="html"><![CDATA[Jenkins Pipeline 이란? Jenkins Pipeline은 지속적인 업데이트 파이프라인을 구현하고 Jenkins에 통합하는 것을 지원하는 플러그인의 집합이다. 이 과정에서 소프트웨어를 빌드하고 여러 단계의 테스트, 배포를 진행한다. Pipeline은 Pipeline Domain Specific Language라는 문법을 통해 마치 코드를 작성하는 것과 같이 Pipeline을 통해 간단한 배포 파이프라인부터 복잡한 배포 파이프라인을 코드로 모델링하기 위한 확장 가능한 도구 집합을 제공합니다. . Jenkins 파이프 라인의 정의는 프로젝트의 소스 제어 저장소에 commit될 수 있는 텍스트 파일 (Jenkinsfile이라고 함)에 저장합니다.]]></summary></entry><entry><title type="html">Jenkins Kubernetes Plugin 설치 및 환경구성</title><link href="http://localhost:4000/devops/install-kubernetes-plugin/" rel="alternate" type="text/html" title="Jenkins Kubernetes Plugin 설치 및 환경구성" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/devops/install%20kubernetes%20plugin</id><content type="html" xml:base="http://localhost:4000/devops/install-kubernetes-plugin/"><![CDATA[<h2 id="jenkins-kubernetes-plugin-설치">Jenkins Kubernetes Plugin 설치</h2>
-<p>Jenkins Agent로 Kubernetes에 실행하기 위해 Kubernetes Plugin을 Jenkins에 설치하여 환경을 구성합니다.</p>
-
-<p>Jenkins UI에서 Manage Jenkins &gt; System Configuration &gt; Manage Plugins &gt;Available plugins 메뉴를 클릭합니다</p>
-
-<p>Plugins 검색 입력 필드에서 Kubernetes 입력하고 다음과 같은 첫번째  Kubernetes [V] 선택, 왼쪽 하단에 Install without restart 버튼을 클릭합니다</p>
-
-<p><img src="/assets/images/jenkins/12-jenkins-install-kubernetes-plugin.png" alt="Install Kubernetes Plugin" /></p>
-
-<p>아래의 [v] “Restart Jenkins when installation is complete and no jobs are running” 버튼을 선택하여 jenkins를 재시작 합니다. admin 계정으로 로드인을 합니다</p>
-
-<p>Manage Jenkins &gt; System Configuration &gt; Manage Nodes and Clouds를 선택합니다.</p>
-
-<p>Configure Clouds를 선택하고, Combo 박스에서 Kubernetes를 선택합니다.</p>
-
-<p><img src="/assets/images/jenkins/13-jenkins-add-new-cloud.png" alt="Install Kubernetes Plugin" /></p>
-
-<p>Kubernetes 접속하기 위한 Credentials 정보를 입력하면이 다음과 같이 출력됩니다. Kubernetes Cloud details 버튼을 클릭하면 상세 입력창이 출력됩니다.</p>
-<figure style="width: 5%; height: 20%; " class="align-center">
-  <img src="http://localhost:4000/assets/images/jenkins/14-jenkins-configure-clouds.png " alt="" />
-  <figcaption></figcaption>
-</figure>
-
-<p>Kubernetes Namespace section에 jenkins 를 입력합니다
-<img src="/assets/images/jenkins/15-jenkins-kubernetes-namespace.png" alt="Kubernetes Namespace" /></p>
-
-<p>Configure Clouds에서 Credentials &gt; Add 버튼을 클릭합니다
-<img src="/assets/images/jenkins/16-jenkins-add-jenkins.png" alt="add jenkins in Credentials" /></p>
-
-<p>Add Credentials 입력창에서 credentials 정보를 다음과 같이 입력합니다.<br />
-File은 자신의 VM 서버의 root 계정의. $HOME/.kube/config 파일을 선택합니다.<br />
-.kube/config 파일을 자신의 laptop에 download 받아서 choose file 버튼을 클릭하여 download 받은 config파일을 선택합니다.<br />
-<img src="/assets/images/jenkins/17-jenkins-add-credentials.png" alt="add Credentials" /></p>
-
-<p>Credentials Section 에서 위에서 입력한 mykubeconfig를 선택하고, Test Connection버튼을 클릭하여 minikube 연결을 테스트합니다. 다음의 메시지처럼 정상 출력되는지 확인합니다.
-“Connected to Kubernetes v1.xx.x”로 표시 되는지 확인합니다</p>
-<figure style="width: 50%; height: 20%; " class="align-center">
-  <img src="http://localhost:4000/assets/images/jenkins/18-jenkins-connected.png " alt="" />
-  <figcaption></figcaption>
-</figure>
-
-<p>WebSocket 항목을 선택합니다.<br />
-[v] WebSocket</p>
-
-<p>Pod Label Section에서key / value값을 다음과 같이 입력합니다.</p>
-
-<figure style="width: 100%; height: 100%; " class="align-center">
-  <img src="http://localhost:4000/assets/images/jenkins/19-jenkins-pod-labels.png " alt="" />
-  <figcaption></figcaption>
-</figure>
-
-<p>Pod Templates Section 다음과 같이 입력합니다</p>
-<figure style="width: 50%; height: 100%; " class="align-center">
-  <img src="http://localhost:4000/assets/images/jenkins/20-jenkins-pod-templates.png " alt="" />
-  <figcaption></figcaption>
-</figure>
-
-<p>Container Section은 다음과 같이 입력하고 저장버튼을 클릭합니다.<br />
-Name : jnlp-slave<br />
-Docker image : jenkinsci/jnlp-slave:latest<br />
-Working directory : /home/jenkins/agent<br />
-Command to run : /bin/sh -c .</p>
-
-<figure style="width: 50%; height: 100%; " class="align-center">
-  <img src="http://localhost:4000/assets/images/jenkins/21-jenkins-container-templates.png " alt="" />
-  <figcaption></figcaption>
-</figure>
-
-<p>Jenkins agent가 실행할 jenkins namespace를 다음과 같이 생성합니다.</p>
-
-<p>kubectl create ns jenkins</p>
-
-<p>Jenkins Console Output 화면에서 다음과 같은 메시지가 출력되면 “Message: namespaces “jenkins” not found”  위 Jenkins namespace를 생성하지 않아서 발생하는 에러입니다.</p>
-
-<p>터미널창에서 default namespace에 app을 설치할 수 있는 권한을 cluster-admin 권한으로 jenkins에 부여합니다.
-kubectl create clusterrolebinding jenkins-admin  –clusterrole cluster-admin –serviceaccount jenkins:default</p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><summary type="html"><![CDATA[Jenkins Kubernetes Plugin 설치 Jenkins Agent로 Kubernetes에 실행하기 위해 Kubernetes Plugin을 Jenkins에 설치하여 환경을 구성합니다.]]></summary></entry><entry><title type="html">Docker 기반 Jira 설치</title><link href="http://localhost:4000/docker/altassian-jira/" rel="alternate" type="text/html" title="Docker 기반 Jira 설치" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/docker/altassian-jira</id><content type="html" xml:base="http://localhost:4000/docker/altassian-jira/"><![CDATA[<h2 id="jira-on-docker">Jira on Docker</h2>
-<p>Docker 기반 Jira 입니다.</p>
-
-<pre><code class="language-YAML">version: '3'
-networks:
- jenkins-net:
-    driver: bridge
-
-services:
-  jira:
-    container_name: jira
-    image: atlassian/jira-software:latest
-    networks:
-      - jenkins-net
-    ports:
-      - "9010:8080"
-
-  postgres:
-    container_name: postgres
-    image: postgres:latest
-    volumes:
-      - ./data:/var/lib/postgresql/data
-    environment:
-      - 'POSTGRES_USER=postgres'
-      # CHANGE THE PASSWORD!
-      - 'POSTGRES_PASSWORD=admin1234'
-      - 'POSTGRES_DB=jira'
-      - 'POSTGRES_ENCODING=UTF8'
-    networks:
-      - jenkins-net
-    ports:
-      - "5432:5432"
-</code></pre>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="jira" /><summary type="html"><![CDATA[Jira on Docker Docker 기반 Jira 입니다.]]></summary></entry><entry><title type="html">Install MiniKube for Jenkins</title><link href="http://localhost:4000/kubernetes/install-minikube/" rel="alternate" type="text/html" title="Install MiniKube for Jenkins" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/install-minikube</id><content type="html" xml:base="http://localhost:4000/kubernetes/install-minikube/"><![CDATA[<h2 id="pre-requisites---install-docker">Pre-requisites - Install Docker</h2>
-
-<p>yum utils을 설치합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> yum-utils
-</code></pre></div></div>
-
-<p>Docker repository 정보를 download 받습니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum-config-manager <span class="se">\</span>
-<span class="nt">--add-repo</span> <span class="se">\</span>
-https://download.docker.com/linux/centos/docker-ce.repo
-</code></pre></div></div>
-
-<p>최신 버전의 Docker Engine, containerd를 설치하거나 다음 단계로 이동하여 특정 버전을 설치합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> docker-ce docker-ce-cli containerd.io
-</code></pre></div></div>
-
-<p>docker를 시작합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl start docker
-</code></pre></div></div>
-
-<p>docker daemon이 정상 설치되었는지 hello-world docker image를 pull하기 위해 다음 명령어를 수행하여 확인합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull hello-world 
-</code></pre></div></div>
-
-<p>[수행결과]
-<img src="/assets/images/jenkins/07-jenkins-docker-hello-world.png" alt="docker pull hello-world" /></p>
-
-<p>docker images를 수행하여 아래와 같이 출력되는 확인합니다</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker images
-</code></pre></div></div>
-
-<p>[수행결과]
-<img src="/assets/images/jenkins/08-jenkins-docker-images.png" alt="docker pull hello-world" /></p>
-
-<h2 id="install-minikube">Install MiniKube</h2>
-
-<p>minikube를 download 하고 minikube를 설치합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-LO</span> https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-<span class="nb">sudo mv </span>minikube-linux-amd64 /usr/local/bin/minikube
-<span class="nb">chmod</span> +x /usr/local/bin/minikube
-</code></pre></div></div>
-
-<p>minikube를 다음과 같이 시작합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>minikube start <span class="nt">--driver</span><span class="o">=</span>docker <span class="nt">--force</span>
-</code></pre></div></div>
-
-<p>kubectl CLI download 합니다</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-L</span> <span class="s2">"https://dl.k8s.io/release/</span><span class="si">$(</span>curl <span class="nt">-L</span> <span class="nt">-s</span> https://dl.k8s.io/release/stable.txt<span class="si">)</span><span class="s2">/bin/linux/amd64/kubectl"</span> <span class="nt">-o</span> /usr/local/bin/kubectl
-
-<span class="nb">chmod</span> +x /usr/local/bin/kubectl
-
-kubectl get po <span class="nt">-A</span>
-</code></pre></div></div>
-
-<h2 id="configure-for-connecting-jenkins">Configure for connecting Jenkins</h2>
-
-<p>jenkins에서 minikube에 접속하기 위해  Kubernetes 의 credentials 정보가 있는 $HOME/.kube/config 파일을 확인합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>less ~/.kube/config
-</code></pre></div></div>
-
-<p><img src="/assets/images/jenkins/09-jenkins-kube-config.png" alt="kube-config" /></p>
-
-<p>위의 cluster CA 정보의 client 인증서 파일 경로를 데이터의 내용으로 변경 합니다
-<img src="/assets/images/jenkins/10-jenkins-kube-config-2.png" alt="kube-config" /></p>
-
-<p>아래의 명령어로 ca.crt, client.crt, client.key 파일의 내용을 다음의 명령어로 변환합니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> /root/.minikube/ca.crt|base64 <span class="nt">-w0</span><span class="p">;</span><span class="nb">echo
-cat</span> /root/.minikube/profiles/minikube/client.crt|base64 <span class="nt">-w0</span><span class="p">;</span><span class="nb">echo
-cat</span> /root/.minikube/profiles/minikube/client.key|base64 <span class="nt">-w0</span><span class="p">;</span><span class="nb">echo</span>
-</code></pre></div></div>
-
-<p>certificate-authority =&gt; certificate-authority-data로 변경
-client-certificate =&gt; client-certificate-data 로 변경
-client-key =&gt; client-key-data 로 변경</p>
-
-<p><img src="/assets/images/jenkins/11-jenkins-change-kube-config.png" alt="kube-config" /></p>
-
-<p>default namespace의 pod 목록이 조회되는지 다음과 같이 확인합니다.</p>
-
-<p>kubectl get pods</p>
-
-<p>[수행결과]
-No resources found in default namespace.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="kubernetes" /><category term="minikube" /><summary type="html"><![CDATA[Pre-requisites - Install Docker]]></summary></entry></feed>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><summary type="html"><![CDATA[Jenkins Pipeline 이란? Jenkins Pipeline은 지속적인 업데이트 파이프라인을 구현하고 Jenkins에 통합하는 것을 지원하는 플러그인의 집합이다. 이 과정에서 소프트웨어를 빌드하고 여러 단계의 테스트, 배포를 진행한다. Pipeline은 Pipeline Domain Specific Language라는 문법을 통해 마치 코드를 작성하는 것과 같이 Pipeline을 통해 간단한 배포 파이프라인부터 복잡한 배포 파이프라인을 코드로 모델링하기 위한 확장 가능한 도구 집합을 제공합니다. . Jenkins 파이프 라인의 정의는 프로젝트의 소스 제어 저장소에 commit될 수 있는 텍스트 파일 (Jenkinsfile이라고 함)에 저장합니다.]]></summary></entry></feed>

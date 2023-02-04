@@ -190,4 +190,10 @@ var store = [{
         "tags": ["Harbor"],
         "url": "/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/",
         "teaser": null
+      },{
+        "title": "Nexus를 docker container repository로 사용하기",
+        "excerpt":"Nexus를 docker container repository로 사용하기 Nexus를 docker container image의 repository로 사용하는 위한 설정입니다. Harbor 같은 전용 Docker container Registry로 사용하는 Open Source 솔루션도 있으나 애플리케이션 수가 몇개 되지 않는 것은 Nexus를 Container Image Repository로 사용할 수 있습니다. Nexus 설치는 블로그 목록을 참고해 주시고, 설정이 끝나고 추가적으로 container Image Repository를 추가하는...","categories": ["devops"],
+        "tags": ["nexus","podman"],
+        "url": "/devops/push-container-image-to-nexus/",
+        "teaser": null
       }]
