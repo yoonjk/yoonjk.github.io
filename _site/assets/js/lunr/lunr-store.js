@@ -191,6 +191,12 @@ var store = [{
         "url": "/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/",
         "teaser": null
       },{
+        "title": "Private Gitlab Repository 구성하기",
+        "excerpt":"Gitlab-CE 설치하기 git repository로 public 으로 사용할 수 있는 대표적인 것 중 하나가 github와 gitlab입니다. gitlab은 Gitlab-CE 로 기업의 Private 환경에 git 소스 Repository로 구성이 가능합니다. 상용 솔루션으로 Bitbucket도 많이 사용하지만 오픈소스 무료 솔루션으로 구성할 수도 있습니다. Step 1 : Gitlab을 위한 Pre-requisites package 설치 gitalb-ce 를 설치하기 위한 사전...","categories": ["devops"],
+        "tags": ["gitlab"],
+        "url": "/devops/gitlab-ce/",
+        "teaser": null
+      },{
         "title": "Nexus를 docker container repository로 사용하기",
         "excerpt":"Nexus를 docker container repository로 사용하기 Nexus를 docker container image의 repository로 사용하는 위한 설정입니다. Harbor 같은 전용 Docker container Registry로 사용하는 Open Source 솔루션도 있으나 애플리케이션 수가 몇개 되지 않는 것은 Nexus를 Container Image Repository로 사용할 수 있습니다. Nexus 설치는 블로그 목록을 참고해 주시고, 설정이 끝나고 추가적으로 container Image Repository를 추가하는...","categories": ["devops"],
         "tags": ["nexus","podman"],

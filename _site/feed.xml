@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-04T20:06:57+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Nexus를 docker container repository로 사용하기</title><link href="http://localhost:4000/devops/push-container-image-to-nexus/" rel="alternate" type="text/html" title="Nexus를 docker container repository로 사용하기" /><published>2023-02-04T00:00:00+09:00</published><updated>2023-02-04T00:00:00+09:00</updated><id>http://localhost:4000/devops/push%20container%20image%20to%20nexus</id><content type="html" xml:base="http://localhost:4000/devops/push-container-image-to-nexus/"><![CDATA[<h2 id="nexus를-docker-container-repository로-사용하기">Nexus를 docker container repository로 사용하기</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-04T20:54:48+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Nexus를 docker container repository로 사용하기</title><link href="http://localhost:4000/devops/push-container-image-to-nexus/" rel="alternate" type="text/html" title="Nexus를 docker container repository로 사용하기" /><published>2023-02-04T00:00:00+09:00</published><updated>2023-02-04T00:00:00+09:00</updated><id>http://localhost:4000/devops/push%20container%20image%20to%20nexus</id><content type="html" xml:base="http://localhost:4000/devops/push-container-image-to-nexus/"><![CDATA[<h2 id="nexus를-docker-container-repository로-사용하기">Nexus를 docker container repository로 사용하기</h2>
 <p>Nexus를 docker container image의 repository로 사용하는 위한 설정입니다.
 Harbor 같은 전용 Docker container Registry로 사용하는 Open Source 솔루션도 있으나
 애플리케이션 수가 몇개 되지 않는 것은 Nexus를 Container Image Repository로 사용할 수 있습니다.</p>
@@ -32,7 +32,45 @@ podman login <span class="nt">-u</span> deploy-user <span class="nt">-p</span> P
 <p>Nexus 가 local에 있는 경우 nexus-server-id를 localhost로 지정합니다.</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman login <span class="nt">-u</span> deploy-user <span class="nt">-p</span> Passw0rd@ <span class="nt">--tls-verify</span><span class="o">=</span><span class="nb">false </span>localhost:5000
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="nexus" /><category term="podman" /><summary type="html"><![CDATA[Nexus를 docker container repository로 사용하기 Nexus를 docker container image의 repository로 사용하는 위한 설정입니다. Harbor 같은 전용 Docker container Registry로 사용하는 Open Source 솔루션도 있으나 애플리케이션 수가 몇개 되지 않는 것은 Nexus를 Container Image Repository로 사용할 수 있습니다.]]></summary></entry><entry><title type="html">Harbor로 Docker Private Registry 구축하기</title><link href="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/" rel="alternate" type="text/html" title="Harbor로 Docker Private Registry 구축하기" /><published>2023-01-30T00:00:00+09:00</published><updated>2023-01-30T00:00:00+09:00</updated><id>http://localhost:4000/docker/Harbor%EB%A1%9C%20Private%20Registry%20%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0</id><content type="html" xml:base="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/"><![CDATA[<h2 id="harbor-로-docker-private-registry-구축하기">Harbor 로 Docker Private Registry 구축하기</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="nexus" /><category term="podman" /><summary type="html"><![CDATA[Nexus를 docker container repository로 사용하기 Nexus를 docker container image의 repository로 사용하는 위한 설정입니다. Harbor 같은 전용 Docker container Registry로 사용하는 Open Source 솔루션도 있으나 애플리케이션 수가 몇개 되지 않는 것은 Nexus를 Container Image Repository로 사용할 수 있습니다.]]></summary></entry><entry><title type="html">Private Gitlab Repository 구성하기</title><link href="http://localhost:4000/devops/gitlab-ce/" rel="alternate" type="text/html" title="Private Gitlab Repository 구성하기" /><published>2023-02-04T00:00:00+09:00</published><updated>2023-02-04T00:00:00+09:00</updated><id>http://localhost:4000/devops/gitlab-ce</id><content type="html" xml:base="http://localhost:4000/devops/gitlab-ce/"><![CDATA[<h2 id="gitlab-ce-설치하기">Gitlab-CE 설치하기</h2>
+<p>git repository로 public 으로 사용할 수 있는 대표적인 것 중 하나가 github와 gitlab입니다.</p>
+
+<p>gitlab은 Gitlab-CE 로 기업의 Private 환경에  git 소스 Repository로 구성이 가능합니다. 상용 솔루션으로 Bitbucket도 많이 사용하지만 오픈소스 무료 솔루션으로 구성할 수도 있습니다.</p>
+
+<h2 id="step-1--gitlab을-위한-pre-requisites-package-설치">Step 1 : Gitlab을 위한 Pre-requisites package 설치</h2>
+<p>gitalb-ce 를 설치하기 위한 사전 필수 패키지를 설치합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nt">-y</span> <span class="nb">install </span>wget bash-completion git policycoreutils-python
+</code></pre></div></div>
+
+<h2 id="step-2--postfix-설치-및-설정">Step 2 : Postfix 설치 및 설정</h2>
+<p>Gitlab system 에서 Notification 을 수행하기 위해 Postfix 를 설치하고 간단하게 설정합</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nt">-y</span> <span class="nb">install </span>postfix
+</code></pre></div></div>
+
+<p>/etc/postfix/main.cf 에서 아래의 내용을 수정합니다.</p>
+
+<p>myhostname = gitlab.example.com 
+mydomain = example.com<br />
+myorigin = $myhostname <br />
+inet_interfaces = all 
+mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain<br />
+relay_domains = $mydestination</p>
+
+<p><img src="/assets/images/gitlab/01-jenkins-gitlab-main-cf.png" alt="gitlab-ce" /></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/postfix/main.cf
+</code></pre></div></div>
+
+<h2 id="step-3--gitlab-ce-설치">Step 3 : Gitlab-CE 설치</h2>
+<p>gitlab repo 정보를 download 받습니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-sS</span> https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | <span class="nb">sudo </span>bash
+
+<span class="nv">EXTERNAL_URL</span><span class="o">=</span><span class="s2">"https://gitlab.example.com"</span> yum <span class="nb">install</span> <span class="nt">-y</span> gitlab-ce
+
+<span class="c"># gitalb 실행 상태 확인</span>
+gitlab status
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="gitlab" /><summary type="html"><![CDATA[Gitlab-CE 설치하기 git repository로 public 으로 사용할 수 있는 대표적인 것 중 하나가 github와 gitlab입니다.]]></summary></entry><entry><title type="html">Harbor로 Docker Private Registry 구축하기</title><link href="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/" rel="alternate" type="text/html" title="Harbor로 Docker Private Registry 구축하기" /><published>2023-01-30T00:00:00+09:00</published><updated>2023-01-30T00:00:00+09:00</updated><id>http://localhost:4000/docker/Harbor%EB%A1%9C%20Private%20Registry%20%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0</id><content type="html" xml:base="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/"><![CDATA[<h2 id="harbor-로-docker-private-registry-구축하기">Harbor 로 Docker Private Registry 구축하기</h2>
 
 <p>Harbor는 Offline Install과 Online Install 두 가지 방식으로 설치를 지원하고 있습니다. 이 실습에서는 Offline Install 을 기준으로 설치하도록 합니다. Harbor는 아래 github 사이트에 릴리즈 정보를 확인하고 download 받습니다.</p>
 
@@ -166,154 +204,7 @@ Clearing the configuration file: /config/registry/config.yml
  ⠿ Container nginx              Started                                         3.9s
 
 <span class="nt">----Harbor</span> has been installed and started successfully.----
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="Harbor" /><summary type="html"><![CDATA[Harbor 로 Docker Private Registry 구축하기]]></summary></entry><entry><title type="html">Docker 기반 JFrog 설치</title><link href="http://localhost:4000/docker/jfrog/" rel="alternate" type="text/html" title="Docker 기반 JFrog 설치" /><published>2023-01-29T00:00:00+09:00</published><updated>2023-01-29T00:00:00+09:00</updated><id>http://localhost:4000/docker/jfrog</id><content type="html" xml:base="http://localhost:4000/docker/jfrog/"><![CDATA[<h2 id="jfrog-on-docker">JFrog on Docker</h2>
-<p>Docker 기반 JFrog를 설치합니다.</p>
-
-<h2 id="step-1-install-docker-engine-on-centos7">Step 1: Install Docker Engine on Centos7</h2>
-
-<p><a href="https://docs.docker.com/engine/install/">Docker</a> 설치 방법은 다음을 참고하세요.</p>
-
-<p><a href="https://docs.docker.com/engine/install/">https://docs.docker.com/engine/install/</a></p>
-
-<h2 id="step-2--jfrog-artifactory-docker-image-를-download">Step 2 : JFrog Artifactory Docker Image 를 download</h2>
-
-<p>For CE edition:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull docker.bintray.io/jfrog/artifactory-cpp-ce
-
-
-docker images
-
-docker images <span class="s2">"*/jfrog/*"</span>
-<span class="nt">-------------------------------------------------------------------------------------------</span>
-REPOSITORY                                   TAG       IMAGE ID       CREATED      SIZE
-docker.bintray.io/jfrog/artifactory-cpp-ce   latest    82ca33a84e75   5 days ago   1.55GB
-
-</code></pre></div></div>
-<h2 id="step-3--create-data-directory">Step 3 : Create Data Directory</h2>
-<p>컨테이너에서 사용되는 데이터가 영구적으로 저장하기 위해 시스템에 데이터 디렉토리를 생성합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo mkdir</span> <span class="nt">-p</span> /jfrog/artifactory
-<span class="nb">sudo chown</span> <span class="nt">-R</span> 1030 /jfrog/
-</code></pre></div></div>
-
-<h2 id="step-4-start-jfrog-artifactory-container">Step 4: Start JFrog Artifactory container</h2>
-<p>Artifactory 컨테이너를 시작하려면 다음 명령을 사용하십시오.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">--name</span> artifactory <span class="nt">-d</span> <span class="nt">-p</span> 8081:8081 <span class="nt">-p</span> 8082:8082 <span class="se">\</span>
-<span class="nt">-v</span> /jfrog/artifactory:/var/opt/jfrog/artifactory <span class="se">\</span>
-docker.bintray.io/jfrog/artifactory-cpp-ce
-
-
-docker ps
-<span class="nt">---------------------------------------------------------------------------</span>
-CONTAINER ID   IMAGE                                            COMMAND                  CREATED         STATUS         PORTS                                                           NAMES
-29c549fecd50   docker.bintray.io/jfrog/artifactory-cpp-ce:latest   <span class="s2">"/entrypoint-artifac…"</span>   9 minutes ago   Up 9 minutes   0.0.0.0:8081-8082-&gt;8081-8082/tcp, :::8081-8082-&gt;8081-8082/tcp   artifactory
-</code></pre></div></div>
-
-<h2 id="step-5--running-jfrog-artifactory-container-with-systemd">Step 5 : Running JFrog Artifactory container with Systemd</h2>
-
-<p>Systemd는 CentOS 7의 기본 초기화 시스템입니다. 이를 사용하여 JFrog Artifactory 컨테이너를 시스템 시작시 
-시작할 수 있도록 관리할 수 있습니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>vim /etc/systemd/system/artifactory.service
-</code></pre></div></div>
-
-<p>아래 내용을 추가합니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>Unit]
-<span class="nv">Description</span><span class="o">=</span>Setup Systemd script <span class="k">for </span>Artifactory Container
-<span class="nv">After</span><span class="o">=</span>network.target
-
-<span class="o">[</span>Service]
-<span class="nv">Restart</span><span class="o">=</span>always
-<span class="nv">ExecStartPre</span><span class="o">=</span>-/usr/bin/docker <span class="nb">kill </span>artifactory
-<span class="nv">ExecStartPre</span><span class="o">=</span>-/usr/bin/docker <span class="nb">rm </span>artifactory
-<span class="nv">ExecStart</span><span class="o">=</span>/usr/bin/docker run <span class="nt">--name</span> artifactory <span class="nt">-p</span> 8081:8081 <span class="nt">-p</span> 8082:8082 <span class="se">\</span>
-  <span class="nt">-v</span> /jfrog/artifactory:/var/opt/jfrog/artifactory <span class="se">\</span>
-  docker.bintray.io/jfrog/artifactory-oss:latest
-<span class="nv">ExecStop</span><span class="o">=</span>-/usr/bin/docker <span class="nb">kill </span>artifactory
-<span class="nv">ExecStop</span><span class="o">=</span>-/usr/bin/docker <span class="nb">rm </span>artifactory
-
-<span class="o">[</span>Install]
-<span class="nv">WantedBy</span><span class="o">=</span>multi-user.target
-
-</code></pre></div></div>
-
-<p>Reload systemd.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl daemon-reload
-</code></pre></div></div>
-
-<p>systemd를 이용하여 Artifactory Container를 시작합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl start artifactory
-</code></pre></div></div>
-
-<p>시스템이 재시작될 때 JFrog를 시작할 수 있도록 활성화합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl <span class="nb">enable </span>artifactory
-</code></pre></div></div>
-
-<p>JFrog 서비스가 실행중인지 상태를 확인합니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl status artifactory
-</code></pre></div></div>
-
-<p>서비스의 포트 binding 을 확인합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ss <span class="nt">-tunelp</span> | <span class="nb">grep </span>8081
-</code></pre></div></div>
-
-<h2 id="step-6-web-ui에서-artifactory-서버에-접근">Step 6: WEB UI에서 Artifactory 서버에 접근</h2>
-
-<p>JFrog Artifactory에 접근하기 위해 브라우저 URL에서 8081 포트로 접근합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://자신의 서버 IP 또는 localhost:8081/artifactory
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="JFrog" /><summary type="html"><![CDATA[JFrog on Docker Docker 기반 JFrog를 설치합니다.]]></summary></entry><entry><title type="html">Docker Engine 설치 on Centos7</title><link href="http://localhost:4000/docker/docker/" rel="alternate" type="text/html" title="Docker Engine 설치 on Centos7" /><published>2023-01-29T00:00:00+09:00</published><updated>2023-01-29T00:00:00+09:00</updated><id>http://localhost:4000/docker/docker</id><content type="html" xml:base="http://localhost:4000/docker/docker/"><![CDATA[<h2 id="jfrog-on-docker">JFrog on Docker</h2>
-<p>Centos7 기반 Docker Engine을 설치합니다.</p>
-
-<h2 id="step-1-upgrade-os-package">Step 1: Upgrade OS package</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dnf upgrade <span class="nt">-y</span>
-</code></pre></div></div>
-
-<h2 id="step-2--install-docker-engine">Step 2 : Install Docker engine</h2>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> yum-utils
-
-</code></pre></div></div>
-<p>Docker CE repsoitory정보를 download 합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum-config-manager <span class="nt">--add-repo</span> https://download.docker.com/linux/centos/docker-ce.repo
-</code></pre></div></div>
-<p>For Docker CE edition:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull docker.bintray.io/jfrog/artifactory-cpp-ce
-
-yum <span class="nb">install</span> <span class="nt">-y</span> docker-ce docker-ce-cli containerd
-</code></pre></div></div>
-
-<p>Docker 를 시작합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl start docker
-</code></pre></div></div>
-
-<p>Docker가 정상 설치되었는지 확인하기 위해 hello-world docker image를 download 받습니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull hello-world
-</code></pre></div></div>
-
-<h2 id="step-3--install-docker-compose">Step 3 : Install docker-compose</h2>
-<p>Docker compose를 download 받아서 설정합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">DOCKER_CONFIG</span><span class="o">=</span>/usr/local/lib/docker 
-<span class="nb">mkdir</span> <span class="nt">-p</span> <span class="nv">$DOCKER_CONFIG</span>/cli-plugins
-
-curl <span class="nt">-SL</span> https://github.com/docker/compose/releases/download/v2.14.2/docker-compose-linux-x86_64 <span class="nt">-o</span> <span class="nv">$DOCKER_CONFIG</span>/cli-plugins/docker-compose
-
-<span class="nb">chmod</span> +x <span class="nv">$DOCKER_CONFIG</span>/cli-plugins/docker-compose
-</code></pre></div></div>
-
-<p>~/.bash_profile에  DOCER_CONFIG 환경변수를 추가하고 path에 DOCKER_CONFIG를 추가하고 저장합니다</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi ~/.bash_profile 
-
-<span class="nv">DOCKER_CONFIG</span><span class="o">=</span>/usr/local/lib/docker
-<span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$HOME</span>/bin:<span class="nv">$DOCKER_CONFIG</span>/cli-plugins
-</code></pre></div></div>
-
-<p>docker-compose가  정상적으로 설치되었는지 docker-compose 명령어를 실행해 봅니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose version
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="docker" /><category term="docker-compose" /><summary type="html"><![CDATA[JFrog on Docker Centos7 기반 Docker Engine을 설치합니다.]]></summary></entry><entry><title type="html">리모트 서버에서 Harbor 서버에 docker login</title><link href="http://localhost:4000/docker/%EB%A6%AC%EB%AA%A8%ED%8A%B8-%EC%84%9C%EB%B2%84%EC%97%90%EC%84%9C-Harbor-%EC%97%90-%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%95%98%EA%B8%B0/" rel="alternate" type="text/html" title="리모트 서버에서 Harbor 서버에 docker login" /><published>2023-01-29T00:00:00+09:00</published><updated>2023-01-29T00:00:00+09:00</updated><id>http://localhost:4000/docker/%EB%A6%AC%EB%AA%A8%ED%8A%B8%20%EC%84%9C%EB%B2%84%EC%97%90%EC%84%9C%20Harbor%20%EC%97%90%20%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%95%98%EA%B8%B0</id><content type="html" xml:base="http://localhost:4000/docker/%EB%A6%AC%EB%AA%A8%ED%8A%B8-%EC%84%9C%EB%B2%84%EC%97%90%EC%84%9C-Harbor-%EC%97%90-%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%95%98%EA%B8%B0/"><![CDATA[<h2 id="리모트-서버에서-harbor-서버에-docker-login">리모트 서버에서 Harbor 서버에 docker login</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="Harbor" /><summary type="html"><![CDATA[Harbor 로 Docker Private Registry 구축하기]]></summary></entry><entry><title type="html">리모트 서버에서 Harbor 서버에 docker login</title><link href="http://localhost:4000/docker/%EB%A6%AC%EB%AA%A8%ED%8A%B8-%EC%84%9C%EB%B2%84%EC%97%90%EC%84%9C-Harbor-%EC%97%90-%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%95%98%EA%B8%B0/" rel="alternate" type="text/html" title="리모트 서버에서 Harbor 서버에 docker login" /><published>2023-01-29T00:00:00+09:00</published><updated>2023-01-29T00:00:00+09:00</updated><id>http://localhost:4000/docker/%EB%A6%AC%EB%AA%A8%ED%8A%B8%20%EC%84%9C%EB%B2%84%EC%97%90%EC%84%9C%20Harbor%20%EC%97%90%20%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%95%98%EA%B8%B0</id><content type="html" xml:base="http://localhost:4000/docker/%EB%A6%AC%EB%AA%A8%ED%8A%B8-%EC%84%9C%EB%B2%84%EC%97%90%EC%84%9C-Harbor-%EC%97%90-%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%95%98%EA%B8%B0/"><![CDATA[<h2 id="리모트-서버에서-harbor-서버에-docker-login">리모트 서버에서 Harbor 서버에 docker login</h2>
 
 <p>리모트 서버는 Centos7을 기준으로 합니다.</p>
 
@@ -460,7 +351,154 @@ vi pom.xml
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi ~/.m2/settings.xml
 </code></pre></div></div>
 
-<p><img src="/assets/images/nexus/05-jenkins-nexus-settings.png" alt="nexus admin" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="nexus" /><summary type="html"><![CDATA[Sonartype Nexus on Docker Centos7 기반 Docker Engine을 설치합니다. 성 Step 1: docker-compose 파일 작성 nexus container 의 데이터를 저장할 폴더를 생성합니다. mkdir ./nexus-data]]></summary></entry><entry><title type="html">Install MiniKube for Jenkins</title><link href="http://localhost:4000/kubernetes/install-minikube/" rel="alternate" type="text/html" title="Install MiniKube for Jenkins" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/install-minikube</id><content type="html" xml:base="http://localhost:4000/kubernetes/install-minikube/"><![CDATA[<h2 id="pre-requisites---install-docker">Pre-requisites - Install Docker</h2>
+<p><img src="/assets/images/nexus/05-jenkins-nexus-settings.png" alt="nexus admin" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="nexus" /><summary type="html"><![CDATA[Sonartype Nexus on Docker Centos7 기반 Docker Engine을 설치합니다. 성 Step 1: docker-compose 파일 작성 nexus container 의 데이터를 저장할 폴더를 생성합니다. mkdir ./nexus-data]]></summary></entry><entry><title type="html">Docker 기반 JFrog 설치</title><link href="http://localhost:4000/docker/jfrog/" rel="alternate" type="text/html" title="Docker 기반 JFrog 설치" /><published>2023-01-29T00:00:00+09:00</published><updated>2023-01-29T00:00:00+09:00</updated><id>http://localhost:4000/docker/jfrog</id><content type="html" xml:base="http://localhost:4000/docker/jfrog/"><![CDATA[<h2 id="jfrog-on-docker">JFrog on Docker</h2>
+<p>Docker 기반 JFrog를 설치합니다.</p>
+
+<h2 id="step-1-install-docker-engine-on-centos7">Step 1: Install Docker Engine on Centos7</h2>
+
+<p><a href="https://docs.docker.com/engine/install/">Docker</a> 설치 방법은 다음을 참고하세요.</p>
+
+<p><a href="https://docs.docker.com/engine/install/">https://docs.docker.com/engine/install/</a></p>
+
+<h2 id="step-2--jfrog-artifactory-docker-image-를-download">Step 2 : JFrog Artifactory Docker Image 를 download</h2>
+
+<p>For CE edition:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull docker.bintray.io/jfrog/artifactory-cpp-ce
+
+
+docker images
+
+docker images <span class="s2">"*/jfrog/*"</span>
+<span class="nt">-------------------------------------------------------------------------------------------</span>
+REPOSITORY                                   TAG       IMAGE ID       CREATED      SIZE
+docker.bintray.io/jfrog/artifactory-cpp-ce   latest    82ca33a84e75   5 days ago   1.55GB
+
+</code></pre></div></div>
+<h2 id="step-3--create-data-directory">Step 3 : Create Data Directory</h2>
+<p>컨테이너에서 사용되는 데이터가 영구적으로 저장하기 위해 시스템에 데이터 디렉토리를 생성합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo mkdir</span> <span class="nt">-p</span> /jfrog/artifactory
+<span class="nb">sudo chown</span> <span class="nt">-R</span> 1030 /jfrog/
+</code></pre></div></div>
+
+<h2 id="step-4-start-jfrog-artifactory-container">Step 4: Start JFrog Artifactory container</h2>
+<p>Artifactory 컨테이너를 시작하려면 다음 명령을 사용하십시오.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">--name</span> artifactory <span class="nt">-d</span> <span class="nt">-p</span> 8081:8081 <span class="nt">-p</span> 8082:8082 <span class="se">\</span>
+<span class="nt">-v</span> /jfrog/artifactory:/var/opt/jfrog/artifactory <span class="se">\</span>
+docker.bintray.io/jfrog/artifactory-cpp-ce
+
+
+docker ps
+<span class="nt">---------------------------------------------------------------------------</span>
+CONTAINER ID   IMAGE                                            COMMAND                  CREATED         STATUS         PORTS                                                           NAMES
+29c549fecd50   docker.bintray.io/jfrog/artifactory-cpp-ce:latest   <span class="s2">"/entrypoint-artifac…"</span>   9 minutes ago   Up 9 minutes   0.0.0.0:8081-8082-&gt;8081-8082/tcp, :::8081-8082-&gt;8081-8082/tcp   artifactory
+</code></pre></div></div>
+
+<h2 id="step-5--running-jfrog-artifactory-container-with-systemd">Step 5 : Running JFrog Artifactory container with Systemd</h2>
+
+<p>Systemd는 CentOS 7의 기본 초기화 시스템입니다. 이를 사용하여 JFrog Artifactory 컨테이너를 시스템 시작시 
+시작할 수 있도록 관리할 수 있습니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>vim /etc/systemd/system/artifactory.service
+</code></pre></div></div>
+
+<p>아래 내용을 추가합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>Unit]
+<span class="nv">Description</span><span class="o">=</span>Setup Systemd script <span class="k">for </span>Artifactory Container
+<span class="nv">After</span><span class="o">=</span>network.target
+
+<span class="o">[</span>Service]
+<span class="nv">Restart</span><span class="o">=</span>always
+<span class="nv">ExecStartPre</span><span class="o">=</span>-/usr/bin/docker <span class="nb">kill </span>artifactory
+<span class="nv">ExecStartPre</span><span class="o">=</span>-/usr/bin/docker <span class="nb">rm </span>artifactory
+<span class="nv">ExecStart</span><span class="o">=</span>/usr/bin/docker run <span class="nt">--name</span> artifactory <span class="nt">-p</span> 8081:8081 <span class="nt">-p</span> 8082:8082 <span class="se">\</span>
+  <span class="nt">-v</span> /jfrog/artifactory:/var/opt/jfrog/artifactory <span class="se">\</span>
+  docker.bintray.io/jfrog/artifactory-oss:latest
+<span class="nv">ExecStop</span><span class="o">=</span>-/usr/bin/docker <span class="nb">kill </span>artifactory
+<span class="nv">ExecStop</span><span class="o">=</span>-/usr/bin/docker <span class="nb">rm </span>artifactory
+
+<span class="o">[</span>Install]
+<span class="nv">WantedBy</span><span class="o">=</span>multi-user.target
+
+</code></pre></div></div>
+
+<p>Reload systemd.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl daemon-reload
+</code></pre></div></div>
+
+<p>systemd를 이용하여 Artifactory Container를 시작합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl start artifactory
+</code></pre></div></div>
+
+<p>시스템이 재시작될 때 JFrog를 시작할 수 있도록 활성화합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl <span class="nb">enable </span>artifactory
+</code></pre></div></div>
+
+<p>JFrog 서비스가 실행중인지 상태를 확인합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl status artifactory
+</code></pre></div></div>
+
+<p>서비스의 포트 binding 을 확인합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ss <span class="nt">-tunelp</span> | <span class="nb">grep </span>8081
+</code></pre></div></div>
+
+<h2 id="step-6-web-ui에서-artifactory-서버에-접근">Step 6: WEB UI에서 Artifactory 서버에 접근</h2>
+
+<p>JFrog Artifactory에 접근하기 위해 브라우저 URL에서 8081 포트로 접근합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://자신의 서버 IP 또는 localhost:8081/artifactory
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="JFrog" /><summary type="html"><![CDATA[JFrog on Docker Docker 기반 JFrog를 설치합니다.]]></summary></entry><entry><title type="html">Docker Engine 설치 on Centos7</title><link href="http://localhost:4000/docker/docker/" rel="alternate" type="text/html" title="Docker Engine 설치 on Centos7" /><published>2023-01-29T00:00:00+09:00</published><updated>2023-01-29T00:00:00+09:00</updated><id>http://localhost:4000/docker/docker</id><content type="html" xml:base="http://localhost:4000/docker/docker/"><![CDATA[<h2 id="jfrog-on-docker">JFrog on Docker</h2>
+<p>Centos7 기반 Docker Engine을 설치합니다.</p>
+
+<h2 id="step-1-upgrade-os-package">Step 1: Upgrade OS package</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dnf upgrade <span class="nt">-y</span>
+</code></pre></div></div>
+
+<h2 id="step-2--install-docker-engine">Step 2 : Install Docker engine</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> yum-utils
+
+</code></pre></div></div>
+<p>Docker CE repsoitory정보를 download 합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum-config-manager <span class="nt">--add-repo</span> https://download.docker.com/linux/centos/docker-ce.repo
+</code></pre></div></div>
+<p>For Docker CE edition:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull docker.bintray.io/jfrog/artifactory-cpp-ce
+
+yum <span class="nb">install</span> <span class="nt">-y</span> docker-ce docker-ce-cli containerd
+</code></pre></div></div>
+
+<p>Docker 를 시작합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl start docker
+</code></pre></div></div>
+
+<p>Docker가 정상 설치되었는지 확인하기 위해 hello-world docker image를 download 받습니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull hello-world
+</code></pre></div></div>
+
+<h2 id="step-3--install-docker-compose">Step 3 : Install docker-compose</h2>
+<p>Docker compose를 download 받아서 설정합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">DOCKER_CONFIG</span><span class="o">=</span>/usr/local/lib/docker 
+<span class="nb">mkdir</span> <span class="nt">-p</span> <span class="nv">$DOCKER_CONFIG</span>/cli-plugins
+
+curl <span class="nt">-SL</span> https://github.com/docker/compose/releases/download/v2.14.2/docker-compose-linux-x86_64 <span class="nt">-o</span> <span class="nv">$DOCKER_CONFIG</span>/cli-plugins/docker-compose
+
+<span class="nb">chmod</span> +x <span class="nv">$DOCKER_CONFIG</span>/cli-plugins/docker-compose
+</code></pre></div></div>
+
+<p>~/.bash_profile에  DOCER_CONFIG 환경변수를 추가하고 path에 DOCKER_CONFIG를 추가하고 저장합니다</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi ~/.bash_profile 
+
+<span class="nv">DOCKER_CONFIG</span><span class="o">=</span>/usr/local/lib/docker
+<span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$HOME</span>/bin:<span class="nv">$DOCKER_CONFIG</span>/cli-plugins
+</code></pre></div></div>
+
+<p>docker-compose가  정상적으로 설치되었는지 docker-compose 명령어를 실행해 봅니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose version
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="docker" /><category term="docker-compose" /><summary type="html"><![CDATA[JFrog on Docker Centos7 기반 Docker Engine을 설치합니다.]]></summary></entry><entry><title type="html">Install MiniKube for Jenkins</title><link href="http://localhost:4000/kubernetes/install-minikube/" rel="alternate" type="text/html" title="Install MiniKube for Jenkins" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/install-minikube</id><content type="html" xml:base="http://localhost:4000/kubernetes/install-minikube/"><![CDATA[<h2 id="pre-requisites---install-docker">Pre-requisites - Install Docker</h2>
 
 <p>yum utils을 설치합니다.</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> yum-utils
@@ -575,129 +613,31 @@ services:
       - jenkins-net
     ports:
       - "5432:5432"
-</code></pre>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="jira" /><summary type="html"><![CDATA[Jira on Docker Docker 기반 Jira 입니다.]]></summary></entry><entry><title type="html">Docker 기반 Bitbucket 설치</title><link href="http://localhost:4000/docker/altassian-bitbucket-jira/" rel="alternate" type="text/html" title="Docker 기반 Bitbucket 설치" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/docker/altassian-bitbucket-jira</id><content type="html" xml:base="http://localhost:4000/docker/altassian-bitbucket-jira/"><![CDATA[<h2 id="bitbucket-on-docker">Bitbucket on Docker</h2>
-<p>Docker 기반 Bitbucket 입니다.</p>
+</code></pre>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="jira" /><summary type="html"><![CDATA[Jira on Docker Docker 기반 Jira 입니다.]]></summary></entry><entry><title type="html">Jenkins 시작</title><link href="http://localhost:4000/devops/start-up-jenkins/" rel="alternate" type="text/html" title="Jenkins 시작" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/devops/start-up%20jenkins</id><content type="html" xml:base="http://localhost:4000/devops/start-up-jenkins/"><![CDATA[<h2 id="start-up-jenkins">Start-up Jenkins</h2>
+<p>Jenkins server에 접속하기 brower에서 해당 서버의 http://localhost:8080 포트 접속합니다.</p>
 
-<pre><code class="language-YAML">version: '3'
-networks:
- jenkins-net:
-    driver: bridge
+<p>Jenkins에 접속하면 Jenkins admin 초기 패스워드를 입력하는 화면이 출력됩니다</p>
 
-services:
-  bitbucket:
-    container_name: bitbucket
-    image: atlassian/bitbucket-server:latest
-    environment:
-      - 'BITBUCKET_PROXY_PORT='
-      - 'BITBUCKET_PROXY_SCHEME='
-      - 'BITBUCKET_DELAYED_START='
-      - 'DOCKER_WAIT_HOST=postgres'
-      - 'DOCKER_WAIT_PORT=5432'
-    networks:
-      - jenkins-net
-    ports:
-      - "8990:7990"
+<p>터미널에서 다음과 같이 명령을 수행하여 Jenkins  admin 초기 로그인 비밀번호를 확인하고, 초기 패스워드를 입력합니다.</p>
 
-  postgres:
-    container_name: postgres
-    image: postgres:latest
-    volumes:
-      - ./data:/var/lib/postgresql/data
-    environment:
-      - 'POSTGRES_USER=postgres'
-      # CHANGE THE PASSWORD!
-      - 'POSTGRES_PASSWORD=admin1234'
-      - 'POSTGRES_DB=bitbucket'
-      - 'POSTGRES_ENCODING=UTF8'
-    networks:
-      - jenkins-net
-    ports:
-      - "5432:5432"
-</code></pre>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="bitbucket" /><summary type="html"><![CDATA[Bitbucket on Docker Docker 기반 Bitbucket 입니다.]]></summary></entry><entry><title type="html">Jenkins 설치 따라하기</title><link href="http://localhost:4000/devops/setup-jenkins/" rel="alternate" type="text/html" title="Jenkins 설치 따라하기" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/devops/setup%20jenkins</id><content type="html" xml:base="http://localhost:4000/devops/setup-jenkins/"><![CDATA[<h2 id="jenkins-pipeline-이란">Jenkins Pipeline 이란?</h2>
-<p>Jenkins Pipeline은 지속적인 업데이트 파이프라인을 구현하고 Jenkins에 통합하는 것을 지원하는 플러그인의 집합이다. 이 과정에서 소프트웨어를 빌드하고 여러 단계의 테스트, 배포를 진행한다. 
-Pipeline은 Pipeline Domain Specific Language라는 문법을 통해 마치 코드를 작성하는 것과 같이 Pipeline을 통해 간단한 배포 파이프라인부터 복잡한 배포  파이프라인을 코드로 모델링하기 위한 확장 가능한 도구 집합을 제공합니다.
-. 
-Jenkins 파이프 라인의 정의는 프로젝트의 소스 제어 저장소에 commit될 수 있는 텍스트 파일 (Jenkinsfile이라고 함)에 저장합니다.</p>
+<p><img src="/assets/images/jenkins/03-jenkins-initial-admin.png" alt="Jenkins Getting started" /></p>
 
-<ul>
-  <li><strong>Install Jenkins on Linux(Centos)</strong></li>
-</ul>
-
-<p>Jenkins를 설치하기 전에 사전에 JDK와 Maven을 설치합니다. 
-상세한 설치 정보는 다음의 링크를 참조합니다.</p>
-
-<p>https://www.jenkins.io/doc/book/installing/linux/</p>
-
-<p>java-11-openjdk을 설치합니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>dnf upgrade <span class="nt">-y</span>
-<span class="nb">sudo </span>dnf <span class="nb">install</span> <span class="nt">-y</span> java-11-openjdk
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> /var/lib/jenkins/secrets/initialAdminPassword
 </code></pre></div></div>
-
-<p>다음의 링크를 접속하여 Maven 설치합니다.
-https://maven.apache.org/download.cgi 에서 최근  maven 링크를 복사합니다</p>
-
-<figure style="width: 100%" class="align-left">
-  <img src="http://localhost:4000/assets/images/jenkins/01-jenkins-install-maven.png" alt="" />
-  <figcaption></figcaption>
-</figure>
-
-<p>설치하고자 하는 경로에 압축파일을 다운 받아 압축을 해제한 후, 해당 폴더가 위치한 곳을 MAVEN_HOME으로 설정합니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://dlcdn.apache.org/maven/maven-3/3.8.7/binaries/apache-maven-3.8.7-bin.tar.gz
-
-<span class="nb">tar </span>xvzf apache-maven-3.8.7-bin.tar.gz <span class="nt">-C</span> /usr/local
-</code></pre></div></div>
-
-<p>~/.bash_profile을 vi editor로 열어MAVEN_HOME 환경정보를 추가합니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">MAVEN_HOME</span><span class="o">=</span>/usr/local/apache-maven-3.8.7 
-<span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$MAVEN_HOME</span>/bin 
-</code></pre></div></div>
-
-<p>bash profile을 설정하고 저장하고, bash_profile을 최신으로 적용합니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">source</span> ~/.bash_profile 
-</code></pre></div></div>
-
-<p>maven 설정되었는지 다음의 명령어로 수행하여 아래의 내용이 출력되는지 확인합니다.</p>
-
-<p>mvn</p>
 
 <p>[수행결과]
-<img src="/assets/images/jenkins/02-jenkins-mvn.png" alt="transparent black overlay" /></p>
+a0f289xxxxxxxxxcd8fbb7</p>
 
-<p>다음과 같이Git 설치합니다.</p>
+<p>Jenkins 패스워드 입력화면에 복사한 패스워드를 입력하고 Continue 버튼을 클릭하고, Install suggested plugins를 선택합니다</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>dnf <span class="nb">install</span> <span class="nt">-y</span> git
-</code></pre></div></div>
+<p><img src="/assets/images/jenkins/04-jenkins-getting-started.png" alt="Jenkins Getting started" /></p>
 
-<p>레포지터리에 젠킨스 레드햇 안정화 버전 레포지터리를 추가합니다.</p>
+<p>Jenkins Plugins이 다음과 같이 설치됩니다</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://pkg.jenkins.io/redhat-stable/jenkins.repo <span class="nt">-O</span> /etc/yum.repos.d/jenkins.repo 
-</code></pre></div></div>
+<p><img src="/assets/images/jenkins/05-jenkins-install-plugins.png" alt="Install Jenkins Plugins" /></p>
 
-<p>rpm에 젠킨스를 추가합니다.</p>
+<p>Jenkins Admin 계정을 생성합니다. Save and Continue 버튼을 클릭합니다</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>rpm <span class="nt">--import</span> https://pkg.jenkins.io/redhat-stable/jenkins.io.key
-</code></pre></div></div>
+<p><img src="/assets/images/jenkins/06-jenkins-create-admin.png" alt="Create Admin" /></p>
 
-<p>Jenkins 를 다음과 같이 설치합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>dnf <span class="nb">install</span> <span class="nt">-y</span> jenkins
-</code></pre></div></div>
-
-<p>OS 부팅 시 Jenkins 서비스가 시작되도록 설정합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl <span class="nb">enable </span>jenkins
-</code></pre></div></div>
-
-<p>다음 명령을 사용하여 Jenkins 서비스를 시작합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl start jenkins
-</code></pre></div></div>
-
-<p>다음 명령을 사용하여 Jenkins 서비스의 상태를 확인할 수 있습니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl status jenkins
-</code></pre></div></div>
-
-<p>docker container image 빌드를 위해 빌드 툴인 Podman을 설치합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum <span class="nb">install</span> <span class="nt">-y</span> podman 
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><summary type="html"><![CDATA[Jenkins Pipeline 이란? Jenkins Pipeline은 지속적인 업데이트 파이프라인을 구현하고 Jenkins에 통합하는 것을 지원하는 플러그인의 집합이다. 이 과정에서 소프트웨어를 빌드하고 여러 단계의 테스트, 배포를 진행한다. Pipeline은 Pipeline Domain Specific Language라는 문법을 통해 마치 코드를 작성하는 것과 같이 Pipeline을 통해 간단한 배포 파이프라인부터 복잡한 배포 파이프라인을 코드로 모델링하기 위한 확장 가능한 도구 집합을 제공합니다. . Jenkins 파이프 라인의 정의는 프로젝트의 소스 제어 저장소에 commit될 수 있는 텍스트 파일 (Jenkinsfile이라고 함)에 저장합니다.]]></summary></entry></feed>
+<p>Instance Configuration 확인하고, Save and Finish 버튼을 클릭하고, Start using Jenkins 버튼을 클릭합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><summary type="html"><![CDATA[Start-up Jenkins Jenkins server에 접속하기 brower에서 해당 서버의 http://localhost:8080 포트 접속합니다.]]></summary></entry></feed>
