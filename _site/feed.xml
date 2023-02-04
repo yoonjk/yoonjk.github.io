@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-04T20:54:48+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Nexus를 docker container repository로 사용하기</title><link href="http://localhost:4000/devops/push-container-image-to-nexus/" rel="alternate" type="text/html" title="Nexus를 docker container repository로 사용하기" /><published>2023-02-04T00:00:00+09:00</published><updated>2023-02-04T00:00:00+09:00</updated><id>http://localhost:4000/devops/push%20container%20image%20to%20nexus</id><content type="html" xml:base="http://localhost:4000/devops/push-container-image-to-nexus/"><![CDATA[<h2 id="nexus를-docker-container-repository로-사용하기">Nexus를 docker container repository로 사용하기</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-04T23:55:55+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Nexus를 docker container repository로 사용하기</title><link href="http://localhost:4000/devops/push-container-image-to-nexus/" rel="alternate" type="text/html" title="Nexus를 docker container repository로 사용하기" /><published>2023-02-04T00:00:00+09:00</published><updated>2023-02-04T00:00:00+09:00</updated><id>http://localhost:4000/devops/push%20container%20image%20to%20nexus</id><content type="html" xml:base="http://localhost:4000/devops/push-container-image-to-nexus/"><![CDATA[<h2 id="nexus를-docker-container-repository로-사용하기">Nexus를 docker container repository로 사용하기</h2>
 <p>Nexus를 docker container image의 repository로 사용하는 위한 설정입니다.
 Harbor 같은 전용 Docker container Registry로 사용하는 Open Source 솔루션도 있으나
 애플리케이션 수가 몇개 되지 않는 것은 Nexus를 Container Image Repository로 사용할 수 있습니다.</p>
@@ -70,7 +70,82 @@ relay_domains = $mydestination</p>
 
 <span class="c"># gitalb 실행 상태 확인</span>
 gitlab status
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="gitlab" /><summary type="html"><![CDATA[Gitlab-CE 설치하기 git repository로 public 으로 사용할 수 있는 대표적인 것 중 하나가 github와 gitlab입니다.]]></summary></entry><entry><title type="html">Harbor로 Docker Private Registry 구축하기</title><link href="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/" rel="alternate" type="text/html" title="Harbor로 Docker Private Registry 구축하기" /><published>2023-01-30T00:00:00+09:00</published><updated>2023-01-30T00:00:00+09:00</updated><id>http://localhost:4000/docker/Harbor%EB%A1%9C%20Private%20Registry%20%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0</id><content type="html" xml:base="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/"><![CDATA[<h2 id="harbor-로-docker-private-registry-구축하기">Harbor 로 Docker Private Registry 구축하기</h2>
+</code></pre></div></div>
+
+<h2 id="step-4--private-domain-을-hosts-파일에-등록">Step 4 : private domain 을 hosts 파일에 등록</h2>
+
+<p>브라우저에서 gitlab.example.com으로 접속하기 위해 laptop의 hosts에 gitlab.example.com domain을 등록하고 브라우저에서 접속합니다.</p>
+
+<h2 id="step-5--root-사용자-비밀번호-초괴화">Step 5 : root 사용자 비밀번호 초괴화</h2>
+<p>gitlab console로 접속하기 위해 다음의 명령어를 수행합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gitlab-rails console <span class="nt">-e</span> production
+</code></pre></div></div>
+
+<p>첫번째 아이디값을 user에 넣는 명령어이다. #&lt;User id:1 @root&gt; 라는 응답이 올것이다. 관리자계정은 root 입니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user <span class="o">=</span> User.where<span class="o">(</span><span class="nb">id</span>: 1<span class="o">)</span>.first
+
+<span class="c"># 수행결과 </span>
+<span class="nt">--------------------------------------------------------------------------------</span>
+ Ruby:         ruby 2.7.7p221 <span class="o">(</span>2022-11-24 revision 168ec2b1e5<span class="o">)</span> <span class="o">[</span>x86_64-linux]
+ GitLab:       15.8.1 <span class="o">(</span>383efe57adf<span class="o">)</span> FOSS
+ GitLab Shell: 14.15.0
+ PostgreSQL:   13.8
+<span class="nt">------------------------------------------------------------</span><span class="o">[</span> booted <span class="k">in </span>36.14s <span class="o">]</span>
+Loading production environment <span class="o">(</span>Rails 6.1.6.1<span class="o">)</span>
+
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>irb<span class="o">(</span>main<span class="o">)</span>:001:0&gt; user <span class="o">=</span> User.where<span class="o">(</span><span class="nb">id</span>: 1<span class="o">)</span>.first
+
+<span class="c"># 수행결과</span>
+<span class="o">=&gt;</span> <span class="c">#&lt;User id:1 @root&gt;</span>
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>irb<span class="o">(</span>main<span class="o">)</span>:011:0&gt; user.password<span class="o">=</span><span class="s1">'Passw0rd!'</span>
+<span class="o">=&gt;</span> <span class="s2">"Passw0rd!과
+irb(main):012:0&gt; user.password_confirmation='Passw0rd!'
+
+=&gt; "</span>Passw0rd!<span class="s2">"
+irb(main):013:0&gt; user.save
+</span></code></pre></div></div>
+
+<h2 id="step-6--gitlab-ce-로그인">Step 6 : gitlab-ce 로그인</h2>
+
+<p>위에서 설정한 root 사용자의 credentials 정보로 로그인합니다.<br />
+<img src="/assets/images/gitlab/02-jenkins-gitlab-root-login.png" alt="root login" /></p>
+
+<p>gitab에 로그인 후 첫 화면은 다음과 같습니다.<br />
+<img src="/assets/images/gitlab/03-jenkins-gitlab-home.png" alt="root home" /></p>
+
+<h2 id="step-7--new-account-생성">Step 7 : New Account 생성</h2>
+<p>gitlab 에 사용자를 추가하기 위해 admin을 선택합니다.<br />
+<img src="/assets/images/gitlab/04-jenkins-gitlab-user.png" alt="add user" /></p>
+
+<p>gitlab 에 사용자를 추가합니다.
+<img src="/assets/images/gitlab/05-jenkins-gitlab-new-user.png" alt="new user" /></p>
+
+<p>gitlab 에 사용자 정보를 입력하고 저장버튼을 클릭합니다.<br />
+<img src="/assets/images/gitlab/06-jenkins-gitlab-new-user-save.png" alt="new user" /></p>
+
+<p>gitlab 에 새로 생성한 사용자 정보를 확인하고, 초기 비밀번호를 설정하기 위해 Edit 버튼을 클릭합니다. <br />
+<img src="/assets/images/gitlab/07-jenkins-gitlab-new-user-result.png" alt="new user" /></p>
+
+<p>gitlab 에 새로 생성한 사용자 초기 임시 비밀번호를 설정하고 저장합니다.<br />
+<img src="/assets/images/gitlab/08-jenkins-gitab-edit-new-user.png" alt="new user" /></p>
+
+<h2 id="step-8--신규-사용자-로그인">Step 8 : 신규 사용자 로그인</h2>
+
+<p>gitlab을 root사용자를 logout하고, 새로 생성한 user00로 로그인하여, 비밀번호를 설정합니다.<br />
+<img src="/assets/images/gitlab/09-jenkins-gitlab-new-password.png" alt="new user" /></p>
+
+<h2 id="step-9--신규-project-생성">Step 9 : 신규 project 생성</h2>
+
+<p>gitlab을 smaple-service project를 생성합니다. 
+<img src="/assets/images/gitlab/10-jenkins-gitlab-create-project.png" alt="new user" /></p>
+
+<p>gitlab을 smaple-service project를 생성합니다. 
+<img src="/assets/images/gitlab/11-jenkins-gitlab-create-blank-project.png" alt="new user" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="gitlab" /><summary type="html"><![CDATA[Gitlab-CE 설치하기 git repository로 public 으로 사용할 수 있는 대표적인 것 중 하나가 github와 gitlab입니다.]]></summary></entry><entry><title type="html">Harbor로 Docker Private Registry 구축하기</title><link href="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/" rel="alternate" type="text/html" title="Harbor로 Docker Private Registry 구축하기" /><published>2023-01-30T00:00:00+09:00</published><updated>2023-01-30T00:00:00+09:00</updated><id>http://localhost:4000/docker/Harbor%EB%A1%9C%20Private%20Registry%20%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0</id><content type="html" xml:base="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/"><![CDATA[<h2 id="harbor-로-docker-private-registry-구축하기">Harbor 로 Docker Private Registry 구축하기</h2>
 
 <p>Harbor는 Offline Install과 Online Install 두 가지 방식으로 설치를 지원하고 있습니다. 이 실습에서는 Offline Install 을 기준으로 설치하도록 합니다. Harbor는 아래 github 사이트에 릴리즈 정보를 확인하고 download 받습니다.</p>
 
