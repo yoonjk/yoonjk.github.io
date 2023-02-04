@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-02T21:33:18+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Harbor로 Docker Private Registry 구축하기</title><link href="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/" rel="alternate" type="text/html" title="Harbor로 Docker Private Registry 구축하기" /><published>2023-01-30T00:00:00+09:00</published><updated>2023-01-30T00:00:00+09:00</updated><id>http://localhost:4000/docker/Harbor%EB%A1%9C%20Private%20Registry%20%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0</id><content type="html" xml:base="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/"><![CDATA[<h2 id="harbor-로-docker-private-registry-구축하기">Harbor 로 Docker Private Registry 구축하기</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-04T11:32:25+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Harbor로 Docker Private Registry 구축하기</title><link href="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/" rel="alternate" type="text/html" title="Harbor로 Docker Private Registry 구축하기" /><published>2023-01-30T00:00:00+09:00</published><updated>2023-01-30T00:00:00+09:00</updated><id>http://localhost:4000/docker/Harbor%EB%A1%9C%20Private%20Registry%20%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0</id><content type="html" xml:base="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/"><![CDATA[<h2 id="harbor-로-docker-private-registry-구축하기">Harbor 로 Docker Private Registry 구축하기</h2>
 
 <p>Harbor는 Offline Install과 Online Install 두 가지 방식으로 설치를 지원하고 있습니다. 이 실습에서는 Offline Install 을 기준으로 설치하도록 합니다. Harbor는 아래 github 사이트에 릴리즈 정보를 확인하고 download 받습니다.</p>
 
@@ -136,6 +136,10 @@ Clearing the configuration file: /config/registry/config.yml
 <p>Centos7 기반 Docker Engine을 설치합니다.<br />
 성</p>
 <h2 id="step-1-docker-compose-파일-작성">Step 1: docker-compose 파일 작성</h2>
+<p>nexus container 의 데이터를 저장할 폴더를 생성합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> ./nexus-data
+</code></pre></div></div>
+
 <p>vi editor 로 docker-compose.yaml 파일을 아래와 같이 작성합니다.</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi docker-compose.yaml
@@ -164,7 +168,32 @@ services:
 <p>docker-compose up 을 background 로 실행합니다.</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose up <span class="nt">-d</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="nexus" /><summary type="html"><![CDATA[Sonartype Nexus on Docker Centos7 기반 Docker Engine을 설치합니다. 성 Step 1: docker-compose 파일 작성 vi editor 로 docker-compose.yaml 파일을 아래와 같이 작성합니다.]]></summary></entry><entry><title type="html">Docker 기반 JFrog 설치</title><link href="http://localhost:4000/docker/jfrog/" rel="alternate" type="text/html" title="Docker 기반 JFrog 설치" /><published>2023-01-29T00:00:00+09:00</published><updated>2023-01-29T00:00:00+09:00</updated><id>http://localhost:4000/docker/jfrog</id><content type="html" xml:base="http://localhost:4000/docker/jfrog/"><![CDATA[<h2 id="jfrog-on-docker">JFrog on Docker</h2>
+</code></pre></div></div>
+
+<h2 id="step-3--nexus-admin-로그인">step 3 : nexus admin 로그인</h2>
+<p>브라우저에서 nexus 8081 포트를 접속하여 오른쪽 상단위 로그인(signin) 버튼을 클릭하여 admin으로 접속합니다.</p>
+
+<p><img src="/assets/images/nexus/01-jenkins-nexus-home.png" alt="nexus home" /></p>
+
+<p>Setup 화면에서 Next 버튼을 클릭합니다.</p>
+
+<p><img src="/assets/images/nexus/02-jenkins-nexus-admin-1.png" alt="nexus admin" /></p>
+
+<p>admin 사용자의 비밀번호를 입력하고, Next 버튼을 클릭합니다.</p>
+
+<p><img src="/assets/images/nexus/02-jenkins-nexus-admin-2.png" alt="nexus admin" /></p>
+
+<p>admin 사용자의 새로운 비밀번호를 입력하고, Next 버튼을 클릭합니다.</p>
+
+<p><img src="/assets/images/nexus/02-jenkins-nexus-admin-3.png" alt="nexus admin" /></p>
+
+<p>Anonymous 접근을 허용하지 않기 위해 Disable anonymous access 를 선택하고, Next 버튼을 클릭합니다.</p>
+
+<p><img src="/assets/images/nexus/02-jenkins-nexus-admin-anonymous.png" alt="nexus admin" /></p>
+
+<p>Complete 화면에서 finish 버튼을 클릭합니다.</p>
+
+<p><img src="/assets/images/nexus/02-jenkins-nexus-admin-4.png" alt="nexus admin" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="nexus" /><summary type="html"><![CDATA[Sonartype Nexus on Docker Centos7 기반 Docker Engine을 설치합니다. 성 Step 1: docker-compose 파일 작성 nexus container 의 데이터를 저장할 폴더를 생성합니다. mkdir ./nexus-data]]></summary></entry><entry><title type="html">Docker 기반 JFrog 설치</title><link href="http://localhost:4000/docker/jfrog/" rel="alternate" type="text/html" title="Docker 기반 JFrog 설치" /><published>2023-01-29T00:00:00+09:00</published><updated>2023-01-29T00:00:00+09:00</updated><id>http://localhost:4000/docker/jfrog</id><content type="html" xml:base="http://localhost:4000/docker/jfrog/"><![CDATA[<h2 id="jfrog-on-docker">JFrog on Docker</h2>
 <p>Docker 기반 JFrog를 설치합니다.</p>
 
 <h2 id="step-1-install-docker-engine-on-centos7">Step 1: Install Docker Engine on Centos7</h2>

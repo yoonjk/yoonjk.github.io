@@ -174,7 +174,7 @@ var store = [{
         "teaser": null
       },{
         "title": "Nexus 설치 using docker",
-        "excerpt":"Sonartype Nexus on Docker Centos7 기반 Docker Engine을 설치합니다. 성 Step 1: docker-compose 파일 작성 vi editor 로 docker-compose.yaml 파일을 아래와 같이 작성합니다. vi docker-compose.yaml version: '3.7' services: nexus3: image: sonatype/nexus3 restart: unless-stopped container_name: nexus3 # privileged: true user: root volumes: - ./nexus-data:/nexus-data healthcheck: test: [\"CMD\", \"nc\", \"-zv\", \"localhost\", \"8000\"...","categories": ["docker"],
+        "excerpt":"Sonartype Nexus on Docker Centos7 기반 Docker Engine을 설치합니다. 성 Step 1: docker-compose 파일 작성 nexus container 의 데이터를 저장할 폴더를 생성합니다. mkdir ./nexus-data vi editor 로 docker-compose.yaml 파일을 아래와 같이 작성합니다. vi docker-compose.yaml version: '3.7' services: nexus3: image: sonatype/nexus3 restart: unless-stopped container_name: nexus3 # privileged: true user: root volumes:...","categories": ["docker"],
         "tags": ["nexus"],
         "url": "/docker/nexus/",
         "teaser": null
