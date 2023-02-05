@@ -36,7 +36,7 @@ docker pull hello-world
 ```
 
 [수행결과]
-![docker pull hello-world]({{ "/assets/images/jenkins/07-jenkins-docker-hello-world.png" | relative_url }})
+![docker pull hello-world]({{ "/assets/images/jenkins/07-jenkins-docker-hello-world.png" }})
 
 docker images를 수행하여 아래와 같이 출력되는 확인합니다
 ```bash
@@ -44,7 +44,7 @@ docker images
 ```
 
 [수행결과]
-![docker pull hello-world]({{ "/assets/images/jenkins/08-jenkins-docker-images.png" | relative_url }})
+![docker pull hello-world]({{ "/assets/images/jenkins/08-jenkins-docker-images.png" }})
 
 ## Install MiniKube
 
