@@ -71,17 +71,17 @@ kubectl get po -A
 
 ## Configure for connecting Jenkins
 
-jenkins에서 minikube에 접속하기 위해  Kubernetes 의 credentials 정보가 있는 $HOME/.kube/config 파일을 확인합니다.
+jenkins에서 minikube에 접속하기 위해  Kubernetes 의 credentials 정보가 있는 $HOME/.kube/config 파일을 확인합니다.  
 ```bash
 less ~/.kube/config
 ```
 
-![kube-config]({{ "/assets/images/jenkins/09-jenkins-kube-config.png" | relative_url }})
+![kube-config]({{ "/assets/images/jenkins/09-jenkins-kube-config.png" }})
 
 위의 cluster CA 정보의 client 인증서 파일 경로를 데이터의 내용으로 변경 합니다
-![kube-config]({{ "/assets/images/jenkins/10-jenkins-kube-config-2.png" | relative_url }})
+![kube-config]({{ "/assets/images/jenkins/10-jenkins-kube-config-2.png" }})
 
-아래의 명령어로 ca.crt, client.crt, client.key 파일의 내용을 다음의 명령어로 변환합니다.
+아래의 명령어로 ca.crt, client.crt, client.key 파일의 내용을 다음의 명령어로 변환합니다.  
 
 ```bash
 cat /root/.minikube/ca.crt|base64 -w0;echo
@@ -91,13 +91,14 @@ cat /root/.minikube/profiles/minikube/client.key|base64 -w0;echo
 
 certificate-authority => certificate-authority-data로 변경
 client-certificate => client-certificate-data 로 변경
-client-key => client-key-data 로 변경
+client-key => client-key-data 로 변경 
 
-![kube-config]({{ "/assets/images/jenkins/11-jenkins-change-kube-config.png" | relative_url }})
+![kube-config]({{ "/assets/images/jenkins/11-jenkins-change-kube-config.png"  }})
 
-default namespace의 pod 목록이 조회되는지 다음과 같이 확인합니다.
-
+default namespace의 pod 목록이 조회되는지 다음과 같이 확인합니다.  
+```bash
 kubectl get pods 
 
-[수행결과]
+## 수행결과
 No resources found in default namespace.
+```

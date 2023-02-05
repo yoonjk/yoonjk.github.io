@@ -101,6 +101,7 @@ sudo systemctl start jenkins
 ```bash
 sudo systemctl status jenkins
 ```
+![jenkins status]({{ "/assets/images/jenkins/11-jenkins-status.png" }})
 
 docker container image 빌드를 위해 빌드 툴인 Podman을 설치합니다.
 ```bash

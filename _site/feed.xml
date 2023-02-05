@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-05T16:18:41+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Nexus를 docker container repository로 사용하기</title><link href="http://localhost:4000/devops/push-container-image-to-nexus/" rel="alternate" type="text/html" title="Nexus를 docker container repository로 사용하기" /><published>2023-02-04T00:00:00+09:00</published><updated>2023-02-04T00:00:00+09:00</updated><id>http://localhost:4000/devops/push%20container%20image%20to%20nexus</id><content type="html" xml:base="http://localhost:4000/devops/push-container-image-to-nexus/"><![CDATA[<h2 id="nexus를-docker-container-repository로-사용하기">Nexus를 docker container repository로 사용하기</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-05T18:44:17+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Nexus를 docker container repository로 사용하기</title><link href="http://localhost:4000/devops/push-container-image-to-nexus/" rel="alternate" type="text/html" title="Nexus를 docker container repository로 사용하기" /><published>2023-02-04T00:00:00+09:00</published><updated>2023-02-04T00:00:00+09:00</updated><id>http://localhost:4000/devops/push%20container%20image%20to%20nexus</id><content type="html" xml:base="http://localhost:4000/devops/push-container-image-to-nexus/"><![CDATA[<h2 id="nexus를-docker-container-repository로-사용하기">Nexus를 docker container repository로 사용하기</h2>
 <p>Nexus를 docker container image의 repository로 사용하는 위한 설정입니다.
 Harbor 같은 전용 Docker container Registry로 사용하는 Open Source 솔루션도 있으나
 애플리케이션 수가 몇개 되지 않는 것은 Nexus를 Container Image Repository로 사용할 수 있습니다.</p>
@@ -655,11 +655,11 @@ client-key =&gt; client-key-data 로 변경</p>
 <p><img src="/assets/images/jenkins/11-jenkins-change-kube-config.png" alt="kube-config" /></p>
 
 <p>default namespace의 pod 목록이 조회되는지 다음과 같이 확인합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl get pods 
 
-<p>kubectl get pods</p>
-
-<p>[수행결과]
-No resources found in default namespace.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="kubernetes" /><category term="minikube" /><summary type="html"><![CDATA[Pre-requisites - Install Docker]]></summary></entry><entry><title type="html">Docker 기반 Jira 설치</title><link href="http://localhost:4000/docker/altassian-jira/" rel="alternate" type="text/html" title="Docker 기반 Jira 설치" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/docker/altassian-jira</id><content type="html" xml:base="http://localhost:4000/docker/altassian-jira/"><![CDATA[<h2 id="jira-on-docker">Jira on Docker</h2>
+<span class="c">## 수행결과</span>
+No resources found <span class="k">in </span>default namespace.
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="kubernetes" /><category term="minikube" /><summary type="html"><![CDATA[Pre-requisites - Install Docker]]></summary></entry><entry><title type="html">Docker 기반 Jira 설치</title><link href="http://localhost:4000/docker/altassian-jira/" rel="alternate" type="text/html" title="Docker 기반 Jira 설치" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/docker/altassian-jira</id><content type="html" xml:base="http://localhost:4000/docker/altassian-jira/"><![CDATA[<h2 id="jira-on-docker">Jira on Docker</h2>
 <p>Docker 기반 Jira 입니다.</p>
 
 <pre><code class="language-YAML">version: '3'
