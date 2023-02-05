@@ -208,4 +208,10 @@ var store = [{
         "tags": ["nexus","podman"],
         "url": "/devops/push-container-image-to-nexus/",
         "teaser": null
+      },{
+        "title": "Tekton 설치",
+        "excerpt":"Tekton 설치 Tekton pipeline을 Kubernetes에 설치합니다. kubectl apply --filename https://storage.googleapis.com/tekton-releases/pipeline/latest/release.yaml 터미널 화면을 신규로 더 실행하여, 신규 터미널에서 tekton pipeline 설치를 확인하기 위해 다음의 명령어를 실행합니다. kubectl get pods --namespace tekton-pipelines -w Tekton dashboard 설치 tekton pipeline, task를 실행되는 WEB UI를 통해 보고자 하는 경우 tekton dashboard를 활용하여 현재 설치되어 있는...","categories": ["devops"],
+        "tags": ["tekton"],
+        "url": "/devops/tekton-installation/",
+        "teaser": null
       }]
