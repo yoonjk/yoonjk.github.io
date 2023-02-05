@@ -197,6 +197,12 @@ var store = [{
         "url": "/devops/gitlab-ce/",
         "teaser": null
       },{
+        "title": "Jenkins Pipeline 이란",
+        "excerpt":"Jenkins Pipeline 이란 Jenkins Pipeline이란 Jenkins를 사용하여 CD 파이프라인울 구현하고 통합하는 것을 지원하는 플러그인의 집합입니다. Jenkins에 의해 정의된 모든 표준 Job을 하나의 script 작성되며 git 과 같은 repository 저장할 수 있습니다. 각 단계에 대해 여러 작업을 작성하는 대신 이제 전체 워크플로를 코딩하여 하나의 Jenkinsfile에 넣을 수 있습니다. 이러한 Pipeline을 작성하는...","categories": ["devops"],
+        "tags": ["jenkins"],
+        "url": "/devops/jenkins-pipeline/",
+        "teaser": null
+      },{
         "title": "Nexus를 docker container repository로 사용하기",
         "excerpt":"Nexus를 docker container repository로 사용하기 Nexus를 docker container image의 repository로 사용하는 위한 설정입니다. Harbor 같은 전용 Docker container Registry로 사용하는 Open Source 솔루션도 있으나 애플리케이션 수가 몇개 되지 않는 것은 Nexus를 Container Image Repository로 사용할 수 있습니다. Nexus 설치는 블로그 목록을 참고해 주시고, 설정이 끝나고 추가적으로 container Image Repository를 추가하는...","categories": ["devops"],
         "tags": ["nexus","podman"],
