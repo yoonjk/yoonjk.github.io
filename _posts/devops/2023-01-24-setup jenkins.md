@@ -44,7 +44,10 @@ wget https://dlcdn.apache.org/maven/maven-3/3.8.7/binaries/apache-maven-3.8.7-bi
 tar xvzf apache-maven-3.8.7-bin.tar.gz -C /usr/local
 ```
 
-~/.bash_profile을 vi editor로 열어MAVEN_HOME 환경정보를 추가합니다.
+~/.bash_profile을 vi editor로 열어MAVEN_HOME 환경정보를 추가합니다.  
+```bash
+vi ~/.bash_profile
+```
 
 ```bash
 export MAVEN_HOME=/usr/local/apache-maven-3.8.7 
