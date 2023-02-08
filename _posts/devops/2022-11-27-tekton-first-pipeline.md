@@ -9,6 +9,7 @@ tags:
 ## First Pipeline 작성
 Tekton을 이용하여 Pipeline을 작성하는 것을 실습합니다. 
 
+## Step 1 : Task 작성
 Pipeline은 CI/CD 워크플로의 일부로 특정 실행 순서로 정렬된 일련의 Task를 정의합니다.
 
 이번에는 first Pipeline을 작성할 것입니다, First Pipeline에서는 이전에 작성했던 Hello World! 그리고 goodbye World! Task를 포함하는 Pipeline을 작성합니다.
@@ -35,7 +36,7 @@ spec:
         echo "Goodbye World!" 
 ```
 
-## Pipeline 작성
+## Step 2 : Pipeline 작성
 hello-world 타스크와 goodbye 타스크를 연결하는 pipeline을 작성합니다.
 
 ```bash
@@ -59,7 +60,7 @@ spec:
         name: goodbye
 ```
 
-## Pipeline Run 작성
+## Step 3 : Pipeline Run 작성
 Pipeline을 인스턴스화하는 Pipeline Run을 다음과 같이 작성해서 Kubernetes에 적용합니다.
 
 [hello-goodbye-pipeline-run.yaml]
