@@ -214,4 +214,10 @@ var store = [{
         "tags": ["tekton"],
         "url": "/devops/tekton-installation/",
         "teaser": null
+      },{
+        "title": "리모트 minikube 연결",
+        "excerpt":"Setup Minikube on minikube server Minikube는 로컬 머신에 VM을 생성하고 하나의 노드만 포함하는 경량의 클러스터를 배포하는 쿠버네티스 입니다. Minikube는 Linux, macOS 및 Windows 시스템에서 사용할 수 있습니다. Minikube가 작동하려면 하이퍼바이저(버추얼 박스 또는 KVM)가 필요하지만 이미 가상 머신 내부에 있는 경우 none 드라이버를 사용하여 추가 VM 계층 생성을 건너뛸 수 있습니다...","categories": ["kubernetes"],
+        "tags": ["minikube"],
+        "url": "/kubernetes/access-a-remote-minikube/",
+        "teaser": null
       }]

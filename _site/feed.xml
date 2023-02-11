@@ -1,4 +1,146 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-09T03:39:50+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Tekton 설치</title><link href="http://localhost:4000/devops/tekton-installation/" rel="alternate" type="text/html" title="Tekton 설치" /><published>2023-02-05T00:00:00+09:00</published><updated>2023-02-05T00:00:00+09:00</updated><id>http://localhost:4000/devops/tekton-installation</id><content type="html" xml:base="http://localhost:4000/devops/tekton-installation/"><![CDATA[<h2 id="tekton-설치">Tekton 설치</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-11T20:29:19+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">리모트 minikube 연결</title><link href="http://localhost:4000/kubernetes/access-a-remote-minikube/" rel="alternate" type="text/html" title="리모트 minikube 연결" /><published>2023-02-11T00:00:00+09:00</published><updated>2023-02-11T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/access-a-remote-minikube</id><content type="html" xml:base="http://localhost:4000/kubernetes/access-a-remote-minikube/"><![CDATA[<h2 id="setup-minikube-on-minikube-server">Setup Minikube on minikube server</h2>
+
+<p>Minikube는 로컬 머신에 VM을 생성하고 하나의 노드만 포함하는 경량의 클러스터를 배포하는 쿠버네티스 입니다. Minikube는 Linux, macOS 및 Windows 시스템에서 사용할 수 있습니다.</p>
+
+<p>Minikube가 작동하려면 하이퍼바이저(버추얼 박스 또는 KVM)가 필요하지만 이미 가상 머신 내부에 있는 경우 none 드라이버를 사용하여 추가 VM 계층 생성을 건너뛸 수 있습니다<br />
+이 경우  해당 VM에 Docker 엔진을 설치해야 합니다. 이는 가상화 대신 도커를 사용한다는 의미입니다 (버추얼 박스, VM웨어 퓨전, kvm2, VM웨어 등).</p>
+
+<p>docker를 성공적으로 설치한 후 다음 명령을 사용하여 로컬 Kubernetes를 시작할 차례입니다.</p>
+
+<p><img src="/assets/images/k8s/01-k8s-download-minikube.png" alt="download-minikube" /></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>curl <span class="nt">-LO</span> https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+<span class="nb">install </span>minikube-linux-amd64 /usr/local/bin/minikube
+<span class="c"># 또는</span>
+<span class="nb">sudo mv </span>minikube-linux-amd64 /usr/local/bin/minikube
+<span class="nb">sudo chmod</span> +x /usr/local/bin/minikube
+</code></pre></div></div>
+
+<p>minikube를 시작합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>minikube start <span class="nt">--driver</span><span class="o">=</span>docker
+</code></pre></div></div>
+
+<p>원격 호스트에서 실행되는 Kubernetes 클러스터가 있습니다. Minikube는 홈 디렉토리의 .kube/ 디렉토리 안에 config 파일을 생성합니다.</p>
+
+<p>kubernetes의 config 파일에는 다음의 내용이 있습니다.<br />
+•	certificate-authority(인증 기관) - 사용자가 제어하는 CA(인증 기관)에서 서명한 TLS 인증서를 프로비저닝할 수 있는 API를 제공합니다. 이러한 CA 및 인증서는 워크로드에서 신뢰를 설정하는 데 사용할 수 있습니다.<br />
+•	server - 파드, 서비스, 복제 컨트롤러 등을 포함하는 API 객체에 대한 데이터의 유효성을 검사하고 구성하는 쿠버네티스 API 서버의 주소이다.<br />
+•	client-certificate -.쿠버네티스/미니큐브는 TLS를 통한 인증을 위해 PKI 인증서가 필요하다.<br />
+•	client-key - 클라이언트 인증서와 일치하는 키입니다.</p>
+
+<p><img src="/assets/images/k8s/02-k8s-cat-kube-config.png" alt="start-minikube" /></p>
+
+<h2 id="install-nginx-for-reverse-proxy-on-minikube-server">Install nginx for Reverse Proxy on minikube server</h2>
+<p>리모트에서 minikube에 접근하기 위해 reverse proxy를 구성합니다.</p>
+
+<p>미니큐브 앞에 Nginx Reverse 프록시를 배포합니다.</p>
+
+<p>쿠버네티스 API 서버는 커맨드 라인 도구 kubectl을 사용할 때 모든 요청이 전달되는 지점입니다. kubectl을 사용하면 쿠버네티스 클러스터에 대해 명령을 실행할 수 있다. 이 예에서 내 kube-apiserver의 주소는 https://10.142.0.17:8443 여기서 10.142.0.17은  minikube의 IP 주소입니다. minikube는 로컬에서만 액세스할 수 있으나, 원격으로 액세스할 수 없습니다. 이러한 이유로 minikube 옆에 Nginx 역방향 프록시를 배포하여 원격 클라이언트의 요청을 수신한 다음 kube-apiserver로 전달할 수 있도록 해야 합니다.</p>
+
+<p>docker를 통해 배포하므로 마운트에 필요한 디렉토리와 파일을 만들어야합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">mkdir</span> <span class="nt">-p</span> /etc/nginx/conf.d/ /etc/nginx/certs
+<span class="nv">$ </span><span class="nb">cat</span> <span class="o">&lt;&lt;</span><span class="no">EOF</span><span class="sh"> &gt; /etc/nginx/conf.d/minikube.conf 
+server {
+    listen       80;
+    listen  [::]:80;
+    server_name  localhost;
+    auth_basic "Administrator’s Area";
+    auth_basic_user_file /etc/nginx/.htpasswd;    
+    
+    location / {   
+        proxy_pass https://`minikube ip`:8443;
+        proxy_ssl_certificate /etc/nginx/certs/minikube-client.crt;
+        proxy_ssl_certificate_key /etc/nginx/certs/minikube-client.key;
+    }
+}
+</span><span class="no">EOF
+</span></code></pre></div></div>
+
+<p>아직 사용자 이름/암호 쌍을 만들지 않았습니다. 이를 위해 htpasswd라는 cmd 도구를 사용합니다<br />
+. 아직 설치하지 않은 경우 yum 을 통해 설치하십시오.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> httpd-tools 
+htpasswd <span class="nt">-c</span> /etc/nginx/.htpasswd minikube
+</code></pre></div></div>
+
+<p>Ubuntu 환경인 경우 htpasswd 유틸 설치</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get <span class="nb">install </span>apache2-utils <span class="nt">-y</span>
+htpasswd <span class="nt">-c</span> /etc/nginx/.htpasswd minikube
+</code></pre></div></div>
+<p>이제 사용자이름/암호가 /etc/nginx/.htpasswd 파일에 저장됩니다. 필요한 구성 파일이 이미 있으므로 다음 명령을 사용하여 Nginx를 배포 할 준비가 되었습니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-d</span> <span class="se">\</span>
+<span class="nt">--name</span> nginx <span class="se">\</span>
+<span class="nt">--network</span> minikube <span class="se">\</span>
+<span class="nt">-p</span> 9080:80 <span class="se">\</span>
+<span class="nt">-v</span> /root/.minikube/profiles/minikube/client.key:/etc/nginx/certs/minikube-client.key <span class="se">\</span>
+<span class="nt">-v</span> /root/.minikube/profiles/minikube/client.crt:/etc/nginx/certs/minikube-client.crt <span class="se">\</span>
+<span class="nt">-v</span> /etc/nginx/conf.d/:/etc/nginx/conf.d <span class="se">\</span>
+<span class="nt">-v</span> /etc/nginx/.htpasswd:/etc/nginx/.htpasswd <span class="se">\</span>
+nginx
+</code></pre></div></div>
+
+<p>브라우저에서 Nginx에 요청하려고 하면 사용자 이름과 비밀번호가 필요하다는 다음 팝업 창이 나타납니다. 브라우저에서 페이지를 열려면 다음 주소로 이동하십시오</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://&lt;YOUR_SERVER_IP&gt;:9080  
+</code></pre></div></div>
+
+<h2 id="install-kubectl-on-local-computer">Install kubectl on local computer</h2>
+
+<p>minikube에 접속할려는 서버에 kubectl 를 설치합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>curl <span class="nt">-L</span> <span class="s2">"https://dl.k8s.io/release/</span><span class="si">$(</span>curl <span class="nt">-L</span> <span class="nt">-s</span> https://dl.k8s.io/release/stable.txt<span class="si">)</span><span class="s2">/bin/linux/amd64/kubectl"</span> <span class="nt">-o</span> /usr/local/bin/kubectl
+
+<span class="nb">sudo chmod</span> +x /usr/local/bin/kubectl
+</code></pre></div></div>
+
+<p>이미 kubectl이 설치되어 있으므로이 단계를 건너 뜁니다.<br />
+이제 미니큐브에 대한 kubectl을 구성해야 한다. 원격 호스트에서 구성 파일의 내용을 복사하고(Img.3 참조) 로컬 server 붙여넣습니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> ~/.kube/  <span class="c"># execute on local computer</span>
+</code></pre></div></div>
+
+<p>아래 이미지에는 변경해야 할 강조 표시된 줄이 있습니다.<br />
+remote 서버에 있는 config 파일을 복사하고 강조 표시된 부분을 수정합니다.<br />
+ENTER_YOUR_PASSWORD_HERE : remote 서버에서 설정한 minikube 비밀번호<br />
+YOUR_SERVER_IP : remote 서버<br />
+•	certificate-authority , client-certificate , and client-key</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://minikube:&lt;ENTER_YOUR_PASSWORD_HERE&gt;@&lt;YOUR_SERVER_IP&gt;:9080
+</code></pre></div></div>
+
+<p><img src="/assets/images/k8s/03-k8s-local-kube-config.png" alt="kube-config-minikube" /></p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">cat &lt;&lt;EOF &gt; .kube/config</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">clusters</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="na">cluster</span><span class="pi">:</span>
+    <span class="na">extensions</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">extension</span><span class="pi">:</span>
+        <span class="na">last-update</span><span class="pi">:</span> <span class="s">Fri, 20 Jan 2023 13:56:37 CST</span>
+        <span class="na">provider</span><span class="pi">:</span> <span class="s">minikube.sigs.k8s.io</span>
+        <span class="na">version</span><span class="pi">:</span> <span class="s">v1.28.0</span>
+      <span class="na">name</span><span class="pi">:</span> <span class="s">cluster_info</span>
+    <span class="na">server</span><span class="pi">:</span> <span class="s">http://minikube:ENTER_YOUR_PASSWORD_HERE@@YOUR_SERVER_IP:9080</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">minikube</span>
+<span class="na">contexts</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="na">context</span><span class="pi">:</span>
+    <span class="na">cluster</span><span class="pi">:</span> <span class="s">minikube</span>
+    <span class="na">extensions</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">extension</span><span class="pi">:</span>
+        <span class="na">last-update</span><span class="pi">:</span> <span class="s">Fri, 20 Jan 2023 13:56:37 CST</span>
+        <span class="na">provider</span><span class="pi">:</span> <span class="s">minikube.sigs.k8s.io</span>
+        <span class="na">version</span><span class="pi">:</span> <span class="s">v1.28.0</span>
+      <span class="na">name</span><span class="pi">:</span> <span class="s">context_info</span>
+    <span class="na">namespace</span><span class="pi">:</span> <span class="s">default</span>
+    <span class="na">user</span><span class="pi">:</span> <span class="s">minikube</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">minikube</span>
+<span class="na">current-context</span><span class="pi">:</span> <span class="s">minikube</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Config</span>
+<span class="na">preferences</span><span class="pi">:</span> <span class="pi">{}</span>
+<span class="na">users</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">minikube</span>
+  <span class="na">user</span><span class="pi">:</span>
+<span class="s">EOF</span>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="kubernetes" /><category term="minikube" /><summary type="html"><![CDATA[Setup Minikube on minikube server]]></summary></entry><entry><title type="html">Tekton 설치</title><link href="http://localhost:4000/devops/tekton-installation/" rel="alternate" type="text/html" title="Tekton 설치" /><published>2023-02-05T00:00:00+09:00</published><updated>2023-02-05T00:00:00+09:00</updated><id>http://localhost:4000/devops/tekton-installation</id><content type="html" xml:base="http://localhost:4000/devops/tekton-installation/"><![CDATA[<h2 id="tekton-설치">Tekton 설치</h2>
 <p>Tekton pipeline을 Kubernetes에 설치합니다.</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl apply <span class="nt">--filename</span> https://storage.googleapis.com/tekton-releases/pipeline/latest/release.yaml
@@ -24,127 +166,7 @@
 
 <p>Tekton dashboard 설치에 대해 자세한 것은 아래의 <a href="https://tekton.dev/docs/dashboard/install/">링크</a>를 확인하세요.</p>
 
-<p><a href="https://tekton.dev/docs/dashboard/install/">https://tekton.dev/docs/dashboard/install/</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="tekton" /><summary type="html"><![CDATA[Tekton 설치 Tekton pipeline을 Kubernetes에 설치합니다.]]></summary></entry><entry><title type="html">Jenkins Pipeline 이란</title><link href="http://localhost:4000/devops/jenkins-pipeline/" rel="alternate" type="text/html" title="Jenkins Pipeline 이란" /><published>2023-02-04T00:00:00+09:00</published><updated>2023-02-04T00:00:00+09:00</updated><id>http://localhost:4000/devops/jenkins%20pipeline</id><content type="html" xml:base="http://localhost:4000/devops/jenkins-pipeline/"><![CDATA[<h2 id="jenkins-pipeline-이란">Jenkins Pipeline 이란</h2>
-<p>Jenkins Pipeline이란 Jenkins를 사용하여 CD 파이프라인울 구현하고 통합하는 것을 지원하는 플러그인의 집합입니다.
-Jenkins에 의해 정의된 모든 표준 Job을 하나의 script 작성되며 git 과 같은 repository 저장할 수 있습니다.
-각 단계에 대해 여러 작업을 작성하는 대신 이제 전체 워크플로를 코딩하여 하나의 Jenkinsfile에 넣을 수 있습니다.
-이러한 Pipeline을 작성하는 데에는 크게 두 가지, 선언적(Declarative) 구문 방식, 스크립팅(Scripted) 방식의 두 가지 유형의 구문을 사용하여 작성할 수 있습니다.</p>
-
-<h4 id="declarative-pipeline">Declarative Pipeline</h4>
-<p>선언적 파이프 라인은 Jenkins Pipeline에 비교적 최근에 추가 된 것으로, 파이프 라인 위에 보다 단순화되고 구조적인 구문을 제공합니다.
-모든 유효한 선언적 파이프라인은 파이프라인 블록 내에 포함되어야 합니다.</p>
-
-<p>•	agent
-•	tools
-•	options
-•	environment
-•	stages
-o	stage
-•	post</p>
-
-<h2 id="pipeline-section">Pipeline section</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pipeline <span class="o">{</span>
-    /<span class="k">*</span> insert Declarative Pipeline here <span class="k">*</span>/
-<span class="o">}</span>
-</code></pre></div></div>
-
-<p>선언적 파이프라인에서 유효한 기본 문 및 식은 Groovy의 구문과 동일한 규칙을 따르지만 다음과 같은 예외가 있습니다.
-•	파이프라인의 최상위 수준은 블록이어야 합니다: pipeline { }.
-•	statement 구분 기호로 세미콜론이 없습니다. 각 문장은 한 줄에 있어야합니다.
-•	선언 파이프라인의 섹션은 일반적으로 하나 이상의 지시사항( 순서, 지시문) 또는steps을 포함합니다.
-•	속성 참조 문은 인수 없는 메서드 호출로 처리됩니다. 예를 들어, 입력은 input()으로 처리됩니다.</p>
-
-<p>선언적 파이프라인에서는 지시문과 섹션 구성을 시작을 도와주기 위해 선언적 지시문 생성기를 사용하여 지원합니다.
-현재 pipeline{} 블록 내에서 코드의 최대 크기를 제한하는 미해결 문제가 있습니다. 이 제한은 Scripted Pipeline에는 적용되지 않습니다.
-선언적 파이프라인의 섹션에는 일반적으로 하나 이상의 지시문 또는 단계가 포함됩니다.</p>
-
-<h4 id="declarative-pipeline--pipeline">Declarative Pipeline : pipeline</h4>
-<p>Agent section은  선언형 Pipeline에서는 필수section 입니다.
-Jenkins 환경에서 에이전트 섹션이 위치에 따라 전체 파이프라인 또는 특정 stage가 실행되는 위치에 지정할 수 있습니다.
-agent가 최상위 부분에 위치할 때는 pipeline이 실행되는node가 됩니다. agent any는 사용가능한 node중에 random 하게 사용하겠다는 의미입니다. 또는 agent에 label을 지정하여 지정된 node에서  pipeline을 실행할 수 있도록 label을 지정할 수 있습니다.
-agent none으로 지정한 경우 각 stage에서 agent를 설정하겠다는 의미입니다.
-agent { docker …} 로 설정한 경우 pipeline을 실행할 때 docker container에서 실행하고자 하는 경우 사용합니다.  이러한 경우 일반적으로 top level agent는 none으로 설정하고 stage 에서 agent를 필요한 docker container image를 사용하기 위해 선언합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pipeline <span class="o">{</span>
-    agent none 
-    stages <span class="o">{</span>
-        stage<span class="o">(</span><span class="s1">'Example Build'</span><span class="o">)</span> <span class="o">{</span>
-            agent <span class="o">{</span> docker <span class="s1">'maven:3.8.7-eclipse-temurin-11'</span> <span class="o">}</span> 
-            steps <span class="o">{</span>
-                <span class="nb">echo</span> <span class="s1">'Hello, Maven'</span>
-                sh <span class="s1">'mvn --version'</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-        stage<span class="o">(</span><span class="s1">'Example Test'</span><span class="o">)</span> <span class="o">{</span>
-            agent <span class="o">{</span> docker <span class="s1">'openjdk:8-jre'</span> <span class="o">}</span> 
-            steps <span class="o">{</span>
-                <span class="nb">echo</span> <span class="s1">'Hello, JDK'</span>
-                sh <span class="s1">'java -version'</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
-<h4 id="declarative-pipeline--agent">Declarative Pipeline : agent</h4>
-<p>agent { kubernetes … } 로 설정되는 경우 dynamic agent로 동적으로 pipeline을 실행할 때만 resource를 사용하고 종료되면 resource를 반환하는 것으로 kubernetes 환경에서 Jenkins agent를 운영하고자 하는 경우 사용합니다.</p>
-
-<h4 id="declarative-pipeline--tools">Declarative Pipeline : tools</h4>
-<p>tools section은 stage에서 사용하는 tool을 사용하기 위해 정의하는 section입니다. agent none인 경우 tools는 무시됩니다. optional 항목입니다.</p>
-
-<h4 id="declarative-pipeline--environemt">Declarative Pipeline : environemt</h4>
-<p>environment section은 pipeline 또는 stage에서 사용하는 key-value 형식의 환경변수를 정의해서 stage에서 사용하는 section입니다.  credentials 를 미리 load,  value에 저장하여 stage에 사용할 수 있습니다.</p>
-
-<h4 id="declarative-pipeline--stages">Declarative Pipeline : stages</h4>
-<p>stages section은 최소한 하나 이상의 stage에 대한 모음을 정의합니다. 대두분의 작업, 예를 들면 Build, Test, Deploy stage와 같이 작업들이 stages의 아래에 위치합니다.</p>
-
-<h4 id="declarative-pipeline--stage">Declarative Pipeline : stage</h4>
-<p>stage section stages section안에 정의하며,하나의 steps section 을 포함합니다.</p>
-
-<h4 id="declarative-pipeline--steps">Declarative Pipeline : steps</h4>
-<p>steps section은 선언적 pipeline에서만 지원하는 것으로 steps내에 실제 해야 할 작업을 정의하는 영역입니다.</p>
-
-<h4 id="declarative-pipeline--script">Declarative Pipeline : script</h4>
-<p>script section은 scripted pipeline의 블록을 가져와 선언적 pipeline에서 실행합니다. 대부분의 사용 사례에서 script 단계는 선언적 파이프라인에서 필요하지 않지만 groovy 문법을 사용해야 하는 경우 사용할 수 있습니다.   script가 로직이 길고 복잡한 블록인 경우 대신 공유 라이브러리로 이동해야 합니다.</p>
-
-<h4 id="declarative-pipeline--post">Declarative Pipeline : post</h4>
-<p>post section은 pipeline 또는 stage 실행 상태,  성공,실패, 또는 성공과 실패에 상관없이 항상 실행하고자 할 떄 사용하는 기능입니다.<br />
-•	pipeline block의 끝에 위치하거나 stage 에 위치
-•	always, success, failure, changed, fixed, regression, aborted, unstable, unsuccessfull, cleanup을 지원합니다.</p>
-
-<p>post는 Condition의 기능입니다.<br />
-<strong>always</strong><br />
-파이프라인 또는 단계 실행의 완료 상태에 관계없이 실행합니다.
-<strong>changed</strong> <br />
-현재 파이프라인의 실행이 이전 실행과 완료 상태가 다른 경우에만 changed 를 실행합니다.<br />
-<strong>fixed</strong>  <br />
-현재 파이프라인의 실행이 성공하고 이전 실행이 실패했거나 불안정한 경우에만 post 에 서 이 fixed 를 실행합니다 
-<strong>regression</strong> <br />
-현재 파이프라인 또는 상태가 실패, 불안정 또는 중단되고 이전 실행이 성공한 경우에만실행합니다.<br />
-<strong>aborted</strong>    <br />
-현재 파이프라인의 실행이 “중단됨” 상태인 경우(일반적으로 파이프라인이 수동으로 중단되었기 때문에) 사후 단계를 실행합니다. 일반적으로 웹 UI에서 회색으로 표시됩니다.<br />
-<strong>failure</strong>  <br />
-현재 파이프라인 또는 stage의 실행이 “실패” 상태(일반적으로 웹 UI에서 빨간색으로 표시됨)인 경우에만 실행합니다.<br />
-<strong>success</strong>  <br />
-현재 파이프라인 또는 스테이지의 실행이 “성공” 상태(일반적으로 웹 UI에서 파란색 또는 녹색으로 표시됨)인 경우에만 실행합니다.<br />
-<strong>cleanup</strong>  <br />
-파이프라인 또는 stage의 상태에 관계없이 다른 모든 사후 조건이 평가된 후 cleanup 실행합니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pipeline <span class="o">{</span>
-    agent any
-    stages <span class="o">{</span>
-        stage<span class="o">(</span><span class="s1">'Example'</span><span class="o">)</span> <span class="o">{</span>
-            steps <span class="o">{</span>
-                <span class="nb">echo</span> <span class="s1">'Hello World'</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-    post <span class="o">{</span> 
-        always <span class="o">{</span> 
-            <span class="nb">echo</span> <span class="s1">'I will always say Hello again!'</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><summary type="html"><![CDATA[Jenkins Pipeline 이란 Jenkins Pipeline이란 Jenkins를 사용하여 CD 파이프라인울 구현하고 통합하는 것을 지원하는 플러그인의 집합입니다. Jenkins에 의해 정의된 모든 표준 Job을 하나의 script 작성되며 git 과 같은 repository 저장할 수 있습니다. 각 단계에 대해 여러 작업을 작성하는 대신 이제 전체 워크플로를 코딩하여 하나의 Jenkinsfile에 넣을 수 있습니다. 이러한 Pipeline을 작성하는 데에는 크게 두 가지, 선언적(Declarative) 구문 방식, 스크립팅(Scripted) 방식의 두 가지 유형의 구문을 사용하여 작성할 수 있습니다.]]></summary></entry><entry><title type="html">Private Gitlab Repository 구성하기</title><link href="http://localhost:4000/devops/gitlab-ce/" rel="alternate" type="text/html" title="Private Gitlab Repository 구성하기" /><published>2023-02-04T00:00:00+09:00</published><updated>2023-02-04T00:00:00+09:00</updated><id>http://localhost:4000/devops/gitlab-ce</id><content type="html" xml:base="http://localhost:4000/devops/gitlab-ce/"><![CDATA[<h2 id="gitlab-ce-설치하기">Gitlab-CE 설치하기</h2>
+<p><a href="https://tekton.dev/docs/dashboard/install/">https://tekton.dev/docs/dashboard/install/</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="tekton" /><summary type="html"><![CDATA[Tekton 설치 Tekton pipeline을 Kubernetes에 설치합니다.]]></summary></entry><entry><title type="html">Private Gitlab Repository 구성하기</title><link href="http://localhost:4000/devops/gitlab-ce/" rel="alternate" type="text/html" title="Private Gitlab Repository 구성하기" /><published>2023-02-04T00:00:00+09:00</published><updated>2023-02-04T00:00:00+09:00</updated><id>http://localhost:4000/devops/gitlab-ce</id><content type="html" xml:base="http://localhost:4000/devops/gitlab-ce/"><![CDATA[<h2 id="gitlab-ce-설치하기">Gitlab-CE 설치하기</h2>
 <p>git repository로 public 으로 사용할 수 있는 대표적인 것 중 하나가 github와 gitlab입니다.</p>
 
 <p>gitlab은 Gitlab-CE 로 기업의 Private 환경에  git 소스 Repository로 구성이 가능합니다. 상용 솔루션으로 Bitbucket도 많이 사용하지만 오픈소스 무료 솔루션으로 구성할 수도 있습니다.</p>
@@ -291,7 +313,127 @@ podman login <span class="nt">-u</span> deploy-user <span class="nt">-p</span> P
 <p>Nexus 가 local에 있는 경우 nexus-server-id를 localhost로 지정합니다.</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman login <span class="nt">-u</span> deploy-user <span class="nt">-p</span> Passw0rd@ <span class="nt">--tls-verify</span><span class="o">=</span><span class="nb">false </span>localhost:5000
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="nexus" /><category term="podman" /><summary type="html"><![CDATA[Nexus를 docker container repository로 사용하기 Nexus를 docker container image의 repository로 사용하는 위한 설정입니다. Harbor 같은 전용 Docker container Registry로 사용하는 Open Source 솔루션도 있으나 애플리케이션 수가 몇개 되지 않는 것은 Nexus를 Container Image Repository로 사용할 수 있습니다.]]></summary></entry><entry><title type="html">Harbor로 Docker Private Registry 구축하기</title><link href="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/" rel="alternate" type="text/html" title="Harbor로 Docker Private Registry 구축하기" /><published>2023-01-30T00:00:00+09:00</published><updated>2023-01-30T00:00:00+09:00</updated><id>http://localhost:4000/docker/Harbor%EB%A1%9C%20Private%20Registry%20%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0</id><content type="html" xml:base="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/"><![CDATA[<h2 id="harbor-로-docker-private-registry-구축하기">Harbor 로 Docker Private Registry 구축하기</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="nexus" /><category term="podman" /><summary type="html"><![CDATA[Nexus를 docker container repository로 사용하기 Nexus를 docker container image의 repository로 사용하는 위한 설정입니다. Harbor 같은 전용 Docker container Registry로 사용하는 Open Source 솔루션도 있으나 애플리케이션 수가 몇개 되지 않는 것은 Nexus를 Container Image Repository로 사용할 수 있습니다.]]></summary></entry><entry><title type="html">Jenkins Pipeline 이란</title><link href="http://localhost:4000/devops/jenkins-pipeline/" rel="alternate" type="text/html" title="Jenkins Pipeline 이란" /><published>2023-02-04T00:00:00+09:00</published><updated>2023-02-04T00:00:00+09:00</updated><id>http://localhost:4000/devops/jenkins%20pipeline</id><content type="html" xml:base="http://localhost:4000/devops/jenkins-pipeline/"><![CDATA[<h2 id="jenkins-pipeline-이란">Jenkins Pipeline 이란</h2>
+<p>Jenkins Pipeline이란 Jenkins를 사용하여 CD 파이프라인울 구현하고 통합하는 것을 지원하는 플러그인의 집합입니다.
+Jenkins에 의해 정의된 모든 표준 Job을 하나의 script 작성되며 git 과 같은 repository 저장할 수 있습니다.
+각 단계에 대해 여러 작업을 작성하는 대신 이제 전체 워크플로를 코딩하여 하나의 Jenkinsfile에 넣을 수 있습니다.
+이러한 Pipeline을 작성하는 데에는 크게 두 가지, 선언적(Declarative) 구문 방식, 스크립팅(Scripted) 방식의 두 가지 유형의 구문을 사용하여 작성할 수 있습니다.</p>
+
+<h4 id="declarative-pipeline">Declarative Pipeline</h4>
+<p>선언적 파이프 라인은 Jenkins Pipeline에 비교적 최근에 추가 된 것으로, 파이프 라인 위에 보다 단순화되고 구조적인 구문을 제공합니다.
+모든 유효한 선언적 파이프라인은 파이프라인 블록 내에 포함되어야 합니다.</p>
+
+<p>•	agent
+•	tools
+•	options
+•	environment
+•	stages
+o	stage
+•	post</p>
+
+<h2 id="pipeline-section">Pipeline section</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pipeline <span class="o">{</span>
+    /<span class="k">*</span> insert Declarative Pipeline here <span class="k">*</span>/
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>선언적 파이프라인에서 유효한 기본 문 및 식은 Groovy의 구문과 동일한 규칙을 따르지만 다음과 같은 예외가 있습니다.
+•	파이프라인의 최상위 수준은 블록이어야 합니다: pipeline { }.
+•	statement 구분 기호로 세미콜론이 없습니다. 각 문장은 한 줄에 있어야합니다.
+•	선언 파이프라인의 섹션은 일반적으로 하나 이상의 지시사항( 순서, 지시문) 또는steps을 포함합니다.
+•	속성 참조 문은 인수 없는 메서드 호출로 처리됩니다. 예를 들어, 입력은 input()으로 처리됩니다.</p>
+
+<p>선언적 파이프라인에서는 지시문과 섹션 구성을 시작을 도와주기 위해 선언적 지시문 생성기를 사용하여 지원합니다.
+현재 pipeline{} 블록 내에서 코드의 최대 크기를 제한하는 미해결 문제가 있습니다. 이 제한은 Scripted Pipeline에는 적용되지 않습니다.
+선언적 파이프라인의 섹션에는 일반적으로 하나 이상의 지시문 또는 단계가 포함됩니다.</p>
+
+<h4 id="declarative-pipeline--pipeline">Declarative Pipeline : pipeline</h4>
+<p>Agent section은  선언형 Pipeline에서는 필수section 입니다.
+Jenkins 환경에서 에이전트 섹션이 위치에 따라 전체 파이프라인 또는 특정 stage가 실행되는 위치에 지정할 수 있습니다.
+agent가 최상위 부분에 위치할 때는 pipeline이 실행되는node가 됩니다. agent any는 사용가능한 node중에 random 하게 사용하겠다는 의미입니다. 또는 agent에 label을 지정하여 지정된 node에서  pipeline을 실행할 수 있도록 label을 지정할 수 있습니다.
+agent none으로 지정한 경우 각 stage에서 agent를 설정하겠다는 의미입니다.
+agent { docker …} 로 설정한 경우 pipeline을 실행할 때 docker container에서 실행하고자 하는 경우 사용합니다.  이러한 경우 일반적으로 top level agent는 none으로 설정하고 stage 에서 agent를 필요한 docker container image를 사용하기 위해 선언합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pipeline <span class="o">{</span>
+    agent none 
+    stages <span class="o">{</span>
+        stage<span class="o">(</span><span class="s1">'Example Build'</span><span class="o">)</span> <span class="o">{</span>
+            agent <span class="o">{</span> docker <span class="s1">'maven:3.8.7-eclipse-temurin-11'</span> <span class="o">}</span> 
+            steps <span class="o">{</span>
+                <span class="nb">echo</span> <span class="s1">'Hello, Maven'</span>
+                sh <span class="s1">'mvn --version'</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        stage<span class="o">(</span><span class="s1">'Example Test'</span><span class="o">)</span> <span class="o">{</span>
+            agent <span class="o">{</span> docker <span class="s1">'openjdk:8-jre'</span> <span class="o">}</span> 
+            steps <span class="o">{</span>
+                <span class="nb">echo</span> <span class="s1">'Hello, JDK'</span>
+                sh <span class="s1">'java -version'</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<h4 id="declarative-pipeline--agent">Declarative Pipeline : agent</h4>
+<p>agent { kubernetes … } 로 설정되는 경우 dynamic agent로 동적으로 pipeline을 실행할 때만 resource를 사용하고 종료되면 resource를 반환하는 것으로 kubernetes 환경에서 Jenkins agent를 운영하고자 하는 경우 사용합니다.</p>
+
+<h4 id="declarative-pipeline--tools">Declarative Pipeline : tools</h4>
+<p>tools section은 stage에서 사용하는 tool을 사용하기 위해 정의하는 section입니다. agent none인 경우 tools는 무시됩니다. optional 항목입니다.</p>
+
+<h4 id="declarative-pipeline--environemt">Declarative Pipeline : environemt</h4>
+<p>environment section은 pipeline 또는 stage에서 사용하는 key-value 형식의 환경변수를 정의해서 stage에서 사용하는 section입니다.  credentials 를 미리 load,  value에 저장하여 stage에 사용할 수 있습니다.</p>
+
+<h4 id="declarative-pipeline--stages">Declarative Pipeline : stages</h4>
+<p>stages section은 최소한 하나 이상의 stage에 대한 모음을 정의합니다. 대두분의 작업, 예를 들면 Build, Test, Deploy stage와 같이 작업들이 stages의 아래에 위치합니다.</p>
+
+<h4 id="declarative-pipeline--stage">Declarative Pipeline : stage</h4>
+<p>stage section stages section안에 정의하며,하나의 steps section 을 포함합니다.</p>
+
+<h4 id="declarative-pipeline--steps">Declarative Pipeline : steps</h4>
+<p>steps section은 선언적 pipeline에서만 지원하는 것으로 steps내에 실제 해야 할 작업을 정의하는 영역입니다.</p>
+
+<h4 id="declarative-pipeline--script">Declarative Pipeline : script</h4>
+<p>script section은 scripted pipeline의 블록을 가져와 선언적 pipeline에서 실행합니다. 대부분의 사용 사례에서 script 단계는 선언적 파이프라인에서 필요하지 않지만 groovy 문법을 사용해야 하는 경우 사용할 수 있습니다.   script가 로직이 길고 복잡한 블록인 경우 대신 공유 라이브러리로 이동해야 합니다.</p>
+
+<h4 id="declarative-pipeline--post">Declarative Pipeline : post</h4>
+<p>post section은 pipeline 또는 stage 실행 상태,  성공,실패, 또는 성공과 실패에 상관없이 항상 실행하고자 할 떄 사용하는 기능입니다.<br />
+•	pipeline block의 끝에 위치하거나 stage 에 위치
+•	always, success, failure, changed, fixed, regression, aborted, unstable, unsuccessfull, cleanup을 지원합니다.</p>
+
+<p>post는 Condition의 기능입니다.<br />
+<strong>always</strong><br />
+파이프라인 또는 단계 실행의 완료 상태에 관계없이 실행합니다.
+<strong>changed</strong> <br />
+현재 파이프라인의 실행이 이전 실행과 완료 상태가 다른 경우에만 changed 를 실행합니다.<br />
+<strong>fixed</strong>  <br />
+현재 파이프라인의 실행이 성공하고 이전 실행이 실패했거나 불안정한 경우에만 post 에 서 이 fixed 를 실행합니다 
+<strong>regression</strong> <br />
+현재 파이프라인 또는 상태가 실패, 불안정 또는 중단되고 이전 실행이 성공한 경우에만실행합니다.<br />
+<strong>aborted</strong>    <br />
+현재 파이프라인의 실행이 “중단됨” 상태인 경우(일반적으로 파이프라인이 수동으로 중단되었기 때문에) 사후 단계를 실행합니다. 일반적으로 웹 UI에서 회색으로 표시됩니다.<br />
+<strong>failure</strong>  <br />
+현재 파이프라인 또는 stage의 실행이 “실패” 상태(일반적으로 웹 UI에서 빨간색으로 표시됨)인 경우에만 실행합니다.<br />
+<strong>success</strong>  <br />
+현재 파이프라인 또는 스테이지의 실행이 “성공” 상태(일반적으로 웹 UI에서 파란색 또는 녹색으로 표시됨)인 경우에만 실행합니다.<br />
+<strong>cleanup</strong>  <br />
+파이프라인 또는 stage의 상태에 관계없이 다른 모든 사후 조건이 평가된 후 cleanup 실행합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pipeline <span class="o">{</span>
+    agent any
+    stages <span class="o">{</span>
+        stage<span class="o">(</span><span class="s1">'Example'</span><span class="o">)</span> <span class="o">{</span>
+            steps <span class="o">{</span>
+                <span class="nb">echo</span> <span class="s1">'Hello World'</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    post <span class="o">{</span> 
+        always <span class="o">{</span> 
+            <span class="nb">echo</span> <span class="s1">'I will always say Hello again!'</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><summary type="html"><![CDATA[Jenkins Pipeline 이란 Jenkins Pipeline이란 Jenkins를 사용하여 CD 파이프라인울 구현하고 통합하는 것을 지원하는 플러그인의 집합입니다. Jenkins에 의해 정의된 모든 표준 Job을 하나의 script 작성되며 git 과 같은 repository 저장할 수 있습니다. 각 단계에 대해 여러 작업을 작성하는 대신 이제 전체 워크플로를 코딩하여 하나의 Jenkinsfile에 넣을 수 있습니다. 이러한 Pipeline을 작성하는 데에는 크게 두 가지, 선언적(Declarative) 구문 방식, 스크립팅(Scripted) 방식의 두 가지 유형의 구문을 사용하여 작성할 수 있습니다.]]></summary></entry><entry><title type="html">Harbor로 Docker Private Registry 구축하기</title><link href="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/" rel="alternate" type="text/html" title="Harbor로 Docker Private Registry 구축하기" /><published>2023-01-30T00:00:00+09:00</published><updated>2023-01-30T00:00:00+09:00</updated><id>http://localhost:4000/docker/Harbor%EB%A1%9C%20Private%20Registry%20%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0</id><content type="html" xml:base="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/"><![CDATA[<h2 id="harbor-로-docker-private-registry-구축하기">Harbor 로 Docker Private Registry 구축하기</h2>
 
 <p>Harbor는 Offline Install과 Online Install 두 가지 방식으로 설치를 지원하고 있습니다. 이 실습에서는 Offline Install 을 기준으로 설치하도록 합니다. Harbor는 아래 github 사이트에 릴리즈 정보를 확인하고 download 받습니다.</p>
 
@@ -425,7 +567,53 @@ Clearing the configuration file: /config/registry/config.yml
  ⠿ Container nginx              Started                                         3.9s
 
 <span class="nt">----Harbor</span> has been installed and started successfully.----
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="Harbor" /><summary type="html"><![CDATA[Harbor 로 Docker Private Registry 구축하기]]></summary></entry><entry><title type="html">Nexus 설치 using docker</title><link href="http://localhost:4000/docker/nexus/" rel="alternate" type="text/html" title="Nexus 설치 using docker" /><published>2023-01-29T00:00:00+09:00</published><updated>2023-01-29T00:00:00+09:00</updated><id>http://localhost:4000/docker/nexus</id><content type="html" xml:base="http://localhost:4000/docker/nexus/"><![CDATA[<h2 id="sonartype-nexus-on-docker">Sonartype Nexus on Docker</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="Harbor" /><summary type="html"><![CDATA[Harbor 로 Docker Private Registry 구축하기]]></summary></entry><entry><title type="html">리모트 서버에서 Harbor 서버에 docker login</title><link href="http://localhost:4000/docker/%EB%A6%AC%EB%AA%A8%ED%8A%B8-%EC%84%9C%EB%B2%84%EC%97%90%EC%84%9C-Harbor-%EC%97%90-%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%95%98%EA%B8%B0/" rel="alternate" type="text/html" title="리모트 서버에서 Harbor 서버에 docker login" /><published>2023-01-29T00:00:00+09:00</published><updated>2023-01-29T00:00:00+09:00</updated><id>http://localhost:4000/docker/%EB%A6%AC%EB%AA%A8%ED%8A%B8%20%EC%84%9C%EB%B2%84%EC%97%90%EC%84%9C%20Harbor%20%EC%97%90%20%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%95%98%EA%B8%B0</id><content type="html" xml:base="http://localhost:4000/docker/%EB%A6%AC%EB%AA%A8%ED%8A%B8-%EC%84%9C%EB%B2%84%EC%97%90%EC%84%9C-Harbor-%EC%97%90-%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%95%98%EA%B8%B0/"><![CDATA[<h2 id="리모트-서버에서-harbor-서버에-docker-login">리모트 서버에서 Harbor 서버에 docker login</h2>
+
+<p>리모트 서버는 Centos7을 기준으로 합니다.</p>
+
+<p>Harbor Container Registry를 구축하고 리모트 서버에서 docker login 하기 위해 환경을 설정합니다.</p>
+
+<h2 id="step-1-setup-docker-engine">Step 1: Setup Docker Engine</h2>
+
+<p>Docker Engine 설치는 아래 링크를 따라 설치과정을 참고해주세요</p>
+
+<p><a href="https://yoonjk.github.io/docker/docker/">Docker Engine 설치</a></p>
+
+<h2 id="step-2--jfrog-artifactory-docker-image-를-download">Step 2 : JFrog Artifactory Docker Image 를 download</h2>
+
+<p>hosts file 파일에 domain을 등록합니다.</p>
+
+<p>Harbor 설치서버의 사설 도메인 서버 이름이 server1.example.com 라고 가정하고 경우</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"119.81.103.68 server1.example.com"</span> <span class="o">&gt;&gt;</span> /etc/hosts
+</code></pre></div></div>
+
+<h2 id="step-3--harbor-에서-제공하는-ca-인증서를-복사">Step 3 : Harbor 에서 제공하는 CA 인증서를 복사</h2>
+
+<p>Harbor 에서 제공하는 CA 인증서를 복사하고, 인증서 참조 디렉토리에 복사합니다.<br />
+ca 인증서가 /root/certs 폴더에 있다고 가정합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>scp root@119.81.103.68:/root/certs/ca.crt <span class="nb">.</span>
+
+<span class="nb">sudo cp </span>ca.crt /etc/pki/ca-trust/source/anchors/
+
+update-ca-trust extract
+</code></pre></div></div>
+
+<h2 id="step-4-restart-docker-engine-및-로그인">Step 4: Restart Docker Engine 및 로그인</h2>
+<p>Docker Engine을 재시작합니다.</p>
+
+<p>Harbor Domain 이 server1.example.com 이라고 가정하고,<br />
+로그인 사용자가 user01로 생성되어 있다면 다음과 같이 수행합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl restart docker
+docker login <span class="nt">-u</span> user01 <span class="nt">-p</span> XXXX server1.example.com
+
+WARNING! Using <span class="nt">--password</span> via the CLI is insecure. Use <span class="nt">--password-stdin</span><span class="nb">.</span>
+WARNING! Your password will be stored unencrypted <span class="k">in</span> /root/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="Harbor" /><summary type="html"><![CDATA[리모트 서버에서 Harbor 서버에 docker login]]></summary></entry><entry><title type="html">Nexus 설치 using docker</title><link href="http://localhost:4000/docker/nexus/" rel="alternate" type="text/html" title="Nexus 설치 using docker" /><published>2023-01-29T00:00:00+09:00</published><updated>2023-01-29T00:00:00+09:00</updated><id>http://localhost:4000/docker/nexus</id><content type="html" xml:base="http://localhost:4000/docker/nexus/"><![CDATA[<h2 id="sonartype-nexus-on-docker">Sonartype Nexus on Docker</h2>
 <p>Centos7 기반 Docker Engine을 설치합니다.<br />
 성</p>
 <h2 id="step-1-docker-compose-파일-작성">Step 1: docker-compose 파일 작성</h2>
@@ -676,82 +864,4 @@ curl <span class="nt">-SL</span> https://github.com/docker/compose/releases/down
 
 <p>docker-compose가  정상적으로 설치되었는지 docker-compose 명령어를 실행해 봅니다.</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose version
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="docker" /><category term="docker-compose" /><summary type="html"><![CDATA[JFrog on Docker Centos7 기반 Docker Engine을 설치합니다.]]></summary></entry><entry><title type="html">리모트 서버에서 Harbor 서버에 docker login</title><link href="http://localhost:4000/docker/%EB%A6%AC%EB%AA%A8%ED%8A%B8-%EC%84%9C%EB%B2%84%EC%97%90%EC%84%9C-Harbor-%EC%97%90-%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%95%98%EA%B8%B0/" rel="alternate" type="text/html" title="리모트 서버에서 Harbor 서버에 docker login" /><published>2023-01-29T00:00:00+09:00</published><updated>2023-01-29T00:00:00+09:00</updated><id>http://localhost:4000/docker/%EB%A6%AC%EB%AA%A8%ED%8A%B8%20%EC%84%9C%EB%B2%84%EC%97%90%EC%84%9C%20Harbor%20%EC%97%90%20%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%95%98%EA%B8%B0</id><content type="html" xml:base="http://localhost:4000/docker/%EB%A6%AC%EB%AA%A8%ED%8A%B8-%EC%84%9C%EB%B2%84%EC%97%90%EC%84%9C-Harbor-%EC%97%90-%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%95%98%EA%B8%B0/"><![CDATA[<h2 id="리모트-서버에서-harbor-서버에-docker-login">리모트 서버에서 Harbor 서버에 docker login</h2>
-
-<p>리모트 서버는 Centos7을 기준으로 합니다.</p>
-
-<p>Harbor Container Registry를 구축하고 리모트 서버에서 docker login 하기 위해 환경을 설정합니다.</p>
-
-<h2 id="step-1-setup-docker-engine">Step 1: Setup Docker Engine</h2>
-
-<p>Docker Engine 설치는 아래 링크를 따라 설치과정을 참고해주세요</p>
-
-<p><a href="https://yoonjk.github.io/docker/docker/">Docker Engine 설치</a></p>
-
-<h2 id="step-2--jfrog-artifactory-docker-image-를-download">Step 2 : JFrog Artifactory Docker Image 를 download</h2>
-
-<p>hosts file 파일에 domain을 등록합니다.</p>
-
-<p>Harbor 설치서버의 사설 도메인 서버 이름이 server1.example.com 라고 가정하고 경우</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"119.81.103.68 server1.example.com"</span> <span class="o">&gt;&gt;</span> /etc/hosts
-</code></pre></div></div>
-
-<h2 id="step-3--harbor-에서-제공하는-ca-인증서를-복사">Step 3 : Harbor 에서 제공하는 CA 인증서를 복사</h2>
-
-<p>Harbor 에서 제공하는 CA 인증서를 복사하고, 인증서 참조 디렉토리에 복사합니다.<br />
-ca 인증서가 /root/certs 폴더에 있다고 가정합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>scp root@119.81.103.68:/root/certs/ca.crt <span class="nb">.</span>
-
-<span class="nb">sudo cp </span>ca.crt /etc/pki/ca-trust/source/anchors/
-
-update-ca-trust extract
-</code></pre></div></div>
-
-<h2 id="step-4-restart-docker-engine-및-로그인">Step 4: Restart Docker Engine 및 로그인</h2>
-<p>Docker Engine을 재시작합니다.</p>
-
-<p>Harbor Domain 이 server1.example.com 이라고 가정하고,<br />
-로그인 사용자가 user01로 생성되어 있다면 다음과 같이 수행합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl restart docker
-docker login <span class="nt">-u</span> user01 <span class="nt">-p</span> XXXX server1.example.com
-
-WARNING! Using <span class="nt">--password</span> via the CLI is insecure. Use <span class="nt">--password-stdin</span><span class="nb">.</span>
-WARNING! Your password will be stored unencrypted <span class="k">in</span> /root/.docker/config.json.
-Configure a credential helper to remove this warning. See
-https://docs.docker.com/engine/reference/commandline/login/#credentials-store
-
-Login Succeeded
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="Harbor" /><summary type="html"><![CDATA[리모트 서버에서 Harbor 서버에 docker login]]></summary></entry><entry><title type="html">Docker 기반 Jira 설치</title><link href="http://localhost:4000/docker/altassian-jira/" rel="alternate" type="text/html" title="Docker 기반 Jira 설치" /><published>2023-01-24T00:00:00+09:00</published><updated>2023-01-24T00:00:00+09:00</updated><id>http://localhost:4000/docker/altassian-jira</id><content type="html" xml:base="http://localhost:4000/docker/altassian-jira/"><![CDATA[<h2 id="jira-on-docker">Jira on Docker</h2>
-<p>Docker 기반 Jira 입니다.</p>
-
-<pre><code class="language-YAML">version: '3'
-networks:
- jenkins-net:
-    driver: bridge
-
-services:
-  jira:
-    container_name: jira
-    image: atlassian/jira-software:latest
-    networks:
-      - jenkins-net
-    ports:
-      - "9010:8080"
-
-  postgres:
-    container_name: postgres
-    image: postgres:latest
-    volumes:
-      - ./data:/var/lib/postgresql/data
-    environment:
-      - 'POSTGRES_USER=postgres'
-      # CHANGE THE PASSWORD!
-      - 'POSTGRES_PASSWORD=admin1234'
-      - 'POSTGRES_DB=jira'
-      - 'POSTGRES_ENCODING=UTF8'
-    networks:
-      - jenkins-net
-    ports:
-      - "5432:5432"
-</code></pre>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="jira" /><summary type="html"><![CDATA[Jira on Docker Docker 기반 Jira 입니다.]]></summary></entry></feed>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="docker" /><category term="docker-compose" /><summary type="html"><![CDATA[JFrog on Docker Centos7 기반 Docker Engine을 설치합니다.]]></summary></entry></feed>
