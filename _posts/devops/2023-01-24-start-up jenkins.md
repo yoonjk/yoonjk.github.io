@@ -24,15 +24,15 @@ a0f289xxxxxxxxxcd8fbb7
 
 Jenkins 패스워드 입력화면에 복사한 패스워드를 입력하고 Continue 버튼을 클릭하고, Install suggested plugins를 선택합니다
 
-![Jenkins Getting started]({{ "/assets/images/jenkins/04-jenkins-getting-started.png" | relative_url }})
+![Jenkins Getting started]({{ "/assets/images/jenkins/04-jenkins-getting-started.png"  }})
 
 
 Jenkins Plugins이 다음과 같이 설치됩니다
 
-![Install Jenkins Plugins]({{ "/assets/images/jenkins/05-jenkins-install-plugins.png" | relative_url }})
+![Install Jenkins Plugins]({{ "/assets/images/jenkins/05-jenkins-install-plugins.png"  }})
 
 Jenkins Admin 계정을 생성합니다. Save and Continue 버튼을 클릭합니다
 
-![Create Admin]({{ "/assets/images/jenkins/06-jenkins-create-admin.png" | relative_url }})
+![Create Admin]({{ "/assets/images/jenkins/06-jenkins-create-admin.png"  }})
 
 Instance Configuration 확인하고, Save and Finish 버튼을 클릭하고, Start using Jenkins 버튼을 클릭합니다.
