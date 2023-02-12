@@ -223,7 +223,7 @@ var store = [{
       },{
         "title": "Install Kind for Jenkins",
         "excerpt":"Pre-requisites : Install docker engine docker engine 설치는 docker engine 설치 글을 참조해 주세요. Step 1 : Download kind binary kind binary를 download 받습니다. curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.17.0/kind-linux-amd64 chmod +x ./kind sudo mv ./kind /usr/local/bin/kind Step 2 : config 파일 작성성 Kind를 이용하여 Kubernetes Cluster를 생성하기 위해 jenkins-config.yaml 파일을 아래와...","categories": ["kubernetes"],
-        "tags": ["minikube"],
+        "tags": ["kind"],
         "url": "/kubernetes/install-kind/",
         "teaser": null
       }]

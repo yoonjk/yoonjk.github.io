@@ -3,7 +3,7 @@ title: Install Kind for Jenkins
 categories:
   - kubernetes
 tags: 
-  - minikube
+  - kind
 ---
 
 ## Pre-requisites : Install docker engine
