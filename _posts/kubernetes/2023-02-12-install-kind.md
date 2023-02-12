@@ -37,6 +37,6 @@ kind create cluster --config jenkins-config.yaml
 ## Step 4 : Configure
 Kind는 .kube/config파일 변경 없이 인증서 파일의 내용이 config파일에 있어서 변환할 필요는 없습니다.  
 minikube와 동일하게 Jenkins를 설정합니다.  
-. Install Kubernetes Plugins
-. Manage Jenkins > Manage Nodes and Clouds > Configure Clouds
+- Install Kubernetes Plugins
+- Manage Jenkins > Manage Nodes and Clouds > Configure Clouds
 
