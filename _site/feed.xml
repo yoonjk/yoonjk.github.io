@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-13T00:06:11+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Install Kind for Jenkins</title><link href="http://localhost:4000/kubernetes/install-kind/" rel="alternate" type="text/html" title="Install Kind for Jenkins" /><published>2023-02-12T00:00:00+09:00</published><updated>2023-02-12T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/install-kind</id><content type="html" xml:base="http://localhost:4000/kubernetes/install-kind/"><![CDATA[<h2 id="pre-requisites--install-docker-engine">Pre-requisites : Install docker engine</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-13T22:42:44+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Install Kind for Jenkins</title><link href="http://localhost:4000/kubernetes/install-kind/" rel="alternate" type="text/html" title="Install Kind for Jenkins" /><published>2023-02-12T00:00:00+09:00</published><updated>2023-02-12T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/install-kind</id><content type="html" xml:base="http://localhost:4000/kubernetes/install-kind/"><![CDATA[<h2 id="pre-requisites--install-docker-engine">Pre-requisites : Install docker engine</h2>
 <p>docker engine 설치는 docker engine 설치 글을 참조해 주세요.</p>
 
 <h2 id="step-1--download-kind-binary">Step 1 : Download kind binary</h2>
@@ -29,7 +29,44 @@ minikube와 동일하게 Jenkins를 설정합니다.</p>
 <ul>
   <li>Install Kubernetes Plugins</li>
   <li>Manage Jenkins &gt; Manage Nodes and Clouds &gt; Configure Clouds</li>
-</ul>]]></content><author><name>Jaeguk Yun</name></author><category term="kubernetes" /><category term="kind" /><summary type="html"><![CDATA[Pre-requisites : Install docker engine docker engine 설치는 docker engine 설치 글을 참조해 주세요.]]></summary></entry><entry><title type="html">리모트 minikube 연결</title><link href="http://localhost:4000/kubernetes/access-a-remote-minikube/" rel="alternate" type="text/html" title="리모트 minikube 연결" /><published>2023-02-11T00:00:00+09:00</published><updated>2023-02-11T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/access-a-remote-minikube</id><content type="html" xml:base="http://localhost:4000/kubernetes/access-a-remote-minikube/"><![CDATA[<h2 id="setup-minikube-on-minikube-server">Setup Minikube on minikube server</h2>
+</ul>
+
+<h2 id="step-4--kubernetes-dashboard-설치">Step 4 : Kubernetes Dashboard 설치</h2>
+
+<p>Kubernetes dashboard yaml파일을 remote에 있는 것을 직접 kubernetes cluster에 적용합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl apply <span class="nt">-f</span> https://raw.githubusercontent.com/kubernetes/dashboard/v2.4.0/aio/deploy/recommended.yaml
+</code></pre></div></div>
+
+<h2 id="step-5--kubernetes-dashboard-접속">Step 5 : Kubernetes Dashboard 접속</h2>
+<p>kubectl proxy로 8001 port를 다음과 같이 오픈합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl port-forward svc/kubernetes-dashboard <span class="nt">-n</span> kubernetes-dashboard 443:443 <span class="nt">--address</span> 0.0.0.0
+</code></pre></div></div>
+
+<p>브라우저에서 dashboard에 접속합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://Your-Server-IP/
+</code></pre></div></div>
+
+<p><img src="/assets/images/k8s/04-k8s-kubernetes-dashboard.png" alt="kube-dashboard" /></p>
+
+<h2 id="step-6--token-생성">Step 6 : Token 생성</h2>
+<ul>
+  <li>kubernetes-dashboard namespace에 admin-user Serviceaccount를 생성
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl create sa admin-user <span class="nt">-n</span> kubernetes-dashboard
+</code></pre></div>    </div>
+  </li>
+  <li>cluster-admin을 clusterrolebinding합니다.
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl create clusterrolebinding admin <span class="nt">--clusterrole</span> cluster-admin <span class="nt">--serviceaccount</span> kubernetes-dashboard:admin-user
+</code></pre></div>    </div>
+  </li>
+  <li>token을 생성
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl create token admin-user <span class="nt">-n</span> kuberneetes-dashboard
+<span class="c"># [수행결과] </span>
+eyJhbGciOiJSUzI1NiIsImtpZCI6ImgxSUxfYzA4Zk54TFdRNF9pdDY3VFgtall1N1M5b1BPMFp2c3JXRVFodFUifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNjc2Mjk2MDE3LCJpYXQiOjE2NzYyOTI0MTcsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsInNlcnZpY2VhY2NvdW50Ijp7Im5hbWUiOiJhZG1pbi11c2VyIiwidWlkIjoiNTAwNGUwMDYtMTNjYy00YWYwLWE2MWEtZjFmYWJiMjczNzBhIn19LCJuYmYiOjE2NzYyOTI0MTcsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlcm5ldGVzLWRhc2hib2FyZDphZG1pbi11c2VyIn0.AVfEFQBnSHW4DQR3Iyf15-BRMDdIAloSkC1BGpUaK-gLVHt-5EB72EK9XX1TK675-DClXEHbNTgEHey_ViP68JPTr99B3mRLy5KXD8gOxjueRMSvQbHo-le85j-DwIOu3TfE9Zyo7NlkGVglU61IBylIfZbg7Sh1TeYpoD6qmTAub6EVWMw1m5OGThBRd7Da6WMd1nI0MMlrT8hGUkCPml3F-x4ExNETjukTfhQTbz0HwRg-jVkad9QwFuCN9_uGuUvw4QUPeZ04hdccADP7fwbd7r4U0Jx2YANVZYNefbmSRl3M4s_Lu5aVxZ4PdcTFR04yiZBQ1C911lluT6hOGw
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p>생성한 token을 dashboard token 입력항목에 붙여넣기 합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="kubernetes" /><category term="kind" /><summary type="html"><![CDATA[Pre-requisites : Install docker engine docker engine 설치는 docker engine 설치 글을 참조해 주세요.]]></summary></entry><entry><title type="html">리모트 minikube 연결</title><link href="http://localhost:4000/kubernetes/access-a-remote-minikube/" rel="alternate" type="text/html" title="리모트 minikube 연결" /><published>2023-02-11T00:00:00+09:00</published><updated>2023-02-11T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/access-a-remote-minikube</id><content type="html" xml:base="http://localhost:4000/kubernetes/access-a-remote-minikube/"><![CDATA[<h2 id="setup-minikube-on-minikube-server">Setup Minikube on minikube server</h2>
 
 <p>Minikube는 로컬 머신에 VM을 생성하고 하나의 노드만 포함하는 경량의 클러스터를 배포하는 쿠버네티스 입니다. Minikube는 Linux, macOS 및 Windows 시스템에서 사용할 수 있습니다.</p>
 
