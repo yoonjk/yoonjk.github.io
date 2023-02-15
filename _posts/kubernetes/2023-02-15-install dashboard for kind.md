@@ -1,5 +1,5 @@
 ---
-title: kind에 dashboard설치하기 
+title: kind 에 dashboard 설치하기 
 categories:
   - kubernetes
 tags: 
