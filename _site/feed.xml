@@ -1,4 +1,32 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-15T23:42:00+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Nginx proxy 리모트 kind cluster 접근</title><link href="http://localhost:4000/kubernetes/access-a-remote-kind/" rel="alternate" type="text/html" title="Nginx proxy 리모트 kind cluster 접근" /><published>2023-02-15T00:00:00+09:00</published><updated>2023-02-15T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/access-a-remote-kind</id><content type="html" xml:base="http://localhost:4000/kubernetes/access-a-remote-kind/"><![CDATA[<h2 id="사전설치환경-구성">사전설치환경 구성</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-16T04:59:28+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">kind에 dashboard설치하기</title><link href="http://localhost:4000/kubernetes/install-dashboard-for-kind/" rel="alternate" type="text/html" title="kind에 dashboard설치하기" /><published>2023-02-15T00:00:00+09:00</published><updated>2023-02-15T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/install%20dashboard%20for%20kind</id><content type="html" xml:base="http://localhost:4000/kubernetes/install-dashboard-for-kind/"><![CDATA[<h2 id="dashboard-설치">Dashboard 설치</h2>
+<p>kind를 사용하여 Kubernetes cluster를 구성하고 dashboard를 구성합니다.
+dashboard는 다음과 같이 remote에 있는 yaml을 직접적용합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl apply <span class="nt">-f</span> https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
+</code></pre></div></div>
+
+<h2 id="port-forward로-port-오픈">port-forward로 port 오픈</h2>
+<p>port-forward를 합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl port-forward svc/kubernetes-dashboard <span class="nt">-n</span> kubernetes-dashboard  443 <span class="nt">--address</span> 0.0.0.0
+</code></pre></div></div>
+<p><img src="/assets/images/k8s/03-k8s-yourconnection-is-not-private.png" alt="port-forward" /></p>
+
+<p><img src="/assets/images/k8s/04-k8s-kubernetes-dashboard.png" alt="port-forward" /></p>
+
+<h2 id="create-serviceaccount-and-role-token">Create serviceaccount and role, token</h2>
+<p>kubernetes dashboard를 위한 serviceaccount와 cluster-role를 생성한 다음 token을 생성합니다. 그리고 생성한 token 값을 
+dashboard login token 입력항목에 붙여넣기를 합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl create sa dashboard-admin <span class="nt">-n</span> kubernetes-dashboard
+kubectl create clusterrolebinding dashbaord-admin <span class="nt">--clusterrole</span> admin <span class="nt">--serviceaccount</span> kubernetes-dashboard:dashboard-admin
+kubectl create token dashboard-admin <span class="nt">-n</span> kubernetes-dashboard
+
+<span class="o">[</span>수행결과]
+eyJhbGciOiJSUzI1NiIsImtpZCI6IjcxeDlkdFlKOVhLZjRXOFdfNzVmLTZpUFVLOUtvQVM5M0RUMlMxcVBtblEifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNjc2NDkzNzA3LCJpYXQiOjE2NzY0OTAxMDcsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsInNlcnZpY2VhY2NvdW50Ijp7Im5hbWUiOiJkYXNoYm9hcmQtYWRtaW4iLCJ1aWQiOiIwNDdlM2RjYS03N2JiLTRmYzMtYTkzZS0yMjAwNWNkZDBkOWYifX0sIm5iZiI6MTY3NjQ5MDEwNywic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50Omt1YmVybmV0ZXMtZGFzaGJvYXJkOmRhc2hib2FyZC1hZG1pbiJ9.uDhrySLj1sZgsRovMS7TqT4DuTipdhaa2n1uKDLnfGq_-JNwQma7S0qOuLY20FAXfIGceax_k_LY5js0SP0GFWHSrw8m2S2jOEeDXkcvEkBQVDXi5DY-bp6p_y2dI4CleUxauFgPXOwXTOu8Un1fOfgltMCvGBcf68qPjZ1pxrni5_HlPi_o9xjhmfbggUxEq8zx0n2H5j0ssVITM7jH38F6eO7rMPVHRBngMok2qqOydviQZ0994TPgq_NByKkWDk1npCXOvrt03z9X6I7Q5-k6yX8vVEZSKq9rbq0lAJQLKlpKlttTHz6YJf0YEQwgygcakDxKCRsCk07kgEXP2Q
+</code></pre></div></div>
+<p>token을 입력합니다.<br />
+<img src="/assets/images/k8s/05-k8s-input-token-dashboard.png" alt="port-forward" /></p>
+
+<p>dashboard 로그인 화면입니다.<br />
+<img src="/assets/images/k8s/06-k8s-dashboard-login.png" alt="port-forward" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="kubernetes" /><category term="kind" /><summary type="html"><![CDATA[Dashboard 설치 kind를 사용하여 Kubernetes cluster를 구성하고 dashboard를 구성합니다. dashboard는 다음과 같이 remote에 있는 yaml을 직접적용합니다. kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml]]></summary></entry><entry><title type="html">Nginx proxy 리모트 kind cluster 접근</title><link href="http://localhost:4000/kubernetes/access-a-remote-kind/" rel="alternate" type="text/html" title="Nginx proxy 리모트 kind cluster 접근" /><published>2023-02-15T00:00:00+09:00</published><updated>2023-02-15T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/access-a-remote-kind</id><content type="html" xml:base="http://localhost:4000/kubernetes/access-a-remote-kind/"><![CDATA[<h2 id="사전설치환경-구성">사전설치환경 구성</h2>
 <p>kind를 구성하기 위해 docker를 설치합니다. docker engine 설치  blog posting을 확인하세요.</p>
 
 <h2 id="setup--on-kind-cluster-server">Setup  on kind cluster server</h2>
@@ -389,7 +417,41 @@ YOUR_SERVER_IP : remote 서버<br />
 
 <p>Tekton dashboard 설치에 대해 자세한 것은 아래의 <a href="https://tekton.dev/docs/dashboard/install/">링크</a>를 확인하세요.</p>
 
-<p><a href="https://tekton.dev/docs/dashboard/install/">https://tekton.dev/docs/dashboard/install/</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="tekton" /><summary type="html"><![CDATA[Tekton 설치 Tekton pipeline을 Kubernetes에 설치합니다.]]></summary></entry><entry><title type="html">Jenkins Pipeline 이란</title><link href="http://localhost:4000/devops/jenkins-pipeline/" rel="alternate" type="text/html" title="Jenkins Pipeline 이란" /><published>2023-02-04T00:00:00+09:00</published><updated>2023-02-04T00:00:00+09:00</updated><id>http://localhost:4000/devops/jenkins%20pipeline</id><content type="html" xml:base="http://localhost:4000/devops/jenkins-pipeline/"><![CDATA[<h2 id="jenkins-pipeline-이란">Jenkins Pipeline 이란</h2>
+<p><a href="https://tekton.dev/docs/dashboard/install/">https://tekton.dev/docs/dashboard/install/</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="tekton" /><summary type="html"><![CDATA[Tekton 설치 Tekton pipeline을 Kubernetes에 설치합니다.]]></summary></entry><entry><title type="html">Nexus를 docker container repository로 사용하기</title><link href="http://localhost:4000/devops/push-container-image-to-nexus/" rel="alternate" type="text/html" title="Nexus를 docker container repository로 사용하기" /><published>2023-02-04T00:00:00+09:00</published><updated>2023-02-04T00:00:00+09:00</updated><id>http://localhost:4000/devops/push%20container%20image%20to%20nexus</id><content type="html" xml:base="http://localhost:4000/devops/push-container-image-to-nexus/"><![CDATA[<h2 id="nexus를-docker-container-repository로-사용하기">Nexus를 docker container repository로 사용하기</h2>
+<p>Nexus를 docker container image의 repository로 사용하는 위한 설정입니다.
+Harbor 같은 전용 Docker container Registry로 사용하는 Open Source 솔루션도 있으나
+애플리케이션 수가 몇개 되지 않는 것은 Nexus를 Container Image Repository로 사용할 수 있습니다.</p>
+
+<p>Nexus 설치는 블로그 목록을 참고해 주시고, 설정이 끝나고 추가적으로 container Image Repository를 추가하는 부분만 소개합니다.</p>
+
+<h2 id="step-1--docker-유형-repository-생성">Step 1 : docker 유형 Repository 생성</h2>
+<p>create repository를 선택합니다.<br />
+<img src="/assets/images/nexus/06-jenkins-nexus-create-repository.png" alt="nexus docker repository" /></p>
+
+<p>Repository 유형중에 docker(hosted) repository를 선택합니다.<br />
+<img src="/assets/images/nexus/07-jenkins-nexus-select-docker-repository.png" alt="nexus docker repository" /></p>
+
+<p>docker-repo 이름으로 다음과 같이 정보를 선택하고 repository를 생성합니다.<br />
+<img src="/assets/images/nexus/08-jenkins-nexus-docker-repository.png" alt="nexus docker repository" /></p>
+
+<h2 id="step-2-add-docker-bearer-token-to-realms">Step 2: Add docker bearer token to Realms</h2>
+
+<p>Realms 에 Docker Bearer token을 추가하고, 저장합니다.</p>
+
+<p><img src="/assets/images/nexus/08-jenkins-nexus-realms-docker-bearer-token.png" alt="add realm" /></p>
+
+<h2 id="step-2-podman-을-사용하여-nexus에-로그인">Step 2: podman 을 사용하여 nexus에 로그인</h2>
+
+<p>Podman을 사용하여 http로 login 합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># nexus-server-ip : remote server ip 또는 localhost</span>
+podman login <span class="nt">-u</span> deploy-user <span class="nt">-p</span> Passw0rd@ <span class="nt">--tls-verify</span><span class="o">=</span><span class="nb">false </span>nexus-server-ip:5000
+</code></pre></div></div>
+
+<p>Nexus 가 local에 있는 경우 nexus-server-id를 localhost로 지정합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman login <span class="nt">-u</span> deploy-user <span class="nt">-p</span> Passw0rd@ <span class="nt">--tls-verify</span><span class="o">=</span><span class="nb">false </span>localhost:5000
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="nexus" /><category term="podman" /><summary type="html"><![CDATA[Nexus를 docker container repository로 사용하기 Nexus를 docker container image의 repository로 사용하는 위한 설정입니다. Harbor 같은 전용 Docker container Registry로 사용하는 Open Source 솔루션도 있으나 애플리케이션 수가 몇개 되지 않는 것은 Nexus를 Container Image Repository로 사용할 수 있습니다.]]></summary></entry><entry><title type="html">Jenkins Pipeline 이란</title><link href="http://localhost:4000/devops/jenkins-pipeline/" rel="alternate" type="text/html" title="Jenkins Pipeline 이란" /><published>2023-02-04T00:00:00+09:00</published><updated>2023-02-04T00:00:00+09:00</updated><id>http://localhost:4000/devops/jenkins%20pipeline</id><content type="html" xml:base="http://localhost:4000/devops/jenkins-pipeline/"><![CDATA[<h2 id="jenkins-pipeline-이란">Jenkins Pipeline 이란</h2>
 <p>Jenkins Pipeline이란 Jenkins를 사용하여 CD 파이프라인울 구현하고 통합하는 것을 지원하는 플러그인의 집합입니다.
 Jenkins에 의해 정의된 모든 표준 Job을 하나의 script 작성되며 git 과 같은 repository 저장할 수 있습니다.
 각 단계에 대해 여러 작업을 작성하는 대신 이제 전체 워크플로를 코딩하여 하나의 Jenkinsfile에 넣을 수 있습니다.
@@ -622,41 +684,7 @@ irb(main):013:0&gt; user.save
 <img src="/assets/images/gitlab/10-jenkins-gitlab-create-project.png" alt="new user" /></p>
 
 <p>gitlab을 smaple-service project를 생성합니다. 
-<img src="/assets/images/gitlab/11-jenkins-gitlab-create-blank-project.png" alt="new user" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="gitlab" /><summary type="html"><![CDATA[Gitlab-CE 설치하기 git repository로 public 으로 사용할 수 있는 대표적인 것 중 하나가 github와 gitlab입니다.]]></summary></entry><entry><title type="html">Nexus를 docker container repository로 사용하기</title><link href="http://localhost:4000/devops/push-container-image-to-nexus/" rel="alternate" type="text/html" title="Nexus를 docker container repository로 사용하기" /><published>2023-02-04T00:00:00+09:00</published><updated>2023-02-04T00:00:00+09:00</updated><id>http://localhost:4000/devops/push%20container%20image%20to%20nexus</id><content type="html" xml:base="http://localhost:4000/devops/push-container-image-to-nexus/"><![CDATA[<h2 id="nexus를-docker-container-repository로-사용하기">Nexus를 docker container repository로 사용하기</h2>
-<p>Nexus를 docker container image의 repository로 사용하는 위한 설정입니다.
-Harbor 같은 전용 Docker container Registry로 사용하는 Open Source 솔루션도 있으나
-애플리케이션 수가 몇개 되지 않는 것은 Nexus를 Container Image Repository로 사용할 수 있습니다.</p>
-
-<p>Nexus 설치는 블로그 목록을 참고해 주시고, 설정이 끝나고 추가적으로 container Image Repository를 추가하는 부분만 소개합니다.</p>
-
-<h2 id="step-1--docker-유형-repository-생성">Step 1 : docker 유형 Repository 생성</h2>
-<p>create repository를 선택합니다.<br />
-<img src="/assets/images/nexus/06-jenkins-nexus-create-repository.png" alt="nexus docker repository" /></p>
-
-<p>Repository 유형중에 docker(hosted) repository를 선택합니다.<br />
-<img src="/assets/images/nexus/07-jenkins-nexus-select-docker-repository.png" alt="nexus docker repository" /></p>
-
-<p>docker-repo 이름으로 다음과 같이 정보를 선택하고 repository를 생성합니다.<br />
-<img src="/assets/images/nexus/08-jenkins-nexus-docker-repository.png" alt="nexus docker repository" /></p>
-
-<h2 id="step-2-add-docker-bearer-token-to-realms">Step 2: Add docker bearer token to Realms</h2>
-
-<p>Realms 에 Docker Bearer token을 추가하고, 저장합니다.</p>
-
-<p><img src="/assets/images/nexus/08-jenkins-nexus-realms-docker-bearer-token.png" alt="add realm" /></p>
-
-<h2 id="step-2-podman-을-사용하여-nexus에-로그인">Step 2: podman 을 사용하여 nexus에 로그인</h2>
-
-<p>Podman을 사용하여 http로 login 합니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># nexus-server-ip : remote server ip 또는 localhost</span>
-podman login <span class="nt">-u</span> deploy-user <span class="nt">-p</span> Passw0rd@ <span class="nt">--tls-verify</span><span class="o">=</span><span class="nb">false </span>nexus-server-ip:5000
-</code></pre></div></div>
-
-<p>Nexus 가 local에 있는 경우 nexus-server-id를 localhost로 지정합니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman login <span class="nt">-u</span> deploy-user <span class="nt">-p</span> Passw0rd@ <span class="nt">--tls-verify</span><span class="o">=</span><span class="nb">false </span>localhost:5000
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="nexus" /><category term="podman" /><summary type="html"><![CDATA[Nexus를 docker container repository로 사용하기 Nexus를 docker container image의 repository로 사용하는 위한 설정입니다. Harbor 같은 전용 Docker container Registry로 사용하는 Open Source 솔루션도 있으나 애플리케이션 수가 몇개 되지 않는 것은 Nexus를 Container Image Repository로 사용할 수 있습니다.]]></summary></entry><entry><title type="html">Harbor로 Docker Private Registry 구축하기</title><link href="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/" rel="alternate" type="text/html" title="Harbor로 Docker Private Registry 구축하기" /><published>2023-01-30T00:00:00+09:00</published><updated>2023-01-30T00:00:00+09:00</updated><id>http://localhost:4000/docker/Harbor%EB%A1%9C%20Private%20Registry%20%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0</id><content type="html" xml:base="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/"><![CDATA[<h2 id="harbor-로-docker-private-registry-구축하기">Harbor 로 Docker Private Registry 구축하기</h2>
+<img src="/assets/images/gitlab/11-jenkins-gitlab-create-blank-project.png" alt="new user" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="gitlab" /><summary type="html"><![CDATA[Gitlab-CE 설치하기 git repository로 public 으로 사용할 수 있는 대표적인 것 중 하나가 github와 gitlab입니다.]]></summary></entry><entry><title type="html">Harbor로 Docker Private Registry 구축하기</title><link href="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/" rel="alternate" type="text/html" title="Harbor로 Docker Private Registry 구축하기" /><published>2023-01-30T00:00:00+09:00</published><updated>2023-01-30T00:00:00+09:00</updated><id>http://localhost:4000/docker/Harbor%EB%A1%9C%20Private%20Registry%20%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0</id><content type="html" xml:base="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/"><![CDATA[<h2 id="harbor-로-docker-private-registry-구축하기">Harbor 로 Docker Private Registry 구축하기</h2>
 
 <p>Harbor는 Offline Install과 Online Install 두 가지 방식으로 설치를 지원하고 있습니다. 이 실습에서는 Offline Install 을 기준으로 설치하도록 합니다. Harbor는 아래 github 사이트에 릴리즈 정보를 확인하고 download 받습니다.</p>
 
@@ -836,105 +864,4 @@ Configure a credential helper to remove this warning. See
 https://docs.docker.com/engine/reference/commandline/login/#credentials-store
 
 Login Succeeded
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="Harbor" /><summary type="html"><![CDATA[리모트 서버에서 Harbor 서버에 docker login]]></summary></entry><entry><title type="html">Nexus 설치 using docker</title><link href="http://localhost:4000/docker/nexus/" rel="alternate" type="text/html" title="Nexus 설치 using docker" /><published>2023-01-29T00:00:00+09:00</published><updated>2023-01-29T00:00:00+09:00</updated><id>http://localhost:4000/docker/nexus</id><content type="html" xml:base="http://localhost:4000/docker/nexus/"><![CDATA[<h2 id="sonartype-nexus-on-docker">Sonartype Nexus on Docker</h2>
-<p>Centos7 기반 Docker Engine을 설치합니다.<br />
-성</p>
-<h2 id="step-1-docker-compose-파일-작성">Step 1: docker-compose 파일 작성</h2>
-<p>nexus container 의 데이터를 저장할 폴더를 생성합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> ./nexus-data
-</code></pre></div></div>
-
-<p>vi editor 로 docker-compose.yaml 파일을 아래와 같이 작성합니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi docker-compose.yaml
-
-version: <span class="s1">'3.7'</span>
-services:
-   nexus3:
-      image: sonatype/nexus3
-      restart: unless-stopped
-      container_name: nexus3
-      <span class="c"># privileged: true</span>
-      user: root
-      volumes:
-         - ./nexus-data:/nexus-data
-      healthcheck:
-         <span class="nb">test</span>: <span class="o">[</span><span class="s2">"CMD"</span>, <span class="s2">"nc"</span>, <span class="s2">"-zv"</span>, <span class="s2">"localhost"</span>, <span class="s2">"8000"</span> <span class="o">]</span>
-         interval: 5s
-         <span class="nb">timeout</span>: 2s
-         retries: 3
-      ports:
-         - 8081:8081
-         - 5000:5000
-</code></pre></div></div>
-
-<h2 id="step-2--docker-compose-실행">Step 2 : docker-compose 실행</h2>
-<p>docker-compose up 을 background 로 실행합니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose up <span class="nt">-d</span>
-</code></pre></div></div>
-
-<h2 id="step-3--nexus-admin-로그인">step 3 : nexus admin 로그인</h2>
-<p>브라우저에서 nexus 8081 포트를 접속하여 오른쪽 상단위 로그인(signin) 버튼을 클릭하여 admin으로 접속합니다.</p>
-
-<p><img src="/assets/images/nexus/01-jenkins-nexus-home.png" alt="nexus home" /></p>
-
-<p>Setup 화면에서 Next 버튼을 클릭합니다.</p>
-
-<p><img src="/assets/images/nexus/02-jenkins-nexus-admin-1.png" alt="nexus admin" /></p>
-
-<p>admin 사용자의 비밀번호를 입력하고, Next 버튼을 클릭합니다.</p>
-
-<p><img src="/assets/images/nexus/02-jenkins-nexus-admin-2.png" alt="nexus admin" /></p>
-
-<p>admin 사용자의 새로운 비밀번호를 입력하고, Next 버튼을 클릭합니다.</p>
-
-<p><img src="/assets/images/nexus/02-jenkins-nexus-admin-3.png" alt="nexus admin" /></p>
-
-<p>Anonymous 접근을 허용하지 않기 위해 Disable anonymous access 를 선택하고, Next 버튼을 클릭합니다.</p>
-
-<p><img src="/assets/images/nexus/02-jenkins-nexus-admin-anonymous.png" alt="nexus admin" /></p>
-
-<p>Complete 화면에서 finish 버튼을 클릭합니다.</p>
-
-<h2 id="step-4--create-role-and-user">step 4 : Create Role and User</h2>
-
-<p><img src="/assets/images/nexus/02-jenkins-nexus-admin-4.png" alt="nexus admin" /></p>
-
-<p>Create Role 을 클릭합니다.</p>
-
-<p><img src="/assets/images/nexus/03-jenkins-nexus-create-role.png" alt="nexus admin" /></p>
-
-<p>Create Role을 생성합니다.</p>
-
-<p><img src="/assets/images/nexus/03-jenkins-nexus-role.png" alt="nexus admin" /></p>
-
-<p>Role 생성 결과입니다.</p>
-
-<p><img src="/assets/images/nexus/03-jenkins-nexus-role-2.png" alt="nexus admin" /></p>
-
-<p>Create Local User를 클릭하고 Create Local User를 생성합니다.</p>
-
-<p><img src="/assets/images/nexus/03-jenkins-nexus-create-user.png" alt="nexus admin" /></p>
-
-<p>Create Local User를 생성 결과입니다.</p>
-
-<p><img src="/assets/images/nexus/03-jenkins-nexus-create-user-1.png" alt="nexus admin" /></p>
-<h2 id="step-4--pomxml-에-nexus-정보를-추가">step 4 : pom.xml 에 nexus 정보를 추가</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://gitlab.com/nexweb/sample-service <span class="nt">-b</span> hello 
-
-<span class="nb">cd </span>sample-service
-
-vi pom.xml
-</code></pre></div></div>
-
-<p><img src="/assets/images/nexus/04-jenkins-nexus-pom.png" alt="nexus admin" /></p>
-
-<h2 id="step-5--settingsxml-에-nexus-정보를-추가">step 5 : settings.xml 에 nexus 정보를 추가</h2>
-
-<p>settings.xml에 nexus 정보를 추가합니다. id 값은 위의 pom.xml 파일에 있는 id값과 동일하게 설정합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi ~/.m2/settings.xml
-</code></pre></div></div>
-
-<p><img src="/assets/images/nexus/05-jenkins-nexus-settings.png" alt="nexus admin" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="nexus" /><summary type="html"><![CDATA[Sonartype Nexus on Docker Centos7 기반 Docker Engine을 설치합니다. 성 Step 1: docker-compose 파일 작성 nexus container 의 데이터를 저장할 폴더를 생성합니다. mkdir ./nexus-data]]></summary></entry></feed>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="Harbor" /><summary type="html"><![CDATA[리모트 서버에서 Harbor 서버에 docker login]]></summary></entry></feed>
