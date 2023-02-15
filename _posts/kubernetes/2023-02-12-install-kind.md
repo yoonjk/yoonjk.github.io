@@ -1,5 +1,5 @@
 ---
-title: Install Kind for Jenkins
+title: Install kind for Jenkins
 categories:
   - kubernetes
 tags: 

@@ -215,19 +215,19 @@ var store = [{
         "url": "/devops/tekton-installation/",
         "teaser": null
       },{
-        "title": "리모트 minikube 연결",
+        "title": "Nginx proxy로 리모트 Minikube 연결",
         "excerpt":"Setup Minikube on minikube server Minikube는 로컬 머신에 VM을 생성하고 하나의 노드만 포함하는 경량의 클러스터를 배포하는 쿠버네티스 입니다. Minikube는 Linux, macOS 및 Windows 시스템에서 사용할 수 있습니다. Minikube가 작동하려면 하이퍼바이저(버추얼 박스 또는 KVM)가 필요하지만 이미 가상 머신 내부에 있는 경우 none 드라이버를 사용하여 추가 VM 계층 생성을 건너뛸 수 있습니다...","categories": ["kubernetes"],
         "tags": ["minikube"],
         "url": "/kubernetes/access-a-remote-minikube/",
         "teaser": null
       },{
-        "title": "Install Kind for Jenkins",
+        "title": "Install kind for Jenkins",
         "excerpt":"Pre-requisites : Install docker engine docker engine 설치는 docker engine 설치 글을 참조해 주세요. Step 1 : Download kind binary kind binary를 download 받습니다. curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.17.0/kind-linux-amd64 chmod +x ./kind sudo mv ./kind /usr/local/bin/kind Step 2 : config 파일 작성성 Kind를 이용하여 Kubernetes Cluster를 생성하기 위해 jenkins-config.yaml 파일을 아래와...","categories": ["kubernetes"],
         "tags": ["kind"],
         "url": "/kubernetes/install-kind/",
         "teaser": null
       },{
-        "title": "리모트 kind cluster 접근",
+        "title": "Nginx proxy 리모트 kind cluster 접근",
         "excerpt":"사전설치환경 구성 kind를 구성하기 위해 docker를 설치합니다. docker engine 설치 blog posting을 확인하세요. Setup on kind cluster server kind 로컬 머신에 VM을 생성하고 하나의 노드만 포함하는 경량의 클러스터를 배포하는 쿠버네티스 입니다. kind는 Linux, macOS 및 Windows 시스템에서 사용할 수 있습니다. Kind가 작동하려면 하이퍼바이저(버추얼 박스 또는 KVM)가 필요하지만 이미 가상 머신...","categories": ["kubernetes"],
         "tags": ["kind"],
         "url": "/kubernetes/access-a-remote-kind/",

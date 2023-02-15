@@ -1,5 +1,5 @@
 ---
-title: 리모트 kind cluster 접근
+title: Nginx proxy 리모트 kind cluster 접근
 categories:
   - kubernetes
 tags: 

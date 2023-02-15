@@ -1,5 +1,5 @@
 ---
-title: 리모트 minikube 연결
+title: Nginx proxy로 리모트 Minikube 연결 
 categories:
   - kubernetes
 tags: 
