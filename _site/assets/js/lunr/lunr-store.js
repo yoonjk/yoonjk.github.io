@@ -226,4 +226,10 @@ var store = [{
         "tags": ["kind"],
         "url": "/kubernetes/install-kind/",
         "teaser": null
+      },{
+        "title": "리모트 kind cluster 접근",
+        "excerpt":"사전설치환경 구성 kind를 구성하기 위해 docker를 설치합니다. docker engine 설치 blog posting을 확인하세요. Setup on kind cluster server kind 로컬 머신에 VM을 생성하고 하나의 노드만 포함하는 경량의 클러스터를 배포하는 쿠버네티스 입니다. kind는 Linux, macOS 및 Windows 시스템에서 사용할 수 있습니다. Kind가 작동하려면 하이퍼바이저(버추얼 박스 또는 KVM)가 필요하지만 이미 가상 머신...","categories": ["kubernetes"],
+        "tags": ["kind"],
+        "url": "/kubernetes/access-a-remote-kind/",
+        "teaser": null
       }]

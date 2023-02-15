@@ -1,4 +1,159 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-13T22:42:44+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Install Kind for Jenkins</title><link href="http://localhost:4000/kubernetes/install-kind/" rel="alternate" type="text/html" title="Install Kind for Jenkins" /><published>2023-02-12T00:00:00+09:00</published><updated>2023-02-12T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/install-kind</id><content type="html" xml:base="http://localhost:4000/kubernetes/install-kind/"><![CDATA[<h2 id="pre-requisites--install-docker-engine">Pre-requisites : Install docker engine</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-15T23:34:09+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">리모트 kind cluster 접근</title><link href="http://localhost:4000/kubernetes/access-a-remote-kind/" rel="alternate" type="text/html" title="리모트 kind cluster 접근" /><published>2023-02-15T00:00:00+09:00</published><updated>2023-02-15T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/access-a-remote-kind</id><content type="html" xml:base="http://localhost:4000/kubernetes/access-a-remote-kind/"><![CDATA[<h2 id="사전설치환경-구성">사전설치환경 구성</h2>
+<p>kind를 구성하기 위해 docker를 설치합니다. docker engine 설치  blog posting을 확인하세요.</p>
+
+<h2 id="setup--on-kind-cluster-server">Setup  on kind cluster server</h2>
+<p>kind 로컬 머신에 VM을 생성하고 하나의 노드만 포함하는 경량의 클러스터를 배포하는 쿠버네티스 입니다. kind는 Linux, macOS 및 Windows 시스템에서 사용할 수 있습니다.</p>
+
+<p>Kind가 작동하려면 하이퍼바이저(버추얼 박스 또는 KVM)가 필요하지만 이미 가상 머신 내부에 있는 경우 none 드라이버를 사용하여 추가 VM 계층 생성을 건너뛸 수 있습니다<br />
+이번에는 VM에 Docker 엔진을 설치하고, 가상화 대신 도커를 사용하여 local server에서 remote kind cluster에 접근하는 구성합니다.</p>
+
+<p>docker를 성공적으로 설치한 후 다음 명령을 사용하여 로컬 Kubernetes를 시작할 차례입니다.</p>
+
+<p><a href="https://kind.sigs.k8s.io/docs/user/quick-start/">kind Quick 설치 가이드</a></p>
+
+<p>Linux 환경에서 설치</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-Lo</span> ./kind https://kind.sigs.k8s.io/dl/v0.17.0/kind-linux-amd64
+<span class="nb">chmod</span> +x ./kind
+<span class="nb">sudo mv</span> ./kind /usr/local/bin/kind
+</code></pre></div></div>
+
+<p>kind를 시작하기 위해 kind cluster config 파일을 다음과 같이 control-plane, 2개의 worker node로 구성된 cluster를 작성합니다.</p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">kind</span><span class="pi">:</span> <span class="s">Cluster</span>
+<span class="na">networking</span><span class="pi">:</span>
+  <span class="na">apiServerAddress</span><span class="pi">:</span> <span class="s2">"</span><span class="s">119.81.103.70"</span>
+  <span class="na">apiServerPort</span><span class="pi">:</span> <span class="m">58350</span>
+<span class="na">nodes</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">role</span><span class="pi">:</span> <span class="s">control-plane</span>
+  <span class="pi">-</span> <span class="na">role</span><span class="pi">:</span> <span class="s">worker</span>
+  <span class="pi">-</span> <span class="na">role</span><span class="pi">:</span> <span class="s">worker</span>
+</code></pre></div></div>
+
+<p>kind cluster를 작성합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kind create cluster <span class="nt">--config</span> jenkins-config.yaml
+</code></pre></div></div>
+
+<p>원격 호스트에서 실행되는 Kubernetes 클러스터가 있습니다. Kind는 홈 디렉토리의 .kube/ 디렉토리 안에 config 파일을 생성합니다.</p>
+
+<p>kubernetes의 config 파일에는 다음의 내용이 있습니다.<br />
+•	certificate-authority(인증 기관) - 사용자가 제어하는 CA(인증 기관)에서 서명한 TLS 인증서를 프로비저닝할 수 있는 API를 제공합니다. 이러한 CA 및 인증서는 워크로드에서 신뢰를 설정하는 데 사용할 수 있습니다.<br />
+•	server - 파드, 서비스, 복제 컨트롤러 등을 포함하는 API 객체에 대한 데이터의 유효성을 검사하고 구성하는 쿠버네티스 API 서버의 주소이다.<br />
+•	client-certificate -.쿠버네티스/미니큐브는 TLS를 통한 인증을 위해 PKI 인증서가 필요하다.<br />
+•	client-key - 클라이언트 인증서와 일치하는 키입니다.</p>
+
+<p>.kube/config에 들어있는 인증서 내용을 x509 형식으로 변환합니다.</p>
+<ul>
+  <li>client-certificate-data 데이터를 base64로 decoding</li>
+  <li>client-key-data 데이터를 base64로 decode</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nb">cat</span> .kube/config
+
+<span class="nv">client_certificate</span><span class="o">=</span><span class="nv">LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURJVENDQWdtZ0F3SUJBZ0lJYnFFNXUyM0ZYRE13RFFZSktvWklodmNOQVFFTEJRQXdGVEVUTUJFR0ExVUUKQXhNS2EzVmlaWEp1WlhSbGN6QWVGdzB5TXpBeU1UUXhNakkyTXpOYUZ3MHlOREF5TVRReE1qSTJNelZhTURReApGekFWQmdOVkJBb1REbk41YzNSbGJUcHRZWE4wWlhKek1Sa3dGd1lEVlFRREV4QnJkV0psY201bGRHVnpMV0ZrCmJXbHVNSUlCSWpBTkJna3Foa2lHOXcwQkFRRUZBQU9DQVE4QU1JSUJDZ0tDQVFFQXRYNnZTcHZPclo4S0cvbWwKZHdZTEcyNWVWNEJzTndWMFFOQVFiWmMyYWd6eDNHOEVBVEh2QUpKcmVUZkIzQmlRUTlqa2xVUVlQL1ByaFI3TgpJMjczbGkrdHE5dGZRUlczN3c4UE44Q0J1dmRVRDNPNUNWaHNDdG5ITXJyVXZJR2xWOXNGNTVHdkVRNklsVitDCnVGdGhnTm9YaWNIaWFiR081bnZ4Y3BoWjJXL0h6SU5CYXJhMEVPdW5wMENpNlMwUHZURjZ2RHRYQXlqTklVR3gKOW8xQ3VjWmw4TU16QW11TWF2eFBBKzBrWUlJMmw0RTlZMDFIdGVZdzBLUHVHK1ZDUDVRREE4TlNDb25mWDZ6ZwpabG5xRGVDMjBGUTV0QjBlbTJQL2tIc3llSTJnaWV1dDNibTdaVm5YWGROLyswbjNhNW9iMHNhaThvMzVNZDlNCnZPT1lnUUlEQVFBQm8xWXdWREFPQmdOVkhROEJBZjhFQkFNQ0JhQXdFd1lEVlIwbEJBd3dDZ1lJS3dZQkJRVUgKQXdJd0RBWURWUjBUQVFIL0JBSXdBREFmQmdOVkhTTUVHREFXZ0JUY1dOUTRMN2ZGcThkN0RyUnBuTXpWbzRGbwptREFOQmdrcWhraUc5dzBCQVFzRkFBT0NBUUVBYzAycWNiRE9XcjRVbENZeFZPSys3cFVCc0ZyK0JIb2tic01jCmVlOXpZT05aRGNaY0VnYm5IeE95ZCt3L0oweVNScyt4aUpDNFRRRHMyU0FydVoxZnZQOFRzQ3I5ZTBrU2JPcEMKT0NrYTJIazlFV3h5eTIvd20xRVRZbXo5UEh3RWtRUytSQkRxNXJGMjMyMXpqZzQybURsU2R3SHB0QnRHNmJQYgp0d1lHY2tHcnJxVElBa0tGZlhBV1JCZWRuVi80S0M2TWg0ZkRVaFdQNjhVWmdyUU9KWENWUFAyc1B2Z3djMmQwCmFYaVF5NWh6b3NpWTdFOCswaHIwK0xpMXVtS3JjeHNGWGdjL01zTW1XbUtJMkR2Y2dManFpNDRSRlNvclV4TzYKWGVJQ0NvMnNMeHl5SFB5NUhjeXRVZTkxSFd4V2p6NDcyK3c1dDJ2MFAzWXY4UGRGQ1E9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg</span><span class="o">==</span>
+<span class="nv">client_key</span><span class="o">=</span><span class="nv">LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFb2dJQkFBS0NBUUVBdFg2dlNwdk9yWjhLRy9tbGR3WUxHMjVlVjRCc053VjBRTkFRYlpjMmFnengzRzhFCkFUSHZBSkpyZVRmQjNCaVFROWprbFVRWVAvUHJoUjdOSTI3M2xpK3RxOXRmUVJXMzd3OFBOOENCdXZkVUQzTzUKQ1Zoc0N0bkhNcnJVdklHbFY5c0Y1NUd2RVE2SWxWK0N1RnRoZ05vWGljSGlhYkdPNW52eGNwaFoyVy9IeklOQgphcmEwRU91bnAwQ2k2UzBQdlRGNnZEdFhBeWpOSVVHeDlvMUN1Y1psOE1NekFtdU1hdnhQQSswa1lJSTJsNEU5ClkwMUh0ZVl3MEtQdUcrVkNQNVFEQThOU0NvbmZYNnpnWmxucURlQzIwRlE1dEIwZW0yUC9rSHN5ZUkyZ2lldXQKM2JtN1pWblhYZE4vKzBuM2E1b2Iwc2FpOG8zNU1kOU12T09ZZ1FJREFRQUJBb0lCQUh5RFFmejhjVWs1bjdUYgppMEhodW9NQ0wrVDE3TWUralNmZDFqZHBFdUtrcU5VaXNHdWxkeU04VUZFa0NISlh3N2xZTmxHVkd0SGRKSW42ClBKLy9oQW5jQWRpeU1tSXpaVEd6Y2l3OGZJUHBKQmxKdWZzSVYyOEdReHV4Z3pzajhtd1lqYTkxaWRZNDAwa3UKOGo1S0t0VThTZ092S1FaNzB0NmF6MlZmMGR4U0kxaXA0VHBxM3pMVXRGSkt1dWJnYThKYmpsQ01jaGVvUUxYVQorT0ZzR1llU0VZK0g4NXltNFRUZGZSUGNsbjdONDJnc2M5UGlYaEx0N1U2OWNKdXdHVEM3NDF1QjNGYnVMQmJvCkRYalBKeTFJK1VpTWRkN0hmcThwSnppVzdQMXlId3dRU2ZqUG1XMzFYYzBoYVk1clBUbmpDY2Q1UkNJRzVWNXAKUkF3NmJjVUNnWUVBd3pXWVZyTWg1bFNjNGgySWdNWGh0S3FleFZxOXFEZE44eXowa3dPMnpLd3E3eUV3R0U4Wgp6cU1ENjk2RFBrditnU1krbTI1M1FIVDhJZG1LcTNzdG9SOEhIZXNOV2lzZTJGSGMxMzVRT1NWUFFaNmV6d1p0ClBsL3lrM2VJM0hIWEUyZEZNRWk0N0NoVWtpRHRZV1dVZDEyVEpHeGtMWTBJVmdFQjdsUEtKVGNDZ1lFQTdnTy8KZzNKUXVZd0dUak45NFBVTUd1cHlhTWx6UEpiSlZ6MmZWMkl1T2R3a1FlbHI4bktJUE50Nm9rS2JtUjFQSzYrSwpSYmJybU1aTnNYM2JGOWFHamhhRWRNV3dIRFRKMFhhVzdlVkxxbHVyQUxPR0NxM2lYRU5CZ3lMWTY5UWZjaURsCkRkaUx0WC9GTzcvSUY0OUEyOHIvZmdoK1FoQ3BQby9yWTl0U0RBY0NnWUJiVE9uZlF4RUw1VzhxNHAxQmZVdS8KY0QycUdISzBCb25TdnFmMVNydG9wdTI5d2t2NFVxYkRXc011d25lbjMyczloR0dyMk5LMXR3Rmw0NVZUOXR5MAppd3FORjY2N0NZZjNyUElaWjk2bG02bWlDMHBEa2NIdWRubkNOeG92NEo2eldJMm5zNXVwK0lMMWhha0E4TDJyCnhueFhnTXFwODFoK3dTSGlFaFp0cVFLQmdDRE5VMitDS2Ezb3BsWFFzdUIxNVIwd2dtUCtuMnNTUE4xUkdNeXEKTTBTMkdpa2JTazAzaTU4WGdHY3NWdFZiUExZQWswWFlWOC9PUkpiWmlZQlhpR084cHJTUktodzVDamRiNktFUQpvTVR4clRlRGhrMmllVGZON1JGdGxBZXNURWttVDJzQkZRQUdnK0FnSml0WkNzOC93c1pUMVZLMWlSMmVLQXF6CkJ6T3hBb0dBVEk0NlNoby8rV0N4d3VNUmZJSHMrU2luZEh6NTUwOVBlTmg4ejdEYnVuNzlXZi9CQ0VVdkNaeW8KV1dUck1kSmh5NTNXUjhBb2hTSy9YTGxWU0U5WTN3K2VteWw5aEU1bmtiNjBIN0M4YWkyUGpsVXBIZzBXR0Y0egpRWmQ3d21RNi9QOHVxS0ZEcnVkcSs4YmRON1dhNWFtZ1pUMy9YdHRWWGlXdHNRUzVYRzQ9Ci0tLS0tRU5EIFJTQSBQUklWQVRFIEtFWS0tLS0tCg</span><span class="o">==</span>
+
+<span class="c"># convert encoded certificates to x509 format</span>
+<span class="nb">mkdir</span> <span class="nt">-p</span> <span class="nv">$HOME</span>/.kind
+<span class="nb">echo</span> <span class="nv">$client_certificate</span> | <span class="nb">base64</span> <span class="nt">-d</span> <span class="o">&gt;</span> .kind/client.crt
+<span class="nb">echo</span> <span class="nv">$client_certificate</span> | <span class="nb">base64</span> <span class="nt">-d</span> <span class="o">&gt;</span> .kind/client.key
+
+</code></pre></div></div>
+<h2 id="install-nginx-for-reverse-proxy-on--kind-cluster-server">Install nginx for Reverse Proxy on  Kind Cluster server</h2>
+<p>리모트에서 Kind에 접근하기 위해 reverse proxy를 구성합니다.</p>
+
+<p>미니큐브 앞에 Nginx Reverse 프록시를 배포합니다.</p>
+
+<p>쿠버네티스 API 서버는 커맨드 라인 도구 kubectl을 사용할 때 모든 요청이 전달되는 지점입니다. kubectl을 사용하면 쿠버네티스 클러스터에 대해 명령을 실행할 수 있다. 이 예에서 내 kube-apiserver의 주소는 https://Your-ServierIP:58350 Kind의 IP 주소입니다. Kind는 로컬에서만 액세스할 수 있으나, 원격으로 액세스할 수 없습니다. 이러한 이유로 Kind 옆에 Nginx 역방향 프록시를 배포하여 원격 클라이언트의 요청을 수신한 다음 kube-apiserver로 전달할 수 있도록 해야 합니다.</p>
+
+<p>docker를 통해 배포하므로 마운트에 필요한 디렉토리와 파일을 만들어야합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">mkdir</span> <span class="nt">-p</span> /etc/nginx/conf.d/ /etc/nginx/certs
+<span class="nv">$ </span><span class="nb">cat</span> <span class="o">&lt;&lt;</span><span class="no">EOF</span><span class="sh"> &gt; /etc/nginx/conf.d/default.conf 
+server {
+    listen       80;
+    listen  [::]:80;
+    server_name  localhost;
+    auth_basic "Administrator's Area";
+    auth_basic_user_file /etc/nginx/.htpasswd;
+
+    location / {
+        proxy_pass https://Your-Kind-ServerIP:58350;
+        proxy_ssl_certificate /etc/nginx/certs/kind-client.crt;
+        proxy_ssl_certificate_key /etc/nginx/certs/kind-client.key;
+    }
+}
+</span><span class="no">EOF
+</span></code></pre></div></div>
+
+<p>아직 사용자 이름/암호 쌍을 만들지 않았습니다. 이를 위해 htpasswd라는 cmd 도구를 사용합니다<br />
+. 아직 설치하지 않은 경우 yum 을 통해 설치하십시오.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> httpd-tools 
+htpasswd <span class="nt">-c</span> /etc/nginx/.htpasswd kind-kind
+</code></pre></div></div>
+
+<p>Ubuntu 환경인 경우 htpasswd 유틸 설치</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get <span class="nb">install </span>apache2-utils <span class="nt">-y</span>
+htpasswd <span class="nt">-c</span> /etc/nginx/.htpasswd kind-kind
+</code></pre></div></div>
+<p>이제 사용자이름/암호가 /etc/nginx/.htpasswd 파일에 저장됩니다. 필요한 구성 파일이 이미 있으므로 다음 명령을 사용하여 Nginx를 배포 할 준비가 되었습니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-d</span> <span class="se">\</span>
+<span class="nt">--name</span> nginx <span class="se">\</span>
+<span class="nt">--network</span> kind <span class="se">\</span>
+<span class="nt">-p</span> 9080:80 <span class="se">\</span>
+<span class="nt">-v</span> /root/.kind/client.key:/etc/nginx/certs/kind-client.key <span class="se">\</span>
+<span class="nt">-v</span> /root/.kind/client.crt:/etc/nginx/certs/kind-client.crt <span class="se">\</span>
+<span class="nt">-v</span> /etc/nginx/conf.d/:/etc/nginx/conf.d <span class="se">\</span>
+<span class="nt">-v</span> /etc/nginx/.htpasswd:/etc/nginx/.htpasswd <span class="se">\</span>
+nginx
+</code></pre></div></div>
+
+<p>브라우저에서 Nginx에 요청하려고 하면 사용자 이름과 비밀번호가 필요하다는 다음 팝업 창이 나타납니다. 브라우저에서 페이지를 열려면 다음 주소로 이동하십시오</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://&lt;YOUR_SERVER_IP&gt;:9080  
+</code></pre></div></div>
+
+<h2 id="install-kubectl-on-local-computer">Install kubectl on local computer</h2>
+
+<p>Kind에 접속할려는 서버에 kubectl 를 설치합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>curl <span class="nt">-L</span> <span class="s2">"https://dl.k8s.io/release/</span><span class="si">$(</span>curl <span class="nt">-L</span> <span class="nt">-s</span> https://dl.k8s.io/release/stable.txt<span class="si">)</span><span class="s2">/bin/linux/amd64/kubectl"</span> <span class="nt">-o</span> /usr/local/bin/kubectl
+
+<span class="nb">sudo chmod</span> +x /usr/local/bin/kubectl
+</code></pre></div></div>
+
+<p>이미 kubectl이 설치되어 있으므로이 단계를 건너 뜁니다.<br />
+이제 미니큐브에 대한 kubectl을 구성해야 한다. 원격 호스트에서 구성 파일의 내용을 복사하고(Img.3 참조) 로컬 server 붙여넣습니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> ~/.kube/  <span class="c"># execute on local computer</span>
+</code></pre></div></div>
+
+<p>아래 이미지에는 변경해야 할 강조 표시된 줄이 있습니다.<br />
+remote 서버에 있는 config 파일을 복사하고 강조 표시된 부분을 수정합니다.<br />
+ENTER_YOUR_PASSWORD_HERE : remote 서버에서 설정한 kind-kind 비밀번호<br />
+YOUR_SERVER_IP : remote 서버<br />
+•	certificate-authority , client-certificate , and client-key</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://kind-kind:&lt;ENTER_YOUR_PASSWORD_HERE&gt;@&lt;YOUR_SERVER_IP&gt;:9080
+</code></pre></div></div>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">cat &lt;&lt;EOF &gt; .kube/config</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">clusters</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="na">cluster</span><span class="pi">:</span>
+    <span class="na">server</span><span class="pi">:</span> <span class="s">http://kind-kind:admin1234@@119.81.103.70:9080</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">kind-kind</span>
+<span class="na">contexts</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="na">context</span><span class="pi">:</span>
+    <span class="na">cluster</span><span class="pi">:</span> <span class="s">kind-kind</span>
+    <span class="na">user</span><span class="pi">:</span> <span class="s">kind-kind</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">kind-kind</span>
+<span class="na">current-context</span><span class="pi">:</span> <span class="s">kind-kind</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Config</span>
+<span class="na">preferences</span><span class="pi">:</span> <span class="pi">{}</span>
+<span class="na">users</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">kind-kind</span>
+  <span class="na">user</span><span class="pi">:</span>
+<span class="s">EOF</span>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="kubernetes" /><category term="kind" /><summary type="html"><![CDATA[사전설치환경 구성 kind를 구성하기 위해 docker를 설치합니다. docker engine 설치 blog posting을 확인하세요.]]></summary></entry><entry><title type="html">Install Kind for Jenkins</title><link href="http://localhost:4000/kubernetes/install-kind/" rel="alternate" type="text/html" title="Install Kind for Jenkins" /><published>2023-02-12T00:00:00+09:00</published><updated>2023-02-12T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/install-kind</id><content type="html" xml:base="http://localhost:4000/kubernetes/install-kind/"><![CDATA[<h2 id="pre-requisites--install-docker-engine">Pre-requisites : Install docker engine</h2>
 <p>docker engine 설치는 docker engine 설치 글을 참조해 주세요.</p>
 
 <h2 id="step-1--download-kind-binary">Step 1 : Download kind binary</h2>
@@ -782,102 +937,4 @@ vi pom.xml
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi ~/.m2/settings.xml
 </code></pre></div></div>
 
-<p><img src="/assets/images/nexus/05-jenkins-nexus-settings.png" alt="nexus admin" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="nexus" /><summary type="html"><![CDATA[Sonartype Nexus on Docker Centos7 기반 Docker Engine을 설치합니다. 성 Step 1: docker-compose 파일 작성 nexus container 의 데이터를 저장할 폴더를 생성합니다. mkdir ./nexus-data]]></summary></entry><entry><title type="html">Docker 기반 JFrog 설치</title><link href="http://localhost:4000/docker/jfrog/" rel="alternate" type="text/html" title="Docker 기반 JFrog 설치" /><published>2023-01-29T00:00:00+09:00</published><updated>2023-01-29T00:00:00+09:00</updated><id>http://localhost:4000/docker/jfrog</id><content type="html" xml:base="http://localhost:4000/docker/jfrog/"><![CDATA[<h2 id="jfrog-on-docker">JFrog on Docker</h2>
-<p>Docker 기반 JFrog를 설치합니다.</p>
-
-<h2 id="step-1-install-docker-engine-on-centos7">Step 1: Install Docker Engine on Centos7</h2>
-
-<p><a href="https://docs.docker.com/engine/install/">Docker</a> 설치 방법은 다음을 참고하세요.</p>
-
-<p><a href="https://docs.docker.com/engine/install/">https://docs.docker.com/engine/install/</a></p>
-
-<h2 id="step-2--jfrog-artifactory-docker-image-를-download">Step 2 : JFrog Artifactory Docker Image 를 download</h2>
-
-<p>For CE edition:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull docker.bintray.io/jfrog/artifactory-cpp-ce
-
-
-docker images
-
-docker images <span class="s2">"*/jfrog/*"</span>
-<span class="nt">-------------------------------------------------------------------------------------------</span>
-REPOSITORY                                   TAG       IMAGE ID       CREATED      SIZE
-docker.bintray.io/jfrog/artifactory-cpp-ce   latest    82ca33a84e75   5 days ago   1.55GB
-
-</code></pre></div></div>
-<h2 id="step-3--create-data-directory">Step 3 : Create Data Directory</h2>
-<p>컨테이너에서 사용되는 데이터가 영구적으로 저장하기 위해 시스템에 데이터 디렉토리를 생성합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo mkdir</span> <span class="nt">-p</span> /jfrog/artifactory
-<span class="nb">sudo chown</span> <span class="nt">-R</span> 1030 /jfrog/
-</code></pre></div></div>
-
-<h2 id="step-4-start-jfrog-artifactory-container">Step 4: Start JFrog Artifactory container</h2>
-<p>Artifactory 컨테이너를 시작하려면 다음 명령을 사용하십시오.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">--name</span> artifactory <span class="nt">-d</span> <span class="nt">-p</span> 8081:8081 <span class="nt">-p</span> 8082:8082 <span class="se">\</span>
-<span class="nt">-v</span> /jfrog/artifactory:/var/opt/jfrog/artifactory <span class="se">\</span>
-docker.bintray.io/jfrog/artifactory-cpp-ce
-
-
-docker ps
-<span class="nt">---------------------------------------------------------------------------</span>
-CONTAINER ID   IMAGE                                            COMMAND                  CREATED         STATUS         PORTS                                                           NAMES
-29c549fecd50   docker.bintray.io/jfrog/artifactory-cpp-ce:latest   <span class="s2">"/entrypoint-artifac…"</span>   9 minutes ago   Up 9 minutes   0.0.0.0:8081-8082-&gt;8081-8082/tcp, :::8081-8082-&gt;8081-8082/tcp   artifactory
-</code></pre></div></div>
-
-<h2 id="step-5--running-jfrog-artifactory-container-with-systemd">Step 5 : Running JFrog Artifactory container with Systemd</h2>
-
-<p>Systemd는 CentOS 7의 기본 초기화 시스템입니다. 이를 사용하여 JFrog Artifactory 컨테이너를 시스템 시작시 
-시작할 수 있도록 관리할 수 있습니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>vim /etc/systemd/system/artifactory.service
-</code></pre></div></div>
-
-<p>아래 내용을 추가합니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>Unit]
-<span class="nv">Description</span><span class="o">=</span>Setup Systemd script <span class="k">for </span>Artifactory Container
-<span class="nv">After</span><span class="o">=</span>network.target
-
-<span class="o">[</span>Service]
-<span class="nv">Restart</span><span class="o">=</span>always
-<span class="nv">ExecStartPre</span><span class="o">=</span>-/usr/bin/docker <span class="nb">kill </span>artifactory
-<span class="nv">ExecStartPre</span><span class="o">=</span>-/usr/bin/docker <span class="nb">rm </span>artifactory
-<span class="nv">ExecStart</span><span class="o">=</span>/usr/bin/docker run <span class="nt">--name</span> artifactory <span class="nt">-p</span> 8081:8081 <span class="nt">-p</span> 8082:8082 <span class="se">\</span>
-  <span class="nt">-v</span> /jfrog/artifactory:/var/opt/jfrog/artifactory <span class="se">\</span>
-  docker.bintray.io/jfrog/artifactory-oss:latest
-<span class="nv">ExecStop</span><span class="o">=</span>-/usr/bin/docker <span class="nb">kill </span>artifactory
-<span class="nv">ExecStop</span><span class="o">=</span>-/usr/bin/docker <span class="nb">rm </span>artifactory
-
-<span class="o">[</span>Install]
-<span class="nv">WantedBy</span><span class="o">=</span>multi-user.target
-
-</code></pre></div></div>
-
-<p>Reload systemd.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl daemon-reload
-</code></pre></div></div>
-
-<p>systemd를 이용하여 Artifactory Container를 시작합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl start artifactory
-</code></pre></div></div>
-
-<p>시스템이 재시작될 때 JFrog를 시작할 수 있도록 활성화합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl <span class="nb">enable </span>artifactory
-</code></pre></div></div>
-
-<p>JFrog 서비스가 실행중인지 상태를 확인합니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl status artifactory
-</code></pre></div></div>
-
-<p>서비스의 포트 binding 을 확인합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ss <span class="nt">-tunelp</span> | <span class="nb">grep </span>8081
-</code></pre></div></div>
-
-<h2 id="step-6-web-ui에서-artifactory-서버에-접근">Step 6: WEB UI에서 Artifactory 서버에 접근</h2>
-
-<p>JFrog Artifactory에 접근하기 위해 브라우저 URL에서 8081 포트로 접근합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://자신의 서버 IP 또는 localhost:8081/artifactory
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="JFrog" /><summary type="html"><![CDATA[JFrog on Docker Docker 기반 JFrog를 설치합니다.]]></summary></entry></feed>
+<p><img src="/assets/images/nexus/05-jenkins-nexus-settings.png" alt="nexus admin" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="nexus" /><summary type="html"><![CDATA[Sonartype Nexus on Docker Centos7 기반 Docker Engine을 설치합니다. 성 Step 1: docker-compose 파일 작성 nexus container 의 데이터를 저장할 폴더를 생성합니다. mkdir ./nexus-data]]></summary></entry></feed>
