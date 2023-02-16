@@ -18,8 +18,11 @@ port-forward를 합니다.
 ```bash
 kubectl port-forward svc/kubernetes-dashboard -n kubernetes-dashboard  443 --address 0.0.0.0
 ```
+chrome 중앙의 to get chrome's 를 클릭하고 thisisunsafe를 입력하고 enter를 누릅니다.   
+
 ![port-forward]({{ "/assets/images/k8s/03-k8s-yourconnection-is-not-private.png"}})
 
+그러면 다음과 가이 dashboard 로그인 화면이 나타납니다.  
 ![port-forward]({{ "/assets/images/k8s/04-k8s-kubernetes-dashboard.png"}})
 
 ## Create serviceaccount and role, token

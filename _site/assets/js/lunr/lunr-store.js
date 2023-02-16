@@ -234,7 +234,7 @@ var store = [{
         "teaser": null
       },{
         "title": "kind 에 dashboard 설치하기",
-        "excerpt":"Dashboard 설치 kind를 사용하여 Kubernetes cluster를 구성하고 dashboard를 구성합니다. dashboard는 다음과 같이 remote에 있는 yaml을 직접적용합니다. kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml port-forward로 port 오픈 port-forward를 합니다. kubectl port-forward svc/kubernetes-dashboard -n kubernetes-dashboard 443 --address 0.0.0.0 Create serviceaccount and role, token kubernetes dashboard를 위한 serviceaccount와 cluster-role를 생성한 다음 token을 생성합니다. 그리고 생성한 token...","categories": ["kubernetes"],
+        "excerpt":"Dashboard 설치 kind를 사용하여 Kubernetes cluster를 구성하고 dashboard를 구성합니다. dashboard는 다음과 같이 remote에 있는 yaml을 직접적용합니다. kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml port-forward로 port 오픈 port-forward를 합니다. kubectl port-forward svc/kubernetes-dashboard -n kubernetes-dashboard 443 --address 0.0.0.0 chrome 중앙의 to get chrome’s 를 클릭하고 thisisunsafe를 입력하고 enter를 누릅니다. 그러면 다음과 가이 dashboard 로그인 화면이...","categories": ["kubernetes"],
         "tags": ["kind"],
         "url": "/kubernetes/install-dashboard-for-kind/",
         "teaser": null
