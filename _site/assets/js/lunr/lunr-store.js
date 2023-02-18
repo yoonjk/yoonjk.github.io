@@ -238,4 +238,10 @@ var store = [{
         "tags": ["kind"],
         "url": "/kubernetes/install-dashboard-for-kind/",
         "teaser": null
+      },{
+        "title": "Jenkins master/slave 구성",
+        "excerpt":"Jenkins 설치 Jenkins Master/Slave는 Controller/Agent로 명칭을 수정해서 글을 post합니다. Jenkins 설치 따라하기를 참조해서 Jenkins를 설치합니다. Jenkins Agent 개요 Jenkins Pipeline을 remote Node에서 실행할 Agent를 추가합니다. Jenkins Agent는 다음과 같이 유형의 Agent가 있습니다. Server 기반의 Agent Docker Container Kubernetes Dynamic Pod Agent Server 기반 Agent도 JNLP 기반 Agent와 ssh 기반 Agent가...","categories": ["devops"],
+        "tags": ["jenkins","master","slave"],
+        "url": "/devops/jenkins-controller-and-agent/",
+        "teaser": null
       }]

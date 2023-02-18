@@ -1,35 +1,99 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-16T22:28:09+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">kind 에 dashboard 설치하기</title><link href="http://localhost:4000/kubernetes/install-dashboard-for-kind/" rel="alternate" type="text/html" title="kind 에 dashboard 설치하기" /><published>2023-02-15T00:00:00+09:00</published><updated>2023-02-15T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/install%20dashboard%20for%20kind</id><content type="html" xml:base="http://localhost:4000/kubernetes/install-dashboard-for-kind/"><![CDATA[<h2 id="dashboard-설치">Dashboard 설치</h2>
-<p>kind를 사용하여 Kubernetes cluster를 구성하고 dashboard를 구성합니다.
-dashboard는 다음과 같이 remote에 있는 yaml을 직접적용합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl apply <span class="nt">-f</span> https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-18T11:12:44+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Jenkins master/slave 구성</title><link href="http://localhost:4000/devops/jenkins-controller-and-agent/" rel="alternate" type="text/html" title="Jenkins master/slave 구성" /><published>2023-02-16T00:00:00+09:00</published><updated>2023-02-16T00:00:00+09:00</updated><id>http://localhost:4000/devops/jenkins%20controller%20and%20agent</id><content type="html" xml:base="http://localhost:4000/devops/jenkins-controller-and-agent/"><![CDATA[<h2 id="jenkins-설치">Jenkins 설치</h2>
+
+<p>Jenkins Master/Slave는 Controller/Agent로 명칭을 수정해서 글을 post합니다.</p>
+
+<p><a href="https://yoonjk.github.io/devops/setup-jenkins/">Jenkins 설치 따라하기</a>를 참조해서 Jenkins를 설치합니다.</p>
+
+<h2 id="jenkins-agent-개요">Jenkins Agent 개요</h2>
+
+<p>Jenkins Pipeline을 remote Node에서 실행할 Agent를 추가합니다.<br />
+Jenkins Agent는 다음과 같이 유형의 Agent가 있습니다.</p>
+
+<ul>
+  <li>Server 기반의 Agent</li>
+  <li>Docker Container</li>
+  <li>Kubernetes Dynamic Pod Agent</li>
+</ul>
+
+<p>Server 기반 Agent도 JNLP 기반 Agent와 ssh 기반 Agent가 있습니다.
+JNLP기반 Agent는 분산된 서버에 agent.jar를 설치하고, 
+java agent를 실행하고 Jenkins Master(Controller)와 연될되어 Pipeline을 실행합니다.</p>
+
+<p>Docker Container 기반 Agent는 선언형 Pipeline에서 각 stage별로 적합한 container를 설정하여 docker를 실행합니다.</p>
+
+<p>Dynmaic Kubernetes Pod Agent는 pipeline을 Kubernetes cluster에 Pod로 실행하고, 종료되면 Pod가 소별하는 방식입니다.</p>
+
+<h2 id="jenkins-agent-node">Jenkins Agent Node</h2>
+<p>Agent Node에 jenkins 계정을 생성하고, jenkins 패스워드를 지정합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>useradd jenkins
+su - jenkins
+<span class="nb">mkdir</span> <span class="nt">-p</span> .ssh
+<span class="nb">exit
+</span>passwd jenkins
 </code></pre></div></div>
 
-<h2 id="port-forward로-port-오픈">port-forward로 port 오픈</h2>
-<p>port-forward를 합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl port-forward svc/kubernetes-dashboard <span class="nt">-n</span> kubernetes-dashboard  443 <span class="nt">--address</span> 0.0.0.0
+<h2 id="jenkins-controller-node">Jenkins Controller Node</h2>
+<p>Jenkins Controller에서 인증서를 생성합니다.  <br />
+<img src="/assets/images/jenkins/22-jenkins-master-agent.png" alt="New Node" /></p>
+
+<p>공개 키를 Agent Node에 복사합니다.
+Are you sure you want to continue connecting (yes/no)? yes를 입력합니다.<br />
+Agent Node에서 ~/.ssh 폴더에 authorized_keys 파일이 생성된 것을 확인합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scp  ~/.ssh/id_rsa.pub jenkins@Your-AgentNodeIP:/home/jenkins/.ssh/authorized_keys
 </code></pre></div></div>
-<p>chrome 중앙의 to get chrome’s 를 클릭하고 thisisunsafe를 입력하고 enter를 누릅니다.</p>
+<p><img src="/assets/images/jenkins/22-jenkins-scp-credentials.png" alt="New Node" /></p>
 
-<p><img src="/assets/images/k8s/03-k8s-yourconnection-is-not-private.png" alt="port-forward" /></p>
-
-<p>그러면 다음과 가이 dashboard 로그인 화면이 나타납니다.<br />
-<img src="/assets/images/k8s/04-k8s-kubernetes-dashboard.png" alt="port-forward" /></p>
-
-<h2 id="create-serviceaccount-and-role-token">Create serviceaccount and role, token</h2>
-<p>kubernetes dashboard를 위한 serviceaccount와 cluster-role를 생성한 다음 token을 생성합니다. 그리고 생성한 token 값을 
-dashboard login token 입력항목에 붙여넣기를 합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl create sa dashboard-admin <span class="nt">-n</span> kubernetes-dashboard
-kubectl create clusterrolebinding dashbaord-admin <span class="nt">--clusterrole</span> admin <span class="nt">--serviceaccount</span> kubernetes-dashboard:dashboard-admin
-kubectl create token dashboard-admin <span class="nt">-n</span> kubernetes-dashboard
-
-<span class="o">[</span>수행결과]
-eyJhbGciOiJSUzI1NiIsImtpZCI6IjcxeDlkdFlKOVhLZjRXOFdfNzVmLTZpUFVLOUtvQVM5M0RUMlMxcVBtblEifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNjc2NDkzNzA3LCJpYXQiOjE2NzY0OTAxMDcsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsInNlcnZpY2VhY2NvdW50Ijp7Im5hbWUiOiJkYXNoYm9hcmQtYWRtaW4iLCJ1aWQiOiIwNDdlM2RjYS03N2JiLTRmYzMtYTkzZS0yMjAwNWNkZDBkOWYifX0sIm5iZiI6MTY3NjQ5MDEwNywic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50Omt1YmVybmV0ZXMtZGFzaGJvYXJkOmRhc2hib2FyZC1hZG1pbiJ9.uDhrySLj1sZgsRovMS7TqT4DuTipdhaa2n1uKDLnfGq_-JNwQma7S0qOuLY20FAXfIGceax_k_LY5js0SP0GFWHSrw8m2S2jOEeDXkcvEkBQVDXi5DY-bp6p_y2dI4CleUxauFgPXOwXTOu8Un1fOfgltMCvGBcf68qPjZ1pxrni5_HlPi_o9xjhmfbggUxEq8zx0n2H5j0ssVITM7jH38F6eO7rMPVHRBngMok2qqOydviQZ0994TPgq_NByKkWDk1npCXOvrt03z9X6I7Q5-k6yX8vVEZSKq9rbq0lAJQLKlpKlttTHz6YJf0YEQwgygcakDxKCRsCk07kgEXP2Q
+<h2 id="jenkins-agent-node-1">Jenkins Agent Node</h2>
+<p>Agent Node에서 .ssh 폴더와 authorized_keys의 접근권한을 설정합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod </span>700 .ssh
+<span class="nb">chmod </span>644 ~/.ssh/authorized_keys
 </code></pre></div></div>
-<p>token을 입력합니다.<br />
-<img src="/assets/images/k8s/05-k8s-input-token-dashboard.png" alt="port-forward" /></p>
+<h2 id="jenkins-controller-node-1">Jenkins Controller Node</h2>
+<p>Jenkins Controller Node에서 ssh로 Jenkins Agent로 접속하여 비밀번호를 없이 접속되는지 확인합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh jenkins@Your-Jenkins-AgentIP
+</code></pre></div></div>
 
-<p>dashboard 로그인 화면입니다.<br />
-<img src="/assets/images/k8s/06-k8s-dashboard-login.png" alt="port-forward" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="kubernetes" /><category term="kind" /><summary type="html"><![CDATA[Dashboard 설치 kind를 사용하여 Kubernetes cluster를 구성하고 dashboard를 구성합니다. dashboard는 다음과 같이 remote에 있는 yaml을 직접적용합니다. kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml]]></summary></entry><entry><title type="html">Nginx proxy 리모트 kind cluster 접근</title><link href="http://localhost:4000/kubernetes/access-a-remote-kind/" rel="alternate" type="text/html" title="Nginx proxy 리모트 kind cluster 접근" /><published>2023-02-15T00:00:00+09:00</published><updated>2023-02-15T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/access-a-remote-kind</id><content type="html" xml:base="http://localhost:4000/kubernetes/access-a-remote-kind/"><![CDATA[<h2 id="사전설치환경-구성">사전설치환경 구성</h2>
+<p><img src="/assets/images/jenkins/22-jenkins-ssh-connect.png" alt="New Node" /></p>
+
+<h2 id="agent-환경구성">Agent 환경구성</h2>
+
+<p>Manage Jenkins를 선택하고, Manage Nodes and Clouds를 선택<br />
+<img src="/assets/images/jenkins/23-jenkins-manage-nodes-clouds.png" alt="New Node" /></p>
+
+<p>New Node를 선택합니다.<br />
+<img src="/assets/images/jenkins/24-jenkins-new-agent.png" alt="New Node" /></p>
+
+<p>Agent에 name, label agent root directory를 설정합니다.
+Number of executors는 Agent의 vcpu 개수만큼 지정합니다.    <br />
+<img src="/assets/images/jenkins/25-jenkins-agent-root-dir.png" alt="New Node" /></p>
+
+<p>Agent Node IP 설정 및 ssh로 접속하기 위해 credentials을 설정합니다.<br />
+<img src="/assets/images/jenkins/24-jenkins-launch-method.png" alt="New Node" /></p>
+
+<p>Add credentials을 선택합니다.<br />
+<img src="/assets/images/jenkins/26-jenkins-add-credentials.png" alt="New Node" /></p>
+
+<p>Kind 선택항목에서 username with private key 를 선택하고, ID, Description, username을 설정합니다.<br />
+<img src="/assets/images/jenkins/28-jenkins-username-with-private-key.png" alt="New Node" /></p>
+
+<p>Private Key 항목에서 Enter directly를 선택하고, Add 버튼을 클릭합니다. <br />
+<img src="/assets/images/jenkins/27-jenkins-private-key-enter-directly.png" alt="New Node" /></p>
+
+<p>Jenkins Controller Node에서 생성한 private key 인증서의 내용을 복사하여 붙여넣기하고 저장합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> ~/.ssh/id_rsa
+</code></pre></div></div>
+<p>Jenkins Controller Node에서  ~/.ssh/id_rsa 인증서 내용을 복사합니다.<br />
+<img src="/assets/images/jenkins/29-jenkins-copy-id_rsa.png" alt="New Node" /></p>
+
+<p>id_rsa 인증서 내용을 붙여넣기하고 Add버튼클 클릭합니다.<br />
+<img src="/assets/images/jenkins/29-jenkins-paste-private-key-and-save.png" alt="New Node" /></p>
+
+<p>Jenkins Agent에서 Credentials을 선택하고, Host Key Verification Strategy 에서 Manually trusted key Verification Strategy를 선택하고, 저장버튼을 클릭합니다.<br />
+<img src="/assets/images/jenkins/30-jenkins-select-credentials.png" alt="New Node" /></p>
+
+<p>Jenkins Controller 인 Built-in-Node를 선택해서 Number of executors의 항목을 0으로 설정하고 저장합니다.</p>
+
+<p><img src="/assets/images/jenkins/31-jenkins-build-in-node.png" alt="New Node" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><category term="master" /><category term="slave" /><summary type="html"><![CDATA[Jenkins 설치]]></summary></entry><entry><title type="html">Nginx proxy 리모트 kind cluster 접근</title><link href="http://localhost:4000/kubernetes/access-a-remote-kind/" rel="alternate" type="text/html" title="Nginx proxy 리모트 kind cluster 접근" /><published>2023-02-15T00:00:00+09:00</published><updated>2023-02-15T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/access-a-remote-kind</id><content type="html" xml:base="http://localhost:4000/kubernetes/access-a-remote-kind/"><![CDATA[<h2 id="사전설치환경-구성">사전설치환경 구성</h2>
 <p>kind를 구성하기 위해 docker를 설치합니다. docker engine 설치  blog posting을 확인하세요.</p>
 
 <h2 id="setup--on-kind-cluster-server">Setup  on kind cluster server</h2>
@@ -184,7 +248,38 @@ YOUR_SERVER_IP : remote 서버<br />
 <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">kind-kind</span>
   <span class="na">user</span><span class="pi">:</span>
 <span class="s">EOF</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="kubernetes" /><category term="kind" /><summary type="html"><![CDATA[사전설치환경 구성 kind를 구성하기 위해 docker를 설치합니다. docker engine 설치 blog posting을 확인하세요.]]></summary></entry><entry><title type="html">Install kind for Jenkins</title><link href="http://localhost:4000/kubernetes/install-kind/" rel="alternate" type="text/html" title="Install kind for Jenkins" /><published>2023-02-12T00:00:00+09:00</published><updated>2023-02-12T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/install-kind</id><content type="html" xml:base="http://localhost:4000/kubernetes/install-kind/"><![CDATA[<h2 id="pre-requisites--install-docker-engine">Pre-requisites : Install docker engine</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="kubernetes" /><category term="kind" /><summary type="html"><![CDATA[사전설치환경 구성 kind를 구성하기 위해 docker를 설치합니다. docker engine 설치 blog posting을 확인하세요.]]></summary></entry><entry><title type="html">kind 에 dashboard 설치하기</title><link href="http://localhost:4000/kubernetes/install-dashboard-for-kind/" rel="alternate" type="text/html" title="kind 에 dashboard 설치하기" /><published>2023-02-15T00:00:00+09:00</published><updated>2023-02-15T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/install%20dashboard%20for%20kind</id><content type="html" xml:base="http://localhost:4000/kubernetes/install-dashboard-for-kind/"><![CDATA[<h2 id="dashboard-설치">Dashboard 설치</h2>
+<p>kind를 사용하여 Kubernetes cluster를 구성하고 dashboard를 구성합니다.
+dashboard는 다음과 같이 remote에 있는 yaml을 직접적용합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl apply <span class="nt">-f</span> https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
+</code></pre></div></div>
+
+<h2 id="port-forward로-port-오픈">port-forward로 port 오픈</h2>
+<p>port-forward를 합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl port-forward svc/kubernetes-dashboard <span class="nt">-n</span> kubernetes-dashboard  443 <span class="nt">--address</span> 0.0.0.0
+</code></pre></div></div>
+<p>chrome 중앙의 to get chrome’s 를 클릭하고 thisisunsafe를 입력하고 enter를 누릅니다.</p>
+
+<p><img src="/assets/images/k8s/03-k8s-yourconnection-is-not-private.png" alt="port-forward" /></p>
+
+<p>그러면 다음과 가이 dashboard 로그인 화면이 나타납니다.<br />
+<img src="/assets/images/k8s/04-k8s-kubernetes-dashboard.png" alt="port-forward" /></p>
+
+<h2 id="create-serviceaccount-and-role-token">Create serviceaccount and role, token</h2>
+<p>kubernetes dashboard를 위한 serviceaccount와 cluster-role를 생성한 다음 token을 생성합니다. 그리고 생성한 token 값을 
+dashboard login token 입력항목에 붙여넣기를 합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl create sa dashboard-admin <span class="nt">-n</span> kubernetes-dashboard
+kubectl create clusterrolebinding dashbaord-admin <span class="nt">--clusterrole</span> admin <span class="nt">--serviceaccount</span> kubernetes-dashboard:dashboard-admin
+kubectl create token dashboard-admin <span class="nt">-n</span> kubernetes-dashboard
+
+<span class="o">[</span>수행결과]
+eyJhbGciOiJSUzI1NiIsImtpZCI6IjcxeDlkdFlKOVhLZjRXOFdfNzVmLTZpUFVLOUtvQVM5M0RUMlMxcVBtblEifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNjc2NDkzNzA3LCJpYXQiOjE2NzY0OTAxMDcsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsInNlcnZpY2VhY2NvdW50Ijp7Im5hbWUiOiJkYXNoYm9hcmQtYWRtaW4iLCJ1aWQiOiIwNDdlM2RjYS03N2JiLTRmYzMtYTkzZS0yMjAwNWNkZDBkOWYifX0sIm5iZiI6MTY3NjQ5MDEwNywic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50Omt1YmVybmV0ZXMtZGFzaGJvYXJkOmRhc2hib2FyZC1hZG1pbiJ9.uDhrySLj1sZgsRovMS7TqT4DuTipdhaa2n1uKDLnfGq_-JNwQma7S0qOuLY20FAXfIGceax_k_LY5js0SP0GFWHSrw8m2S2jOEeDXkcvEkBQVDXi5DY-bp6p_y2dI4CleUxauFgPXOwXTOu8Un1fOfgltMCvGBcf68qPjZ1pxrni5_HlPi_o9xjhmfbggUxEq8zx0n2H5j0ssVITM7jH38F6eO7rMPVHRBngMok2qqOydviQZ0994TPgq_NByKkWDk1npCXOvrt03z9X6I7Q5-k6yX8vVEZSKq9rbq0lAJQLKlpKlttTHz6YJf0YEQwgygcakDxKCRsCk07kgEXP2Q
+</code></pre></div></div>
+<p>token을 입력합니다.<br />
+<img src="/assets/images/k8s/05-k8s-input-token-dashboard.png" alt="port-forward" /></p>
+
+<p>dashboard 로그인 화면입니다.<br />
+<img src="/assets/images/k8s/06-k8s-dashboard-login.png" alt="port-forward" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="kubernetes" /><category term="kind" /><summary type="html"><![CDATA[Dashboard 설치 kind를 사용하여 Kubernetes cluster를 구성하고 dashboard를 구성합니다. dashboard는 다음과 같이 remote에 있는 yaml을 직접적용합니다. kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml]]></summary></entry><entry><title type="html">Install kind for Jenkins</title><link href="http://localhost:4000/kubernetes/install-kind/" rel="alternate" type="text/html" title="Install kind for Jenkins" /><published>2023-02-12T00:00:00+09:00</published><updated>2023-02-12T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/install-kind</id><content type="html" xml:base="http://localhost:4000/kubernetes/install-kind/"><![CDATA[<h2 id="pre-requisites--install-docker-engine">Pre-requisites : Install docker engine</h2>
 <p>docker engine 설치는 docker engine 설치 글을 참조해 주세요.</p>
 
 <h2 id="step-1--download-kind-binary">Step 1 : Download kind binary</h2>
@@ -420,7 +515,120 @@ YOUR_SERVER_IP : remote 서버<br />
 
 <p>Tekton dashboard 설치에 대해 자세한 것은 아래의 <a href="https://tekton.dev/docs/dashboard/install/">링크</a>를 확인하세요.</p>
 
-<p><a href="https://tekton.dev/docs/dashboard/install/">https://tekton.dev/docs/dashboard/install/</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="tekton" /><summary type="html"><![CDATA[Tekton 설치 Tekton pipeline을 Kubernetes에 설치합니다.]]></summary></entry><entry><title type="html">Nexus를 docker container repository로 사용하기</title><link href="http://localhost:4000/devops/push-container-image-to-nexus/" rel="alternate" type="text/html" title="Nexus를 docker container repository로 사용하기" /><published>2023-02-04T00:00:00+09:00</published><updated>2023-02-04T00:00:00+09:00</updated><id>http://localhost:4000/devops/push%20container%20image%20to%20nexus</id><content type="html" xml:base="http://localhost:4000/devops/push-container-image-to-nexus/"><![CDATA[<h2 id="nexus를-docker-container-repository로-사용하기">Nexus를 docker container repository로 사용하기</h2>
+<p><a href="https://tekton.dev/docs/dashboard/install/">https://tekton.dev/docs/dashboard/install/</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="tekton" /><summary type="html"><![CDATA[Tekton 설치 Tekton pipeline을 Kubernetes에 설치합니다.]]></summary></entry><entry><title type="html">Private Gitlab Repository 구성하기</title><link href="http://localhost:4000/devops/gitlab-ce/" rel="alternate" type="text/html" title="Private Gitlab Repository 구성하기" /><published>2023-02-04T00:00:00+09:00</published><updated>2023-02-04T00:00:00+09:00</updated><id>http://localhost:4000/devops/gitlab-ce</id><content type="html" xml:base="http://localhost:4000/devops/gitlab-ce/"><![CDATA[<h2 id="gitlab-ce-설치하기">Gitlab-CE 설치하기</h2>
+<p>git repository로 public 으로 사용할 수 있는 대표적인 것 중 하나가 github와 gitlab입니다.</p>
+
+<p>gitlab은 Gitlab-CE 로 기업의 Private 환경에  git 소스 Repository로 구성이 가능합니다. 상용 솔루션으로 Bitbucket도 많이 사용하지만 오픈소스 무료 솔루션으로 구성할 수도 있습니다.</p>
+
+<h2 id="step-1--gitlab을-위한-pre-requisites-package-설치">Step 1 : Gitlab을 위한 Pre-requisites package 설치</h2>
+<p>gitalb-ce 를 설치하기 위한 사전 필수 패키지를 설치합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nt">-y</span> <span class="nb">install </span>wget bash-completion git policycoreutils-python
+</code></pre></div></div>
+
+<h2 id="step-2--postfix-설치-및-설정">Step 2 : Postfix 설치 및 설정</h2>
+<p>Gitlab system 에서 Notification 을 수행하기 위해 Postfix 를 설치하고 간단하게 설정합</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nt">-y</span> <span class="nb">install </span>postfix
+</code></pre></div></div>
+
+<p>/etc/postfix/main.cf 에서 아래의 내용을 수정합니다.</p>
+
+<p>myhostname = gitlab.example.com 
+mydomain = example.com<br />
+myorigin = $myhostname <br />
+inet_interfaces = all 
+mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain<br />
+relay_domains = $mydestination</p>
+
+<p><img src="/assets/images/gitlab/01-jenkins-gitlab-main-cf.png" alt="gitlab-ce" /></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/postfix/main.cf
+</code></pre></div></div>
+
+<h2 id="step-3--gitlab-ce-설치">Step 3 : Gitlab-CE 설치</h2>
+<p>gitlab repo 정보를 download 받습니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-sS</span> https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | <span class="nb">sudo </span>bash
+
+<span class="nv">EXTERNAL_URL</span><span class="o">=</span><span class="s2">"https://gitlab.example.com"</span> yum <span class="nb">install</span> <span class="nt">-y</span> gitlab-ce
+
+<span class="c"># gitalb 실행 상태 확인</span>
+gitlab status
+</code></pre></div></div>
+
+<h2 id="step-4--private-domain-을-hosts-파일에-등록">Step 4 : private domain 을 hosts 파일에 등록</h2>
+
+<p>브라우저에서 gitlab.example.com으로 접속하기 위해 laptop의 hosts에 gitlab.example.com domain을 등록하고 브라우저에서 접속합니다.</p>
+
+<h2 id="step-5--root-사용자-비밀번호-초괴화">Step 5 : root 사용자 비밀번호 초괴화</h2>
+<p>gitlab console로 접속하기 위해 다음의 명령어를 수행합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gitlab-rails console <span class="nt">-e</span> production
+</code></pre></div></div>
+
+<p>첫번째 아이디값을 user에 넣는 명령어이다. #&lt;User id:1 @root&gt; 라는 응답이 올것이다. 관리자계정은 root 입니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user <span class="o">=</span> User.where<span class="o">(</span><span class="nb">id</span>: 1<span class="o">)</span>.first
+
+<span class="c"># 수행결과 </span>
+<span class="nt">--------------------------------------------------------------------------------</span>
+ Ruby:         ruby 2.7.7p221 <span class="o">(</span>2022-11-24 revision 168ec2b1e5<span class="o">)</span> <span class="o">[</span>x86_64-linux]
+ GitLab:       15.8.1 <span class="o">(</span>383efe57adf<span class="o">)</span> FOSS
+ GitLab Shell: 14.15.0
+ PostgreSQL:   13.8
+<span class="nt">------------------------------------------------------------</span><span class="o">[</span> booted <span class="k">in </span>36.14s <span class="o">]</span>
+Loading production environment <span class="o">(</span>Rails 6.1.6.1<span class="o">)</span>
+
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>irb<span class="o">(</span>main<span class="o">)</span>:001:0&gt; user <span class="o">=</span> User.where<span class="o">(</span><span class="nb">id</span>: 1<span class="o">)</span>.first
+
+<span class="c"># 수행결과</span>
+<span class="o">=&gt;</span> <span class="c">#&lt;User id:1 @root&gt;</span>
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>irb<span class="o">(</span>main<span class="o">)</span>:011:0&gt; user.password<span class="o">=</span><span class="s1">'Passw0rd!'</span>
+<span class="o">=&gt;</span> <span class="s2">"Passw0rd!과
+irb(main):012:0&gt; user.password_confirmation='Passw0rd!'
+
+=&gt; "</span>Passw0rd!<span class="s2">"
+irb(main):013:0&gt; user.save
+</span></code></pre></div></div>
+
+<h2 id="step-6--gitlab-ce-로그인">Step 6 : gitlab-ce 로그인</h2>
+
+<p>위에서 설정한 root 사용자의 credentials 정보로 로그인합니다.<br />
+<img src="/assets/images/gitlab/02-jenkins-gitlab-root-login.png" alt="root login" /></p>
+
+<p>gitab에 로그인 후 첫 화면은 다음과 같습니다.<br />
+<img src="/assets/images/gitlab/03-jenkins-gitlab-home.png" alt="root home" /></p>
+
+<h2 id="step-7--new-account-생성">Step 7 : New Account 생성</h2>
+<p>gitlab 에 사용자를 추가하기 위해 admin을 선택합니다.<br />
+<img src="/assets/images/gitlab/04-jenkins-gitlab-user.png" alt="add user" /></p>
+
+<p>gitlab 에 사용자를 추가합니다.
+<img src="/assets/images/gitlab/05-jenkins-gitlab-new-user.png" alt="new user" /></p>
+
+<p>gitlab 에 사용자 정보를 입력하고 저장버튼을 클릭합니다.<br />
+<img src="/assets/images/gitlab/06-jenkins-gitlab-new-user-save.png" alt="new user" /></p>
+
+<p>gitlab 에 새로 생성한 사용자 정보를 확인하고, 초기 비밀번호를 설정하기 위해 Edit 버튼을 클릭합니다. <br />
+<img src="/assets/images/gitlab/07-jenkins-gitlab-new-user-result.png" alt="new user" /></p>
+
+<p>gitlab 에 새로 생성한 사용자 초기 임시 비밀번호를 설정하고 저장합니다.<br />
+<img src="/assets/images/gitlab/08-jenkins-gitab-edit-new-user.png" alt="new user" /></p>
+
+<h2 id="step-8--신규-사용자-로그인">Step 8 : 신규 사용자 로그인</h2>
+
+<p>gitlab을 root사용자를 logout하고, 새로 생성한 user00로 로그인하여, 비밀번호를 설정합니다.<br />
+<img src="/assets/images/gitlab/09-jenkins-gitlab-new-password.png" alt="new user" /></p>
+
+<h2 id="step-9--신규-project-생성">Step 9 : 신규 project 생성</h2>
+
+<p>gitlab을 smaple-service project를 생성합니다. 
+<img src="/assets/images/gitlab/10-jenkins-gitlab-create-project.png" alt="new user" /></p>
+
+<p>gitlab을 smaple-service project를 생성합니다. 
+<img src="/assets/images/gitlab/11-jenkins-gitlab-create-blank-project.png" alt="new user" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="gitlab" /><summary type="html"><![CDATA[Gitlab-CE 설치하기 git repository로 public 으로 사용할 수 있는 대표적인 것 중 하나가 github와 gitlab입니다.]]></summary></entry><entry><title type="html">Nexus를 docker container repository로 사용하기</title><link href="http://localhost:4000/devops/push-container-image-to-nexus/" rel="alternate" type="text/html" title="Nexus를 docker container repository로 사용하기" /><published>2023-02-04T00:00:00+09:00</published><updated>2023-02-04T00:00:00+09:00</updated><id>http://localhost:4000/devops/push%20container%20image%20to%20nexus</id><content type="html" xml:base="http://localhost:4000/devops/push-container-image-to-nexus/"><![CDATA[<h2 id="nexus를-docker-container-repository로-사용하기">Nexus를 docker container repository로 사용하기</h2>
 <p>Nexus를 docker container image의 repository로 사용하는 위한 설정입니다.
 Harbor 같은 전용 Docker container Registry로 사용하는 Open Source 솔루션도 있으나
 애플리케이션 수가 몇개 되지 않는 것은 Nexus를 Container Image Repository로 사용할 수 있습니다.</p>
@@ -574,120 +782,7 @@ agent { docker …} 로 설정한 경우 pipeline을 실행할 때 docker contai
         <span class="o">}</span>
     <span class="o">}</span>
 <span class="o">}</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><summary type="html"><![CDATA[Jenkins Pipeline 이란 Jenkins Pipeline이란 Jenkins를 사용하여 CD 파이프라인울 구현하고 통합하는 것을 지원하는 플러그인의 집합입니다. Jenkins에 의해 정의된 모든 표준 Job을 하나의 script 작성되며 git 과 같은 repository 저장할 수 있습니다. 각 단계에 대해 여러 작업을 작성하는 대신 이제 전체 워크플로를 코딩하여 하나의 Jenkinsfile에 넣을 수 있습니다. 이러한 Pipeline을 작성하는 데에는 크게 두 가지, 선언적(Declarative) 구문 방식, 스크립팅(Scripted) 방식의 두 가지 유형의 구문을 사용하여 작성할 수 있습니다.]]></summary></entry><entry><title type="html">Private Gitlab Repository 구성하기</title><link href="http://localhost:4000/devops/gitlab-ce/" rel="alternate" type="text/html" title="Private Gitlab Repository 구성하기" /><published>2023-02-04T00:00:00+09:00</published><updated>2023-02-04T00:00:00+09:00</updated><id>http://localhost:4000/devops/gitlab-ce</id><content type="html" xml:base="http://localhost:4000/devops/gitlab-ce/"><![CDATA[<h2 id="gitlab-ce-설치하기">Gitlab-CE 설치하기</h2>
-<p>git repository로 public 으로 사용할 수 있는 대표적인 것 중 하나가 github와 gitlab입니다.</p>
-
-<p>gitlab은 Gitlab-CE 로 기업의 Private 환경에  git 소스 Repository로 구성이 가능합니다. 상용 솔루션으로 Bitbucket도 많이 사용하지만 오픈소스 무료 솔루션으로 구성할 수도 있습니다.</p>
-
-<h2 id="step-1--gitlab을-위한-pre-requisites-package-설치">Step 1 : Gitlab을 위한 Pre-requisites package 설치</h2>
-<p>gitalb-ce 를 설치하기 위한 사전 필수 패키지를 설치합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nt">-y</span> <span class="nb">install </span>wget bash-completion git policycoreutils-python
-</code></pre></div></div>
-
-<h2 id="step-2--postfix-설치-및-설정">Step 2 : Postfix 설치 및 설정</h2>
-<p>Gitlab system 에서 Notification 을 수행하기 위해 Postfix 를 설치하고 간단하게 설정합</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nt">-y</span> <span class="nb">install </span>postfix
-</code></pre></div></div>
-
-<p>/etc/postfix/main.cf 에서 아래의 내용을 수정합니다.</p>
-
-<p>myhostname = gitlab.example.com 
-mydomain = example.com<br />
-myorigin = $myhostname <br />
-inet_interfaces = all 
-mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain<br />
-relay_domains = $mydestination</p>
-
-<p><img src="/assets/images/gitlab/01-jenkins-gitlab-main-cf.png" alt="gitlab-ce" /></p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/postfix/main.cf
-</code></pre></div></div>
-
-<h2 id="step-3--gitlab-ce-설치">Step 3 : Gitlab-CE 설치</h2>
-<p>gitlab repo 정보를 download 받습니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-sS</span> https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | <span class="nb">sudo </span>bash
-
-<span class="nv">EXTERNAL_URL</span><span class="o">=</span><span class="s2">"https://gitlab.example.com"</span> yum <span class="nb">install</span> <span class="nt">-y</span> gitlab-ce
-
-<span class="c"># gitalb 실행 상태 확인</span>
-gitlab status
-</code></pre></div></div>
-
-<h2 id="step-4--private-domain-을-hosts-파일에-등록">Step 4 : private domain 을 hosts 파일에 등록</h2>
-
-<p>브라우저에서 gitlab.example.com으로 접속하기 위해 laptop의 hosts에 gitlab.example.com domain을 등록하고 브라우저에서 접속합니다.</p>
-
-<h2 id="step-5--root-사용자-비밀번호-초괴화">Step 5 : root 사용자 비밀번호 초괴화</h2>
-<p>gitlab console로 접속하기 위해 다음의 명령어를 수행합니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gitlab-rails console <span class="nt">-e</span> production
-</code></pre></div></div>
-
-<p>첫번째 아이디값을 user에 넣는 명령어이다. #&lt;User id:1 @root&gt; 라는 응답이 올것이다. 관리자계정은 root 입니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user <span class="o">=</span> User.where<span class="o">(</span><span class="nb">id</span>: 1<span class="o">)</span>.first
-
-<span class="c"># 수행결과 </span>
-<span class="nt">--------------------------------------------------------------------------------</span>
- Ruby:         ruby 2.7.7p221 <span class="o">(</span>2022-11-24 revision 168ec2b1e5<span class="o">)</span> <span class="o">[</span>x86_64-linux]
- GitLab:       15.8.1 <span class="o">(</span>383efe57adf<span class="o">)</span> FOSS
- GitLab Shell: 14.15.0
- PostgreSQL:   13.8
-<span class="nt">------------------------------------------------------------</span><span class="o">[</span> booted <span class="k">in </span>36.14s <span class="o">]</span>
-Loading production environment <span class="o">(</span>Rails 6.1.6.1<span class="o">)</span>
-
-</code></pre></div></div>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>irb<span class="o">(</span>main<span class="o">)</span>:001:0&gt; user <span class="o">=</span> User.where<span class="o">(</span><span class="nb">id</span>: 1<span class="o">)</span>.first
-
-<span class="c"># 수행결과</span>
-<span class="o">=&gt;</span> <span class="c">#&lt;User id:1 @root&gt;</span>
-</code></pre></div></div>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>irb<span class="o">(</span>main<span class="o">)</span>:011:0&gt; user.password<span class="o">=</span><span class="s1">'Passw0rd!'</span>
-<span class="o">=&gt;</span> <span class="s2">"Passw0rd!과
-irb(main):012:0&gt; user.password_confirmation='Passw0rd!'
-
-=&gt; "</span>Passw0rd!<span class="s2">"
-irb(main):013:0&gt; user.save
-</span></code></pre></div></div>
-
-<h2 id="step-6--gitlab-ce-로그인">Step 6 : gitlab-ce 로그인</h2>
-
-<p>위에서 설정한 root 사용자의 credentials 정보로 로그인합니다.<br />
-<img src="/assets/images/gitlab/02-jenkins-gitlab-root-login.png" alt="root login" /></p>
-
-<p>gitab에 로그인 후 첫 화면은 다음과 같습니다.<br />
-<img src="/assets/images/gitlab/03-jenkins-gitlab-home.png" alt="root home" /></p>
-
-<h2 id="step-7--new-account-생성">Step 7 : New Account 생성</h2>
-<p>gitlab 에 사용자를 추가하기 위해 admin을 선택합니다.<br />
-<img src="/assets/images/gitlab/04-jenkins-gitlab-user.png" alt="add user" /></p>
-
-<p>gitlab 에 사용자를 추가합니다.
-<img src="/assets/images/gitlab/05-jenkins-gitlab-new-user.png" alt="new user" /></p>
-
-<p>gitlab 에 사용자 정보를 입력하고 저장버튼을 클릭합니다.<br />
-<img src="/assets/images/gitlab/06-jenkins-gitlab-new-user-save.png" alt="new user" /></p>
-
-<p>gitlab 에 새로 생성한 사용자 정보를 확인하고, 초기 비밀번호를 설정하기 위해 Edit 버튼을 클릭합니다. <br />
-<img src="/assets/images/gitlab/07-jenkins-gitlab-new-user-result.png" alt="new user" /></p>
-
-<p>gitlab 에 새로 생성한 사용자 초기 임시 비밀번호를 설정하고 저장합니다.<br />
-<img src="/assets/images/gitlab/08-jenkins-gitab-edit-new-user.png" alt="new user" /></p>
-
-<h2 id="step-8--신규-사용자-로그인">Step 8 : 신규 사용자 로그인</h2>
-
-<p>gitlab을 root사용자를 logout하고, 새로 생성한 user00로 로그인하여, 비밀번호를 설정합니다.<br />
-<img src="/assets/images/gitlab/09-jenkins-gitlab-new-password.png" alt="new user" /></p>
-
-<h2 id="step-9--신규-project-생성">Step 9 : 신규 project 생성</h2>
-
-<p>gitlab을 smaple-service project를 생성합니다. 
-<img src="/assets/images/gitlab/10-jenkins-gitlab-create-project.png" alt="new user" /></p>
-
-<p>gitlab을 smaple-service project를 생성합니다. 
-<img src="/assets/images/gitlab/11-jenkins-gitlab-create-blank-project.png" alt="new user" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="gitlab" /><summary type="html"><![CDATA[Gitlab-CE 설치하기 git repository로 public 으로 사용할 수 있는 대표적인 것 중 하나가 github와 gitlab입니다.]]></summary></entry><entry><title type="html">Harbor로 Docker Private Registry 구축하기</title><link href="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/" rel="alternate" type="text/html" title="Harbor로 Docker Private Registry 구축하기" /><published>2023-01-30T00:00:00+09:00</published><updated>2023-01-30T00:00:00+09:00</updated><id>http://localhost:4000/docker/Harbor%EB%A1%9C%20Private%20Registry%20%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0</id><content type="html" xml:base="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/"><![CDATA[<h2 id="harbor-로-docker-private-registry-구축하기">Harbor 로 Docker Private Registry 구축하기</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><summary type="html"><![CDATA[Jenkins Pipeline 이란 Jenkins Pipeline이란 Jenkins를 사용하여 CD 파이프라인울 구현하고 통합하는 것을 지원하는 플러그인의 집합입니다. Jenkins에 의해 정의된 모든 표준 Job을 하나의 script 작성되며 git 과 같은 repository 저장할 수 있습니다. 각 단계에 대해 여러 작업을 작성하는 대신 이제 전체 워크플로를 코딩하여 하나의 Jenkinsfile에 넣을 수 있습니다. 이러한 Pipeline을 작성하는 데에는 크게 두 가지, 선언적(Declarative) 구문 방식, 스크립팅(Scripted) 방식의 두 가지 유형의 구문을 사용하여 작성할 수 있습니다.]]></summary></entry><entry><title type="html">Harbor로 Docker Private Registry 구축하기</title><link href="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/" rel="alternate" type="text/html" title="Harbor로 Docker Private Registry 구축하기" /><published>2023-01-30T00:00:00+09:00</published><updated>2023-01-30T00:00:00+09:00</updated><id>http://localhost:4000/docker/Harbor%EB%A1%9C%20Private%20Registry%20%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0</id><content type="html" xml:base="http://localhost:4000/docker/Harbor%EB%A1%9C-Private-Registry-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0/"><![CDATA[<h2 id="harbor-로-docker-private-registry-구축하기">Harbor 로 Docker Private Registry 구축하기</h2>
 
 <p>Harbor는 Offline Install과 Online Install 두 가지 방식으로 설치를 지원하고 있습니다. 이 실습에서는 Offline Install 을 기준으로 설치하도록 합니다. Harbor는 아래 github 사이트에 릴리즈 정보를 확인하고 download 받습니다.</p>
 
@@ -821,50 +916,4 @@ Clearing the configuration file: /config/registry/config.yml
  ⠿ Container nginx              Started                                         3.9s
 
 <span class="nt">----Harbor</span> has been installed and started successfully.----
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="Harbor" /><summary type="html"><![CDATA[Harbor 로 Docker Private Registry 구축하기]]></summary></entry><entry><title type="html">리모트 서버에서 Harbor 서버에 docker login</title><link href="http://localhost:4000/docker/%EB%A6%AC%EB%AA%A8%ED%8A%B8-%EC%84%9C%EB%B2%84%EC%97%90%EC%84%9C-Harbor-%EC%97%90-%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%95%98%EA%B8%B0/" rel="alternate" type="text/html" title="리모트 서버에서 Harbor 서버에 docker login" /><published>2023-01-29T00:00:00+09:00</published><updated>2023-01-29T00:00:00+09:00</updated><id>http://localhost:4000/docker/%EB%A6%AC%EB%AA%A8%ED%8A%B8%20%EC%84%9C%EB%B2%84%EC%97%90%EC%84%9C%20Harbor%20%EC%97%90%20%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%95%98%EA%B8%B0</id><content type="html" xml:base="http://localhost:4000/docker/%EB%A6%AC%EB%AA%A8%ED%8A%B8-%EC%84%9C%EB%B2%84%EC%97%90%EC%84%9C-Harbor-%EC%97%90-%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%95%98%EA%B8%B0/"><![CDATA[<h2 id="리모트-서버에서-harbor-서버에-docker-login">리모트 서버에서 Harbor 서버에 docker login</h2>
-
-<p>리모트 서버는 Centos7을 기준으로 합니다.</p>
-
-<p>Harbor Container Registry를 구축하고 리모트 서버에서 docker login 하기 위해 환경을 설정합니다.</p>
-
-<h2 id="step-1-setup-docker-engine">Step 1: Setup Docker Engine</h2>
-
-<p>Docker Engine 설치는 아래 링크를 따라 설치과정을 참고해주세요</p>
-
-<p><a href="https://yoonjk.github.io/docker/docker/">Docker Engine 설치</a></p>
-
-<h2 id="step-2--jfrog-artifactory-docker-image-를-download">Step 2 : JFrog Artifactory Docker Image 를 download</h2>
-
-<p>hosts file 파일에 domain을 등록합니다.</p>
-
-<p>Harbor 설치서버의 사설 도메인 서버 이름이 server1.example.com 라고 가정하고 경우</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"119.81.103.68 server1.example.com"</span> <span class="o">&gt;&gt;</span> /etc/hosts
-</code></pre></div></div>
-
-<h2 id="step-3--harbor-에서-제공하는-ca-인증서를-복사">Step 3 : Harbor 에서 제공하는 CA 인증서를 복사</h2>
-
-<p>Harbor 에서 제공하는 CA 인증서를 복사하고, 인증서 참조 디렉토리에 복사합니다.<br />
-ca 인증서가 /root/certs 폴더에 있다고 가정합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>scp root@119.81.103.68:/root/certs/ca.crt <span class="nb">.</span>
-
-<span class="nb">sudo cp </span>ca.crt /etc/pki/ca-trust/source/anchors/
-
-update-ca-trust extract
-</code></pre></div></div>
-
-<h2 id="step-4-restart-docker-engine-및-로그인">Step 4: Restart Docker Engine 및 로그인</h2>
-<p>Docker Engine을 재시작합니다.</p>
-
-<p>Harbor Domain 이 server1.example.com 이라고 가정하고,<br />
-로그인 사용자가 user01로 생성되어 있다면 다음과 같이 수행합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl restart docker
-docker login <span class="nt">-u</span> user01 <span class="nt">-p</span> XXXX server1.example.com
-
-WARNING! Using <span class="nt">--password</span> via the CLI is insecure. Use <span class="nt">--password-stdin</span><span class="nb">.</span>
-WARNING! Your password will be stored unencrypted <span class="k">in</span> /root/.docker/config.json.
-Configure a credential helper to remove this warning. See
-https://docs.docker.com/engine/reference/commandline/login/#credentials-store
-
-Login Succeeded
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="Harbor" /><summary type="html"><![CDATA[리모트 서버에서 Harbor 서버에 docker login]]></summary></entry></feed>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="Harbor" /><summary type="html"><![CDATA[Harbor 로 Docker Private Registry 구축하기]]></summary></entry></feed>
