@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-18T11:12:44+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Jenkins master/slave 구성</title><link href="http://localhost:4000/devops/jenkins-controller-and-agent/" rel="alternate" type="text/html" title="Jenkins master/slave 구성" /><published>2023-02-16T00:00:00+09:00</published><updated>2023-02-16T00:00:00+09:00</updated><id>http://localhost:4000/devops/jenkins%20controller%20and%20agent</id><content type="html" xml:base="http://localhost:4000/devops/jenkins-controller-and-agent/"><![CDATA[<h2 id="jenkins-설치">Jenkins 설치</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-18T11:24:06+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Jenkins master/slave 구성</title><link href="http://localhost:4000/devops/jenkins-controller-and-agent/" rel="alternate" type="text/html" title="Jenkins master/slave 구성" /><published>2023-02-16T00:00:00+09:00</published><updated>2023-02-16T00:00:00+09:00</updated><id>http://localhost:4000/devops/jenkins%20controller%20and%20agent</id><content type="html" xml:base="http://localhost:4000/devops/jenkins-controller-and-agent/"><![CDATA[<h2 id="jenkins-설치">Jenkins 설치</h2>
 
 <p>Jenkins Master/Slave는 Controller/Agent로 명칭을 수정해서 글을 post합니다.</p>
 
@@ -304,6 +304,9 @@ eyJhbGciOiJSUzI1NiIsImtpZCI6IjcxeDlkdFlKOVhLZjRXOFdfNzVmLTZpUFVLOUtvQVM5M0RUMlMx
 <p>Cluster를 생성합니다.</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kind create cluster <span class="nt">--config</span> jenkins-config.yaml
 </code></pre></div></div>
+
+<p><img src="/assets/images/k8s/02-k8s-kind-create-cluster.png" alt="kube-dashboard" /></p>
+
 <h2 id="step-4--configure">Step 4 : Configure</h2>
 <p>Kind는 .kube/config파일 변경 없이 인증서 파일의 내용이 config파일에 있어서 변환할 필요는 없습니다.<br />
 minikube와 동일하게 Jenkins를 설정합니다.</p>

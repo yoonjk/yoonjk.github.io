@@ -34,6 +34,9 @@ Cluster를 생성합니다.
 ```bash
 kind create cluster --config jenkins-config.yaml
 ```
+
+![kube-dashboard]({{ "/assets/images/k8s/02-k8s-kind-create-cluster.png"  }})
+
 ## Step 4 : Configure
 Kind는 .kube/config파일 변경 없이 인증서 파일의 내용이 config파일에 있어서 변환할 필요는 없습니다.  
 minikube와 동일하게 Jenkins를 설정합니다.  
