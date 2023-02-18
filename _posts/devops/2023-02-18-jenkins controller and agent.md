@@ -108,5 +108,14 @@ Jenkins Controller 인 Built-in-Node를 선택해서 Number of executors의 항�
 
 ![New Node]({{ "/assets/images/jenkins/31-jenkins-build-in-node.png" }})
 
+Manage Jenkins > Global Tool Configuration에서 Maven installations 세션에서 
+maven을 다음과 같이 추가합니다.  
+![New Node]({{ "/assets/images/jenkins/32-jenkins-global-tool-config-maven.png" }})
+
+Manage Jenkins > Manage Nodes and Clouds > linux agent를 선택
+Configure 를 선택해서 Node Properties 섹션에서 maven을 설정하고 저장합니다.   
+![New Node]({{ "/assets/images/jenkins/33-jenkins-linux-agent-tool-location.png" }})
+
+
 
 
