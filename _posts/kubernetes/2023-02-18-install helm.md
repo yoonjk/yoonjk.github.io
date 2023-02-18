@@ -4,6 +4,7 @@ categories:
   - kubernetes
 tags: 
   - helm
+  - 헬치
 ---
 
 ## Helm CLI를  설치
