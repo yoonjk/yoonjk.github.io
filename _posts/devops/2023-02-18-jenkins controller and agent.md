@@ -116,6 +116,12 @@ Manage Jenkins > Manage Nodes and Clouds > linux agent를 선택
 Configure 를 선택해서 Node Properties 섹션에서 maven을 설정하고 저장합니다.   
 ![New Node]({{ "/assets/images/jenkins/33-jenkins-linux-agent-tool-location.png" }})
 
+Jenkins Agent Node에서 다음의 명령어를 실행합니다.  
+```bash
+sudo sysctl user.max_user_namespaces=15000
+```
+![New Node]({{ "/assets/images/jenkins/34-jenkins-max_user_namespace.png" }})
+
 
 
 

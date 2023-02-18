@@ -1,4 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-18T18:29:38+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Jenkins master/slave 구성</title><link href="http://localhost:4000/devops/jenkins-controller-and-agent/" rel="alternate" type="text/html" title="Jenkins master/slave 구성" /><published>2023-02-18T00:00:00+09:00</published><updated>2023-02-18T00:00:00+09:00</updated><id>http://localhost:4000/devops/jenkins%20controller%20and%20agent</id><content type="html" xml:base="http://localhost:4000/devops/jenkins-controller-and-agent/"><![CDATA[<h2 id="jenkins-설치">Jenkins 설치</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-18T18:38:58+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html"></title><link href="http://localhost:4000/2023-02-18-podman-max_user_namespaces/" rel="alternate" type="text/html" title="" /><published>2023-02-18T18:38:58+09:00</published><updated>2023-02-18T18:38:58+09:00</updated><id>http://localhost:4000/2023-02-18-podman-max_user_namespaces</id><content type="html" xml:base="http://localhost:4000/2023-02-18-podman-max_user_namespaces/"><![CDATA[<h2 id="podman-실행시-다음의-에러-해결--ssprocsysusermax_user_namespaces">podman 실행시 다음의 에러 해결 : /ssproc/sys/user/max_user_namespaces</h2>
+
+<p>Podman run error in non-root mode: “user namespaces are not enabled in /proc/sys/user/max_user_namespaces”</p>
+
+<p>Jenkins Pipeline에서 podman 실행시 다음의 에러가 발생할 떄</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user namespaces are not enabled <span class="k">in</span> /proc/sys/user/max_user_namespaces
+Error: could not get runtime: cannot re-exec process
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author></entry><entry><title type="html">Jenkins master/slave 구성</title><link href="http://localhost:4000/devops/jenkins-controller-and-agent/" rel="alternate" type="text/html" title="Jenkins master/slave 구성" /><published>2023-02-18T00:00:00+09:00</published><updated>2023-02-18T00:00:00+09:00</updated><id>http://localhost:4000/devops/jenkins%20controller%20and%20agent</id><content type="html" xml:base="http://localhost:4000/devops/jenkins-controller-and-agent/"><![CDATA[<h2 id="jenkins-설치">Jenkins 설치</h2>
 
 <p>Jenkins Master/Slave는 Controller/Agent로 명칭을 수정해서 글을 post합니다.</p>
 
@@ -101,7 +108,12 @@ maven을 다음과 같이 추가합니다.<br />
 
 <p>Manage Jenkins &gt; Manage Nodes and Clouds &gt; linux agent를 선택
 Configure 를 선택해서 Node Properties 섹션에서 maven을 설정하고 저장합니다. <br />
-<img src="/assets/images/jenkins/33-jenkins-linux-agent-tool-location.png" alt="New Node" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><category term="master" /><category term="slave" /><summary type="html"><![CDATA[Jenkins 설치]]></summary></entry><entry><title type="html">Helm 설치</title><link href="http://localhost:4000/kubernetes/install-helm/" rel="alternate" type="text/html" title="Helm 설치" /><published>2023-02-18T00:00:00+09:00</published><updated>2023-02-18T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/install%20helm</id><content type="html" xml:base="http://localhost:4000/kubernetes/install-helm/"><![CDATA[<h2 id="helm-cli를--설치">Helm CLI를  설치</h2>
+<img src="/assets/images/jenkins/33-jenkins-linux-agent-tool-location.png" alt="New Node" /></p>
+
+<p>Jenkins Agent Node에서 다음의 명령어를 실행합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>sysctl user.max_user_namespaces<span class="o">=</span>15000
+</code></pre></div></div>
+<p><img src="/assets/images/jenkins/34-jenkins-max_user_namespace.png" alt="New Node" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><category term="master" /><category term="slave" /><summary type="html"><![CDATA[Jenkins 설치]]></summary></entry><entry><title type="html">Helm 설치</title><link href="http://localhost:4000/kubernetes/install-helm/" rel="alternate" type="text/html" title="Helm 설치" /><published>2023-02-18T00:00:00+09:00</published><updated>2023-02-18T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/install%20helm</id><content type="html" xml:base="http://localhost:4000/kubernetes/install-helm/"><![CDATA[<h2 id="helm-cli를--설치">Helm CLI를  설치</h2>
 <p>Helm Chart를 설치하기 위해 Helm CLI를 설치합니다.</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> curl <span class="nt">-fsSL</span> <span class="nt">-o</span> get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
 <span class="nb">chmod </span>700 get_helm.sh
@@ -535,41 +547,7 @@ YOUR_SERVER_IP : remote 서버<br />
 
 <p>Tekton dashboard 설치에 대해 자세한 것은 아래의 <a href="https://tekton.dev/docs/dashboard/install/">링크</a>를 확인하세요.</p>
 
-<p><a href="https://tekton.dev/docs/dashboard/install/">https://tekton.dev/docs/dashboard/install/</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="tekton" /><summary type="html"><![CDATA[Tekton 설치 Tekton pipeline을 Kubernetes에 설치합니다.]]></summary></entry><entry><title type="html">Nexus를 docker container repository로 사용하기</title><link href="http://localhost:4000/devops/push-container-image-to-nexus/" rel="alternate" type="text/html" title="Nexus를 docker container repository로 사용하기" /><published>2023-02-04T00:00:00+09:00</published><updated>2023-02-04T00:00:00+09:00</updated><id>http://localhost:4000/devops/push%20container%20image%20to%20nexus</id><content type="html" xml:base="http://localhost:4000/devops/push-container-image-to-nexus/"><![CDATA[<h2 id="nexus를-docker-container-repository로-사용하기">Nexus를 docker container repository로 사용하기</h2>
-<p>Nexus를 docker container image의 repository로 사용하는 위한 설정입니다.
-Harbor 같은 전용 Docker container Registry로 사용하는 Open Source 솔루션도 있으나
-애플리케이션 수가 몇개 되지 않는 것은 Nexus를 Container Image Repository로 사용할 수 있습니다.</p>
-
-<p>Nexus 설치는 블로그 목록을 참고해 주시고, 설정이 끝나고 추가적으로 container Image Repository를 추가하는 부분만 소개합니다.</p>
-
-<h2 id="step-1--docker-유형-repository-생성">Step 1 : docker 유형 Repository 생성</h2>
-<p>create repository를 선택합니다.<br />
-<img src="/assets/images/nexus/06-jenkins-nexus-create-repository.png" alt="nexus docker repository" /></p>
-
-<p>Repository 유형중에 docker(hosted) repository를 선택합니다.<br />
-<img src="/assets/images/nexus/07-jenkins-nexus-select-docker-repository.png" alt="nexus docker repository" /></p>
-
-<p>docker-repo 이름으로 다음과 같이 정보를 선택하고 repository를 생성합니다.<br />
-<img src="/assets/images/nexus/08-jenkins-nexus-docker-repository.png" alt="nexus docker repository" /></p>
-
-<h2 id="step-2-add-docker-bearer-token-to-realms">Step 2: Add docker bearer token to Realms</h2>
-
-<p>Realms 에 Docker Bearer token을 추가하고, 저장합니다.</p>
-
-<p><img src="/assets/images/nexus/08-jenkins-nexus-realms-docker-bearer-token.png" alt="add realm" /></p>
-
-<h2 id="step-2-podman-을-사용하여-nexus에-로그인">Step 2: podman 을 사용하여 nexus에 로그인</h2>
-
-<p>Podman을 사용하여 http로 login 합니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># nexus-server-ip : remote server ip 또는 localhost</span>
-podman login <span class="nt">-u</span> deploy-user <span class="nt">-p</span> Passw0rd@ <span class="nt">--tls-verify</span><span class="o">=</span><span class="nb">false </span>nexus-server-ip:5000
-</code></pre></div></div>
-
-<p>Nexus 가 local에 있는 경우 nexus-server-id를 localhost로 지정합니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman login <span class="nt">-u</span> deploy-user <span class="nt">-p</span> Passw0rd@ <span class="nt">--tls-verify</span><span class="o">=</span><span class="nb">false </span>localhost:5000
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="nexus" /><category term="podman" /><summary type="html"><![CDATA[Nexus를 docker container repository로 사용하기 Nexus를 docker container image의 repository로 사용하는 위한 설정입니다. Harbor 같은 전용 Docker container Registry로 사용하는 Open Source 솔루션도 있으나 애플리케이션 수가 몇개 되지 않는 것은 Nexus를 Container Image Repository로 사용할 수 있습니다.]]></summary></entry><entry><title type="html">Jenkins Pipeline 이란</title><link href="http://localhost:4000/devops/jenkins-pipeline/" rel="alternate" type="text/html" title="Jenkins Pipeline 이란" /><published>2023-02-04T00:00:00+09:00</published><updated>2023-02-04T00:00:00+09:00</updated><id>http://localhost:4000/devops/jenkins%20pipeline</id><content type="html" xml:base="http://localhost:4000/devops/jenkins-pipeline/"><![CDATA[<h2 id="jenkins-pipeline-이란">Jenkins Pipeline 이란</h2>
+<p><a href="https://tekton.dev/docs/dashboard/install/">https://tekton.dev/docs/dashboard/install/</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="tekton" /><summary type="html"><![CDATA[Tekton 설치 Tekton pipeline을 Kubernetes에 설치합니다.]]></summary></entry><entry><title type="html">Jenkins Pipeline 이란</title><link href="http://localhost:4000/devops/jenkins-pipeline/" rel="alternate" type="text/html" title="Jenkins Pipeline 이란" /><published>2023-02-04T00:00:00+09:00</published><updated>2023-02-04T00:00:00+09:00</updated><id>http://localhost:4000/devops/jenkins%20pipeline</id><content type="html" xml:base="http://localhost:4000/devops/jenkins-pipeline/"><![CDATA[<h2 id="jenkins-pipeline-이란">Jenkins Pipeline 이란</h2>
 <p>Jenkins Pipeline이란 Jenkins를 사용하여 CD 파이프라인울 구현하고 통합하는 것을 지원하는 플러그인의 집합입니다.
 Jenkins에 의해 정의된 모든 표준 Job을 하나의 script 작성되며 git 과 같은 repository 저장할 수 있습니다.
 각 단계에 대해 여러 작업을 작성하는 대신 이제 전체 워크플로를 코딩하여 하나의 Jenkinsfile에 넣을 수 있습니다.

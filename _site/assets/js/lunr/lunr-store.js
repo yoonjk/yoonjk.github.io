@@ -250,4 +250,10 @@ var store = [{
         "tags": ["helm","헬치"],
         "url": "/kubernetes/install-helm/",
         "teaser": null
+      },{
+        "title": null,
+        "excerpt":"podman 실행시 다음의 에러 해결 : /ssproc/sys/user/max_user_namespaces   Podman run error in non-root mode: “user namespaces are not enabled in /proc/sys/user/max_user_namespaces”   Jenkins Pipeline에서 podman 실행시 다음의 에러가 발생할 떄  user namespaces are not enabled in /proc/sys/user/max_user_namespaces Error: could not get runtime: cannot re-exec process  ","categories": [],
+        "tags": null,
+        "url": "/2023-02-18-podman-max_user_namespaces/",
+        "teaser": null
       }]
