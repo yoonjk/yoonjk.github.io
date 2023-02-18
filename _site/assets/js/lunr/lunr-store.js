@@ -245,15 +245,15 @@ var store = [{
         "url": "/devops/jenkins-controller-and-agent/",
         "teaser": null
       },{
+        "title": "podman에서 max_user_namespaces 에러",
+        "excerpt":"podman 실행시 다음의 에러 해결   Podman run error in non-root mode: “user namespaces are not enabled in /proc/sys/user/max_user_namespaces”   Jenkins Pipeline에서 podman 실행시 다음의 에러가 발생할 떄  user namespaces are not enabled in /proc/sys/user/max_user_namespaces Error: could not get runtime: cannot re-exec process  ","categories": ["devops"],
+        "tags": ["jenkins","podman"],
+        "url": "/devops/podman-max_user_namespaces/",
+        "teaser": null
+      },{
         "title": "Helm 설치",
         "excerpt":"Helm CLI를  설치  Helm Chart를 설치하기 위해 Helm CLI를 설치합니다.   curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 chmod 700 get_helm.sh ./get_helm.sh  ","categories": ["kubernetes"],
         "tags": ["helm","헬치"],
         "url": "/kubernetes/install-helm/",
-        "teaser": null
-      },{
-        "title": null,
-        "excerpt":"podman 실행시 다음의 에러 해결 : /ssproc/sys/user/max_user_namespaces   Podman run error in non-root mode: “user namespaces are not enabled in /proc/sys/user/max_user_namespaces”   Jenkins Pipeline에서 podman 실행시 다음의 에러가 발생할 떄  user namespaces are not enabled in /proc/sys/user/max_user_namespaces Error: could not get runtime: cannot re-exec process  ","categories": [],
-        "tags": null,
-        "url": "/2023-02-18-podman-max_user_namespaces/",
         "teaser": null
       }]
