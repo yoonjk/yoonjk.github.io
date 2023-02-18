@@ -246,7 +246,7 @@ var store = [{
         "teaser": null
       },{
         "title": "podman에서 max_user_namespaces 에러",
-        "excerpt":"podman 실행시 다음의 에러 해결   Podman run error in non-root mode: “user namespaces are not enabled in /proc/sys/user/max_user_namespaces”   Jenkins Pipeline에서 podman 실행시 다음의 에러가 발생할 떄  user namespaces are not enabled in /proc/sys/user/max_user_namespaces Error: could not get runtime: cannot re-exec process  ","categories": ["devops"],
+        "excerpt":"podman 실행시 다음의 에러 해결   Podman run error in non-root mode: “user namespaces are not enabled in /proc/sys/user/max_user_namespaces”   Jenkins Pipeline에서 podman 실행시 다음의 에러가 발생할 떄  user namespaces are not enabled in /proc/sys/user/max_user_namespaces Error: could not get runtime: cannot re-exec process  다음의 링크를 참조합니다.   https://github.com/containers/podman/issues/7704  ","categories": ["devops"],
         "tags": ["jenkins","podman"],
         "url": "/devops/podman-max_user_namespaces/",
         "teaser": null

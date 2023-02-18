@@ -16,3 +16,6 @@ Jenkins Pipeline에서 podman 실행시 다음의 에러가 발생할 떄
 user namespaces are not enabled in /proc/sys/user/max_user_namespaces
 Error: could not get runtime: cannot re-exec process
 ```
+다음의 [링크](https://github.com/containers/podman/issues/7704)를 참조합니다.  
+
+[https://github.com/containers/podman/issues/7704](https://github.com/containers/podman/issues/7704)
