@@ -10,7 +10,7 @@ tags:
 kind를 사용하여 Kubernetes cluster를 구성하고 dashboard를 구성합니다.
 dashboard는 다음과 같이 remote에 있는 yaml을 직접적용합니다.  
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
+kubectl apply -f kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
 ```
 
 ## port-forward로 port 오픈
