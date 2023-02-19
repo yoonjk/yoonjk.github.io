@@ -133,24 +133,11 @@ cat <<EOF > .kube/config
 apiVersion: v1
 clusters:
 - cluster:
-    extensions:
-    - extension:
-        last-update: Fri, 20 Jan 2023 13:56:37 CST
-        provider: minikube.sigs.k8s.io
-        version: v1.28.0
-      name: cluster_info
-    server: http://minikube:ENTER_YOUR_PASSWORD_HERE@@YOUR_SERVER_IP:9080
+    server: http://minikube:admin1234@@119.81.106.194:9080
   name: minikube
 contexts:
 - context:
     cluster: minikube
-    extensions:
-    - extension:
-        last-update: Fri, 20 Jan 2023 13:56:37 CST
-        provider: minikube.sigs.k8s.io
-        version: v1.28.0
-      name: context_info
-    namespace: default
     user: minikube
   name: minikube
 current-context: minikube
