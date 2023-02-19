@@ -256,4 +256,16 @@ var store = [{
         "tags": ["helm","헬치"],
         "url": "/kubernetes/install-helm/",
         "teaser": null
+      },{
+        "title": "Jenkins-Grafana 설정",
+        "excerpt":"Grafana 로그인 Grafana에 로그인하고, 비밀번호를 변경합니다. Prometheus 설정 Grafana에 로그인하면 다음과 같이 화면이 출력됩니다. 설정을 선택하고, Grafana에 datasource를 추가하기 위해 Add data source를 클릭합니다. Prometheus datasource를 선택합니다. Prometheus datasource를 설정합니다. Prometheus save-test 버튼을 클릭하면 Data source is working 메시지를 출력됩니다. ![gitlab-ce](/assets/images/jenkins/07-grafana-prometheus-save-test.png Jenkins dashboard 선택 https://grafana.com/grafana/dashboards/ 에서 download jenkins dashboard를 선택합니다....","categories": ["devops"],
+        "tags": ["jenkins","prometheus","grafana"],
+        "url": "/devops/grafana-setup/",
+        "teaser": null
+      },{
+        "title": "Jenkins-Prometheus/Grafana 설치",
+        "excerpt":"Jenkins 와 Prometheus/Grafana 여녜 Jenkins Controller와 Agent를 를 모너터링하기 위해 Prometheus Plugin을 설치하고 Jenkins에서 수집한 Metrics정보를 기반으로 Prometheus를 통해 Metrics 정보를 주시적으로 수집하고, 수집된 정보를 기반으로 Grafana에 Visual하게 모니터링합니다. Prometheus metrics plugin 설치 Manage Jenkins &gt; Manage Plugins &gt; Available Plugins에서 Prometheus metrics Plugins을 선택, Install without restart를 클릭해서 Plugin을...","categories": ["devops"],
+        "tags": ["jenkins","prometheus","grafana"],
+        "url": "/devops/jenkins-with-grafana/",
+        "teaser": null
       }]
