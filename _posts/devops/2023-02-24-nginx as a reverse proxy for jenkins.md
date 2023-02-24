@@ -151,3 +151,11 @@ nginx configuration을 테스트하고 nginx를 재시작합니다.
 nginx -t
 systemctl restart nginx
 ```
+
+browser에서 jenkins server에  80 port로 접속합니다.  
+만약 502 Bad Gateway가 발생하면 아래의 명령어를 실행합니다.  
+```bash
+setenforce permissive
+```
+
+jenkins server에 접속하여 Manage jenkins > Configure System 에 접속하여 jenkins URL을 변경합니다.  
