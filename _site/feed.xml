@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-25T06:41:47+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">nginx as Reverse Proxy for Jenkins</title><link href="http://localhost:4000/devops/nginx-as-a-reverse-proxy-for-jenkins/" rel="alternate" type="text/html" title="nginx as Reverse Proxy for Jenkins" /><published>2023-02-24T00:00:00+09:00</published><updated>2023-02-24T00:00:00+09:00</updated><id>http://localhost:4000/devops/nginx%20as%20a%20reverse%20proxy%20for%20jenkins</id><content type="html" xml:base="http://localhost:4000/devops/nginx-as-a-reverse-proxy-for-jenkins/"><![CDATA[<p>Jenkins를 Nginx Reverse Proxy를 설정하여 접근하는 것을 설명합니다.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-25T07:34:18+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">nginx as Reverse Proxy for Jenkins</title><link href="http://localhost:4000/devops/nginx-as-a-reverse-proxy-for-jenkins/" rel="alternate" type="text/html" title="nginx as Reverse Proxy for Jenkins" /><published>2023-02-24T00:00:00+09:00</published><updated>2023-02-24T00:00:00+09:00</updated><id>http://localhost:4000/devops/nginx%20as%20a%20reverse%20proxy%20for%20jenkins</id><content type="html" xml:base="http://localhost:4000/devops/nginx-as-a-reverse-proxy-for-jenkins/"><![CDATA[<p>Jenkins를 Nginx Reverse Proxy를 설정하여 접근하는 것을 설명합니다.</p>
 
 <h2 id="nginx-설치">Nginx 설치</h2>
 <p>nginx를 설치하기 위해 사전에 필요한 package를 아래와 같이 설치합니다.</p>
@@ -157,7 +157,31 @@ systemctl restart nginx
 systemctl restart jenkins
 </code></pre></div></div>
 
-<p>위에서 지정한 Port로 접속해서 Port가 변경된 것을 확인합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><summary type="html"><![CDATA[Jenkins Port 확인 및 복사 Jenkins Default Port를 확인하기 위해 아래와 같이 명령어를 실행합니다. systemctl edit jenkins --full JENKINS_PORT를 검색해서 아래의 내용을 clipboard에 복사합니다. Environment="JENKINS_PORT=8080"]]></summary></entry><entry><title type="html">Jenkins-Prometheus/Grafana 설치</title><link href="http://localhost:4000/devops/jenkins-with-grafana/" rel="alternate" type="text/html" title="Jenkins-Prometheus/Grafana 설치" /><published>2023-02-19T00:00:00+09:00</published><updated>2023-02-19T00:00:00+09:00</updated><id>http://localhost:4000/devops/jenkins%20with%20grafana</id><content type="html" xml:base="http://localhost:4000/devops/jenkins-with-grafana/"><![CDATA[<h2 id="jenkins-와-prometheusgrafana-여녜">Jenkins 와 Prometheus/Grafana 여녜</h2>
+<p>위에서 지정한 Port로 접속해서 Port가 변경된 것을 확인합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><summary type="html"><![CDATA[Jenkins Port 확인 및 복사 Jenkins Default Port를 확인하기 위해 아래와 같이 명령어를 실행합니다. systemctl edit jenkins --full JENKINS_PORT를 검색해서 아래의 내용을 clipboard에 복사합니다. Environment="JENKINS_PORT=8080"]]></summary></entry><entry><title type="html">Jenkins 서버 재시작 방법</title><link href="http://localhost:4000/devops/how-to-restart-jenkins/" rel="alternate" type="text/html" title="Jenkins 서버 재시작 방법" /><published>2023-02-24T00:00:00+09:00</published><updated>2023-02-24T00:00:00+09:00</updated><id>http://localhost:4000/devops/how-to-restart-jenkins</id><content type="html" xml:base="http://localhost:4000/devops/how-to-restart-jenkins/"><![CDATA[<h2 id="jenkins-port-확인-및-복사">Jenkins Port 확인 및 복사</h2>
+<p>Jenkins 를 재시작하는 방법은 3가지 있습니다.</p>
+<ul>
+  <li>systemctl 사용</li>
+  <li>browser에서 restart</li>
+  <li>browser에서 safeRestart</li>
+</ul>
+
+<h2 id="systemctl-사용">Systemctl 사용</h2>
+<p>systemctl 명령어로 사용하는 경우 Jenkins Job이 실행중인 것이 있더라도 jenkins를 즉시 재시작합니다.<br />
+Jenkins 가 재시작 이후 그존 실행중인 job은 다시 재개합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl restart jenkins
+</code></pre></div></div>
+<h2 id="browser에서-restart">browser에서 restart</h2>
+<p>Jenkins를 로그인 해서 browser url에서 your-jenkins/restart를 입력하면 다음과 같이 재시작 여부를 묻는 메시지가 출력됩니다.</p>
+
+<p>Are you sure you want to restart Jenkins?</p>
+
+<p>Yes 버튼을 클릭합니다.</p>
+
+<h2 id="browser에서-saferestart">browser에서 safeRestart</h2>
+<p>browser에서 safeRestart를 수행하면 다음과 같이 메시지가 출력됩니다. 기존 수행중인 Job 은 중단되고, Jenkins가 재시작하면 다시 재게합니다.<br />
+Yes 버튼을 클릭합니다.</p>
+
+<p>Are you sure you want to restart Jenkins? Jenkins will restart once all running jobs are finished. (Pipeline builds may prevent Jenkins from restarting for a short period of time in some cases, but if so, they will be paused at the next available opportunity and then resumed after Jenkins restarts.)</p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><summary type="html"><![CDATA[Jenkins Port 확인 및 복사 Jenkins 를 재시작하는 방법은 3가지 있습니다. systemctl 사용 browser에서 restart browser에서 safeRestart]]></summary></entry><entry><title type="html">Jenkins-Prometheus/Grafana 설치</title><link href="http://localhost:4000/devops/jenkins-with-grafana/" rel="alternate" type="text/html" title="Jenkins-Prometheus/Grafana 설치" /><published>2023-02-19T00:00:00+09:00</published><updated>2023-02-19T00:00:00+09:00</updated><id>http://localhost:4000/devops/jenkins%20with%20grafana</id><content type="html" xml:base="http://localhost:4000/devops/jenkins-with-grafana/"><![CDATA[<h2 id="jenkins-와-prometheusgrafana-여녜">Jenkins 와 Prometheus/Grafana 여녜</h2>
 
 <p>Jenkins Controller와 Agent를 를 모너터링하기 위해 Prometheus Plugin을 설치하고 Jenkins에서 수집한 
 Metrics정보를 기반으로 Prometheus를 통해 Metrics 정보를 주시적으로 수집하고, 수집된 정보를 기반으로 Grafana에 Visual하게
@@ -684,75 +708,4 @@ YOUR_SERVER_IP : remote 서버<br />
 <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">kind-kind</span>
   <span class="na">user</span><span class="pi">:</span>
 <span class="s">EOF</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="kubernetes" /><category term="kind" /><summary type="html"><![CDATA[사전설치환경 구성 kind를 구성하기 위해 docker를 설치합니다. docker engine 설치 blog posting을 확인하세요.]]></summary></entry><entry><title type="html">Install kind for Jenkins</title><link href="http://localhost:4000/kubernetes/install-kind/" rel="alternate" type="text/html" title="Install kind for Jenkins" /><published>2023-02-12T00:00:00+09:00</published><updated>2023-02-12T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/install-kind</id><content type="html" xml:base="http://localhost:4000/kubernetes/install-kind/"><![CDATA[<h2 id="pre-requisites--install-docker-engine">Pre-requisites : Install docker engine</h2>
-<p>docker engine 설치는 docker engine 설치 글을 참조해 주세요.</p>
-
-<h2 id="step-1--download-kind-binary">Step 1 : Download kind binary</h2>
-<p>kind binary를 download 받습니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-Lo</span> ./kind https://kind.sigs.k8s.io/dl/v0.17.0/kind-linux-amd64
-<span class="nb">chmod</span> +x ./kind
-<span class="nb">sudo mv</span> ./kind /usr/local/bin/kind
-</code></pre></div></div>
-
-<h2 id="step-2--config-파일-작성성">Step 2 : config 파일 작성성</h2>
-
-<p>Kind를 이용하여 Kubernetes Cluster를 생성하기 위해 jenkins-config.yaml 파일을 아래와 같이 작성합니다.</p>
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">kind.x-k8s.io/v1alpha4</span>
-<span class="na">kind</span><span class="pi">:</span> <span class="s">Cluster</span>
-<span class="na">nodes</span><span class="pi">:</span>
-<span class="pi">-</span> <span class="na">role</span><span class="pi">:</span> <span class="s">control-plane</span>
-<span class="pi">-</span> <span class="na">role</span><span class="pi">:</span> <span class="s">worker</span>
-<span class="pi">-</span> <span class="na">role</span><span class="pi">:</span> <span class="s">worker</span>
-</code></pre></div></div>
-
-<h2 id="step-3--create-cluster">Step 3 : Create Cluster</h2>
-<p>Cluster를 생성합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kind create cluster <span class="nt">--config</span> jenkins-config.yaml
-</code></pre></div></div>
-
-<p><img src="/assets/images/k8s/02-k8s-kind-create-cluster.png" alt="kube-dashboard" /></p>
-
-<h2 id="step-4--configure">Step 4 : Configure</h2>
-<p>Kind는 .kube/config파일 변경 없이 인증서 파일의 내용이 config파일에 있어서 변환할 필요는 없습니다.<br />
-minikube와 동일하게 Jenkins를 설정합니다.</p>
-<ul>
-  <li>Install Kubernetes Plugins</li>
-  <li>Manage Jenkins &gt; Manage Nodes and Clouds &gt; Configure Clouds</li>
-</ul>
-
-<h2 id="step-4--kubernetes-dashboard-설치">Step 4 : Kubernetes Dashboard 설치</h2>
-
-<p>Kubernetes dashboard yaml파일을 remote에 있는 것을 직접 kubernetes cluster에 적용합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl apply <span class="nt">-f</span> https://raw.githubusercontent.com/kubernetes/dashboard/v2.4.0/aio/deploy/recommended.yaml
-</code></pre></div></div>
-
-<h2 id="step-5--kubernetes-dashboard-접속">Step 5 : Kubernetes Dashboard 접속</h2>
-<p>kubectl proxy로 8001 port를 다음과 같이 오픈합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl port-forward svc/kubernetes-dashboard <span class="nt">-n</span> kubernetes-dashboard 443:443 <span class="nt">--address</span> 0.0.0.0
-</code></pre></div></div>
-
-<p>브라우저에서 dashboard에 접속합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://Your-Server-IP/
-</code></pre></div></div>
-
-<p><img src="/assets/images/k8s/04-k8s-kubernetes-dashboard.png" alt="kube-dashboard" /></p>
-
-<h2 id="step-6--token-생성">Step 6 : Token 생성</h2>
-<ul>
-  <li>kubernetes-dashboard namespace에 admin-user Serviceaccount를 생성
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl create sa admin-user <span class="nt">-n</span> kubernetes-dashboard
-</code></pre></div>    </div>
-  </li>
-  <li>cluster-admin을 clusterrolebinding합니다.
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl create clusterrolebinding admin <span class="nt">--clusterrole</span> cluster-admin <span class="nt">--serviceaccount</span> kubernetes-dashboard:admin-user
-</code></pre></div>    </div>
-  </li>
-  <li>token을 생성
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl create token admin-user <span class="nt">-n</span> kuberneetes-dashboard
-<span class="c"># [수행결과] </span>
-eyJhbGciOiJSUzI1NiIsImtpZCI6ImgxSUxfYzA4Zk54TFdRNF9pdDY3VFgtall1N1M5b1BPMFp2c3JXRVFodFUifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNjc2Mjk2MDE3LCJpYXQiOjE2NzYyOTI0MTcsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsInNlcnZpY2VhY2NvdW50Ijp7Im5hbWUiOiJhZG1pbi11c2VyIiwidWlkIjoiNTAwNGUwMDYtMTNjYy00YWYwLWE2MWEtZjFmYWJiMjczNzBhIn19LCJuYmYiOjE2NzYyOTI0MTcsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlcm5ldGVzLWRhc2hib2FyZDphZG1pbi11c2VyIn0.AVfEFQBnSHW4DQR3Iyf15-BRMDdIAloSkC1BGpUaK-gLVHt-5EB72EK9XX1TK675-DClXEHbNTgEHey_ViP68JPTr99B3mRLy5KXD8gOxjueRMSvQbHo-le85j-DwIOu3TfE9Zyo7NlkGVglU61IBylIfZbg7Sh1TeYpoD6qmTAub6EVWMw1m5OGThBRd7Da6WMd1nI0MMlrT8hGUkCPml3F-x4ExNETjukTfhQTbz0HwRg-jVkad9QwFuCN9_uGuUvw4QUPeZ04hdccADP7fwbd7r4U0Jx2YANVZYNefbmSRl3M4s_Lu5aVxZ4PdcTFR04yiZBQ1C911lluT6hOGw
-</code></pre></div>    </div>
-  </li>
-</ul>
-
-<p>생성한 token을 dashboard token 입력항목에 붙여넣기 합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="kubernetes" /><category term="kind" /><summary type="html"><![CDATA[Pre-requisites : Install docker engine docker engine 설치는 docker engine 설치 글을 참조해 주세요.]]></summary></entry></feed>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="kubernetes" /><category term="kind" /><summary type="html"><![CDATA[사전설치환경 구성 kind를 구성하기 위해 docker를 설치합니다. docker engine 설치 blog posting을 확인하세요.]]></summary></entry></feed>

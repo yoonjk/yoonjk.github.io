@@ -275,6 +275,12 @@ var store = [{
         "url": "/devops/change-jenkins-port/",
         "teaser": null
       },{
+        "title": "Jenkins 서버 재시작 방법",
+        "excerpt":"Jenkins Port 확인 및 복사 Jenkins 를 재시작하는 방법은 3가지 있습니다. systemctl 사용 browser에서 restart browser에서 safeRestart Systemctl 사용 systemctl 명령어로 사용하는 경우 Jenkins Job이 실행중인 것이 있더라도 jenkins를 즉시 재시작합니다. Jenkins 가 재시작 이후 그존 실행중인 job은 다시 재개합니다. systemctl restart jenkins browser에서 restart Jenkins를 로그인 해서 browser url에서...","categories": ["devops"],
+        "tags": ["jenkins"],
+        "url": "/devops/how-to-restart-jenkins/",
+        "teaser": null
+      },{
         "title": "nginx as Reverse Proxy for Jenkins",
         "excerpt":"Jenkins를 Nginx Reverse Proxy를 설정하여 접근하는 것을 설명합니다. Nginx 설치 nginx를 설치하기 위해 사전에 필요한 package를 아래와 같이 설치합니다. yum install -y yum-utils yum install -y epel-release nginx를 설치합니다. yum install -y nginx nginx의 status를 확인합니다. ● nginx.service - The nginx HTTP and reverse proxy server Loaded: loaded (/usr/lib/systemd/system/nginx.service; disabled;...","categories": ["devops"],
         "tags": ["jenkins","nginx"],
