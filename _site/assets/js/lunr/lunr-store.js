@@ -268,4 +268,16 @@ var store = [{
         "tags": ["jenkins","prometheus","grafana"],
         "url": "/devops/jenkins-with-grafana/",
         "teaser": null
+      },{
+        "title": "Jenkins Port 변경",
+        "excerpt":"Jenkins Port 확인 및 복사 Jenkins Default Port를 확인하기 위해 아래와 같이 명령어를 실행합니다. systemctl edit jenkins --full JENKINS_PORT를 검색해서 아래의 내용을 clipboard에 복사합니다. Environment=\"JENKINS_PORT=8080\" Jenkins Port 변경 jenkins.service 파일에서 Environment의 JENKINS_PORT=9080으로 변경합니다. systemctl edit jenkins.service Environment=\"JENKINS_PORT=9080\" systemctl daemon-reload systemctl restart jenkins 위에서 지정한 Port로 접속해서 Port가 변경된 것을 확인합니다....","categories": ["devops"],
+        "tags": ["jenkins"],
+        "url": "/devops/change-jenkins-port/",
+        "teaser": null
+      },{
+        "title": "nginx as Reverse Proxy for Jenkins",
+        "excerpt":"Jenkins를 Nginx Reverse Proxy를 설정하여 접근하는 것을 설명합니다. Nginx 설치 nginx를 설치하기 위해 사전에 필요한 package를 아래와 같이 설치합니다. yum install -y yum-utils yum install -y epel-release nginx를 설치합니다. yum install -y nginx nginx의 status를 확인합니다. ● nginx.service - The nginx HTTP and reverse proxy server Loaded: loaded (/usr/lib/systemd/system/nginx.service; disabled;...","categories": ["devops"],
+        "tags": ["jenkins","nginx"],
+        "url": "/devops/nginx-as-a-reverse-proxy-for-jenkins/",
+        "teaser": null
       }]

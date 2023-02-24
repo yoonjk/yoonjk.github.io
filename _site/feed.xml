@@ -1,4 +1,156 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-19T21:40:54+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Jenkins-Prometheus/Grafana 설치</title><link href="http://localhost:4000/devops/jenkins-with-grafana/" rel="alternate" type="text/html" title="Jenkins-Prometheus/Grafana 설치" /><published>2023-02-19T00:00:00+09:00</published><updated>2023-02-19T00:00:00+09:00</updated><id>http://localhost:4000/devops/jenkins%20with%20grafana</id><content type="html" xml:base="http://localhost:4000/devops/jenkins-with-grafana/"><![CDATA[<h2 id="jenkins-와-prometheusgrafana-여녜">Jenkins 와 Prometheus/Grafana 여녜</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-25T06:20:47+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">nginx as Reverse Proxy for Jenkins</title><link href="http://localhost:4000/devops/nginx-as-a-reverse-proxy-for-jenkins/" rel="alternate" type="text/html" title="nginx as Reverse Proxy for Jenkins" /><published>2023-02-24T00:00:00+09:00</published><updated>2023-02-24T00:00:00+09:00</updated><id>http://localhost:4000/devops/nginx%20as%20a%20reverse%20proxy%20for%20jenkins</id><content type="html" xml:base="http://localhost:4000/devops/nginx-as-a-reverse-proxy-for-jenkins/"><![CDATA[<p>Jenkins를 Nginx Reverse Proxy를 설정하여 접근하는 것을 설명합니다.</p>
+
+<h2 id="nginx-설치">Nginx 설치</h2>
+<p>nginx를 설치하기 위해 사전에 필요한 package를 아래와 같이 설치합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum <span class="nb">install</span> <span class="nt">-y</span> yum-utils
+yum <span class="nb">install</span> <span class="nt">-y</span> epel-release
+</code></pre></div></div>
+
+<p>nginx를 설치합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum <span class="nb">install</span> <span class="nt">-y</span> nginx
+</code></pre></div></div>
+
+<p>nginx의 status를 확인합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>● nginx.service - The nginx HTTP and reverse proxy server
+   Loaded: loaded <span class="o">(</span>/usr/lib/systemd/system/nginx.service<span class="p">;</span> disabled<span class="p">;</span> vendor preset: disabled<span class="o">)</span>
+   Active: inactive <span class="o">(</span>dead<span class="o">)</span>
+</code></pre></div></div>
+<h2 id="nginx-시작">nginx 시작</h2>
+<p>jenkins.service 파일에서 Environment의 JENKINS_PORT=9080으로 변경합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl start nginx
+</code></pre></div></div>
+
+<p>nginx가 정상적으로 실행되었는지 확인합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>● nginx.service - The nginx HTTP and reverse proxy server
+   Loaded: loaded <span class="o">(</span>/usr/lib/systemd/system/nginx.service<span class="p">;</span> disabled<span class="p">;</span> vendor preset: disabled<span class="o">)</span>
+   Active: active <span class="o">(</span>running<span class="o">)</span> since Fri 2023-02-24 08:13:06 CST<span class="p">;</span> 28s ago
+  Process: 49962 <span class="nv">ExecStart</span><span class="o">=</span>/usr/sbin/nginx <span class="o">(</span><span class="nv">code</span><span class="o">=</span>exited, <span class="nv">status</span><span class="o">=</span>0/SUCCESS<span class="o">)</span>
+  Process: 49958 <span class="nv">ExecStartPre</span><span class="o">=</span>/usr/sbin/nginx <span class="nt">-t</span> <span class="o">(</span><span class="nv">code</span><span class="o">=</span>exited, <span class="nv">status</span><span class="o">=</span>0/SUCCESS<span class="o">)</span>
+  Process: 49956 <span class="nv">ExecStartPre</span><span class="o">=</span>/usr/bin/rm <span class="nt">-f</span> /run/nginx.pid <span class="o">(</span><span class="nv">code</span><span class="o">=</span>exited, <span class="nv">status</span><span class="o">=</span>0/SUCCESS<span class="o">)</span>
+ Main PID: 49964 <span class="o">(</span>nginx<span class="o">)</span>
+   CGroup: /system.slice/nginx.service
+           ├─49964 nginx: master process /usr/sbin/ngin
+           ├─49965 nginx: worker proces
+           └─49966 nginx: worker proces
+
+Feb 24 08:13:06 virtualserver01.HyukSeoung-Choi-s-Account.cloud systemd[1]: Starting The nginx HTTP and reverse proxy server...
+Feb 24 08:13:06 virtualserver01.HyukSeoung-Choi-s-Account.cloud nginx[49958]: nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+Feb 24 08:13:06 virtualserver01.HyukSeoung-Choi-s-Account.cloud nginx[49958]: nginx: configuration file /etc/nginx/nginx.conf <span class="nb">test </span>is successful
+Feb 24 08:13:06 virtualserver01.HyukSeoung-Choi-s-Account.cloud systemd[1]: Started The nginx HTTP and reverse proxy server.
+</code></pre></div></div>
+
+<p>nginx configuration 테스트합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nginx <span class="nt">-t</span>
+</code></pre></div></div>
+<p>google.com에서 <a href="https://www.jenkins.io/doc/book/system-administration/reverse-proxy-configuration-nginx/">jenkins reverse proxy nginx</a> 키워드로 검색해서 나온 결과중에<br />
+첫번째 검색결과항목을 클릭합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>upstream jenkins <span class="o">{</span>
+  keepalive 32<span class="p">;</span> <span class="c"># keepalive connections</span>
+  server 127.0.0.1:8080<span class="p">;</span> <span class="c"># jenkins ip and port</span>
+<span class="o">}</span>
+
+<span class="c"># Required for Jenkins websocket agents</span>
+map <span class="nv">$http_upgrade</span> <span class="nv">$connection_upgrade</span> <span class="o">{</span>
+  default upgrade<span class="p">;</span>
+  <span class="s1">''</span> close<span class="p">;</span>
+<span class="o">}</span>
+
+server <span class="o">{</span>
+  listen          80<span class="p">;</span>       <span class="c"># Listen on port 80 for IPv4 requests</span>
+
+  server_name     jenkins.example.com<span class="p">;</span>  <span class="c"># replace 'jenkins.example.com' with your server domain name</span>
+
+  <span class="c"># this is the jenkins web root directory</span>
+  <span class="c"># (mentioned in the output of "systemctl cat jenkins")</span>
+  root            /var/run/jenkins/war/<span class="p">;</span>
+
+  access_log      /var/log/nginx/jenkins.access.log<span class="p">;</span>
+  error_log       /var/log/nginx/jenkins.error.log<span class="p">;</span>
+
+  <span class="c"># pass through headers from Jenkins that Nginx considers invalid</span>
+  ignore_invalid_headers off<span class="p">;</span>
+
+  location ~ <span class="s2">"^/static/[0-9a-fA-F]{8}</span><span class="se">\/</span><span class="s2">(.*)$"</span> <span class="o">{</span>
+    <span class="c"># rewrite all static files into requests to the root</span>
+    <span class="c"># E.g /static/12345678/css/something.css will become /css/something.css</span>
+    rewrite <span class="s2">"^/static/[0-9a-fA-F]{8}</span><span class="se">\/</span><span class="s2">(.*)"</span> /<span class="nv">$1</span> last<span class="p">;</span>
+  <span class="o">}</span>
+
+  location /userContent <span class="o">{</span>
+    <span class="c"># have nginx handle all the static requests to userContent folder</span>
+    <span class="c"># note : This is the $JENKINS_HOME dir</span>
+    root /var/lib/jenkins/<span class="p">;</span>
+    <span class="k">if</span> <span class="o">(!</span><span class="nt">-f</span> <span class="nv">$request_filename</span><span class="o">){</span>
+      <span class="c"># this file does not exist, might be a directory or a /**view** url</span>
+      rewrite <span class="o">(</span>.<span class="k">*</span><span class="o">)</span> /<span class="nv">$1</span> last<span class="p">;</span>
+      <span class="nb">break</span><span class="p">;</span>
+    <span class="o">}</span>
+    sendfile on<span class="p">;</span>
+  <span class="o">}</span>
+
+  location / <span class="o">{</span>
+      sendfile off<span class="p">;</span>
+      proxy_pass         http://jenkins<span class="p">;</span>
+      proxy_redirect     default<span class="p">;</span>
+      proxy_http_version 1.1<span class="p">;</span>
+
+      <span class="c"># Required for Jenkins websocket agents</span>
+      proxy_set_header   Connection        <span class="nv">$connection_upgrade</span><span class="p">;</span>
+      proxy_set_header   Upgrade           <span class="nv">$http_upgrade</span><span class="p">;</span>
+
+      proxy_set_header   Host              <span class="nv">$host</span><span class="p">;</span>
+      proxy_set_header   X-Real-IP         <span class="nv">$remote_addr</span><span class="p">;</span>
+      proxy_set_header   X-Forwarded-For   <span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
+      proxy_set_header   X-Forwarded-Proto <span class="nv">$scheme</span><span class="p">;</span>
+      proxy_max_temp_file_size 0<span class="p">;</span>
+
+      <span class="c">#this is the maximum upload size</span>
+      client_max_body_size       10m<span class="p">;</span>
+      client_body_buffer_size    128k<span class="p">;</span>
+
+      proxy_connect_timeout      90<span class="p">;</span>
+      proxy_send_timeout         90<span class="p">;</span>
+      proxy_read_timeout         90<span class="p">;</span>
+      proxy_buffering            off<span class="p">;</span>
+      proxy_request_buffering    off<span class="p">;</span> <span class="c"># Required for HTTP CLI commands</span>
+      proxy_set_header Connection <span class="s2">""</span><span class="p">;</span> <span class="c"># Clear for keepalive</span>
+  <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>위의 내용을 클립보드에 복사하고 jenkins.conf 파링에 붙여넣기 합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> /etc/nginx/conf.d/
+vi jenkins.conf
+</code></pre></div></div>
+
+<p>jenkins.conf에서 아래의 내용으로 변경합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root            /var/cache/jenkins/war/<span class="p">;</span>
+</code></pre></div></div>
+
+<p>nginx configuration을 테스트하고 nginx를 재시작합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nginx <span class="nt">-t</span>
+systemctl restart nginx
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><category term="nginx" /><summary type="html"><![CDATA[Jenkins를 Nginx Reverse Proxy를 설정하여 접근하는 것을 설명합니다.]]></summary></entry><entry><title type="html">Jenkins Port 변경</title><link href="http://localhost:4000/devops/change-jenkins-port/" rel="alternate" type="text/html" title="Jenkins Port 변경" /><published>2023-02-24T00:00:00+09:00</published><updated>2023-02-24T00:00:00+09:00</updated><id>http://localhost:4000/devops/change-jenkins-port</id><content type="html" xml:base="http://localhost:4000/devops/change-jenkins-port/"><![CDATA[<h2 id="jenkins-port-확인-및-복사">Jenkins Port 확인 및 복사</h2>
+<p>Jenkins Default Port를 확인하기 위해 아래와 같이 명령어를 실행합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl edit jenkins <span class="nt">--full</span>
+</code></pre></div></div>
+<p>JENKINS_PORT를 검색해서  아래의 내용을 clipboard에 복사합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">Environment</span><span class="o">=</span><span class="s2">"JENKINS_PORT=8080"</span>
+</code></pre></div></div>
+
+<h2 id="jenkins-port-변경">Jenkins Port 변경</h2>
+<p>jenkins.service 파일에서 Environment의 JENKINS_PORT=9080으로 변경합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl edit jenkins.service
+<span class="nv">Environment</span><span class="o">=</span><span class="s2">"JENKINS_PORT=9080"</span>
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl daemon-reload
+systemctl restart jenkins
+</code></pre></div></div>
+
+<p>위에서 지정한 Port로 접속해서 Port가 변경된 것을 확인합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><summary type="html"><![CDATA[Jenkins Port 확인 및 복사 Jenkins Default Port를 확인하기 위해 아래와 같이 명령어를 실행합니다. systemctl edit jenkins --full JENKINS_PORT를 검색해서 아래의 내용을 clipboard에 복사합니다. Environment="JENKINS_PORT=8080"]]></summary></entry><entry><title type="html">Jenkins-Prometheus/Grafana 설치</title><link href="http://localhost:4000/devops/jenkins-with-grafana/" rel="alternate" type="text/html" title="Jenkins-Prometheus/Grafana 설치" /><published>2023-02-19T00:00:00+09:00</published><updated>2023-02-19T00:00:00+09:00</updated><id>http://localhost:4000/devops/jenkins%20with%20grafana</id><content type="html" xml:base="http://localhost:4000/devops/jenkins-with-grafana/"><![CDATA[<h2 id="jenkins-와-prometheusgrafana-여녜">Jenkins 와 Prometheus/Grafana 여녜</h2>
 
 <p>Jenkins Controller와 Agent를 를 모너터링하기 위해 Prometheus Plugin을 설치하고 Jenkins에서 수집한 
 Metrics정보를 기반으로 Prometheus를 통해 Metrics 정보를 주시적으로 수집하고, 수집된 정보를 기반으로 Grafana에 Visual하게
@@ -596,159 +748,4 @@ eyJhbGciOiJSUzI1NiIsImtpZCI6ImgxSUxfYzA4Zk54TFdRNF9pdDY3VFgtall1N1M5b1BPMFp2c3JX
   </li>
 </ul>
 
-<p>생성한 token을 dashboard token 입력항목에 붙여넣기 합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="kubernetes" /><category term="kind" /><summary type="html"><![CDATA[Pre-requisites : Install docker engine docker engine 설치는 docker engine 설치 글을 참조해 주세요.]]></summary></entry><entry><title type="html">Nginx proxy로 리모트 Minikube 연결</title><link href="http://localhost:4000/kubernetes/access-a-remote-minikube/" rel="alternate" type="text/html" title="Nginx proxy로 리모트 Minikube 연결" /><published>2023-02-11T00:00:00+09:00</published><updated>2023-02-11T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/access-a-remote-minikube</id><content type="html" xml:base="http://localhost:4000/kubernetes/access-a-remote-minikube/"><![CDATA[<h2 id="setup-minikube-on-minikube-server">Setup Minikube on minikube server</h2>
-
-<p>Minikube는 로컬 머신에 VM을 생성하고 하나의 노드만 포함하는 경량의 클러스터를 배포하는 쿠버네티스 입니다. Minikube는 Linux, macOS 및 Windows 시스템에서 사용할 수 있습니다.</p>
-
-<p>Minikube가 작동하려면 하이퍼바이저(버추얼 박스 또는 KVM)가 필요하지만 이미 가상 머신 내부에 있는 경우 none 드라이버를 사용하여 추가 VM 계층 생성을 건너뛸 수 있습니다<br />
-이 경우  해당 VM에 Docker 엔진을 설치해야 합니다. 이는 가상화 대신 도커를 사용한다는 의미입니다 (버추얼 박스, VM웨어 퓨전, kvm2, VM웨어 등).</p>
-
-<p>docker를 성공적으로 설치한 후 다음 명령을 사용하여 로컬 Kubernetes를 시작할 차례입니다.</p>
-
-<p><img src="/assets/images/k8s/01-k8s-download-minikube.png" alt="download-minikube" /></p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>curl <span class="nt">-LO</span> https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-<span class="nb">install </span>minikube-linux-amd64 /usr/local/bin/minikube
-<span class="c"># 또는</span>
-<span class="nb">sudo mv </span>minikube-linux-amd64 /usr/local/bin/minikube
-<span class="nb">sudo chmod</span> +x /usr/local/bin/minikube
-</code></pre></div></div>
-
-<p>minikube를 시작합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>minikube start <span class="nt">--driver</span><span class="o">=</span>docker
-</code></pre></div></div>
-
-<p>원격 호스트에서 실행되는 Kubernetes 클러스터가 있습니다. Minikube는 홈 디렉토리의 .kube/ 디렉토리 안에 config 파일을 생성합니다.</p>
-
-<p>kubernetes의 config 파일에는 다음의 내용이 있습니다.<br />
-•	certificate-authority(인증 기관) - 사용자가 제어하는 CA(인증 기관)에서 서명한 TLS 인증서를 프로비저닝할 수 있는 API를 제공합니다. 이러한 CA 및 인증서는 워크로드에서 신뢰를 설정하는 데 사용할 수 있습니다.<br />
-•	server - 파드, 서비스, 복제 컨트롤러 등을 포함하는 API 객체에 대한 데이터의 유효성을 검사하고 구성하는 쿠버네티스 API 서버의 주소이다.<br />
-•	client-certificate -.쿠버네티스/미니큐브는 TLS를 통한 인증을 위해 PKI 인증서가 필요하다.<br />
-•	client-key - 클라이언트 인증서와 일치하는 키입니다.</p>
-
-<p><img src="/assets/images/k8s/02-k8s-cat-kube-config.png" alt="start-minikube" /></p>
-
-<h2 id="install-nginx-for-reverse-proxy-on-minikube-server">Install nginx for Reverse Proxy on minikube server</h2>
-<p>리모트에서 minikube에 접근하기 위해 reverse proxy를 구성합니다.</p>
-
-<p>미니큐브 앞에 Nginx Reverse 프록시를 배포합니다.</p>
-
-<p>쿠버네티스 API 서버는 커맨드 라인 도구 kubectl을 사용할 때 모든 요청이 전달되는 지점입니다. kubectl을 사용하면 쿠버네티스 클러스터에 대해 명령을 실행할 수 있다. 이 예에서 내 kube-apiserver의 주소는 https://10.142.0.17:8443 여기서 10.142.0.17은  minikube의 IP 주소입니다. minikube는 로컬에서만 액세스할 수 있으나, 원격으로 액세스할 수 없습니다. 이러한 이유로 minikube 옆에 Nginx 역방향 프록시를 배포하여 원격 클라이언트의 요청을 수신한 다음 kube-apiserver로 전달할 수 있도록 해야 합니다.</p>
-
-<p>docker를 통해 배포하므로 마운트에 필요한 디렉토리와 파일을 만들어야합니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">mkdir</span> <span class="nt">-p</span> /etc/nginx/conf.d/ /etc/nginx/certs
-<span class="nv">$ </span><span class="nb">cat</span> <span class="o">&lt;&lt;</span><span class="no">EOF</span><span class="sh"> &gt; /etc/nginx/conf.d/minikube.conf 
-server {
-    listen       80;
-    listen  [::]:80;
-    server_name  localhost;
-    auth_basic "Administrator’s Area";
-    auth_basic_user_file /etc/nginx/.htpasswd;    
-    
-    location / {   
-        proxy_pass https://`minikube ip`:8443;
-        proxy_ssl_certificate /etc/nginx/certs/minikube-client.crt;
-        proxy_ssl_certificate_key /etc/nginx/certs/minikube-client.key;
-    }
-}
-</span><span class="no">EOF
-</span></code></pre></div></div>
-
-<p>아직 사용자 이름/암호 쌍을 만들지 않았습니다. 이를 위해 htpasswd라는 cmd 도구를 사용합니다<br />
-. 아직 설치하지 않은 경우 yum 을 통해 설치하십시오.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> httpd-tools 
-htpasswd <span class="nt">-c</span> /etc/nginx/.htpasswd minikube
-</code></pre></div></div>
-
-<p>Ubuntu 환경인 경우 htpasswd 유틸 설치</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get <span class="nb">install </span>apache2-utils <span class="nt">-y</span>
-htpasswd <span class="nt">-c</span> /etc/nginx/.htpasswd minikube
-</code></pre></div></div>
-<p>이제 사용자이름/암호가 /etc/nginx/.htpasswd 파일에 저장됩니다. 필요한 구성 파일이 이미 있으므로 다음 명령을 사용하여 Nginx를 배포 할 준비가 되었습니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-d</span> <span class="se">\</span>
-<span class="nt">--name</span> nginx <span class="se">\</span>
-<span class="nt">--network</span> minikube <span class="se">\</span>
-<span class="nt">-p</span> 9080:80 <span class="se">\</span>
-<span class="nt">-v</span> /root/.minikube/profiles/minikube/client.key:/etc/nginx/certs/minikube-client.key <span class="se">\</span>
-<span class="nt">-v</span> /root/.minikube/profiles/minikube/client.crt:/etc/nginx/certs/minikube-client.crt <span class="se">\</span>
-<span class="nt">-v</span> /etc/nginx/conf.d/:/etc/nginx/conf.d <span class="se">\</span>
-<span class="nt">-v</span> /etc/nginx/.htpasswd:/etc/nginx/.htpasswd <span class="se">\</span>
-nginx
-</code></pre></div></div>
-
-<p>브라우저에서 Nginx에 요청하려고 하면 사용자 이름과 비밀번호가 필요하다는 다음 팝업 창이 나타납니다. 브라우저에서 페이지를 열려면 다음 주소로 이동하십시오</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://&lt;YOUR_SERVER_IP&gt;:9080  
-</code></pre></div></div>
-
-<h2 id="install-kubectl-on-local-computer">Install kubectl on local computer</h2>
-
-<p>minikube에 접속할려는 서버에 kubectl 를 설치합니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>curl <span class="nt">-L</span> <span class="s2">"https://dl.k8s.io/release/</span><span class="si">$(</span>curl <span class="nt">-L</span> <span class="nt">-s</span> https://dl.k8s.io/release/stable.txt<span class="si">)</span><span class="s2">/bin/linux/amd64/kubectl"</span> <span class="nt">-o</span> /usr/local/bin/kubectl
-
-<span class="nb">sudo chmod</span> +x /usr/local/bin/kubectl
-</code></pre></div></div>
-
-<p>이미 kubectl이 설치되어 있으므로이 단계를 건너 뜁니다.<br />
-이제 미니큐브에 대한 kubectl을 구성해야 한다. 원격 호스트에서 구성 파일의 내용을 복사하고(Img.3 참조) 로컬 server 붙여넣습니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> ~/.kube/  <span class="c"># execute on local computer</span>
-</code></pre></div></div>
-
-<p>아래 이미지에는 변경해야 할 강조 표시된 줄이 있습니다.<br />
-remote 서버에 있는 config 파일을 복사하고 강조 표시된 부분을 수정합니다.<br />
-ENTER_YOUR_PASSWORD_HERE : remote 서버에서 설정한 minikube 비밀번호<br />
-YOUR_SERVER_IP : remote 서버<br />
-•	certificate-authority , client-certificate , and client-key</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://minikube:&lt;ENTER_YOUR_PASSWORD_HERE&gt;@&lt;YOUR_SERVER_IP&gt;:9080
-</code></pre></div></div>
-
-<p><img src="/assets/images/k8s/03-k8s-local-kube-config.png" alt="kube-config-minikube" /></p>
-
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">cat &lt;&lt;EOF &gt; .kube/config</span>
-<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
-<span class="na">clusters</span><span class="pi">:</span>
-<span class="pi">-</span> <span class="na">cluster</span><span class="pi">:</span>
-    <span class="na">server</span><span class="pi">:</span> <span class="s">http://minikube:admin1234@@119.81.106.194:9080</span>
-  <span class="na">name</span><span class="pi">:</span> <span class="s">minikube</span>
-<span class="na">contexts</span><span class="pi">:</span>
-<span class="pi">-</span> <span class="na">context</span><span class="pi">:</span>
-    <span class="na">cluster</span><span class="pi">:</span> <span class="s">minikube</span>
-    <span class="na">user</span><span class="pi">:</span> <span class="s">minikube</span>
-  <span class="na">name</span><span class="pi">:</span> <span class="s">minikube</span>
-<span class="na">current-context</span><span class="pi">:</span> <span class="s">minikube</span>
-<span class="na">kind</span><span class="pi">:</span> <span class="s">Config</span>
-<span class="na">preferences</span><span class="pi">:</span> <span class="pi">{}</span>
-<span class="na">users</span><span class="pi">:</span>
-<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">minikube</span>
-  <span class="na">user</span><span class="pi">:</span>
-<span class="s">EOF</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="kubernetes" /><category term="minikube" /><summary type="html"><![CDATA[Setup Minikube on minikube server]]></summary></entry><entry><title type="html">Tekton 설치</title><link href="http://localhost:4000/devops/tekton-installation/" rel="alternate" type="text/html" title="Tekton 설치" /><published>2023-02-05T00:00:00+09:00</published><updated>2023-02-05T00:00:00+09:00</updated><id>http://localhost:4000/devops/tekton-installation</id><content type="html" xml:base="http://localhost:4000/devops/tekton-installation/"><![CDATA[<h2 id="tekton-설치">Tekton 설치</h2>
-<p>Tekton pipeline을 Kubernetes에 설치합니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl apply <span class="nt">--filename</span> https://storage.googleapis.com/tekton-releases/pipeline/latest/release.yaml
-</code></pre></div></div>
-
-<p>터미널 화면을 신규로 더 실행하여, 신규 터미널에서 tekton pipeline 설치를 확인하기 위해 다음의 명령어를 실행합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl get pods <span class="nt">--namespace</span> tekton-pipelines <span class="nt">-w</span>
-</code></pre></div></div>
-<h4 id="tekton-dashboard-설치">Tekton dashboard 설치</h4>
-
-<p>tekton pipeline, task를 실행되는 WEB UI를 통해 보고자 하는 경우 tekton dashboard를 활용하여 현재 설치되어 있는 pipeline, task, 실행결과를 확인 할 수 있습니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl apply <span class="nt">--filename</span> https://storage.googleapis.com/tekton-releases/dashboard/latest/release.yaml
-</code></pre></div></div>
-
-<p>tekton dashboard 설치를 확인하기 위해 다음의 명령어를 실행합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl get pods <span class="nt">--namespace</span> tekton-pipelines <span class="nt">-w</span>
-</code></pre></div></div>
-
-<p>Tekton pipeline 설치에 대해 자세한 것은 아래의 <a href="https://tekton.dev/docs/pipelines/install/">링크</a>를 확인하세요.</p>
-
-<p><a href="https://tekton.dev/docs/pipelines/install/">https://tekton.dev/docs/pipelines/install/</a></p>
-
-<p>Tekton dashboard 설치에 대해 자세한 것은 아래의 <a href="https://tekton.dev/docs/dashboard/install/">링크</a>를 확인하세요.</p>
-
-<p><a href="https://tekton.dev/docs/dashboard/install/">https://tekton.dev/docs/dashboard/install/</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="tekton" /><summary type="html"><![CDATA[Tekton 설치 Tekton pipeline을 Kubernetes에 설치합니다.]]></summary></entry></feed>
+<p>생성한 token을 dashboard token 입력항목에 붙여넣기 합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="kubernetes" /><category term="kind" /><summary type="html"><![CDATA[Pre-requisites : Install docker engine docker engine 설치는 docker engine 설치 글을 참조해 주세요.]]></summary></entry></feed>
