@@ -1,5 +1,5 @@
 ---
-title: redis docker-compose 파ㄹ
+title: docker-compose로 redis standalone으로 실행
 categories:
   - docker 
 tags:
@@ -22,6 +22,11 @@ services:
         - "mode=standalone"
       ports:
         - 6379:6379
+```
+
+docker-compose.yaml 파일이 있는 곳에서 docker-compose를 실행합니다.  
+```
+docker-compose up -d
 ```
 
 
