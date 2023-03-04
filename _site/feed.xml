@@ -1,4 +1,56 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-25T07:34:18+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">nginx as Reverse Proxy for Jenkins</title><link href="http://localhost:4000/devops/nginx-as-a-reverse-proxy-for-jenkins/" rel="alternate" type="text/html" title="nginx as Reverse Proxy for Jenkins" /><published>2023-02-24T00:00:00+09:00</published><updated>2023-02-24T00:00:00+09:00</updated><id>http://localhost:4000/devops/nginx%20as%20a%20reverse%20proxy%20for%20jenkins</id><content type="html" xml:base="http://localhost:4000/devops/nginx-as-a-reverse-proxy-for-jenkins/"><![CDATA[<p>Jenkins를 Nginx Reverse Proxy를 설정하여 접근하는 것을 설명합니다.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-05T07:21:25+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">배너 추가</title><link href="http://localhost:4000/springboot/banner/" rel="alternate" type="text/html" title="배너 추가" /><published>2023-03-03T00:00:00+09:00</published><updated>2023-03-03T00:00:00+09:00</updated><id>http://localhost:4000/springboot/banner</id><content type="html" xml:base="http://localhost:4000/springboot/banner/"><![CDATA[<h2 id="배너-파일">배너 파일</h2>
+<p>Springboot의 왼쪽 하단에 있는 dashboard tab에서 springboot를 시작하면 console 로그에 자신만의 로고를 출력하고 싶을 때가 있습니다. 이때 베너를 추가하는 방법에 설명합니다.</p>
+
+<h2 id="배너-생성">배너 생성</h2>
+<p>Springboot에서 배너를 추가하기 위해서 resources 폴더 하위에 banner.txt 파일을 생성해서 내용을 추가하면 springboot가 시작되면서 텍스트를 읽어 출력합니다.</p>
+
+<p><img src="/assets/images/springboot/01-springboot-banner.png" alt="banner" /></p>
+
+<h2 id="배너-텍스트-생성-및-복사">배너 텍스트 생성 및 복사</h2>
+
+<p>아래의 <a href="http://patorjk.com/software/taag/">배너 링크 사이트</a>에서 배너를 작성해서 banner.txt에 내용을 붙여넣기 하면 쉽게 배너를 만들 수 있습니다.</p>
+
+<p><a href="http://patorjk.com/software/taag/">http://patorjk.com/software/taag/</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="banner" /><summary type="html"><![CDATA[배너 파일 Springboot의 왼쪽 하단에 있는 dashboard tab에서 springboot를 시작하면 console 로그에 자신만의 로고를 출력하고 싶을 때가 있습니다. 이때 베너를 추가하는 방법에 설명합니다.]]></summary></entry><entry><title type="html">mysql docker-compose 파ㄹ</title><link href="http://localhost:4000/docker/mysql-docker-compose/" rel="alternate" type="text/html" title="mysql docker-compose 파ㄹ" /><published>2023-03-01T00:00:00+09:00</published><updated>2023-03-01T00:00:00+09:00</updated><id>http://localhost:4000/docker/mysql-docker-compose</id><content type="html" xml:base="http://localhost:4000/docker/mysql-docker-compose/"><![CDATA[<h2 id="mysql-docker-compose-파일">mysql docker-compose 파일</h2>
+
+<p>mysql docker-compose 파일입니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> data
+vi docker-compose.yaml
+</code></pre></div></div>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="s2">"</span><span class="s">3"</span> <span class="c1"># 파일규격버전</span>
+
+<span class="na">services</span><span class="pi">:</span>
+  <span class="na">db</span><span class="pi">:</span> <span class="c1"># 서비스이름</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">mysql:8.0.23</span> <span class="c1"># 이미지</span>
+    <span class="na">container_name</span><span class="pi">:</span> <span class="s">mysql</span> <span class="c1"># 컨테이너 이름</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">3306:3306"</span> <span class="c1"># 포트 설정  외부:내부</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="na">MYSQL_ROOT_PASSWORD</span><span class="pi">:</span> <span class="s2">"</span><span class="s">1234qwer"</span> <span class="c1"># 패스워드설정</span>
+      <span class="na">MYSQL_DATABASE</span><span class="pi">:</span> <span class="s2">"</span><span class="s">demo"</span>
+      <span class="na">MYSQL_USER</span><span class="pi">:</span> <span class="s2">"</span><span class="s">user00"</span>
+      <span class="na">MYSQL_PASSWORD</span><span class="pi">:</span> <span class="s2">"</span><span class="s">admin1234"</span>
+    <span class="na">command</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">--character-set-server=utf8</span> <span class="c1"># 인코딩</span>
+      <span class="pi">-</span> <span class="s">--collation-server=utf8_general_ci</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">./data:/dev/docker/db/mysql-db01</span> <span class="c1"># 마운트 설정</span>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="mysql" /><summary type="html"><![CDATA[mysql docker-compose 파일]]></summary></entry><entry><title type="html">redis docker-compose 파ㄹ</title><link href="http://localhost:4000/docker/redis-docker-compose/" rel="alternate" type="text/html" title="redis docker-compose 파ㄹ" /><published>2023-03-01T00:00:00+09:00</published><updated>2023-03-01T00:00:00+09:00</updated><id>http://localhost:4000/docker/redis-docker-compose</id><content type="html" xml:base="http://localhost:4000/docker/redis-docker-compose/"><![CDATA[<h2 id="redis-docker-compose-파일">Redis docker-compose 파일</h2>
+
+<p>redis docker-compose 파일입니다.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="s1">'</span><span class="s">3.7'</span>
+<span class="na">services</span><span class="pi">:</span>
+    <span class="na">redis</span><span class="pi">:</span>
+      <span class="na">image</span><span class="pi">:</span> <span class="s">redis:alpine</span>
+      <span class="na">command</span><span class="pi">:</span> <span class="s">redis-server --port </span><span class="m">6379</span>
+      <span class="na">container_name</span><span class="pi">:</span> <span class="s">redis</span>
+      <span class="na">labels</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s2">"</span><span class="s">name=redis"</span>
+        <span class="pi">-</span> <span class="s2">"</span><span class="s">mode=standalone"</span>
+      <span class="na">ports</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">6379:6379</span>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="redis" /><summary type="html"><![CDATA[Redis docker-compose 파일]]></summary></entry><entry><title type="html">nginx as Reverse Proxy for Jenkins</title><link href="http://localhost:4000/devops/nginx-as-a-reverse-proxy-for-jenkins/" rel="alternate" type="text/html" title="nginx as Reverse Proxy for Jenkins" /><published>2023-02-24T00:00:00+09:00</published><updated>2023-02-24T00:00:00+09:00</updated><id>http://localhost:4000/devops/nginx%20as%20a%20reverse%20proxy%20for%20jenkins</id><content type="html" xml:base="http://localhost:4000/devops/nginx-as-a-reverse-proxy-for-jenkins/"><![CDATA[<p>Jenkins를 Nginx Reverse Proxy를 설정하여 접근하는 것을 설명합니다.</p>
 
 <h2 id="nginx-설치">Nginx 설치</h2>
 <p>nginx를 설치하기 위해 사전에 필요한 package를 아래와 같이 설치합니다.</p>
@@ -508,204 +560,4 @@ Configure 를 선택해서 Node Properties 섹션에서 maven을 설정하고 �
 <p>Jenkins Agent Node에서 다음의 명령어를 실행합니다.</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>sysctl user.max_user_namespaces<span class="o">=</span>15000
 </code></pre></div></div>
-<p><img src="/assets/images/jenkins/34-jenkins-max_user_namespace.png" alt="New Node" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><category term="master" /><category term="slave" /><summary type="html"><![CDATA[Jenkins 설치]]></summary></entry><entry><title type="html">podman에서 max_user_namespaces 에러</title><link href="http://localhost:4000/devops/podman-max_user_namespaces/" rel="alternate" type="text/html" title="podman에서 max_user_namespaces 에러" /><published>2023-02-18T00:00:00+09:00</published><updated>2023-02-18T00:00:00+09:00</updated><id>http://localhost:4000/devops/podman-max_user_namespaces</id><content type="html" xml:base="http://localhost:4000/devops/podman-max_user_namespaces/"><![CDATA[<h2 id="podman-실행시-다음의-에러-해결">podman 실행시 다음의 에러 해결</h2>
-
-<p>Podman run error in non-root mode: “user namespaces are not enabled in /proc/sys/user/max_user_namespaces”</p>
-
-<p>Jenkins Pipeline에서 podman 실행시 다음의 에러가 발생할 떄</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user namespaces are not enabled <span class="k">in</span> /proc/sys/user/max_user_namespaces
-Error: could not get runtime: cannot re-exec process
-</code></pre></div></div>
-<p>다음의 <a href="https://github.com/containers/podman/issues/7704">링크</a>를 참조합니다.</p>
-
-<p><a href="https://github.com/containers/podman/issues/7704">https://github.com/containers/podman/issues/7704</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><category term="podman" /><summary type="html"><![CDATA[podman 실행시 다음의 에러 해결]]></summary></entry><entry><title type="html">kind 에 dashboard 설치하기</title><link href="http://localhost:4000/kubernetes/install-dashboard-for-kind/" rel="alternate" type="text/html" title="kind 에 dashboard 설치하기" /><published>2023-02-15T00:00:00+09:00</published><updated>2023-02-15T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/install%20dashboard%20for%20kind</id><content type="html" xml:base="http://localhost:4000/kubernetes/install-dashboard-for-kind/"><![CDATA[<h2 id="dashboard-설치">Dashboard 설치</h2>
-<p>kind를 사용하여 Kubernetes cluster를 구성하고 dashboard를 구성합니다.
-dashboard는 다음과 같이 remote에 있는 yaml을 직접적용합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl apply <span class="nt">-f</span> kubectl apply <span class="nt">-f</span> https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
-</code></pre></div></div>
-
-<h2 id="port-forward로-port-오픈">port-forward로 port 오픈</h2>
-<p>port-forward를 합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl port-forward svc/kubernetes-dashboard <span class="nt">-n</span> kubernetes-dashboard  443 <span class="nt">--address</span> 0.0.0.0
-</code></pre></div></div>
-<p>chrome 중앙의 to get chrome’s 를 클릭하고 thisisunsafe를 입력하고 enter를 누릅니다.</p>
-
-<p><img src="/assets/images/k8s/03-k8s-yourconnection-is-not-private.png" alt="port-forward" /></p>
-
-<p>그러면 다음과 가이 dashboard 로그인 화면이 나타납니다.<br />
-<img src="/assets/images/k8s/04-k8s-kubernetes-dashboard.png" alt="port-forward" /></p>
-
-<h2 id="create-serviceaccount-and-role-token">Create serviceaccount and role, token</h2>
-<p>kubernetes dashboard를 위한 serviceaccount와 cluster-role를 생성한 다음 token을 생성합니다. 그리고 생성한 token 값을 
-dashboard login token 입력항목에 붙여넣기를 합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl create sa dashboard-admin <span class="nt">-n</span> kubernetes-dashboard
-kubectl create clusterrolebinding dashbaord-admin <span class="nt">--clusterrole</span> admin <span class="nt">--serviceaccount</span> kubernetes-dashboard:dashboard-admin
-kubectl create token dashboard-admin <span class="nt">-n</span> kubernetes-dashboard
-
-<span class="o">[</span>수행결과]
-eyJhbGciOiJSUzI1NiIsImtpZCI6IjcxeDlkdFlKOVhLZjRXOFdfNzVmLTZpUFVLOUtvQVM5M0RUMlMxcVBtblEifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNjc2NDkzNzA3LCJpYXQiOjE2NzY0OTAxMDcsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsInNlcnZpY2VhY2NvdW50Ijp7Im5hbWUiOiJkYXNoYm9hcmQtYWRtaW4iLCJ1aWQiOiIwNDdlM2RjYS03N2JiLTRmYzMtYTkzZS0yMjAwNWNkZDBkOWYifX0sIm5iZiI6MTY3NjQ5MDEwNywic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50Omt1YmVybmV0ZXMtZGFzaGJvYXJkOmRhc2hib2FyZC1hZG1pbiJ9.uDhrySLj1sZgsRovMS7TqT4DuTipdhaa2n1uKDLnfGq_-JNwQma7S0qOuLY20FAXfIGceax_k_LY5js0SP0GFWHSrw8m2S2jOEeDXkcvEkBQVDXi5DY-bp6p_y2dI4CleUxauFgPXOwXTOu8Un1fOfgltMCvGBcf68qPjZ1pxrni5_HlPi_o9xjhmfbggUxEq8zx0n2H5j0ssVITM7jH38F6eO7rMPVHRBngMok2qqOydviQZ0994TPgq_NByKkWDk1npCXOvrt03z9X6I7Q5-k6yX8vVEZSKq9rbq0lAJQLKlpKlttTHz6YJf0YEQwgygcakDxKCRsCk07kgEXP2Q
-</code></pre></div></div>
-<p>token을 입력합니다.<br />
-<img src="/assets/images/k8s/05-k8s-input-token-dashboard.png" alt="port-forward" /></p>
-
-<p>dashboard 로그인 화면입니다.<br />
-<img src="/assets/images/k8s/06-k8s-dashboard-login.png" alt="port-forward" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="kubernetes" /><category term="kind" /><summary type="html"><![CDATA[Dashboard 설치 kind를 사용하여 Kubernetes cluster를 구성하고 dashboard를 구성합니다. dashboard는 다음과 같이 remote에 있는 yaml을 직접적용합니다. kubectl apply -f kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml]]></summary></entry><entry><title type="html">Nginx proxy 리모트 kind cluster 접근</title><link href="http://localhost:4000/kubernetes/access-a-remote-kind/" rel="alternate" type="text/html" title="Nginx proxy 리모트 kind cluster 접근" /><published>2023-02-15T00:00:00+09:00</published><updated>2023-02-15T00:00:00+09:00</updated><id>http://localhost:4000/kubernetes/access-a-remote-kind</id><content type="html" xml:base="http://localhost:4000/kubernetes/access-a-remote-kind/"><![CDATA[<h2 id="사전설치환경-구성">사전설치환경 구성</h2>
-<p>kind를 구성하기 위해 docker를 설치합니다. docker engine 설치  blog posting을 확인하세요.</p>
-
-<h2 id="setup--on-kind-cluster-server">Setup  on kind cluster server</h2>
-<p>kind 로컬 머신에 VM을 생성하고 하나의 노드만 포함하는 경량의 클러스터를 배포하는 쿠버네티스 입니다. kind는 Linux, macOS 및 Windows 시스템에서 사용할 수 있습니다.</p>
-
-<p>Kind가 작동하려면 하이퍼바이저(버추얼 박스 또는 KVM)가 필요하지만 이미 가상 머신 내부에 있는 경우 none 드라이버를 사용하여 추가 VM 계층 생성을 건너뛸 수 있습니다<br />
-이번에는 VM에 Docker 엔진을 설치하고, 가상화 대신 도커를 사용하여 local server에서 remote kind cluster에 접근하는 구성합니다.</p>
-
-<p>docker를 성공적으로 설치한 후 다음 명령을 사용하여 로컬 Kubernetes를 시작할 차례입니다.</p>
-
-<p><a href="https://kind.sigs.k8s.io/docs/user/quick-start/">kind Quick 설치 가이드</a></p>
-
-<p>Linux 환경에서 설치</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-Lo</span> ./kind https://kind.sigs.k8s.io/dl/v0.17.0/kind-linux-amd64
-<span class="nb">chmod</span> +x ./kind
-<span class="nb">sudo mv</span> ./kind /usr/local/bin/kind
-</code></pre></div></div>
-
-<p>kind를 시작하기 위해 kind cluster config 파일을 다음과 같이 control-plane, 2개의 worker node로 구성된 cluster를 작성합니다.</p>
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">kind</span><span class="pi">:</span> <span class="s">Cluster</span>
-<span class="na">networking</span><span class="pi">:</span>
-  <span class="na">apiServerAddress</span><span class="pi">:</span> <span class="s2">"</span><span class="s">119.81.103.70"</span>
-  <span class="na">apiServerPort</span><span class="pi">:</span> <span class="m">58350</span>
-<span class="na">nodes</span><span class="pi">:</span>
-  <span class="pi">-</span> <span class="na">role</span><span class="pi">:</span> <span class="s">control-plane</span>
-  <span class="pi">-</span> <span class="na">role</span><span class="pi">:</span> <span class="s">worker</span>
-  <span class="pi">-</span> <span class="na">role</span><span class="pi">:</span> <span class="s">worker</span>
-</code></pre></div></div>
-
-<p>kind cluster를 작성합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kind create cluster <span class="nt">--config</span> jenkins-config.yaml
-</code></pre></div></div>
-
-<p>원격 호스트에서 실행되는 Kubernetes 클러스터가 있습니다. Kind는 홈 디렉토리의 .kube/ 디렉토리 안에 config 파일을 생성합니다.</p>
-
-<p>kubernetes의 config 파일에는 다음의 내용이 있습니다.<br />
-•	certificate-authority(인증 기관) - 사용자가 제어하는 CA(인증 기관)에서 서명한 TLS 인증서를 프로비저닝할 수 있는 API를 제공합니다. 이러한 CA 및 인증서는 워크로드에서 신뢰를 설정하는 데 사용할 수 있습니다.<br />
-•	server - 파드, 서비스, 복제 컨트롤러 등을 포함하는 API 객체에 대한 데이터의 유효성을 검사하고 구성하는 쿠버네티스 API 서버의 주소이다.<br />
-•	client-certificate -.쿠버네티스/미니큐브는 TLS를 통한 인증을 위해 PKI 인증서가 필요하다.<br />
-•	client-key - 클라이언트 인증서와 일치하는 키입니다.</p>
-
-<p>.kube/config에 들어있는 인증서 내용을 x509 형식으로 변환합니다.</p>
-<ul>
-  <li>client-certificate-data 데이터를 base64로 decoding</li>
-  <li>client-key-data 데이터를 base64로 decode</li>
-</ul>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="nb">cat</span> .kube/config
-
-<span class="nv">ca_crt</span><span class="o">=</span><span class="si">$(</span><span class="nb">cat</span> .kube/config|grep certificate-authority-data|cut <span class="nt">-d</span><span class="s2">":"</span> <span class="nt">-f2-</span>|cut <span class="nt">-d</span><span class="s2">" "</span> <span class="nt">-f1-</span><span class="si">)</span>
-
-<span class="nv">client_crt</span><span class="o">=</span><span class="si">$(</span><span class="nb">cat</span> .kube/config|grep client-certificate-data|cut <span class="nt">-d</span><span class="s2">":"</span> <span class="nt">-f2-</span>|cut <span class="nt">-d</span><span class="s2">" "</span> <span class="nt">-f1-</span><span class="si">)</span>
-
-<span class="nv">client_key</span><span class="o">=</span><span class="si">$(</span><span class="nb">cat</span> .kube/config|grep client-key-data|cut <span class="nt">-d</span><span class="s2">":"</span> <span class="nt">-f2-</span>|cut <span class="nt">-d</span><span class="s2">" "</span> <span class="nt">-f1-</span><span class="si">)</span>
-
-</code></pre></div></div>
-
-<h1 id="convert-encoded-certificates-to-x509-format">convert encoded certificates to x509 format</h1>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> <span class="nv">$HOME</span>/.kind
-<span class="nb">echo</span> <span class="nv">$client_crt</span> | <span class="nb">base64</span> <span class="nt">-d</span> <span class="o">&gt;</span> .kind/client.crt
-<span class="nb">echo</span> <span class="nv">$client_key</span> | <span class="nb">base64</span> <span class="nt">-d</span> <span class="o">&gt;</span> .kind/client.key
-</code></pre></div></div>
-<h2 id="install-nginx-for-reverse-proxy-on--kind-cluster-server">Install nginx for Reverse Proxy on  Kind Cluster server</h2>
-<p>리모트에서 Kind에 접근하기 위해 reverse proxy를 구성합니다.</p>
-
-<p>미니큐브 앞에 Nginx Reverse 프록시를 배포합니다.</p>
-
-<p>쿠버네티스 API 서버는 커맨드 라인 도구 kubectl을 사용할 때 모든 요청이 전달되는 지점입니다. kubectl을 사용하면 쿠버네티스 클러스터에 대해 명령을 실행할 수 있다. 이 예에서 내 kube-apiserver의 주소는 https://Your-ServierIP:58350 Kind의 IP 주소입니다. Kind는 로컬에서만 액세스할 수 있으나, 원격으로 액세스할 수 없습니다. 이러한 이유로 Kind 옆에 Nginx 역방향 프록시를 배포하여 원격 클라이언트의 요청을 수신한 다음 kube-apiserver로 전달할 수 있도록 해야 합니다.</p>
-
-<p>docker를 통해 배포하므로 마운트에 필요한 디렉토리와 파일을 만들어야합니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">mkdir</span> <span class="nt">-p</span> /etc/nginx/conf.d/ /etc/nginx/certs
-<span class="nv">$ </span><span class="nb">cat</span> <span class="o">&lt;&lt;</span><span class="no">EOF</span><span class="sh"> &gt; /etc/nginx/conf.d/default.conf 
-server {
-    listen       80;
-    listen  [::]:80;
-    server_name  localhost;
-    auth_basic "Administrator's Area";
-    auth_basic_user_file /etc/nginx/.htpasswd;
-
-    location / {
-        proxy_pass https://Your-Kind-ServerIP:58443;
-        proxy_ssl_certificate /etc/nginx/certs/kind-client.crt;
-        proxy_ssl_certificate_key /etc/nginx/certs/kind-client.key;
-    }
-}
-</span><span class="no">EOF
-</span></code></pre></div></div>
-
-<p>아직 사용자 이름/암호 쌍을 만들지 않았습니다. 이를 위해 htpasswd라는 cmd 도구를 사용합니다<br />
-. 아직 설치하지 않은 경우 yum 을 통해 설치하십시오.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> httpd-tools 
-htpasswd <span class="nt">-c</span> /etc/nginx/.htpasswd kind-kind
-</code></pre></div></div>
-
-<p>Ubuntu 환경인 경우 htpasswd 유틸 설치</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get <span class="nb">install </span>apache2-utils <span class="nt">-y</span>
-htpasswd <span class="nt">-c</span> /etc/nginx/.htpasswd kind-kind
-</code></pre></div></div>
-<p>이제 사용자이름/암호가 /etc/nginx/.htpasswd 파일에 저장됩니다. 필요한 구성 파일이 이미 있으므로 다음 명령을 사용하여 Nginx를 배포 할 준비가 되었습니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-d</span> <span class="se">\</span>
-<span class="nt">--name</span> nginx <span class="se">\</span>
-<span class="nt">--network</span> kind <span class="se">\</span>
-<span class="nt">-p</span> 9080:80 <span class="se">\</span>
-<span class="nt">-v</span> /root/.kind/client.key:/etc/nginx/certs/kind-client.key <span class="se">\</span>
-<span class="nt">-v</span> /root/.kind/client.crt:/etc/nginx/certs/kind-client.crt <span class="se">\</span>
-<span class="nt">-v</span> /etc/nginx/conf.d/:/etc/nginx/conf.d <span class="se">\</span>
-<span class="nt">-v</span> /etc/nginx/.htpasswd:/etc/nginx/.htpasswd <span class="se">\</span>
-nginx
-</code></pre></div></div>
-
-<p>브라우저에서 Nginx에 요청하려고 하면 사용자 이름과 비밀번호가 필요하다는 다음 팝업 창이 나타납니다. 브라우저에서 페이지를 열려면 다음 주소로 이동하십시오</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://&lt;YOUR_SERVER_IP&gt;:9080  
-</code></pre></div></div>
-
-<h2 id="install-kubectl-on-local-computer">Install kubectl on local computer</h2>
-
-<p>Kind에 접속할려는 서버에 kubectl 를 설치합니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>curl <span class="nt">-L</span> <span class="s2">"https://dl.k8s.io/release/</span><span class="si">$(</span>curl <span class="nt">-L</span> <span class="nt">-s</span> https://dl.k8s.io/release/stable.txt<span class="si">)</span><span class="s2">/bin/linux/amd64/kubectl"</span> <span class="nt">-o</span> /usr/local/bin/kubectl
-
-<span class="nb">sudo chmod</span> +x /usr/local/bin/kubectl
-</code></pre></div></div>
-
-<p>이미 kubectl이 설치되어 있으므로이 단계를 건너 뜁니다.<br />
-이제 미니큐브에 대한 kubectl을 구성해야 한다. 원격 호스트에서 구성 파일의 내용을 복사하고(Img.3 참조) 로컬 server 붙여넣습니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> ~/.kube/  <span class="c"># execute on local computer</span>
-</code></pre></div></div>
-
-<p>아래 이미지에는 변경해야 할 강조 표시된 줄이 있습니다.<br />
-remote 서버에 있는 config 파일을 복사하고 강조 표시된 부분을 수정합니다.<br />
-ENTER_YOUR_PASSWORD_HERE : remote 서버에서 설정한 kind-kind 비밀번호<br />
-YOUR_SERVER_IP : remote 서버<br />
-•	certificate-authority , client-certificate , and client-key</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://kind-kind:&lt;ENTER_YOUR_PASSWORD_HERE&gt;@&lt;YOUR_SERVER_IP&gt;:9080
-</code></pre></div></div>
-
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">cat &lt;&lt;EOF &gt; .kube/config</span>
-<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
-<span class="na">clusters</span><span class="pi">:</span>
-<span class="pi">-</span> <span class="na">cluster</span><span class="pi">:</span>
-    <span class="na">server</span><span class="pi">:</span> <span class="s">http://kind-kind:admin1234@@Your-KindClusterServerIP:9080</span>
-  <span class="na">name</span><span class="pi">:</span> <span class="s">kind-kind</span>
-<span class="na">contexts</span><span class="pi">:</span>
-<span class="pi">-</span> <span class="na">context</span><span class="pi">:</span>
-    <span class="na">cluster</span><span class="pi">:</span> <span class="s">kind-kind</span>
-    <span class="na">user</span><span class="pi">:</span> <span class="s">kind-kind</span>
-  <span class="na">name</span><span class="pi">:</span> <span class="s">kind-kind</span>
-<span class="na">current-context</span><span class="pi">:</span> <span class="s">kind-kind</span>
-<span class="na">kind</span><span class="pi">:</span> <span class="s">Config</span>
-<span class="na">preferences</span><span class="pi">:</span> <span class="pi">{}</span>
-<span class="na">users</span><span class="pi">:</span>
-<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">kind-kind</span>
-  <span class="na">user</span><span class="pi">:</span>
-<span class="s">EOF</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="kubernetes" /><category term="kind" /><summary type="html"><![CDATA[사전설치환경 구성 kind를 구성하기 위해 docker를 설치합니다. docker engine 설치 blog posting을 확인하세요.]]></summary></entry></feed>
+<p><img src="/assets/images/jenkins/34-jenkins-max_user_namespace.png" alt="New Node" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><category term="master" /><category term="slave" /><summary type="html"><![CDATA[Jenkins 설치]]></summary></entry></feed>

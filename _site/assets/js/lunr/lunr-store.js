@@ -286,4 +286,22 @@ var store = [{
         "tags": ["jenkins","nginx"],
         "url": "/devops/nginx-as-a-reverse-proxy-for-jenkins/",
         "teaser": null
+      },{
+        "title": "mysql docker-compose 파ㄹ",
+        "excerpt":"mysql docker-compose 파일 mysql docker-compose 파일입니다. mkdir -p data vi docker-compose.yaml version: \"3\" # 파일규격버전 services: db: # 서비스이름 image: mysql:8.0.23 # 이미지 container_name: mysql # 컨테이너 이름 ports: - \"3306:3306\" # 포트 설정 외부:내부 environment: MYSQL_ROOT_PASSWORD: \"1234qwer\" # 패스워드설정 MYSQL_DATABASE: \"demo\" MYSQL_USER: \"user00\" MYSQL_PASSWORD: \"admin1234\" command: - --character-set-server=utf8 #...","categories": ["docker"],
+        "tags": ["mysql"],
+        "url": "/docker/mysql-docker-compose/",
+        "teaser": null
+      },{
+        "title": "redis docker-compose 파ㄹ",
+        "excerpt":"Redis docker-compose 파일   redis docker-compose 파일입니다.   version: '3.7' services:     redis:       image: redis:alpine       command: redis-server --port 6379       container_name: redis       labels:         - \"name=redis\"         - \"mode=standalone\"       ports:         - 6379:6379   ","categories": ["docker"],
+        "tags": ["redis"],
+        "url": "/docker/redis-docker-compose/",
+        "teaser": null
+      },{
+        "title": "배너 추가",
+        "excerpt":"배너 파일 Springboot의 왼쪽 하단에 있는 dashboard tab에서 springboot를 시작하면 console 로그에 자신만의 로고를 출력하고 싶을 때가 있습니다. 이때 베너를 추가하는 방법에 설명합니다. 배너 생성 Springboot에서 배너를 추가하기 위해서 resources 폴더 하위에 banner.txt 파일을 생성해서 내용을 추가하면 springboot가 시작되면서 텍스트를 읽어 출력합니다. 배너 텍스트 생성 및 복사 아래의 배너 링크...","categories": ["springboot"],
+        "tags": ["banner"],
+        "url": "/springboot/banner/",
+        "teaser": null
       }]
