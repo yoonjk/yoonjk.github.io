@@ -1,5 +1,5 @@
 ---
-title: mysql docker-compose 파ㄹ
+title: mysql docker-compose 로 실행하기
 categories:
   - docker 
 tags:
@@ -35,4 +35,8 @@ services:
       - ./data:/dev/docker/db/mysql-db01 # 마운트 설정
 ```
 
+docker-compose.yaml 파일이 있는 곳에서 docker-compose를 실행합니다.  
+```
+docker-compose up -d
+```
 
