@@ -1,5 +1,5 @@
 ---
-title: MacOS openJDK 1.8 설치하기
+title: MacOS openJDK 8 설치하기
 categories:
   - springboot
 tags: 
