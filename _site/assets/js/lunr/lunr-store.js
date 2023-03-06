@@ -287,21 +287,39 @@ var store = [{
         "url": "/devops/nginx-as-a-reverse-proxy-for-jenkins/",
         "teaser": null
       },{
-        "title": "mysql docker-compose 파ㄹ",
+        "title": "mysql docker-compose 로 실행하기",
         "excerpt":"mysql docker-compose 파일 mysql docker-compose 파일입니다. mkdir -p data vi docker-compose.yaml version: \"3\" # 파일규격버전 services: db: # 서비스이름 image: mysql:8.0.23 # 이미지 container_name: mysql # 컨테이너 이름 ports: - \"3306:3306\" # 포트 설정 외부:내부 environment: MYSQL_ROOT_PASSWORD: \"1234qwer\" # 패스워드설정 MYSQL_DATABASE: \"demo\" MYSQL_USER: \"user00\" MYSQL_PASSWORD: \"admin1234\" command: - --character-set-server=utf8 #...","categories": ["docker"],
         "tags": ["mysql"],
         "url": "/docker/mysql-docker-compose/",
         "teaser": null
       },{
-        "title": "redis docker-compose 파ㄹ",
-        "excerpt":"Redis docker-compose 파일   redis docker-compose 파일입니다.   version: '3.7' services:     redis:       image: redis:alpine       command: redis-server --port 6379       container_name: redis       labels:         - \"name=redis\"         - \"mode=standalone\"       ports:         - 6379:6379   ","categories": ["docker"],
+        "title": "docker-compose로 postgreSQL 실행",
+        "excerpt":"PostgresSQL docker-compose 파일 새로운 응용 프로그램을 만들 때 PostgreSQL을 데이터베이스 엔진으로 자주 사용합니다. 빠르고 사용하기 쉬우 며 인터넷상의 거의 모든 프로그래밍 언어 및 플랫폼과 매우 잘 통합됩니다. Windows 시스템을 실행하지 않고 macOS 또는 Linux에서 PostgreSQL 데이터베이스를 실행해야하는 경우 Docker를 사용할 수 있습니다. 몇 가지 간단한 명령만으로 도커에서 PostgreSQL을 시작하는 것은...","categories": ["docker"],
+        "tags": ["postgresSQL"],
+        "url": "/docker/redis-docker-compose-copy/",
+        "teaser": null
+      },{
+        "title": "docker-compose로 redis standalone으로 실행",
+        "excerpt":"Redis docker-compose 파일   redis docker-compose 파일입니다.   version: '3.7' services:     redis:       image: redis:alpine       command: redis-server --port 6379       container_name: redis       labels:         - \"name=redis\"         - \"mode=standalone\"       ports:         - 6379:6379   docker-compose.yaml 파일이 있는 곳에서 docker-compose를 실행합니다.  docker-compose up -d   ","categories": ["docker"],
         "tags": ["redis"],
         "url": "/docker/redis-docker-compose/",
+        "teaser": null
+      },{
+        "title": "mac 에서 jdk switch",
+        "excerpt":"jdk 11 or 8 switch   java 기반 개발을 하면서 jdk 다양한 버전이 필요해서 설치하는 경우 있습니다. jdk를 switch하고자 하는 경우 다음과 같이 .zshrc에 추가해서 사용합니다.   ~/.zshrc 파일을 editor로 열어서 다음과 같이 JAVA_HOME을 추가하면 됩니다.  vi ~/.zshrc export JAVA_HOME=`/usr/libexec/java_home -v 1.8`    .zshrc 다시 적용합니다.  source ~/.zshrc   ","categories": ["docker"],
+        "tags": ["jdk","mac"],
+        "url": "/docker/jdk-switch-on-mac/",
         "teaser": null
       },{
         "title": "배너 추가",
         "excerpt":"배너 파일 Springboot의 왼쪽 하단에 있는 dashboard tab에서 springboot를 시작하면 console 로그에 자신만의 로고를 출력하고 싶을 때가 있습니다. 이때 베너를 추가하는 방법에 설명합니다. 배너 생성 Springboot에서 배너를 추가하기 위해서 resources 폴더 하위에 banner.txt 파일을 생성해서 내용을 추가하면 springboot가 시작되면서 텍스트를 읽어 출력합니다. 배너 텍스트 생성 및 복사 아래의 배너 링크...","categories": ["springboot"],
         "tags": ["banner"],
         "url": "/springboot/banner/",
+        "teaser": null
+      },{
+        "title": "MacOS openJDK 1.8 설치하기",
+        "excerpt":"open jdk  mac에서 open jdk를 설치합니다   brew tap AdoptOpenJDK/openjdk  brew install --cask adoptopenjdk8  switch jdk 1.8 to 11  jdk를 여러 버전을 설치한 경우 jdk를 필요에 따라 switch하고자 하는 경우 다음과 같이 합니다.  vi로 ~/.zshrc 파일을 편집하고 아래의 항목을 추가합니다.  export JAVA_HOME=`/usr/libexec/java_home -v 1.8`   zsh profile을 적용합니다.  source ~/.zshrc  ","categories": ["springboot"],
+        "tags": ["openjdk"],
+        "url": "/springboot/mac-jdk-switch/",
         "teaser": null
       }]
