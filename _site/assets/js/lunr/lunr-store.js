@@ -322,4 +322,22 @@ var store = [{
         "tags": ["openjdk"],
         "url": "/springboot/mac-jdk-switch/",
         "teaser": null
+      },{
+        "title": "CacheMager 사용하여 data 캐시하는 방법",
+        "excerpt":"cacheManager 의존성 추가 Springboot 에서 data를 Cache를 하고자 하는 경우 Solution을 시용하는 경우 Redis를 고려합니다. 그러나 Redis 를 사용할 정도의 애플리케이션 아닌 경우 Local Cache만으로 충분한 경우 Singleton 패턴으로 구현할 수도 있지만 이미 만들어진 CacheManager를 사용하면 편리합니다. Springboot에서 cacheManager를 사용하기 위해서 maven 빌드 환경에서 pom.xml에 아래의 의존성을 추가합니다. &lt;dependency&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;...","categories": ["springboot"],
+        "tags": ["cacheManager"],
+        "url": "/springboot/how-to-cache-data-from-db-in-springboot/",
+        "teaser": null
+      },{
+        "title": "load-on-startup",
+        "excerpt":"load-on-startup  Springboot 시작시 첫 호출이 느린 경우 application.yml에 해당 내용 추가 합니다.   application.yml 파일입니다.  spring:   mvc:     servlet:       load-on-startup: 1  ","categories": ["springboot"],
+        "tags": ["load-on-startup"],
+        "url": "/springboot/springboot-load-on-startup/",
+        "teaser": null
+      },{
+        "title": "Mybatis에 멀티 로우 insert or update",
+        "excerpt":"Mybatis 한번에 여러건 Insert or Update Mybatis에서 한번에 여러건의 데이터를 insert 또는 update하기 기능을 Mybatis는 이를 지원하고 있다. 이 기능을 이용하여 약간의 성능에 도움을 받을 수 있습니다. Mybatis에서 여러건의 데이터를 Insert or Update 예제입니다. 다음은 Controller 입니다. @Slf4j @RestController public class HelloController { @Autowired private SampleUserDao sampleUserDao; @ApiOperation(value=\"bulkload\") @PostMapping(value=\"/users/bulkload\") public...","categories": ["springboot"],
+        "tags": ["mybatis"],
+        "url": "/springboot/upsert-mybatis-multi-row/",
+        "teaser": null
       }]

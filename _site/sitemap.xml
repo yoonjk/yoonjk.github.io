@@ -4,6 +4,54 @@
         xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     
     <url>
+        <loc>http://localhost:4000/springboot/upsert-mybatis-multi-row/</loc>
+        
+        <lastmod>2023-03-11T00:00:00+09:00</lastmod>
+        
+
+        
+        <changefreq>weekly</changefreq>
+        
+
+        
+        <priority>0.5</priority>
+        
+
+    </url>
+    
+    <url>
+        <loc>http://localhost:4000/springboot/springboot-load-on-startup/</loc>
+        
+        <lastmod>2023-03-11T00:00:00+09:00</lastmod>
+        
+
+        
+        <changefreq>weekly</changefreq>
+        
+
+        
+        <priority>0.5</priority>
+        
+
+    </url>
+    
+    <url>
+        <loc>http://localhost:4000/springboot/how-to-cache-data-from-db-in-springboot/</loc>
+        
+        <lastmod>2023-03-11T00:00:00+09:00</lastmod>
+        
+
+        
+        <changefreq>weekly</changefreq>
+        
+
+        
+        <priority>0.5</priority>
+        
+
+    </url>
+    
+    <url>
         <loc>http://localhost:4000/springboot/mac-jdk-switch/</loc>
         
         <lastmod>2023-03-06T00:00:00+09:00</lastmod>
