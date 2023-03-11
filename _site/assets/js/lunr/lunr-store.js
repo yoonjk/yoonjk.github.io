@@ -323,6 +323,12 @@ var store = [{
         "url": "/springboot/mac-jdk-switch/",
         "teaser": null
       },{
+        "title": "AOP(Aspect Oriented Programming) 이해 - 구성요소",
+        "excerpt":"AOP 구성요소 특정지정에 제어하고 싶은 대상에 제어하고자 하는 기능을 구현하는 AOP에 대해 알아보았습ㄴ다. 이번에는 좀더 용어에 대해 상세하게 알아보겠습니다. AOP의 구성요소는 Aspect Advice PointCut JoinPoint 로 되어 있습니다. Aspect Aspect는 AspectConfig 기능처럼 제어하고자 하는 모듈의 묶음을 의미하며, 이를 위해 어노테이션 @Aspect를 추가합니다. Advice Advice는 특정 지점에서 trigger 되었을 때 실행되는...","categories": ["springboot"],
+        "tags": ["aop"],
+        "url": "/springboot/aop-2/",
+        "teaser": null
+      },{
         "title": "AOP(Aspect Oriented Programming) 란?",
         "excerpt":"AOP 개요 AOP 란 관점 지향 프로그래밍입니다. 처음에 관점 지향이라고 하면 쉽게 머리속에 그려지지 않습니다. 개발을 하면서 layer 아래와 같이 Three layer로 구성하여 구현할 때 layer별로 아래와 같은 기능을 처리해야 하는 경우 logging security 에러 공통처리 등 Filter나, Intereptor, AOP를 고려합니다. AOP는 가장 상세하게 처리를 제어할 수 있습니다. 다시 본론으로...","categories": ["springboot"],
         "tags": ["aop"],
