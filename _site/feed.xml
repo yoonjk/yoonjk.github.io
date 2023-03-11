@@ -1,48 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-12T08:06:14+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">AOP(Aspect Oriented Programming) 이해 - 구성요소</title><link href="http://localhost:4000/springboot/aop-2/" rel="alternate" type="text/html" title="AOP(Aspect Oriented Programming) 이해 - 구성요소" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/aop-2</id><content type="html" xml:base="http://localhost:4000/springboot/aop-2/"><![CDATA[<h2 id="aop-구성요소">AOP 구성요소</h2>
-<p>특정지정에 제어하고 싶은 대상에 제어하고자 하는 기능을 구현하는 AOP에 대해 알아보았습ㄴ다.
-이번에는 좀더 용어에 대해 상세하게 알아보겠습니다. <br />
-AOP의 구성요소는</p>
-<ul>
-  <li>Aspect</li>
-  <li>Advice</li>
-  <li>PointCut</li>
-  <li>JoinPoint</li>
-</ul>
-
-<p>로 되어 있습니다.</p>
-
-<h4 id="aspect">Aspect</h4>
-<p>Aspect는 AspectConfig 기능처럼 제어하고자 하는 모듈의 묶음을 의미하며, 이를 위해 어노테이션 @Aspect를 추가합니다.</p>
-
-<h4 id="advice">Advice</h4>
-<p>Advice는 특정 지점에서 trigger 되었을 때 실행되는 operation 입니다.<br />
-예를 들면 operation이 실행되지는 시점은 다음과 같습니다.</p>
-<ul>
-  <li>시적전/후 : @Around</li>
-  <li>시작전(Before) : @Before</li>
-  <li>성공처리 후 : @AfterReturning</li>
-  <li>에러발생시 : @AfterThrowing</li>
-  <li>처리종료 후 항상 실행 : @After</li>
-</ul>
-
-<h4 id="joinpoint">JoinPoint</h4>
-<p>JoinPoint는 어떤 Operation을 대상으로 할지 정의하는 것입니다.
-Springframework의 AOP는 operation or method 단위로 JoinPoint를 지원합니다.<br />
-대표적인 것이 execution, @Annotation 이 있습니다. 이중에서 execution JoinPoint가 가장 많이 사용되고 있습니다.</p>
-
-<h4 id="pointcut">PointCut</h4>
-<p>어느 시점(Operation or method)에 AOP 모듈을 trigger할지 정의하는 JoinPoint의 상세 스펙 또는 표현식(Expression)입니다.</p>
-
-<h4 id="기타">기타</h4>
-<ul>
-  <li>
-    <p>Weaving(위빙): Weaving은 애플리케이션의 Design/Runtime 등 시점에 Aspect를 적용하는 것<br />
-springframework는 Runtime 시점에 Weaving 합니다.</p>
-  </li>
-  <li>
-    <p>target : Aspect가 적용되는 객체를 의미합니다.</p>
-  </li>
-</ul>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><summary type="html"><![CDATA[AOP 구성요소 특정지정에 제어하고 싶은 대상에 제어하고자 하는 기능을 구현하는 AOP에 대해 알아보았습ㄴ다. 이번에는 좀더 용어에 대해 상세하게 알아보겠습니다. AOP의 구성요소는 Aspect Advice PointCut JoinPoint]]></summary></entry><entry><title type="html">AOP(Aspect Oriented Programming) 이해 - PointCut</title><link href="http://localhost:4000/springboot/aop-pointcut/" rel="alternate" type="text/html" title="AOP(Aspect Oriented Programming) 이해 - PointCut" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/aop-pointcut</id><content type="html" xml:base="http://localhost:4000/springboot/aop-pointcut/"><![CDATA[<h2 id="pointcut-의-이해">PointCut 의 이해</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-12T08:44:40+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">AOP(Aspect Oriented Programming) 이해 - PointCut</title><link href="http://localhost:4000/springboot/aop-pointcut/" rel="alternate" type="text/html" title="AOP(Aspect Oriented Programming) 이해 - PointCut" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/aop-pointcut</id><content type="html" xml:base="http://localhost:4000/springboot/aop-pointcut/"><![CDATA[<h2 id="pointcut-의-이해">PointCut 의 이해</h2>
 <p>어느 시점(Operation or method)에 AOP 모듈을 trigger할지 정의하는 JoinPoint의 상세 스펙 또는 표현식(Expression) 으로
 설명하였습니다. 아래 그림으로 표현하다면 주황색의 내용으로 이해하면 좋을 것 같습니다.</p>
 <ul>
@@ -105,7 +61,99 @@ springframework는 Runtime 시점에 Weaving 합니다.</p>
 </table>
 
 <h2 id="참고">참고</h2>
-<p><a href="https://velog.io/@gmtmoney2357/%EC%8A%A4%ED%94%84%EB%A7%81-%EB%B6%80%ED%8A%B8-%EC%8A%A4%ED%94%84%EB%A7%81-AOP-%ED%8F%AC%EC%9D%B8%ED%8A%B8%EC%BB%B7-%EC%A7%80%EC%8B%9C%EC%9E%90">SeungTaek</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><category term="pointcut" /><summary type="html"><![CDATA[PointCut 의 이해 어느 시점(Operation or method)에 AOP 모듈을 trigger할지 정의하는 JoinPoint의 상세 스펙 또는 표현식(Expression) 으로 설명하였습니다. 아래 그림으로 표현하다면 주황색의 내용으로 이해하면 좋을 것 같습니다. 주황색 유형 : JoinPoint 주황색 표현식(E) : PointCut 주황색 내용 : Advice]]></summary></entry><entry><title type="html">load-on-startup</title><link href="http://localhost:4000/springboot/springboot-load-on-startup/" rel="alternate" type="text/html" title="load-on-startup" /><published>2023-03-11T00:00:00+09:00</published><updated>2023-03-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/springboot-load-on-startup</id><content type="html" xml:base="http://localhost:4000/springboot/springboot-load-on-startup/"><![CDATA[<h2 id="load-on-startup">load-on-startup</h2>
+<p><a href="https://velog.io/@gmtmoney2357/%EC%8A%A4%ED%94%84%EB%A7%81-%EB%B6%80%ED%8A%B8-%EC%8A%A4%ED%94%84%EB%A7%81-AOP-%ED%8F%AC%EC%9D%B8%ED%8A%B8%EC%BB%B7-%EC%A7%80%EC%8B%9C%EC%9E%90">SeungTaek</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><category term="pointcut" /><summary type="html"><![CDATA[PointCut 의 이해 어느 시점(Operation or method)에 AOP 모듈을 trigger할지 정의하는 JoinPoint의 상세 스펙 또는 표현식(Expression) 으로 설명하였습니다. 아래 그림으로 표현하다면 주황색의 내용으로 이해하면 좋을 것 같습니다. 주황색 유형 : JoinPoint 주황색 표현식(E) : PointCut 주황색 내용 : Advice]]></summary></entry><entry><title type="html">AOP(Aspect Oriented Programming) 이해 - 구성요소</title><link href="http://localhost:4000/springboot/aop-2/" rel="alternate" type="text/html" title="AOP(Aspect Oriented Programming) 이해 - 구성요소" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/aop-2</id><content type="html" xml:base="http://localhost:4000/springboot/aop-2/"><![CDATA[<h2 id="aop-구성요소">AOP 구성요소</h2>
+<p>특정지정에 제어하고 싶은 대상에 제어하고자 하는 기능을 구현하는 AOP에 대해 알아보았습ㄴ다.
+이번에는 좀더 용어에 대해 상세하게 알아보겠습니다. <br />
+AOP의 구성요소는</p>
+<ul>
+  <li>Aspect</li>
+  <li>Advice</li>
+  <li>PointCut</li>
+  <li>JoinPoint</li>
+</ul>
+
+<p>로 되어 있습니다.</p>
+
+<h4 id="aspect">Aspect</h4>
+<p>Aspect는 AspectConfig 기능처럼 제어하고자 하는 모듈의 묶음을 의미하며, 이를 위해 어노테이션 @Aspect를 추가합니다.</p>
+
+<h4 id="advice">Advice</h4>
+<p>Advice는 특정 지점에서 trigger 되었을 때 실행되는 operation 입니다.<br />
+예를 들면 operation이 실행되지는 시점은 다음과 같습니다.</p>
+<ul>
+  <li>시적전/후 : @Around</li>
+  <li>시작전(Before) : @Before</li>
+  <li>성공처리 후 : @AfterReturning</li>
+  <li>에러발생시 : @AfterThrowing</li>
+  <li>처리종료 후 항상 실행 : @After</li>
+</ul>
+
+<h4 id="joinpoint">JoinPoint</h4>
+<p>JoinPoint는 어떤 Operation을 대상으로 할지 정의하는 것입니다.
+Springframework의 AOP는 operation or method 단위로 JoinPoint를 지원합니다.<br />
+대표적인 것이 execution, @Annotation 이 있습니다. 이중에서 execution JoinPoint가 가장 많이 사용되고 있습니다.</p>
+
+<h4 id="pointcut">PointCut</h4>
+<p>어느 시점(Operation or method)에 AOP 모듈을 trigger할지 정의하는 JoinPoint의 상세 스펙 또는 표현식(Expression)입니다.</p>
+
+<h4 id="기타">기타</h4>
+<ul>
+  <li>
+    <p>Weaving(위빙): Weaving은 애플리케이션의 Design/Runtime 등 시점에 Aspect를 적용하는 것<br />
+springframework는 Runtime 시점에 Weaving 합니다.</p>
+  </li>
+  <li>
+    <p>target : Aspect가 적용되는 객체를 의미합니다.</p>
+  </li>
+</ul>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><summary type="html"><![CDATA[AOP 구성요소 특정지정에 제어하고 싶은 대상에 제어하고자 하는 기능을 구현하는 AOP에 대해 알아보았습ㄴ다. 이번에는 좀더 용어에 대해 상세하게 알아보겠습니다. AOP의 구성요소는 Aspect Advice PointCut JoinPoint]]></summary></entry><entry><title type="html">AOP(Aspect Oriented Programming) 이해 - PointCut 표현식</title><link href="http://localhost:4000/springboot/aop-pointcut-detail/" rel="alternate" type="text/html" title="AOP(Aspect Oriented Programming) 이해 - PointCut 표현식" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/aop-pointcut-detail</id><content type="html" xml:base="http://localhost:4000/springboot/aop-pointcut-detail/"><![CDATA[<h2 id="pointcut-의-표현식">PointCut 의 표현식</h2>
+<p><strong>리턴타입  패키지경로  클래스지정  메소드지정</strong></p>
+
+<p><strong>예시)</strong></p>
+<ul>
+  <li>execution(* com.demo.microservices..*.*Controller.*(..))</li>
+  <li>execution(* com.demo.microservices..*.*Service.*(..))</li>
+</ul>
+
+<p><strong>리턴타입</strong> :</p>
+<ul>
+  <li>* : 모든 리턴타입 허용</li>
+  <li>void : 리턴타입이 void인 메소드 선택</li>
+  <li>!void : 리턴타압이 void가 아닌 메소드 선택</li>
+</ul>
+
+<p><strong>패키지경로</strong> :</p>
+<ul>
+  <li>com.demo.microservice : 지정한 패키지만 선택</li>
+  <li>com.demo.microservices.. : 지정한 패턴의 모든패키지 선택</li>
+  <li>com.demo.microservices..controller : 마지막 패키지 이름이 controller로 끝나는 패키지 선택</li>
+</ul>
+
+<p><strong>클래스지정</strong></p>
+<ul>
+  <li>UserController : 지정한 클래스만 선택</li>
+  <li>*Controller : 이정한 패턴으로 시작하는 클래스 선택</li>
+  <li>Controller+ : 지정한 클래로 파생된 모든 자식 클래스를 선택. 또는 인터페이스로 구현한 모든 클래스</li>
+</ul>
+
+<p><strong>메소드</strong></p>
+<ul>
+  <li>*(..) : 모든 메소드 선택</li>
+  <li>update*(..) : 메소드명이 update로 시작하는 모든 메소드 선택</li>
+</ul>
+
+<p><strong>매개변수 지정</strong></p>
+<ul>
+  <li>(..) : 모든 매개변수</li>
+  <li>(*) : 반드시 1개의 매개변수를 가지는 메소드</li>
+  <li>(com.demo.microservices.model.UserVO) : 매개변수로 UserVO 를 가지는 메소드만 선택</li>
+  <li>(!om.demo.microservices.model.UserVO) : 매개변수로 UserVO 를 가지지 않는 메소드를 선택</li>
+  <li>(Integer, ..) : 1개 이상의 매개변수를 가지고, 첫번째 매개변수 타입이 Integer인 메소드만 선택</li>
+  <li>(Integer, *) : 반드시 2개의 매개변수를 가지고, 첫번째 타입이 Integer인 메소드만 선택</li>
+</ul>
+
+<h2 id="참조">참조</h2>
+<p><a href="https://sjh836.tistory.com/157">빨간색코딩</a><br />
+<a href="http://closer27.github.io/backend/2017/08/03/spring-aop/">어느 개발자의 한적한 공간</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><category term="pointcut" /><summary type="html"><![CDATA[PointCut 의 표현식 리턴타입 패키지경로 클래스지정 메소드지정]]></summary></entry><entry><title type="html">load-on-startup</title><link href="http://localhost:4000/springboot/springboot-load-on-startup/" rel="alternate" type="text/html" title="load-on-startup" /><published>2023-03-11T00:00:00+09:00</published><updated>2023-03-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/springboot-load-on-startup</id><content type="html" xml:base="http://localhost:4000/springboot/springboot-load-on-startup/"><![CDATA[<h2 id="load-on-startup">load-on-startup</h2>
 <p>Springboot 시작시 첫 호출이 느린 경우 application.yml에 해당 내용 추가 합니다.</p>
 
 <p>application.yml 파일입니다.</p>
@@ -379,23 +427,4 @@ vi로 ~/.zshrc 파일을 편집하고 아래의 항목을 추가합니다.</p>
 
 <p>.zshrc 다시 적용합니다.</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">source</span> ~/.zshrc
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="jdk" /><category term="mac" /><summary type="html"><![CDATA[jdk 11 or 8 switch]]></summary></entry><entry><title type="html">docker-compose로 redis standalone으로 실행</title><link href="http://localhost:4000/docker/redis-docker-compose/" rel="alternate" type="text/html" title="docker-compose로 redis standalone으로 실행" /><published>2023-03-01T00:00:00+09:00</published><updated>2023-03-01T00:00:00+09:00</updated><id>http://localhost:4000/docker/redis-docker-compose</id><content type="html" xml:base="http://localhost:4000/docker/redis-docker-compose/"><![CDATA[<h2 id="redis-docker-compose-파일">Redis docker-compose 파일</h2>
-
-<p>redis docker-compose 파일입니다.</p>
-
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="s1">'</span><span class="s">3.7'</span>
-<span class="na">services</span><span class="pi">:</span>
-    <span class="na">redis</span><span class="pi">:</span>
-      <span class="na">image</span><span class="pi">:</span> <span class="s">redis:alpine</span>
-      <span class="na">command</span><span class="pi">:</span> <span class="s">redis-server --port </span><span class="m">6379</span>
-      <span class="na">container_name</span><span class="pi">:</span> <span class="s">redis</span>
-      <span class="na">labels</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="s2">"</span><span class="s">name=redis"</span>
-        <span class="pi">-</span> <span class="s2">"</span><span class="s">mode=standalone"</span>
-      <span class="na">ports</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="s">6379:6379</span>
-</code></pre></div></div>
-
-<p>docker-compose.yaml 파일이 있는 곳에서 docker-compose를 실행합니다.</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose up -d
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="redis" /><summary type="html"><![CDATA[Redis docker-compose 파일]]></summary></entry></feed>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="jdk" /><category term="mac" /><summary type="html"><![CDATA[jdk 11 or 8 switch]]></summary></entry></feed>
