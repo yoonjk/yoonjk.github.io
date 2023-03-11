@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-11T21:41:35+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Mybatis에 멀티 로우 insert or update</title><link href="http://localhost:4000/springboot/upsert-mybatis-multi-row/" rel="alternate" type="text/html" title="Mybatis에 멀티 로우 insert or update" /><published>2023-03-11T00:00:00+09:00</published><updated>2023-03-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/upsert-mybatis-multi-row</id><content type="html" xml:base="http://localhost:4000/springboot/upsert-mybatis-multi-row/"><![CDATA[<h2 id="mybatis-한번에-여러건-insert-or-update">Mybatis 한번에 여러건 Insert or Update</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-12T06:08:00+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Mybatis에 멀티 로우 insert or update</title><link href="http://localhost:4000/springboot/upsert-mybatis-multi-row/" rel="alternate" type="text/html" title="Mybatis에 멀티 로우 insert or update" /><published>2023-03-11T00:00:00+09:00</published><updated>2023-03-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/upsert-mybatis-multi-row</id><content type="html" xml:base="http://localhost:4000/springboot/upsert-mybatis-multi-row/"><![CDATA[<h2 id="mybatis-한번에-여러건-insert-or-update">Mybatis 한번에 여러건 Insert or Update</h2>
 <p>Mybatis에서 한번에 여러건의 데이터를 insert 또는 update하기 기능을 Mybatis는 이를 지원하고 있다.
 이 기능을 이용하여 약간의 성능에 도움을 받을 수 있습니다.</p>
 
@@ -163,7 +163,68 @@
 
 <p>관련 소스는 아래 <a href="https://gitlab.com/nexweb/sample-service.git">링크</a>에 boot-startup branch에 있습니다.</p>
 
-<p><a href="https://gitlab.com/nexweb/sample-service.git">https://gitlab.com/nexweb/sample-service.git</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="cacheManager" /><summary type="html"><![CDATA[cacheManager 의존성 추가 Springboot 에서 data를 Cache를 하고자 하는 경우 Solution을 시용하는 경우 Redis를 고려합니다. 그러나 Redis 를 사용할 정도의 애플리케이션 아닌 경우 Local Cache만으로 충분한 경우 Singleton 패턴으로 구현할 수도 있지만 이미 만들어진 CacheManager를 사용하면 편리합니다.]]></summary></entry><entry><title type="html">load-on-startup</title><link href="http://localhost:4000/springboot/springboot-load-on-startup/" rel="alternate" type="text/html" title="load-on-startup" /><published>2023-03-11T00:00:00+09:00</published><updated>2023-03-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/springboot-load-on-startup</id><content type="html" xml:base="http://localhost:4000/springboot/springboot-load-on-startup/"><![CDATA[<h2 id="load-on-startup">load-on-startup</h2>
+<p><a href="https://gitlab.com/nexweb/sample-service.git">https://gitlab.com/nexweb/sample-service.git</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="cacheManager" /><summary type="html"><![CDATA[cacheManager 의존성 추가 Springboot 에서 data를 Cache를 하고자 하는 경우 Solution을 시용하는 경우 Redis를 고려합니다. 그러나 Redis 를 사용할 정도의 애플리케이션 아닌 경우 Local Cache만으로 충분한 경우 Singleton 패턴으로 구현할 수도 있지만 이미 만들어진 CacheManager를 사용하면 편리합니다.]]></summary></entry><entry><title type="html">AOP(Aspect Oriented Programming) 란?</title><link href="http://localhost:4000/springboot/aop/" rel="alternate" type="text/html" title="AOP(Aspect Oriented Programming) 란?" /><published>2023-03-11T00:00:00+09:00</published><updated>2023-03-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/aop</id><content type="html" xml:base="http://localhost:4000/springboot/aop/"><![CDATA[<h2 id="aop-개요">AOP 개요</h2>
+<p>AOP 란 관점 지향 프로그래밍입니다. 처음에 관점 지향이라고 하면 쉽게 머리속에 그려지지 않습니다.
+개발을 하면서 layer 아래와 같이 Three layer로 구성하여 구현할 때 layer별로 아래와 같은 기능을 처리해야 하는 경우</p>
+<ul>
+  <li>logging</li>
+  <li>security</li>
+  <li>에러 공통처리 등<br />
+Filter나, Intereptor, AOP를 고려합니다. AOP는 가장 상세하게 처리를 제어할 수 있습니다.</li>
+</ul>
+
+<p>다시 본론으로 돌와서 관점지향이란 수많은 트랜잭션이 흘러가고 있을 떄 특정 지점에서 무엇인가 제어하고 싶을 떄 
+처리하는 지점을 모듈로 구현하기 쉽게 지원하는게 AOP입니다.</p>
+
+<p><img src="/assets/images/springboot/02-spring-aop.png" alt="aop" /></p>
+
+<h2 id="aop-사용하기-위해서-필요한-것">AOP 사용하기 위해서 필요한 것</h2>
+<ul>
+  <li>Spring Boot AOP Dependency 추가</li>
+  <li>클래스(빈)를 하나 생성하고 @Aspect 어노테이션 추가</li>
+  <li>AOP 모듈 구현</li>
+</ul>
+
+<h4 id="spring-boot-aop-dependency-추가">Spring Boot AOP Dependency 추가</h4>
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-aop<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div></div>
+
+<h4 id="aop-관련-클래스를-만들기위해-클래스빈를-하나-생성하고-aspect-어노테이션-붙이기">AOP 관련 클래스를 만들기위해 클래스(빈)를 하나 생성하고 @Aspect 어노테이션 붙이기</h4>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Component</span>
+<span class="nd">@Aspect</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AspectConfig</span> <span class="o">{</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h4 id="특정-지점을-제어하고자-하는-기능을-작성">특정 지점을 제어하고자 하는 기능을 작성</h4>
+<p>아래 코드에서 제어하고자 하는 특정 지점은</p>
+<ul>
+  <li>모든 constroller의 operation이 실행될 때</li>
+  <li>operation 실행되기 전/후에 로그를 출력하는 모듈 
+AOP기능으로 가장 많이 사용하는 로그 출력하는 AOP 예제입니다.
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Slf4j</span>
+<span class="nd">@Component</span>
+<span class="nd">@Aspect</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AspectConfig</span> <span class="o">{</span>
+  <span class="nd">@Around</span><span class="o">(</span><span class="s">"execution(* com.demo.microservices.controller.*Controller.*(..))"</span><span class="o">)</span>
+  <span class="kd">public</span> <span class="nc">Object</span> <span class="nf">logPrint</span><span class="o">(</span><span class="nc">ProceedingJoinPoint</span> <span class="n">joinPoint</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+      <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"-------------------------------------"</span><span class="o">)</span>
+      <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"Before Execute Method!"</span><span class="o">);</span>
+      <span class="nc">Object</span> <span class="n">proceed</span> <span class="o">=</span> <span class="n">joinPoint</span><span class="o">.</span><span class="na">proceed</span><span class="o">();</span>
+      <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"After Execute Method!!!!"</span><span class="o">);</span>
+      <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"-------------------------------------"</span><span class="o">)</span>
+
+      <span class="k">return</span> <span class="n">proceed</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+</ul>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><summary type="html"><![CDATA[AOP 개요 AOP 란 관점 지향 프로그래밍입니다. 처음에 관점 지향이라고 하면 쉽게 머리속에 그려지지 않습니다. 개발을 하면서 layer 아래와 같이 Three layer로 구성하여 구현할 때 layer별로 아래와 같은 기능을 처리해야 하는 경우 logging security 에러 공통처리 등 Filter나, Intereptor, AOP를 고려합니다. AOP는 가장 상세하게 처리를 제어할 수 있습니다.]]></summary></entry><entry><title type="html">load-on-startup</title><link href="http://localhost:4000/springboot/springboot-load-on-startup/" rel="alternate" type="text/html" title="load-on-startup" /><published>2023-03-11T00:00:00+09:00</published><updated>2023-03-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/springboot-load-on-startup</id><content type="html" xml:base="http://localhost:4000/springboot/springboot-load-on-startup/"><![CDATA[<h2 id="load-on-startup">load-on-startup</h2>
 <p>Springboot 시작시 첫 호출이 느린 경우 application.yml에 해당 내용 추가 합니다.</p>
 
 <p>application.yml 파일입니다.</p>
@@ -316,28 +377,4 @@ Mac 또는 Linux (GUI) 컴퓨터를 사용하는 경우 터미널을 불러와 �
 </code></pre></div></div>
 <p>또는</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose ps
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="postgresSQL" /><summary type="html"><![CDATA[PostgresSQL docker-compose 파일 새로운 응용 프로그램을 만들 때 PostgreSQL을 데이터베이스 엔진으로 자주 사용합니다. 빠르고 사용하기 쉬우 며 인터넷상의 거의 모든 프로그래밍 언어 및 플랫폼과 매우 잘 통합됩니다. Windows 시스템을 실행하지 않고 macOS 또는 Linux에서 PostgreSQL 데이터베이스를 실행해야하는 경우 Docker를 사용할 수 있습니다. 몇 가지 간단한 명령만으로 도커에서 PostgreSQL을 시작하는 것은 매우 쉽습니다.]]></summary></entry><entry><title type="html">Jenkins 서버 재시작 방법</title><link href="http://localhost:4000/devops/how-to-restart-jenkins/" rel="alternate" type="text/html" title="Jenkins 서버 재시작 방법" /><published>2023-02-24T00:00:00+09:00</published><updated>2023-02-24T00:00:00+09:00</updated><id>http://localhost:4000/devops/how-to-restart-jenkins</id><content type="html" xml:base="http://localhost:4000/devops/how-to-restart-jenkins/"><![CDATA[<h2 id="jenkins-port-확인-및-복사">Jenkins Port 확인 및 복사</h2>
-<p>Jenkins 를 재시작하는 방법은 3가지 있습니다.</p>
-<ul>
-  <li>systemctl 사용</li>
-  <li>browser에서 restart</li>
-  <li>browser에서 safeRestart</li>
-</ul>
-
-<h2 id="systemctl-사용">Systemctl 사용</h2>
-<p>systemctl 명령어로 사용하는 경우 Jenkins Job이 실행중인 것이 있더라도 jenkins를 즉시 재시작합니다.<br />
-Jenkins 가 재시작 이후 그존 실행중인 job은 다시 재개합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl restart jenkins
-</code></pre></div></div>
-<h2 id="browser에서-restart">browser에서 restart</h2>
-<p>Jenkins를 로그인 해서 browser url에서 your-jenkins/restart를 입력하면 다음과 같이 재시작 여부를 묻는 메시지가 출력됩니다.</p>
-
-<p>Are you sure you want to restart Jenkins?</p>
-
-<p>Yes 버튼을 클릭합니다.</p>
-
-<h2 id="browser에서-saferestart">browser에서 safeRestart</h2>
-<p>browser에서 safeRestart를 수행하면 다음과 같이 메시지가 출력됩니다. 기존 수행중인 Job 은 중단되고, Jenkins가 재시작하면 다시 재게합니다.<br />
-Yes 버튼을 클릭합니다.</p>
-
-<p>Are you sure you want to restart Jenkins? Jenkins will restart once all running jobs are finished. (Pipeline builds may prevent Jenkins from restarting for a short period of time in some cases, but if so, they will be paused at the next available opportunity and then resumed after Jenkins restarts.)</p>]]></content><author><name>Jaeguk Yun</name></author><category term="devops" /><category term="jenkins" /><summary type="html"><![CDATA[Jenkins Port 확인 및 복사 Jenkins 를 재시작하는 방법은 3가지 있습니다. systemctl 사용 browser에서 restart browser에서 safeRestart]]></summary></entry></feed>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="postgresSQL" /><summary type="html"><![CDATA[PostgresSQL docker-compose 파일 새로운 응용 프로그램을 만들 때 PostgreSQL을 데이터베이스 엔진으로 자주 사용합니다. 빠르고 사용하기 쉬우 며 인터넷상의 거의 모든 프로그래밍 언어 및 플랫폼과 매우 잘 통합됩니다. Windows 시스템을 실행하지 않고 macOS 또는 Linux에서 PostgreSQL 데이터베이스를 실행해야하는 경우 Docker를 사용할 수 있습니다. 몇 가지 간단한 명령만으로 도커에서 PostgreSQL을 시작하는 것은 매우 쉽습니다.]]></summary></entry></feed>

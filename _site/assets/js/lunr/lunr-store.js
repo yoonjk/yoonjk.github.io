@@ -323,6 +323,12 @@ var store = [{
         "url": "/springboot/mac-jdk-switch/",
         "teaser": null
       },{
+        "title": "AOP(Aspect Oriented Programming) 란?",
+        "excerpt":"AOP 개요 AOP 란 관점 지향 프로그래밍입니다. 처음에 관점 지향이라고 하면 쉽게 머리속에 그려지지 않습니다. 개발을 하면서 layer 아래와 같이 Three layer로 구성하여 구현할 때 layer별로 아래와 같은 기능을 처리해야 하는 경우 logging security 에러 공통처리 등 Filter나, Intereptor, AOP를 고려합니다. AOP는 가장 상세하게 처리를 제어할 수 있습니다. 다시 본론으로...","categories": ["springboot"],
+        "tags": ["aop"],
+        "url": "/springboot/aop/",
+        "teaser": null
+      },{
         "title": "CacheMager 사용하여 data 캐시하는 방법",
         "excerpt":"cacheManager 의존성 추가 Springboot 에서 data를 Cache를 하고자 하는 경우 Solution을 시용하는 경우 Redis를 고려합니다. 그러나 Redis 를 사용할 정도의 애플리케이션 아닌 경우 Local Cache만으로 충분한 경우 Singleton 패턴으로 구현할 수도 있지만 이미 만들어진 CacheManager를 사용하면 편리합니다. Springboot에서 cacheManager를 사용하기 위해서 maven 빌드 환경에서 pom.xml에 아래의 의존성을 추가합니다. &lt;dependency&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;...","categories": ["springboot"],
         "tags": ["cacheManager"],
