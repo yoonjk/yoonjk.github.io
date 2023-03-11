@@ -88,14 +88,14 @@ public class SampleUser {
 		    agree_inform,
 		    birth_dt
 		) values 
-	  foreach collection="list" item="item" separator=",">
+		foreach collection="list" item="item" separator=",">
 		(
-			  #{item.userId},
-			  #{item.userNm},
-			  #{item.addr},
-			  #{item.cellPhone},
-			  #{item.agreeInform},
-			  #{item.birthDt}
+		    #{item.userId},
+		    #{item.userNm},
+		    #{item.addr},
+		    #{item.cellPhone},
+		    #{item.agreeInform},
+		    #{item.birthDt}
 		)
 		</foreach> 	
 		on duplicate key update 
