@@ -364,4 +364,10 @@ var store = [{
         "tags": ["mybatis"],
         "url": "/springboot/upsert-mybatis-multi-row/",
         "teaser": null
+      },{
+        "title": "AOP(Aspect Oriented Programming) 란?",
+        "excerpt":"AOP 개요 AOP 란 관점 지향 프로그래밍입니다. 처음에 관점 지향이라고 하면 쉽게 머리속에 그려지지 않습니다. 개발을 하면서 layer 아래와 같이 Three layer로 구성하여 구현할 때 layer별로 아래와 같은 기능을 처리해야 하는 경우 logging security 에러 공통처리 등 Filter나, Intereptor, AOP를 고려합니다. AOP는 가장 상세하게 처리를 제어할 수 있습니다. 다시 본론으로...","categories": ["springboot"],
+        "tags": ["aop"],
+        "url": "/springboot/aop-test/",
+        "teaser": null
       }]
