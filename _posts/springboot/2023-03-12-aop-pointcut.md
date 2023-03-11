@@ -1,5 +1,5 @@
 ---
-title: AOP(Aspect Oriented Programming)  PointCut 
+title: AOP(Aspect Oriented Programming) PointCut 
 categories:
   - springboot
 tags: 
