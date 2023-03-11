@@ -81,15 +81,14 @@ public class SampleUser {
 <mapper namespace="com.demo.microservices.dao.SampleUserDao">
 	<insert id="bulkloadUsers" parameterType="list">
 		insert into tb_user00 (
-			  user_id,
-	      user_nm,
-	      addr,
-	      cell_phone,
-	      agree_inform,
-	      birth_dt
+		    user_id,
+		    user_nm,
+		    addr,
+		    cell_phone,
+		    agree_inform,
+		    birth_dt
 		) values 
-
-		<foreach collection="list" item="item" separator=",">
+	  foreach collection="list" item="item" separator=",">
 		(
 			  #{item.userId},
 			  #{item.userNm},

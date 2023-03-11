@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-11T21:28:06+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Mybatis에 멀티 로우 insert or update</title><link href="http://localhost:4000/springboot/upsert-mybatis-multi-row/" rel="alternate" type="text/html" title="Mybatis에 멀티 로우 insert or update" /><published>2023-03-11T00:00:00+09:00</published><updated>2023-03-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/upsert-mybatis-multi-row</id><content type="html" xml:base="http://localhost:4000/springboot/upsert-mybatis-multi-row/"><![CDATA[<h2 id="mybatis-한번에-여러건-insert-or-update">Mybatis 한번에 여러건 Insert or Update</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-11T21:39:57+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Mybatis에 멀티 로우 insert or update</title><link href="http://localhost:4000/springboot/upsert-mybatis-multi-row/" rel="alternate" type="text/html" title="Mybatis에 멀티 로우 insert or update" /><published>2023-03-11T00:00:00+09:00</published><updated>2023-03-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/upsert-mybatis-multi-row</id><content type="html" xml:base="http://localhost:4000/springboot/upsert-mybatis-multi-row/"><![CDATA[<h2 id="mybatis-한번에-여러건-insert-or-update">Mybatis 한번에 여러건 Insert or Update</h2>
 <p>Mybatis에서 한번에 여러건의 데이터를 insert 또는 update하기 기능을 Mybatis는 이를 지원하고 있다.
 이 기능을 이용하여 약간의 성능에 도움을 받을 수 있습니다.</p>
 
@@ -74,15 +74,14 @@
 <span class="nt">&lt;mapper</span> <span class="na">namespace=</span><span class="s">"com.demo.microservices.dao.SampleUserDao"</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;insert</span> <span class="na">id=</span><span class="s">"bulkloadUsers"</span> <span class="na">parameterType=</span><span class="s">"list"</span><span class="nt">&gt;</span>
 		insert into tb_user00 (
-			  user_id,
-	      user_nm,
-	      addr,
-	      cell_phone,
-	      agree_inform,
-	      birth_dt
+		    user_id,
+		    user_nm,
+		    addr,
+		    cell_phone,
+		    agree_inform,
+		    birth_dt
 		) values 
-
-		<span class="nt">&lt;foreach</span> <span class="na">collection=</span><span class="s">"list"</span> <span class="na">item=</span><span class="s">"item"</span> <span class="na">separator=</span><span class="s">","</span><span class="nt">&gt;</span>
+	  foreach collection="list" item="item" separator=","&gt;
 		(
 			  #{item.userId},
 			  #{item.userNm},
