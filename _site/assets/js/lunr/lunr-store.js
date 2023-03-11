@@ -323,12 +323,6 @@ var store = [{
         "url": "/springboot/mac-jdk-switch/",
         "teaser": null
       },{
-        "title": "AOP(Aspect Oriented Programming) 이해 - 구성요소",
-        "excerpt":"AOP 구성요소 특정지정에 제어하고 싶은 대상에 제어하고자 하는 기능을 구현하는 AOP에 대해 알아보았습ㄴ다. 이번에는 좀더 용어에 대해 상세하게 알아보겠습니다. AOP의 구성요소는 Aspect Advice PointCut JoinPoint 로 되어 있습니다. Aspect Aspect는 AspectConfig 기능처럼 제어하고자 하는 모듈의 묶음을 의미하며, 이를 위해 어노테이션 @Aspect를 추가합니다. Advice Advice는 특정 지점에서 trigger 되었을 때 실행되는...","categories": ["springboot"],
-        "tags": ["aop"],
-        "url": "/springboot/aop-2/",
-        "teaser": null
-      },{
         "title": "AOP(Aspect Oriented Programming) 란?",
         "excerpt":"AOP 개요 AOP 란 관점 지향 프로그래밍입니다. 처음에 관점 지향이라고 하면 쉽게 머리속에 그려지지 않습니다. 개발을 하면서 layer 아래와 같이 Three layer로 구성하여 구현할 때 layer별로 아래와 같은 기능을 처리해야 하는 경우 logging security 에러 공통처리 등 Filter나, Intereptor, AOP를 고려합니다. AOP는 가장 상세하게 처리를 제어할 수 있습니다. 다시 본론으로...","categories": ["springboot"],
         "tags": ["aop"],
@@ -351,5 +345,17 @@ var store = [{
         "excerpt":"Mybatis 한번에 여러건 Insert or Update Mybatis에서 한번에 여러건의 데이터를 insert 또는 update하기 기능을 Mybatis는 이를 지원하고 있다. 이 기능을 이용하여 약간의 성능에 도움을 받을 수 있습니다. Mybatis에서 여러건의 데이터를 Insert or Update 예제입니다. 다음은 Controller 입니다. @Slf4j @RestController public class HelloController { @Autowired private SampleUserDao sampleUserDao; @ApiOperation(value=\"bulkload\") @PostMapping(value=\"/users/bulkload\") public...","categories": ["springboot"],
         "tags": ["mybatis"],
         "url": "/springboot/upsert-mybatis-multi-row/",
+        "teaser": null
+      },{
+        "title": "AOP(Aspect Oriented Programming) 이해 - 구성요소",
+        "excerpt":"AOP 구성요소 특정지정에 제어하고 싶은 대상에 제어하고자 하는 기능을 구현하는 AOP에 대해 알아보았습ㄴ다. 이번에는 좀더 용어에 대해 상세하게 알아보겠습니다. AOP의 구성요소는 Aspect Advice PointCut JoinPoint 로 되어 있습니다. Aspect Aspect는 AspectConfig 기능처럼 제어하고자 하는 모듈의 묶음을 의미하며, 이를 위해 어노테이션 @Aspect를 추가합니다. Advice Advice는 특정 지점에서 trigger 되었을 때 실행되는...","categories": ["springboot"],
+        "tags": ["aop"],
+        "url": "/springboot/aop-2/",
+        "teaser": null
+      },{
+        "title": "AOP(Aspect Oriented Programming) 이해 - PointCut",
+        "excerpt":"PointCut 의 이해 어느 시점(Operation or method)에 AOP 모듈을 trigger할지 정의하는 JoinPoint의 상세 스펙 또는 표현식(Expression) 으로 설명하였습니다. 아래 그림으로 표현하다면 주황색의 내용으로 이해하면 좋을 것 같습니다. 주황색 유형 : JoinPoint 주황색 표현식 : PointCut 주황색 내용 : Advice JoinPoint 설명 execution 메소드 실행 조인 포인트를 매칭한다. 스프링 AOP에서 가장...","categories": ["springboot"],
+        "tags": ["aop","pointcut"],
+        "url": "/springboot/aop-pointcut/",
         "teaser": null
       }]

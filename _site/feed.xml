@@ -1,4 +1,111 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-12T07:03:10+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">load-on-startup</title><link href="http://localhost:4000/springboot/springboot-load-on-startup/" rel="alternate" type="text/html" title="load-on-startup" /><published>2023-03-11T00:00:00+09:00</published><updated>2023-03-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/springboot-load-on-startup</id><content type="html" xml:base="http://localhost:4000/springboot/springboot-load-on-startup/"><![CDATA[<h2 id="load-on-startup">load-on-startup</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-12T08:03:25+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">AOP(Aspect Oriented Programming) 이해 - 구성요소</title><link href="http://localhost:4000/springboot/aop-2/" rel="alternate" type="text/html" title="AOP(Aspect Oriented Programming) 이해 - 구성요소" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/aop-2</id><content type="html" xml:base="http://localhost:4000/springboot/aop-2/"><![CDATA[<h2 id="aop-구성요소">AOP 구성요소</h2>
+<p>특정지정에 제어하고 싶은 대상에 제어하고자 하는 기능을 구현하는 AOP에 대해 알아보았습ㄴ다.
+이번에는 좀더 용어에 대해 상세하게 알아보겠습니다. <br />
+AOP의 구성요소는</p>
+<ul>
+  <li>Aspect</li>
+  <li>Advice</li>
+  <li>PointCut</li>
+  <li>JoinPoint</li>
+</ul>
+
+<p>로 되어 있습니다.</p>
+
+<h4 id="aspect">Aspect</h4>
+<p>Aspect는 AspectConfig 기능처럼 제어하고자 하는 모듈의 묶음을 의미하며, 이를 위해 어노테이션 @Aspect를 추가합니다.</p>
+
+<h4 id="advice">Advice</h4>
+<p>Advice는 특정 지점에서 trigger 되었을 때 실행되는 operation 입니다.<br />
+예를 들면 operation이 실행되지는 시점은 다음과 같습니다.</p>
+<ul>
+  <li>시적전/후 : @Around</li>
+  <li>시작전(Before) : @Before</li>
+  <li>성공처리 후 : @AfterReturning</li>
+  <li>에러발생시 : @AfterThrowing</li>
+  <li>처리종료 후 항상 실행 : @After</li>
+</ul>
+
+<h4 id="joinpoint">JoinPoint</h4>
+<p>JoinPoint는 어떤 Operation을 대상으로 할지 정의하는 것입니다.
+Springframework의 AOP는 operation or method 단위로 JoinPoint를 지원합니다.<br />
+대표적인 것이 execution, @Annotation 이 있습니다. 이중에서 execution JoinPoint가 가장 많이 사용되고 있습니다.</p>
+
+<h4 id="pointcut">PointCut</h4>
+<p>어느 시점(Operation or method)에 AOP 모듈을 trigger할지 정의하는 JoinPoint의 상세 스펙 또는 표현식(Expression)입니다.</p>
+
+<h4 id="기타">기타</h4>
+<ul>
+  <li>
+    <p>Weaving(위빙): Weaving은 애플리케이션의 Design/Runtime 등 시점에 Aspect를 적용하는 것<br />
+springframework는 Runtime 시점에 Weaving 합니다.</p>
+  </li>
+  <li>
+    <p>target : Aspect가 적용되는 객체를 의미합니다.</p>
+  </li>
+</ul>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><summary type="html"><![CDATA[AOP 구성요소 특정지정에 제어하고 싶은 대상에 제어하고자 하는 기능을 구현하는 AOP에 대해 알아보았습ㄴ다. 이번에는 좀더 용어에 대해 상세하게 알아보겠습니다. AOP의 구성요소는 Aspect Advice PointCut JoinPoint]]></summary></entry><entry><title type="html">AOP(Aspect Oriented Programming) 이해 - PointCut</title><link href="http://localhost:4000/springboot/aop-pointcut/" rel="alternate" type="text/html" title="AOP(Aspect Oriented Programming) 이해 - PointCut" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/aop-pointcut</id><content type="html" xml:base="http://localhost:4000/springboot/aop-pointcut/"><![CDATA[<h2 id="pointcut-의-이해">PointCut 의 이해</h2>
+<p>어느 시점(Operation or method)에 AOP 모듈을 trigger할지 정의하는 JoinPoint의 상세 스펙 또는 표현식(Expression) 으로
+설명하였습니다. 아래 그림으로 표현하다면 주황색의 내용으로 이해하면 좋을 것 같습니다.</p>
+<ul>
+  <li>주황색 유형 : JoinPoint</li>
+  <li>주황색 표현식 : PointCut</li>
+  <li>주황색 내용 : Advice</li>
+</ul>
+
+<p><img src="/assets/images/springboot/03-spring-aop-pointcut.png" alt="ponintcut" /></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>JoinPoint</th>
+      <th>설명</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>execution</td>
+      <td>메소드 실행 조인 포인트를 매칭한다. 스프링 AOP에서 가장 많이 사용하고, 기능도 복잡</td>
+    </tr>
+    <tr>
+      <td>within</td>
+      <td>특정 타입 내의 조인 포인트를 매칭.</td>
+    </tr>
+    <tr>
+      <td>args</td>
+      <td>인자가 주어진 타입의 인스턴스인 조인 포인트</td>
+    </tr>
+    <tr>
+      <td>this</td>
+      <td>스프링 빈 객체(스프링 AOP 프록시)를 대상으로 하는 조인 포인트</td>
+    </tr>
+    <tr>
+      <td>target</td>
+      <td>Target 객체(스프링 AOP 프록시가 가르키는 실제 대상)를 대상으로 하는 조인 포인트</td>
+    </tr>
+    <tr>
+      <td>@target</td>
+      <td>실행 객체의 클래스에 주어진 타입의 애노테이션이 있는 조인 포인트</td>
+    </tr>
+    <tr>
+      <td>@within</td>
+      <td>주어진 애노테이션이 있는 타입 내 조인 포인트</td>
+    </tr>
+    <tr>
+      <td>@annotation</td>
+      <td>메서드가 주어진 애노테이션을 가지고 있는 조인 포인트를 매칭</td>
+    </tr>
+    <tr>
+      <td>@args</td>
+      <td>전달된 실제 인수의 런타임 타입이 주어진 타입의 애노테이션을 갖는 조인 포인트</td>
+    </tr>
+    <tr>
+      <td>bean</td>
+      <td>스프링 전용 포인트컷 지시자, 빈의 이름으로 포인트컷을 지정한다.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="참고">참고</h2>
+<p><a href="https://velog.io/@gmtmoney2357/%EC%8A%A4%ED%94%84%EB%A7%81-%EB%B6%80%ED%8A%B8-%EC%8A%A4%ED%94%84%EB%A7%81-AOP-%ED%8F%AC%EC%9D%B8%ED%8A%B8%EC%BB%B7-%EC%A7%80%EC%8B%9C%EC%9E%90">SeungTaek</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><category term="pointcut" /><summary type="html"><![CDATA[PointCut 의 이해 어느 시점(Operation or method)에 AOP 모듈을 trigger할지 정의하는 JoinPoint의 상세 스펙 또는 표현식(Expression) 으로 설명하였습니다. 아래 그림으로 표현하다면 주황색의 내용으로 이해하면 좋을 것 같습니다. 주황색 유형 : JoinPoint 주황색 표현식 : PointCut 주황색 내용 : Advice]]></summary></entry><entry><title type="html">load-on-startup</title><link href="http://localhost:4000/springboot/springboot-load-on-startup/" rel="alternate" type="text/html" title="load-on-startup" /><published>2023-03-11T00:00:00+09:00</published><updated>2023-03-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/springboot-load-on-startup</id><content type="html" xml:base="http://localhost:4000/springboot/springboot-load-on-startup/"><![CDATA[<h2 id="load-on-startup">load-on-startup</h2>
 <p>Springboot 시작시 첫 호출이 느린 경우 application.yml에 해당 내용 추가 합니다.</p>
 
 <p>application.yml 파일입니다.</p>
@@ -6,7 +113,132 @@
   <span class="na">mvc</span><span class="pi">:</span>
     <span class="na">servlet</span><span class="pi">:</span>
       <span class="na">load-on-startup</span><span class="pi">:</span> <span class="m">1</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="load-on-startup" /><summary type="html"><![CDATA[load-on-startup Springboot 시작시 첫 호출이 느린 경우 application.yml에 해당 내용 추가 합니다.]]></summary></entry><entry><title type="html">Mybatis에 멀티 로우 insert or update</title><link href="http://localhost:4000/springboot/upsert-mybatis-multi-row/" rel="alternate" type="text/html" title="Mybatis에 멀티 로우 insert or update" /><published>2023-03-11T00:00:00+09:00</published><updated>2023-03-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/upsert-mybatis-multi-row</id><content type="html" xml:base="http://localhost:4000/springboot/upsert-mybatis-multi-row/"><![CDATA[<h2 id="mybatis-한번에-여러건-insert-or-update">Mybatis 한번에 여러건 Insert or Update</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="load-on-startup" /><summary type="html"><![CDATA[load-on-startup Springboot 시작시 첫 호출이 느린 경우 application.yml에 해당 내용 추가 합니다.]]></summary></entry><entry><title type="html">CacheMager 사용하여 data 캐시하는 방법</title><link href="http://localhost:4000/springboot/how-to-cache-data-from-db-in-springboot/" rel="alternate" type="text/html" title="CacheMager 사용하여 data 캐시하는 방법" /><published>2023-03-11T00:00:00+09:00</published><updated>2023-03-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/how-to-cache%20data%20from%20db%20in%20springboot</id><content type="html" xml:base="http://localhost:4000/springboot/how-to-cache-data-from-db-in-springboot/"><![CDATA[<h2 id="cachemanager-의존성-추가">cacheManager 의존성 추가</h2>
+<p>Springboot 에서 data를 Cache를 하고자 하는 경우 Solution을 시용하는 경우 Redis를 고려합니다.<br />
+그러나 Redis 를 사용할 정도의 애플리케이션 아닌 경우 Local Cache만으로 충분한 경우 Singleton 패턴으로 구현할 수도 있지만 이미 만들어진 CacheManager를 사용하면 편리합니다.</p>
+
+<p>Springboot에서 cacheManager를 사용하기 위해서 maven 빌드 환경에서 pom.xml에 아래의 의존성을 추가합니다.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">		</span><span class="s">&lt;dependency&gt;</span>
+<span class="err">			</span><span class="s">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span>
+<span class="err">			</span><span class="s">&lt;artifactId&gt;spring-boot-starter-cache&lt;/artifactId&gt;</span>
+<span class="err">		</span><span class="s">&lt;/dependency&gt;</span>
+</code></pre></div></div>
+<h2 id="cachemanager-bean-등록">cacheManager Bean 등록</h2>
+<p>CacheManager를 사용하기 위해 먼저 CacheManager Bean을 등록합니다.<br />
+@EnableCaching을 어노테이션을 추가하고 SimpleCacheManager를 생성하고 CacheManager에 cache하고자 하는 대상에 대해 cacheName 을 등록합니다. 아래는 user 정보와 product 정보를 cache하기 위해서 cache name을 users, products으로 cache name을 등록하였습니다.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Configuration</span>
+<span class="nd">@EnableCaching</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CacheManagerConfig</span> <span class="kd">extends</span> <span class="nc">CachingConfigurerSupport</span> <span class="o">{</span>
+
+	<span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="nc">CacheManager</span> <span class="nf">cacheManager</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">SimpleCacheManager</span> <span class="n">cacheManager</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SimpleCacheManager</span><span class="o">();</span>
+        <span class="n">cacheManager</span><span class="o">.</span><span class="na">setCaches</span><span class="o">(</span><span class="nc">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span>
+          <span class="k">new</span> <span class="nf">ConcurrentMapCache</span><span class="o">(</span><span class="s">"users"</span><span class="o">),</span> 
+          <span class="k">new</span> <span class="nf">ConcurrentMapCache</span><span class="o">(</span><span class="s">"products"</span><span class="o">)));</span>
+        <span class="k">return</span> <span class="n">cacheManager</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="cachemanager-service-구현">cacheManager Service 구현</h2>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RequiredArgsConstructor</span>
+<span class="nd">@RestController</span>
+<span class="nd">@Slf4j</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ProductController</span> <span class="o">{</span>
+	<span class="kd">private</span> <span class="kd">final</span> <span class="nc">ProductService</span> <span class="n">productService</span><span class="o">;</span>
+	
+	<span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/products/{productId}"</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="nc">ResponseEntity</span><span class="o">&lt;?&gt;</span> <span class="n">findByProduct</span><span class="o">(</span><span class="nd">@PathVariable</span> <span class="nc">String</span> <span class="n">productId</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">ProductVo</span> <span class="n">product</span> <span class="o">=</span> <span class="n">productService</span><span class="o">.</span><span class="na">findByProductId</span><span class="o">(</span><span class="n">productId</span><span class="o">);</span>
+		
+		<span class="k">return</span> <span class="k">new</span> <span class="nc">ResponseEntity</span><span class="o">&lt;</span><span class="nc">Object</span><span class="o">&gt;(</span><span class="n">product</span><span class="o">,</span> <span class="nc">HttpStatus</span><span class="o">.</span><span class="na">OK</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p>Service에서 productId를 조회했을 때 @Cacheable 오노테이션을 사용하여 Product Id가 조회된 결과를 Caching합니다. 두번째 같은 product id를 조회하면 Cache된 정보가 조회됩니다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Slf4j</span>
+<span class="nd">@RequiredArgsConstructor</span>
+<span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ProductService</span> <span class="o">{</span>
+	<span class="kd">private</span> <span class="kd">final</span> <span class="nc">ProductDao</span> <span class="n">productDao</span><span class="o">;</span>
+	
+	<span class="nd">@Cacheable</span><span class="o">(</span><span class="n">value</span><span class="o">=</span><span class="s">"products"</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="nc">ProductVo</span> <span class="nf">findByProductId</span><span class="o">(</span><span class="nc">String</span> <span class="n">productId</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">ProductVo</span> <span class="n">product</span> <span class="o">=</span> <span class="n">productDao</span><span class="o">.</span><span class="na">findByProductId</span><span class="o">(</span><span class="n">productId</span><span class="o">);</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"product:{}"</span><span class="o">,</span> <span class="n">product</span><span class="o">);</span>
+		<span class="k">return</span> <span class="n">product</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>관련 소스는 아래 <a href="https://gitlab.com/nexweb/sample-service.git">링크</a>에 boot-startup branch에 있습니다.</p>
+
+<p><a href="https://gitlab.com/nexweb/sample-service.git">https://gitlab.com/nexweb/sample-service.git</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="cacheManager" /><summary type="html"><![CDATA[cacheManager 의존성 추가 Springboot 에서 data를 Cache를 하고자 하는 경우 Solution을 시용하는 경우 Redis를 고려합니다. 그러나 Redis 를 사용할 정도의 애플리케이션 아닌 경우 Local Cache만으로 충분한 경우 Singleton 패턴으로 구현할 수도 있지만 이미 만들어진 CacheManager를 사용하면 편리합니다.]]></summary></entry><entry><title type="html">AOP(Aspect Oriented Programming) 란?</title><link href="http://localhost:4000/springboot/aop/" rel="alternate" type="text/html" title="AOP(Aspect Oriented Programming) 란?" /><published>2023-03-11T00:00:00+09:00</published><updated>2023-03-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/aop</id><content type="html" xml:base="http://localhost:4000/springboot/aop/"><![CDATA[<h2 id="aop-개요">AOP 개요</h2>
+<p>AOP 란 관점 지향 프로그래밍입니다. 처음에 관점 지향이라고 하면 쉽게 머리속에 그려지지 않습니다.
+개발을 하면서 layer 아래와 같이 Three layer로 구성하여 구현할 때 layer별로 아래와 같은 기능을 처리해야 하는 경우</p>
+<ul>
+  <li>logging</li>
+  <li>security</li>
+  <li>에러 공통처리 등<br />
+Filter나, Intereptor, AOP를 고려합니다. AOP는 가장 상세하게 처리를 제어할 수 있습니다.</li>
+</ul>
+
+<p>다시 본론으로 돌와서 관점지향이란 수많은 트랜잭션이 흘러가고 있을 떄 특정 지점에서 무엇인가 제어하고 싶을 떄 
+처리하는 지점을 모듈로 구현하기 쉽게 지원하는게 AOP입니다.</p>
+
+<p><img src="/assets/images/springboot/02-spring-aop.png" alt="aop" /></p>
+
+<h2 id="aop-사용하기-위해서-필요한-것">AOP 사용하기 위해서 필요한 것</h2>
+<ul>
+  <li>Spring Boot AOP Dependency 추가</li>
+  <li>클래스(빈)를 하나 생성하고 @Aspect 어노테이션 추가</li>
+  <li>AOP 모듈 구현</li>
+</ul>
+
+<h4 id="spring-boot-aop-dependency-추가">Spring Boot AOP Dependency 추가</h4>
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-aop<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div></div>
+
+<h4 id="aop-관련-클래스를-만들기위해-클래스빈를-하나-생성하고-aspect-어노테이션-붙이기">AOP 관련 클래스를 만들기위해 클래스(빈)를 하나 생성하고 @Aspect 어노테이션 붙이기</h4>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Component</span>
+<span class="nd">@Aspect</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AspectConfig</span> <span class="o">{</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h4 id="특정-지점을-제어하고자-하는-기능을-작성">특정 지점을 제어하고자 하는 기능을 작성</h4>
+<p>아래 코드에서 제어하고자 하는 특정 지점은</p>
+<ul>
+  <li>모든 constroller의 operation이 실행될 때</li>
+  <li>operation 실행되기 전/후에 로그를 출력하는 모듈 
+AOP기능으로 가장 많이 사용하는 로그 출력하는 AOP 예제입니다.
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Slf4j</span>
+<span class="nd">@Component</span>
+<span class="nd">@Aspect</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AspectConfig</span> <span class="o">{</span>
+  <span class="nd">@Around</span><span class="o">(</span><span class="s">"execution(* com.demo.microservices.controller.*Controller.*(..))"</span><span class="o">)</span>
+  <span class="kd">public</span> <span class="nc">Object</span> <span class="nf">logPrint</span><span class="o">(</span><span class="nc">ProceedingJoinPoint</span> <span class="n">joinPoint</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+      <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"-------------------------------------"</span><span class="o">)</span>
+      <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"Before Execute Method!"</span><span class="o">);</span>
+      <span class="nc">Object</span> <span class="n">proceed</span> <span class="o">=</span> <span class="n">joinPoint</span><span class="o">.</span><span class="na">proceed</span><span class="o">();</span>
+      <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"After Execute Method!!!!"</span><span class="o">);</span>
+      <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"-------------------------------------"</span><span class="o">)</span>
+
+      <span class="k">return</span> <span class="n">proceed</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+</ul>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><summary type="html"><![CDATA[AOP 개요 AOP 란 관점 지향 프로그래밍입니다. 처음에 관점 지향이라고 하면 쉽게 머리속에 그려지지 않습니다. 개발을 하면서 layer 아래와 같이 Three layer로 구성하여 구현할 때 layer별로 아래와 같은 기능을 처리해야 하는 경우 logging security 에러 공통처리 등 Filter나, Intereptor, AOP를 고려합니다. AOP는 가장 상세하게 처리를 제어할 수 있습니다.]]></summary></entry><entry><title type="html">Mybatis에 멀티 로우 insert or update</title><link href="http://localhost:4000/springboot/upsert-mybatis-multi-row/" rel="alternate" type="text/html" title="Mybatis에 멀티 로우 insert or update" /><published>2023-03-11T00:00:00+09:00</published><updated>2023-03-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/upsert-mybatis-multi-row</id><content type="html" xml:base="http://localhost:4000/springboot/upsert-mybatis-multi-row/"><![CDATA[<h2 id="mybatis-한번에-여러건-insert-or-update">Mybatis 한번에 여러건 Insert or Update</h2>
 <p>Mybatis에서 한번에 여러건의 데이터를 insert 또는 update하기 기능을 Mybatis는 이를 지원하고 있다.
 이 기능을 이용하여 약간의 성능에 도움을 받을 수 있습니다.</p>
 
@@ -107,176 +339,7 @@
 		    birth_dt = values(birth_dt)
 	<span class="nt">&lt;/insert&gt;</span>
 <span class="nt">&lt;/mapper&gt;</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="mybatis" /><summary type="html"><![CDATA[Mybatis 한번에 여러건 Insert or Update Mybatis에서 한번에 여러건의 데이터를 insert 또는 update하기 기능을 Mybatis는 이를 지원하고 있다. 이 기능을 이용하여 약간의 성능에 도움을 받을 수 있습니다.]]></summary></entry><entry><title type="html">AOP(Aspect Oriented Programming) 란?</title><link href="http://localhost:4000/springboot/aop/" rel="alternate" type="text/html" title="AOP(Aspect Oriented Programming) 란?" /><published>2023-03-11T00:00:00+09:00</published><updated>2023-03-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/aop</id><content type="html" xml:base="http://localhost:4000/springboot/aop/"><![CDATA[<h2 id="aop-개요">AOP 개요</h2>
-<p>AOP 란 관점 지향 프로그래밍입니다. 처음에 관점 지향이라고 하면 쉽게 머리속에 그려지지 않습니다.
-개발을 하면서 layer 아래와 같이 Three layer로 구성하여 구현할 때 layer별로 아래와 같은 기능을 처리해야 하는 경우</p>
-<ul>
-  <li>logging</li>
-  <li>security</li>
-  <li>에러 공통처리 등<br />
-Filter나, Intereptor, AOP를 고려합니다. AOP는 가장 상세하게 처리를 제어할 수 있습니다.</li>
-</ul>
-
-<p>다시 본론으로 돌와서 관점지향이란 수많은 트랜잭션이 흘러가고 있을 떄 특정 지점에서 무엇인가 제어하고 싶을 떄 
-처리하는 지점을 모듈로 구현하기 쉽게 지원하는게 AOP입니다.</p>
-
-<p><img src="/assets/images/springboot/02-spring-aop.png" alt="aop" /></p>
-
-<h2 id="aop-사용하기-위해서-필요한-것">AOP 사용하기 위해서 필요한 것</h2>
-<ul>
-  <li>Spring Boot AOP Dependency 추가</li>
-  <li>클래스(빈)를 하나 생성하고 @Aspect 어노테이션 추가</li>
-  <li>AOP 모듈 구현</li>
-</ul>
-
-<h4 id="spring-boot-aop-dependency-추가">Spring Boot AOP Dependency 추가</h4>
-<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependency&gt;</span>
-  <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-  <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-aop<span class="nt">&lt;/artifactId&gt;</span>
-<span class="nt">&lt;/dependency&gt;</span>
-</code></pre></div></div>
-
-<h4 id="aop-관련-클래스를-만들기위해-클래스빈를-하나-생성하고-aspect-어노테이션-붙이기">AOP 관련 클래스를 만들기위해 클래스(빈)를 하나 생성하고 @Aspect 어노테이션 붙이기</h4>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Component</span>
-<span class="nd">@Aspect</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AspectConfig</span> <span class="o">{</span>
-
-<span class="o">}</span>
-</code></pre></div></div>
-
-<h4 id="특정-지점을-제어하고자-하는-기능을-작성">특정 지점을 제어하고자 하는 기능을 작성</h4>
-<p>아래 코드에서 제어하고자 하는 특정 지점은</p>
-<ul>
-  <li>모든 constroller의 operation이 실행될 때</li>
-  <li>operation 실행되기 전/후에 로그를 출력하는 모듈 
-AOP기능으로 가장 많이 사용하는 로그 출력하는 AOP 예제입니다.
-    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Slf4j</span>
-<span class="nd">@Component</span>
-<span class="nd">@Aspect</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AspectConfig</span> <span class="o">{</span>
-  <span class="nd">@Around</span><span class="o">(</span><span class="s">"execution(* com.demo.microservices.controller.*Controller.*(..))"</span><span class="o">)</span>
-  <span class="kd">public</span> <span class="nc">Object</span> <span class="nf">logPrint</span><span class="o">(</span><span class="nc">ProceedingJoinPoint</span> <span class="n">joinPoint</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
-      <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"-------------------------------------"</span><span class="o">)</span>
-      <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"Before Execute Method!"</span><span class="o">);</span>
-      <span class="nc">Object</span> <span class="n">proceed</span> <span class="o">=</span> <span class="n">joinPoint</span><span class="o">.</span><span class="na">proceed</span><span class="o">();</span>
-      <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"After Execute Method!!!!"</span><span class="o">);</span>
-      <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"-------------------------------------"</span><span class="o">)</span>
-
-      <span class="k">return</span> <span class="n">proceed</span><span class="o">;</span>
-  <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div>    </div>
-  </li>
-</ul>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><summary type="html"><![CDATA[AOP 개요 AOP 란 관점 지향 프로그래밍입니다. 처음에 관점 지향이라고 하면 쉽게 머리속에 그려지지 않습니다. 개발을 하면서 layer 아래와 같이 Three layer로 구성하여 구현할 때 layer별로 아래와 같은 기능을 처리해야 하는 경우 logging security 에러 공통처리 등 Filter나, Intereptor, AOP를 고려합니다. AOP는 가장 상세하게 처리를 제어할 수 있습니다.]]></summary></entry><entry><title type="html">AOP(Aspect Oriented Programming) 이해 - 구성요소</title><link href="http://localhost:4000/springboot/aop-2/" rel="alternate" type="text/html" title="AOP(Aspect Oriented Programming) 이해 - 구성요소" /><published>2023-03-11T00:00:00+09:00</published><updated>2023-03-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/aop-2</id><content type="html" xml:base="http://localhost:4000/springboot/aop-2/"><![CDATA[<h2 id="aop-구성요소">AOP 구성요소</h2>
-<p>특정지정에 제어하고 싶은 대상에 제어하고자 하는 기능을 구현하는 AOP에 대해 알아보았습ㄴ다.
-이번에는 좀더 용어에 대해 상세하게 알아보겠습니다. <br />
-AOP의 구성요소는</p>
-<ul>
-  <li>Aspect</li>
-  <li>Advice</li>
-  <li>PointCut</li>
-  <li>JoinPoint</li>
-</ul>
-
-<p>로 되어 있습니다.</p>
-
-<h4 id="aspect">Aspect</h4>
-<p>Aspect는 AspectConfig 기능처럼 제어하고자 하는 모듈의 묶음을 의미하며, 이를 위해 어노테이션 @Aspect를 추가합니다.</p>
-
-<h4 id="advice">Advice</h4>
-<p>Advice는 특정 지점에서 trigger 되었을 때 실행되는 operation 입니다.<br />
-예를 들면 operation이 실행되지는 시점은 다음과 같습니다.</p>
-<ul>
-  <li>시적전/후 : @Around</li>
-  <li>시작전(Before) : @Before</li>
-  <li>성공처리 후 : @AfterReturning</li>
-  <li>에러발생시 : @AfterThrowing</li>
-  <li>처리종료 후 항상 실행 : @After</li>
-</ul>
-
-<h4 id="joinpoint">JoinPoint</h4>
-<p>JoinPoint는 어떤 Operation을 대상으로 할지 정의하는 것입니다.
-Springframework의 AOP는 operation or method 단위로 JoinPoint를 지원합니다.<br />
-대표적인 것이 execution, @Annotation 이 있습니다.</p>
-
-<h4 id="pointcut">PointCut</h4>
-<p>어느 시점(Operation or method)에 AOP 모듈을 trigger할지 정의하는 JoinPoint의 상세 스펙 또는 표현식(Expression)입니다.</p>
-
-<h4 id="기타">기타</h4>
-<ul>
-  <li>
-    <p>Weaving(위빙): Weaving은 애플리케이션의 Design/Runtime 등 시점에 Aspect를 적용하는 것<br />
-springframework는 Runtime 시점에 Weaving 합니다.</p>
-  </li>
-  <li>
-    <p>target : Aspect가 적용되는 객체를 의미합니다.</p>
-  </li>
-</ul>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><summary type="html"><![CDATA[AOP 구성요소 특정지정에 제어하고 싶은 대상에 제어하고자 하는 기능을 구현하는 AOP에 대해 알아보았습ㄴ다. 이번에는 좀더 용어에 대해 상세하게 알아보겠습니다. AOP의 구성요소는 Aspect Advice PointCut JoinPoint]]></summary></entry><entry><title type="html">CacheMager 사용하여 data 캐시하는 방법</title><link href="http://localhost:4000/springboot/how-to-cache-data-from-db-in-springboot/" rel="alternate" type="text/html" title="CacheMager 사용하여 data 캐시하는 방법" /><published>2023-03-11T00:00:00+09:00</published><updated>2023-03-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/how-to-cache%20data%20from%20db%20in%20springboot</id><content type="html" xml:base="http://localhost:4000/springboot/how-to-cache-data-from-db-in-springboot/"><![CDATA[<h2 id="cachemanager-의존성-추가">cacheManager 의존성 추가</h2>
-<p>Springboot 에서 data를 Cache를 하고자 하는 경우 Solution을 시용하는 경우 Redis를 고려합니다.<br />
-그러나 Redis 를 사용할 정도의 애플리케이션 아닌 경우 Local Cache만으로 충분한 경우 Singleton 패턴으로 구현할 수도 있지만 이미 만들어진 CacheManager를 사용하면 편리합니다.</p>
-
-<p>Springboot에서 cacheManager를 사용하기 위해서 maven 빌드 환경에서 pom.xml에 아래의 의존성을 추가합니다.</p>
-
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">		</span><span class="s">&lt;dependency&gt;</span>
-<span class="err">			</span><span class="s">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span>
-<span class="err">			</span><span class="s">&lt;artifactId&gt;spring-boot-starter-cache&lt;/artifactId&gt;</span>
-<span class="err">		</span><span class="s">&lt;/dependency&gt;</span>
-</code></pre></div></div>
-<h2 id="cachemanager-bean-등록">cacheManager Bean 등록</h2>
-<p>CacheManager를 사용하기 위해 먼저 CacheManager Bean을 등록합니다.<br />
-@EnableCaching을 어노테이션을 추가하고 SimpleCacheManager를 생성하고 CacheManager에 cache하고자 하는 대상에 대해 cacheName 을 등록합니다. 아래는 user 정보와 product 정보를 cache하기 위해서 cache name을 users, products으로 cache name을 등록하였습니다.</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Configuration</span>
-<span class="nd">@EnableCaching</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CacheManagerConfig</span> <span class="kd">extends</span> <span class="nc">CachingConfigurerSupport</span> <span class="o">{</span>
-
-	<span class="nd">@Bean</span>
-    <span class="kd">public</span> <span class="nc">CacheManager</span> <span class="nf">cacheManager</span><span class="o">()</span> <span class="o">{</span>
-        <span class="nc">SimpleCacheManager</span> <span class="n">cacheManager</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SimpleCacheManager</span><span class="o">();</span>
-        <span class="n">cacheManager</span><span class="o">.</span><span class="na">setCaches</span><span class="o">(</span><span class="nc">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span>
-          <span class="k">new</span> <span class="nf">ConcurrentMapCache</span><span class="o">(</span><span class="s">"users"</span><span class="o">),</span> 
-          <span class="k">new</span> <span class="nf">ConcurrentMapCache</span><span class="o">(</span><span class="s">"products"</span><span class="o">)));</span>
-        <span class="k">return</span> <span class="n">cacheManager</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<h2 id="cachemanager-service-구현">cacheManager Service 구현</h2>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RequiredArgsConstructor</span>
-<span class="nd">@RestController</span>
-<span class="nd">@Slf4j</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ProductController</span> <span class="o">{</span>
-	<span class="kd">private</span> <span class="kd">final</span> <span class="nc">ProductService</span> <span class="n">productService</span><span class="o">;</span>
-	
-	<span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/products/{productId}"</span><span class="o">)</span>
-	<span class="kd">public</span> <span class="nc">ResponseEntity</span><span class="o">&lt;?&gt;</span> <span class="n">findByProduct</span><span class="o">(</span><span class="nd">@PathVariable</span> <span class="nc">String</span> <span class="n">productId</span><span class="o">)</span> <span class="o">{</span>
-		<span class="nc">ProductVo</span> <span class="n">product</span> <span class="o">=</span> <span class="n">productService</span><span class="o">.</span><span class="na">findByProductId</span><span class="o">(</span><span class="n">productId</span><span class="o">);</span>
-		
-		<span class="k">return</span> <span class="k">new</span> <span class="nc">ResponseEntity</span><span class="o">&lt;</span><span class="nc">Object</span><span class="o">&gt;(</span><span class="n">product</span><span class="o">,</span> <span class="nc">HttpStatus</span><span class="o">.</span><span class="na">OK</span><span class="o">);</span>
-	<span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
-<p>Service에서 productId를 조회했을 때 @Cacheable 오노테이션을 사용하여 Product Id가 조회된 결과를 Caching합니다. 두번째 같은 product id를 조회하면 Cache된 정보가 조회됩니다.</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Slf4j</span>
-<span class="nd">@RequiredArgsConstructor</span>
-<span class="nd">@Service</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ProductService</span> <span class="o">{</span>
-	<span class="kd">private</span> <span class="kd">final</span> <span class="nc">ProductDao</span> <span class="n">productDao</span><span class="o">;</span>
-	
-	<span class="nd">@Cacheable</span><span class="o">(</span><span class="n">value</span><span class="o">=</span><span class="s">"products"</span><span class="o">)</span>
-	<span class="kd">public</span> <span class="nc">ProductVo</span> <span class="nf">findByProductId</span><span class="o">(</span><span class="nc">String</span> <span class="n">productId</span><span class="o">)</span> <span class="o">{</span>
-		<span class="nc">ProductVo</span> <span class="n">product</span> <span class="o">=</span> <span class="n">productDao</span><span class="o">.</span><span class="na">findByProductId</span><span class="o">(</span><span class="n">productId</span><span class="o">);</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"product:{}"</span><span class="o">,</span> <span class="n">product</span><span class="o">);</span>
-		<span class="k">return</span> <span class="n">product</span><span class="o">;</span>
-	<span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<p>관련 소스는 아래 <a href="https://gitlab.com/nexweb/sample-service.git">링크</a>에 boot-startup branch에 있습니다.</p>
-
-<p><a href="https://gitlab.com/nexweb/sample-service.git">https://gitlab.com/nexweb/sample-service.git</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="cacheManager" /><summary type="html"><![CDATA[cacheManager 의존성 추가 Springboot 에서 data를 Cache를 하고자 하는 경우 Solution을 시용하는 경우 Redis를 고려합니다. 그러나 Redis 를 사용할 정도의 애플리케이션 아닌 경우 Local Cache만으로 충분한 경우 Singleton 패턴으로 구현할 수도 있지만 이미 만들어진 CacheManager를 사용하면 편리합니다.]]></summary></entry><entry><title type="html">MacOS openJDK 1.8 설치하기</title><link href="http://localhost:4000/springboot/mac-jdk-switch/" rel="alternate" type="text/html" title="MacOS openJDK 1.8 설치하기" /><published>2023-03-06T00:00:00+09:00</published><updated>2023-03-06T00:00:00+09:00</updated><id>http://localhost:4000/springboot/mac-jdk-switch</id><content type="html" xml:base="http://localhost:4000/springboot/mac-jdk-switch/"><![CDATA[<h2 id="open-jdk">open jdk</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="mybatis" /><summary type="html"><![CDATA[Mybatis 한번에 여러건 Insert or Update Mybatis에서 한번에 여러건의 데이터를 insert 또는 update하기 기능을 Mybatis는 이를 지원하고 있다. 이 기능을 이용하여 약간의 성능에 도움을 받을 수 있습니다.]]></summary></entry><entry><title type="html">MacOS openJDK 1.8 설치하기</title><link href="http://localhost:4000/springboot/mac-jdk-switch/" rel="alternate" type="text/html" title="MacOS openJDK 1.8 설치하기" /><published>2023-03-06T00:00:00+09:00</published><updated>2023-03-06T00:00:00+09:00</updated><id>http://localhost:4000/springboot/mac-jdk-switch</id><content type="html" xml:base="http://localhost:4000/springboot/mac-jdk-switch/"><![CDATA[<h2 id="open-jdk">open jdk</h2>
 <p>mac에서 open jdk를 설치합니다</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew tap AdoptOpenJDK/openjdk
@@ -335,33 +398,4 @@ vi로 ~/.zshrc 파일을 편집하고 아래의 항목을 추가합니다.</p>
 
 <p>docker-compose.yaml 파일이 있는 곳에서 docker-compose를 실행합니다.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose up -d
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="redis" /><summary type="html"><![CDATA[Redis docker-compose 파일]]></summary></entry><entry><title type="html">mysql docker-compose 로 실행하기</title><link href="http://localhost:4000/docker/mysql-docker-compose/" rel="alternate" type="text/html" title="mysql docker-compose 로 실행하기" /><published>2023-03-01T00:00:00+09:00</published><updated>2023-03-01T00:00:00+09:00</updated><id>http://localhost:4000/docker/mysql-docker-compose</id><content type="html" xml:base="http://localhost:4000/docker/mysql-docker-compose/"><![CDATA[<h2 id="mysql-docker-compose-파일">mysql docker-compose 파일</h2>
-
-<p>mysql docker-compose 파일입니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> data
-vi docker-compose.yaml
-</code></pre></div></div>
-
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="s2">"</span><span class="s">3"</span> <span class="c1"># 파일규격버전</span>
-
-<span class="na">services</span><span class="pi">:</span>
-  <span class="na">db</span><span class="pi">:</span> <span class="c1"># 서비스이름</span>
-    <span class="na">image</span><span class="pi">:</span> <span class="s">mysql:8.0.23</span> <span class="c1"># 이미지</span>
-    <span class="na">container_name</span><span class="pi">:</span> <span class="s">mysql</span> <span class="c1"># 컨테이너 이름</span>
-    <span class="na">ports</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">3306:3306"</span> <span class="c1"># 포트 설정  외부:내부</span>
-    <span class="na">environment</span><span class="pi">:</span>
-      <span class="na">MYSQL_ROOT_PASSWORD</span><span class="pi">:</span> <span class="s2">"</span><span class="s">1234qwer"</span> <span class="c1"># 패스워드설정</span>
-      <span class="na">MYSQL_DATABASE</span><span class="pi">:</span> <span class="s2">"</span><span class="s">demo"</span>
-      <span class="na">MYSQL_USER</span><span class="pi">:</span> <span class="s2">"</span><span class="s">user00"</span>
-      <span class="na">MYSQL_PASSWORD</span><span class="pi">:</span> <span class="s2">"</span><span class="s">admin1234"</span>
-    <span class="na">command</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">--character-set-server=utf8</span> <span class="c1"># 인코딩</span>
-      <span class="pi">-</span> <span class="s">--collation-server=utf8_general_ci</span>
-    <span class="na">volumes</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">./data:/dev/docker/db/mysql-db01</span> <span class="c1"># 마운트 설정</span>
-</code></pre></div></div>
-
-<p>docker-compose.yaml 파일이 있는 곳에서 docker-compose를 실행합니다.</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose up -d
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="mysql" /><summary type="html"><![CDATA[mysql docker-compose 파일]]></summary></entry></feed>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="redis" /><summary type="html"><![CDATA[Redis docker-compose 파일]]></summary></entry></feed>
