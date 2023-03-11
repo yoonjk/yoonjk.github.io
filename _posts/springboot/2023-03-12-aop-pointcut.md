@@ -11,7 +11,7 @@ tags:
 어느 시점(Operation or method)에 AOP 모듈을 trigger할지 정의하는 JoinPoint의 상세 스펙 또는 표현식(Expression) 으로
 설명하였습니다. 아래 그림으로 표현하다면 주황색의 내용으로 이해하면 좋을 것 같습니다.  
 - 주황색 유형 : JoinPoint  
-- 주황색 표현식 : PointCut  
+- 주황색 표현식(E) : PointCut  
 - 주황색 내용 : Advice
 
 ![ponintcut]({{ "/assets/images/springboot/03-spring-aop-pointcut.png" }})

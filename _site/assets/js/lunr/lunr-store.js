@@ -354,7 +354,7 @@ var store = [{
         "teaser": null
       },{
         "title": "AOP(Aspect Oriented Programming) 이해 - PointCut",
-        "excerpt":"PointCut 의 이해 어느 시점(Operation or method)에 AOP 모듈을 trigger할지 정의하는 JoinPoint의 상세 스펙 또는 표현식(Expression) 으로 설명하였습니다. 아래 그림으로 표현하다면 주황색의 내용으로 이해하면 좋을 것 같습니다. 주황색 유형 : JoinPoint 주황색 표현식 : PointCut 주황색 내용 : Advice JoinPoint 설명 execution 메소드 실행 조인 포인트를 매칭한다. 스프링 AOP에서 가장...","categories": ["springboot"],
+        "excerpt":"PointCut 의 이해 어느 시점(Operation or method)에 AOP 모듈을 trigger할지 정의하는 JoinPoint의 상세 스펙 또는 표현식(Expression) 으로 설명하였습니다. 아래 그림으로 표현하다면 주황색의 내용으로 이해하면 좋을 것 같습니다. 주황색 유형 : JoinPoint 주황색 표현식(E) : PointCut 주황색 내용 : Advice JoinPoint 설명 execution 메소드 실행 조인 포인트를 매칭한다. 스프링 AOP에서 가장...","categories": ["springboot"],
         "tags": ["aop","pointcut"],
         "url": "/springboot/aop-pointcut/",
         "teaser": null
