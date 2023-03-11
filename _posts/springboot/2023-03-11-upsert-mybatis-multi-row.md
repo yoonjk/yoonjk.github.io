@@ -6,7 +6,7 @@ tags:
   - mybatis
 ---
 
-## open jdk
+## Mybatis 한번에 여러건 Insert or Update
 Mybatis에서 한번에 여러건의 데이터를 insert 또는 update하기 기능을 Mybatis는 이를 지원하고 있다.
 이 기능을 이용하여 약간의 성능에 도움을 받을 수 있습니다.  
 
