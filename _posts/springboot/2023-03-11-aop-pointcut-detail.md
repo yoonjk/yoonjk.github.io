@@ -15,6 +15,15 @@ tags:
 - execution(* com.demo.microservices..\*.\*Controller.\*(..))  
 - execution(* com.demo.microservices..\*.\*Service.\*(..))  
 
+| JoinPoint | PointCut Spec |
+|---|---|
+| execution | \*	com.demo.microservices..\*.\*Controller.\*(..)	)
+
+|리턴타입|패키지|클래스명|매소드명|매개변수
+|---|---|---|---|---|
+|\*	|com.demo.microservices..\*.|\*Controller.|\*(..)	)
+
+
 **리턴타입** : 
 - \* : 모든 리턴타입 허용
 - void : 리턴타입이 void인 메소드 선택

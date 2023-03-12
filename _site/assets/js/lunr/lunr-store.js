@@ -330,7 +330,7 @@ var store = [{
         "teaser": null
       },{
         "title": "AOP(Aspect Oriented Programming) PointCut 표현식",
-        "excerpt":"PointCut 의 표현식 리턴타입 패키지경로 클래스지정 메소드지정 예시) execution(* com.demo.microservices..*.*Controller.*(..)) execution(* com.demo.microservices..*.*Service.*(..)) 리턴타입 : * : 모든 리턴타입 허용 void : 리턴타입이 void인 메소드 선택 !void : 리턴타압이 void가 아닌 메소드 선택 패키지경로 : com.demo.microservice : 지정한 패키지만 선택 com.demo.microservices.. : 지정한 패턴의 모든패키지 선택 com.demo.microservices..controller : 마지막 패키지 이름이...","categories": ["springboot"],
+        "excerpt":"PointCut 의 표현식 리턴타입 패키지경로 클래스지정 메소드지정 예시) execution(* com.demo.microservices..*.*Controller.*(..)) execution(* com.demo.microservices..*.*Service.*(..)) JoinPoint PointCut Spec execution * com.demo.microservices..*.*Controller.*(..) ) 리턴타입 패키지 클래스명 매소드명 매개변수 * com.demo.microservices..*. *Controller. *(..) )   리턴타입 : * : 모든 리턴타입 허용 void : 리턴타입이 void인 메소드 선택 !void : 리턴타압이 void가 아닌 메소드 선택...","categories": ["springboot"],
         "tags": ["aop","pointcut"],
         "url": "/springboot/aop-pointcut-detail/",
         "teaser": null
@@ -363,11 +363,5 @@ var store = [{
         "excerpt":"Mybatis 한번에 여러건 Insert or Update Mybatis에서 한번에 여러건의 데이터를 insert 또는 update하기 기능을 Mybatis는 이를 지원하고 있다. 이 기능을 이용하여 약간의 성능에 도움을 받을 수 있습니다. Mybatis에서 여러건의 데이터를 Insert or Update 예제입니다. 다음은 Controller 입니다. @Slf4j @RestController public class HelloController { @Autowired private SampleUserDao sampleUserDao; @ApiOperation(value=\"bulkload\") @PostMapping(value=\"/users/bulkload\") public...","categories": ["springboot"],
         "tags": ["mybatis"],
         "url": "/springboot/upsert-mybatis-multi-row/",
-        "teaser": null
-      },{
-        "title": "AOP(Aspect Oriented Programming) 란?",
-        "excerpt":"AOP 개요 AOP 란 관점 지향 프로그래밍입니다. 처음에 관점 지향이라고 하면 쉽게 머리속에 그려지지 않습니다. 개발을 하면서 layer 아래와 같이 Three layer로 구성하여 구현할 때 layer별로 아래와 같은 기능을 처리해야 하는 경우 logging security 에러 공통처리 등 Filter나, Intereptor, AOP를 고려합니다. AOP는 가장 상세하게 처리를 제어할 수 있습니다. 다시 본론으로...","categories": ["springboot"],
-        "tags": ["aop"],
-        "url": "/springboot/aop-test/",
         "teaser": null
       }]
