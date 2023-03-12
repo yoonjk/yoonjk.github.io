@@ -364,4 +364,10 @@ var store = [{
         "tags": ["mybatis"],
         "url": "/springboot/upsert-mybatis-multi-row/",
         "teaser": null
+      },{
+        "title": "AOP(Aspect Oriented Programming) 예시",
+        "excerpt":"AOP 예시 @Aspect public class AspectConfig { @Pointcut(\"@annotation(org.springframework.web.bind.annotation.GetMapping)\") public void getMapping() { } @Pointcut(\"@annotation(org.springframework.web.bind.annotation.PostMapping)\") public void postMapping() { } @Pointcut(\"@annotation(org.springframework.web.bind.annotation.RequestMapping)\") public void requestMapping() { } @Pointcut(\"execution(* com.demo.microservices..*.*Service.*(..))\") public void serviceExcution() { } @Around(value=\"serviceExcution()\") public Object around(ProceedingJoinPoint pjt) throws Throwable { log.info(\"------------- Around logging Start -------------\"); Object retValue = null; try...","categories": ["springboot"],
+        "tags": ["aop"],
+        "url": "/springboot/aop-examples/",
+        "teaser": null
       }]

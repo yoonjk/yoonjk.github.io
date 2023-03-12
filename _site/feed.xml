@@ -1,4 +1,235 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-12T09:04:54+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">AOP(Aspect Oriented Programming) 란?</title><link href="http://localhost:4000/springboot/aop/" rel="alternate" type="text/html" title="AOP(Aspect Oriented Programming) 란?" /><published>2023-03-11T00:00:00+09:00</published><updated>2023-03-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/aop</id><content type="html" xml:base="http://localhost:4000/springboot/aop/"><![CDATA[<h2 id="aop-개요">AOP 개요</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-12T09:08:07+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">AOP(Aspect Oriented Programming) 예시</title><link href="http://localhost:4000/springboot/aop-examples/" rel="alternate" type="text/html" title="AOP(Aspect Oriented Programming) 예시" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/aop-examples</id><content type="html" xml:base="http://localhost:4000/springboot/aop-examples/"><![CDATA[<h2 id="aop-예시">AOP 예시</h2>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Aspect</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AspectConfig</span> <span class="o">{</span>
+	<span class="nd">@Pointcut</span><span class="o">(</span><span class="s">"@annotation(org.springframework.web.bind.annotation.GetMapping)"</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">getMapping</span><span class="o">()</span> <span class="o">{</span>
+		
+	<span class="o">}</span>
+	
+	<span class="nd">@Pointcut</span><span class="o">(</span><span class="s">"@annotation(org.springframework.web.bind.annotation.PostMapping)"</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">postMapping</span><span class="o">()</span> <span class="o">{</span>
+		
+	<span class="o">}</span>
+	
+	<span class="nd">@Pointcut</span><span class="o">(</span><span class="s">"@annotation(org.springframework.web.bind.annotation.RequestMapping)"</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">requestMapping</span><span class="o">()</span> <span class="o">{</span>
+		
+	<span class="o">}</span>
+	
+	<span class="nd">@Pointcut</span><span class="o">(</span><span class="s">"execution(* com.demo.microservices..*.*Service.*(..))"</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">serviceExcution</span><span class="o">()</span> <span class="o">{</span>
+		
+	<span class="o">}</span>
+	
+	<span class="nd">@Around</span><span class="o">(</span><span class="n">value</span><span class="o">=</span><span class="s">"serviceExcution()"</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="nc">Object</span> <span class="nf">around</span><span class="o">(</span><span class="nc">ProceedingJoinPoint</span>  <span class="n">pjt</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------- Around logging Start -------------"</span><span class="o">);</span>
+		
+		<span class="nc">Object</span> <span class="n">retValue</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">retValue</span> <span class="o">=</span> <span class="n">pjt</span><span class="o">.</span><span class="na">proceed</span><span class="o">();</span>
+		<span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">Throwable</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"error:{}"</span><span class="o">,</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+			
+		<span class="o">}</span>
+
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"--------------"</span><span class="o">);</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">" return val:{}"</span><span class="o">,</span> <span class="n">retValue</span><span class="o">);</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------- Around logging end -------------"</span><span class="o">);</span>
+		<span class="k">return</span> <span class="n">retValue</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="nd">@Before</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"serviceExcution()"</span><span class="o">)</span> 
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">before</span><span class="o">(</span><span class="nc">JoinPoint</span> <span class="n">jointPoint</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------- Before logging -------------"</span> <span class="o">);</span>
+	<span class="o">}</span>
+	
+	<span class="nd">@AfterReturning</span><span class="o">(</span><span class="n">pointcut</span> <span class="o">=</span> <span class="s">"serviceExcution()"</span><span class="o">,</span> <span class="n">returning</span> <span class="o">=</span> <span class="s">"result"</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">afterRuturning</span><span class="o">(</span><span class="nc">JoinPoint</span> <span class="n">joinPoint</span><span class="o">,</span> <span class="nc">Object</span> <span class="n">result</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------- AfterReturning logging -------------"</span> <span class="o">);</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">" result :{}"</span><span class="o">,</span> <span class="n">result</span><span class="o">);</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"----------------------------------------"</span> <span class="o">);</span>
+	<span class="o">}</span>
+	
+	<span class="nd">@After</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"serviceExcution()"</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">after</span><span class="o">(</span><span class="nc">JoinPoint</span> <span class="n">joinPoint</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------- After logging -------------"</span><span class="o">);</span>
+	<span class="o">}</span>
+	
+	<span class="nd">@AfterThrowing</span><span class="o">(</span><span class="n">pointcut</span> <span class="o">=</span> <span class="s">"serviceExcution()"</span><span class="o">,</span> <span class="n">throwing</span> <span class="o">=</span> <span class="s">"e"</span><span class="o">)</span> 
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">afterThrowing</span><span class="o">(</span><span class="nc">JoinPoint</span> <span class="n">joinPoint</span><span class="o">,</span> <span class="nc">Throwable</span> <span class="n">e</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------- AfterThrowing logging -------------"</span><span class="o">);</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">" throwable :{}"</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"----------------------------------------"</span> <span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><summary type="html"><![CDATA[AOP 예시]]></summary></entry><entry><title type="html">CacheMager 사용하여 data 캐시하는 방법</title><link href="http://localhost:4000/springboot/how-to-cache-data-from-db-in-springboot/" rel="alternate" type="text/html" title="CacheMager 사용하여 data 캐시하는 방법" /><published>2023-03-11T00:00:00+09:00</published><updated>2023-03-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/how-to-cache%20data%20from%20db%20in%20springboot</id><content type="html" xml:base="http://localhost:4000/springboot/how-to-cache-data-from-db-in-springboot/"><![CDATA[<h2 id="cachemanager-의존성-추가">cacheManager 의존성 추가</h2>
+<p>Springboot 에서 data를 Cache를 하고자 하는 경우 Solution을 시용하는 경우 Redis를 고려합니다.<br />
+그러나 Redis 를 사용할 정도의 애플리케이션 아닌 경우 Local Cache만으로 충분한 경우 Singleton 패턴으로 구현할 수도 있지만 이미 만들어진 CacheManager를 사용하면 편리합니다.</p>
+
+<p>Springboot에서 cacheManager를 사용하기 위해서 maven 빌드 환경에서 pom.xml에 아래의 의존성을 추가합니다.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">		</span><span class="s">&lt;dependency&gt;</span>
+<span class="err">			</span><span class="s">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span>
+<span class="err">			</span><span class="s">&lt;artifactId&gt;spring-boot-starter-cache&lt;/artifactId&gt;</span>
+<span class="err">		</span><span class="s">&lt;/dependency&gt;</span>
+</code></pre></div></div>
+<h2 id="cachemanager-bean-등록">cacheManager Bean 등록</h2>
+<p>CacheManager를 사용하기 위해 먼저 CacheManager Bean을 등록합니다.<br />
+@EnableCaching을 어노테이션을 추가하고 SimpleCacheManager를 생성하고 CacheManager에 cache하고자 하는 대상에 대해 cacheName 을 등록합니다. 아래는 user 정보와 product 정보를 cache하기 위해서 cache name을 users, products으로 cache name을 등록하였습니다.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Configuration</span>
+<span class="nd">@EnableCaching</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CacheManagerConfig</span> <span class="kd">extends</span> <span class="nc">CachingConfigurerSupport</span> <span class="o">{</span>
+
+	<span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="nc">CacheManager</span> <span class="nf">cacheManager</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">SimpleCacheManager</span> <span class="n">cacheManager</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SimpleCacheManager</span><span class="o">();</span>
+        <span class="n">cacheManager</span><span class="o">.</span><span class="na">setCaches</span><span class="o">(</span><span class="nc">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span>
+          <span class="k">new</span> <span class="nf">ConcurrentMapCache</span><span class="o">(</span><span class="s">"users"</span><span class="o">),</span> 
+          <span class="k">new</span> <span class="nf">ConcurrentMapCache</span><span class="o">(</span><span class="s">"products"</span><span class="o">)));</span>
+        <span class="k">return</span> <span class="n">cacheManager</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="cachemanager-service-구현">cacheManager Service 구현</h2>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RequiredArgsConstructor</span>
+<span class="nd">@RestController</span>
+<span class="nd">@Slf4j</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ProductController</span> <span class="o">{</span>
+	<span class="kd">private</span> <span class="kd">final</span> <span class="nc">ProductService</span> <span class="n">productService</span><span class="o">;</span>
+	
+	<span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/products/{productId}"</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="nc">ResponseEntity</span><span class="o">&lt;?&gt;</span> <span class="n">findByProduct</span><span class="o">(</span><span class="nd">@PathVariable</span> <span class="nc">String</span> <span class="n">productId</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">ProductVo</span> <span class="n">product</span> <span class="o">=</span> <span class="n">productService</span><span class="o">.</span><span class="na">findByProductId</span><span class="o">(</span><span class="n">productId</span><span class="o">);</span>
+		
+		<span class="k">return</span> <span class="k">new</span> <span class="nc">ResponseEntity</span><span class="o">&lt;</span><span class="nc">Object</span><span class="o">&gt;(</span><span class="n">product</span><span class="o">,</span> <span class="nc">HttpStatus</span><span class="o">.</span><span class="na">OK</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p>Service에서 productId를 조회했을 때 @Cacheable 오노테이션을 사용하여 Product Id가 조회된 결과를 Caching합니다. 두번째 같은 product id를 조회하면 Cache된 정보가 조회됩니다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Slf4j</span>
+<span class="nd">@RequiredArgsConstructor</span>
+<span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ProductService</span> <span class="o">{</span>
+	<span class="kd">private</span> <span class="kd">final</span> <span class="nc">ProductDao</span> <span class="n">productDao</span><span class="o">;</span>
+	
+	<span class="nd">@Cacheable</span><span class="o">(</span><span class="n">value</span><span class="o">=</span><span class="s">"products"</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="nc">ProductVo</span> <span class="nf">findByProductId</span><span class="o">(</span><span class="nc">String</span> <span class="n">productId</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">ProductVo</span> <span class="n">product</span> <span class="o">=</span> <span class="n">productDao</span><span class="o">.</span><span class="na">findByProductId</span><span class="o">(</span><span class="n">productId</span><span class="o">);</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"product:{}"</span><span class="o">,</span> <span class="n">product</span><span class="o">);</span>
+		<span class="k">return</span> <span class="n">product</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>관련 소스는 아래 <a href="https://gitlab.com/nexweb/sample-service.git">링크</a>에 boot-startup branch에 있습니다.</p>
+
+<p><a href="https://gitlab.com/nexweb/sample-service.git">https://gitlab.com/nexweb/sample-service.git</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="cacheManager" /><summary type="html"><![CDATA[cacheManager 의존성 추가 Springboot 에서 data를 Cache를 하고자 하는 경우 Solution을 시용하는 경우 Redis를 고려합니다. 그러나 Redis 를 사용할 정도의 애플리케이션 아닌 경우 Local Cache만으로 충분한 경우 Singleton 패턴으로 구현할 수도 있지만 이미 만들어진 CacheManager를 사용하면 편리합니다.]]></summary></entry><entry><title type="html">Mybatis에 멀티 로우 insert or update</title><link href="http://localhost:4000/springboot/upsert-mybatis-multi-row/" rel="alternate" type="text/html" title="Mybatis에 멀티 로우 insert or update" /><published>2023-03-11T00:00:00+09:00</published><updated>2023-03-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/upsert-mybatis-multi-row</id><content type="html" xml:base="http://localhost:4000/springboot/upsert-mybatis-multi-row/"><![CDATA[<h2 id="mybatis-한번에-여러건-insert-or-update">Mybatis 한번에 여러건 Insert or Update</h2>
+<p>Mybatis에서 한번에 여러건의 데이터를 insert 또는 update하기 기능을 Mybatis는 이를 지원하고 있다.
+이 기능을 이용하여 약간의 성능에 도움을 받을 수 있습니다.</p>
+
+<p>Mybatis에서 여러건의 데이터를 Insert or Update 예제입니다.</p>
+
+<ul>
+  <li>다음은 Controller 입니다.</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nd">@Slf4j</span>
+<span class="nd">@RestController</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloController</span> <span class="o">{</span>
+	<span class="nd">@Autowired</span>
+	<span class="kd">private</span> <span class="nc">SampleUserDao</span> <span class="n">sampleUserDao</span><span class="o">;</span>
+
+	<span class="nd">@ApiOperation</span><span class="o">(</span><span class="n">value</span><span class="o">=</span><span class="s">"bulkload"</span><span class="o">)</span>
+	<span class="nd">@PostMapping</span><span class="o">(</span><span class="n">value</span><span class="o">=</span><span class="s">"/users/bulkload"</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="nc">ResponseEntity</span> <span class="o">&lt;?&gt;</span> <span class="n">bulkloadUser</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">SampleUser</span><span class="o">&gt;</span> <span class="n">userList</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">sampleUserDao</span><span class="o">.</span><span class="na">bulkloadUsers</span><span class="o">(</span><span class="n">userList</span><span class="o">);</span>
+		<span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
+		<span class="o">}</span>
+
+		<span class="k">return</span> <span class="nc">Response</span><span class="o">.</span><span class="na">ok</span><span class="o">(</span><span class="s">"Success"</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>다음은 Mapper 입니다.</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Mapper</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">SampleUserDao</span> <span class="o">{</span>	
+	
+	<span class="cm">/**
+	 * 사용자 목록을 입력받아 bulkload합니다.
+	 * @return
+	 * @throws Exception
+	 */</span>
+	<span class="kt">int</span> <span class="nf">bulkloadUsers</span><span class="o">(</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">SampleUser</span><span class="o">&gt;</span> <span class="n">userList</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>다음은 VO(Value Object) 입니다.</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">lombok.Getter</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">lombok.Setter</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">lombok.ToString</span><span class="o">;</span>
+
+<span class="nd">@Getter</span>
+<span class="nd">@Setter</span>
+<span class="nd">@ToString</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SampleUser</span> <span class="o">{</span>
+	 <span class="kd">private</span> <span class="nc">String</span>  <span class="n">userId</span> 		<span class="o">;</span> <span class="c1">// 사용자 ID</span>
+	 <span class="kd">private</span> <span class="nc">String</span>  <span class="n">userNm</span> 		<span class="o">;</span> <span class="c1">// 사용자 이름</span>
+	 <span class="kd">private</span> <span class="nc">String</span>  <span class="n">addr</span> 		    <span class="o">;</span> <span class="c1">// 주소 </span>
+	 <span class="kd">private</span> <span class="nc">String</span>  <span class="n">cellPhone</span> 	    <span class="o">;</span> <span class="c1">// 핸드폰 </span>
+	 <span class="kd">private</span> <span class="nc">String</span>  <span class="n">agreeInform</span>    <span class="o">;</span> <span class="c1">// 고객정보 동의 여부 </span>
+	 <span class="kd">private</span> <span class="nc">String</span>  <span class="n">birthDt</span> 	    <span class="o">;</span> <span class="c1">// 생년 월일 </span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+
+<p>다음의 그 Mybatis Mapper 파일 예제입니다.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="cp">&lt;!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"&gt;</span>
+<span class="nt">&lt;mapper</span> <span class="na">namespace=</span><span class="s">"com.demo.microservices.dao.SampleUserDao"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;insert</span> <span class="na">id=</span><span class="s">"bulkloadUsers"</span> <span class="na">parameterType=</span><span class="s">"list"</span><span class="nt">&gt;</span>
+		insert into tb_user00 (
+		    user_id,
+		    user_nm,
+		    addr,
+		    cell_phone,
+		    agree_inform,
+		    birth_dt
+		) values 
+		foreach collection="list" item="item" separator=","&gt;
+		(
+		    #{item.userId},
+		    #{item.userNm},
+		    #{item.addr},
+		    #{item.cellPhone},
+		    #{item.agreeInform},
+		    #{item.birthDt}
+		)
+		<span class="nt">&lt;/foreach&gt;</span> 	
+		on duplicate key update 
+		    user_nm = values(user_nm),
+		    addr = values(addr),
+		    cell_phone = values(cell_phone),
+		    agree_inform = values(agree_inform),
+		    birth_dt = values(birth_dt)
+	<span class="nt">&lt;/insert&gt;</span>
+<span class="nt">&lt;/mapper&gt;</span>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="mybatis" /><summary type="html"><![CDATA[Mybatis 한번에 여러건 Insert or Update Mybatis에서 한번에 여러건의 데이터를 insert 또는 update하기 기능을 Mybatis는 이를 지원하고 있다. 이 기능을 이용하여 약간의 성능에 도움을 받을 수 있습니다.]]></summary></entry><entry><title type="html">AOP(Aspect Oriented Programming) 란?</title><link href="http://localhost:4000/springboot/aop/" rel="alternate" type="text/html" title="AOP(Aspect Oriented Programming) 란?" /><published>2023-03-11T00:00:00+09:00</published><updated>2023-03-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/aop</id><content type="html" xml:base="http://localhost:4000/springboot/aop/"><![CDATA[<h2 id="aop-개요">AOP 개요</h2>
 <p>AOP 란 관점 지향 프로그래밍입니다. 처음에 관점 지향이라고 하면 쉽게 머리속에 그려지지 않습니다.
 개발을 하면서 layer 아래와 같이 Three layer로 구성하여 구현할 때 layer별로 아래와 같은 기능을 처리해야 하는 경우</p>
 <ul>
@@ -258,172 +489,7 @@ springframework는 Runtime 시점에 Weaving 합니다.</p>
   <span class="na">mvc</span><span class="pi">:</span>
     <span class="na">servlet</span><span class="pi">:</span>
       <span class="na">load-on-startup</span><span class="pi">:</span> <span class="m">1</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="load-on-startup" /><summary type="html"><![CDATA[load-on-startup Springboot 시작시 첫 호출이 느린 경우 application.yml에 해당 내용 추가 합니다.]]></summary></entry><entry><title type="html">CacheMager 사용하여 data 캐시하는 방법</title><link href="http://localhost:4000/springboot/how-to-cache-data-from-db-in-springboot/" rel="alternate" type="text/html" title="CacheMager 사용하여 data 캐시하는 방법" /><published>2023-03-11T00:00:00+09:00</published><updated>2023-03-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/how-to-cache%20data%20from%20db%20in%20springboot</id><content type="html" xml:base="http://localhost:4000/springboot/how-to-cache-data-from-db-in-springboot/"><![CDATA[<h2 id="cachemanager-의존성-추가">cacheManager 의존성 추가</h2>
-<p>Springboot 에서 data를 Cache를 하고자 하는 경우 Solution을 시용하는 경우 Redis를 고려합니다.<br />
-그러나 Redis 를 사용할 정도의 애플리케이션 아닌 경우 Local Cache만으로 충분한 경우 Singleton 패턴으로 구현할 수도 있지만 이미 만들어진 CacheManager를 사용하면 편리합니다.</p>
-
-<p>Springboot에서 cacheManager를 사용하기 위해서 maven 빌드 환경에서 pom.xml에 아래의 의존성을 추가합니다.</p>
-
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">		</span><span class="s">&lt;dependency&gt;</span>
-<span class="err">			</span><span class="s">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span>
-<span class="err">			</span><span class="s">&lt;artifactId&gt;spring-boot-starter-cache&lt;/artifactId&gt;</span>
-<span class="err">		</span><span class="s">&lt;/dependency&gt;</span>
-</code></pre></div></div>
-<h2 id="cachemanager-bean-등록">cacheManager Bean 등록</h2>
-<p>CacheManager를 사용하기 위해 먼저 CacheManager Bean을 등록합니다.<br />
-@EnableCaching을 어노테이션을 추가하고 SimpleCacheManager를 생성하고 CacheManager에 cache하고자 하는 대상에 대해 cacheName 을 등록합니다. 아래는 user 정보와 product 정보를 cache하기 위해서 cache name을 users, products으로 cache name을 등록하였습니다.</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Configuration</span>
-<span class="nd">@EnableCaching</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CacheManagerConfig</span> <span class="kd">extends</span> <span class="nc">CachingConfigurerSupport</span> <span class="o">{</span>
-
-	<span class="nd">@Bean</span>
-    <span class="kd">public</span> <span class="nc">CacheManager</span> <span class="nf">cacheManager</span><span class="o">()</span> <span class="o">{</span>
-        <span class="nc">SimpleCacheManager</span> <span class="n">cacheManager</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SimpleCacheManager</span><span class="o">();</span>
-        <span class="n">cacheManager</span><span class="o">.</span><span class="na">setCaches</span><span class="o">(</span><span class="nc">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span>
-          <span class="k">new</span> <span class="nf">ConcurrentMapCache</span><span class="o">(</span><span class="s">"users"</span><span class="o">),</span> 
-          <span class="k">new</span> <span class="nf">ConcurrentMapCache</span><span class="o">(</span><span class="s">"products"</span><span class="o">)));</span>
-        <span class="k">return</span> <span class="n">cacheManager</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<h2 id="cachemanager-service-구현">cacheManager Service 구현</h2>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RequiredArgsConstructor</span>
-<span class="nd">@RestController</span>
-<span class="nd">@Slf4j</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ProductController</span> <span class="o">{</span>
-	<span class="kd">private</span> <span class="kd">final</span> <span class="nc">ProductService</span> <span class="n">productService</span><span class="o">;</span>
-	
-	<span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/products/{productId}"</span><span class="o">)</span>
-	<span class="kd">public</span> <span class="nc">ResponseEntity</span><span class="o">&lt;?&gt;</span> <span class="n">findByProduct</span><span class="o">(</span><span class="nd">@PathVariable</span> <span class="nc">String</span> <span class="n">productId</span><span class="o">)</span> <span class="o">{</span>
-		<span class="nc">ProductVo</span> <span class="n">product</span> <span class="o">=</span> <span class="n">productService</span><span class="o">.</span><span class="na">findByProductId</span><span class="o">(</span><span class="n">productId</span><span class="o">);</span>
-		
-		<span class="k">return</span> <span class="k">new</span> <span class="nc">ResponseEntity</span><span class="o">&lt;</span><span class="nc">Object</span><span class="o">&gt;(</span><span class="n">product</span><span class="o">,</span> <span class="nc">HttpStatus</span><span class="o">.</span><span class="na">OK</span><span class="o">);</span>
-	<span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
-<p>Service에서 productId를 조회했을 때 @Cacheable 오노테이션을 사용하여 Product Id가 조회된 결과를 Caching합니다. 두번째 같은 product id를 조회하면 Cache된 정보가 조회됩니다.</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Slf4j</span>
-<span class="nd">@RequiredArgsConstructor</span>
-<span class="nd">@Service</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ProductService</span> <span class="o">{</span>
-	<span class="kd">private</span> <span class="kd">final</span> <span class="nc">ProductDao</span> <span class="n">productDao</span><span class="o">;</span>
-	
-	<span class="nd">@Cacheable</span><span class="o">(</span><span class="n">value</span><span class="o">=</span><span class="s">"products"</span><span class="o">)</span>
-	<span class="kd">public</span> <span class="nc">ProductVo</span> <span class="nf">findByProductId</span><span class="o">(</span><span class="nc">String</span> <span class="n">productId</span><span class="o">)</span> <span class="o">{</span>
-		<span class="nc">ProductVo</span> <span class="n">product</span> <span class="o">=</span> <span class="n">productDao</span><span class="o">.</span><span class="na">findByProductId</span><span class="o">(</span><span class="n">productId</span><span class="o">);</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"product:{}"</span><span class="o">,</span> <span class="n">product</span><span class="o">);</span>
-		<span class="k">return</span> <span class="n">product</span><span class="o">;</span>
-	<span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<p>관련 소스는 아래 <a href="https://gitlab.com/nexweb/sample-service.git">링크</a>에 boot-startup branch에 있습니다.</p>
-
-<p><a href="https://gitlab.com/nexweb/sample-service.git">https://gitlab.com/nexweb/sample-service.git</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="cacheManager" /><summary type="html"><![CDATA[cacheManager 의존성 추가 Springboot 에서 data를 Cache를 하고자 하는 경우 Solution을 시용하는 경우 Redis를 고려합니다. 그러나 Redis 를 사용할 정도의 애플리케이션 아닌 경우 Local Cache만으로 충분한 경우 Singleton 패턴으로 구현할 수도 있지만 이미 만들어진 CacheManager를 사용하면 편리합니다.]]></summary></entry><entry><title type="html">Mybatis에 멀티 로우 insert or update</title><link href="http://localhost:4000/springboot/upsert-mybatis-multi-row/" rel="alternate" type="text/html" title="Mybatis에 멀티 로우 insert or update" /><published>2023-03-11T00:00:00+09:00</published><updated>2023-03-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/upsert-mybatis-multi-row</id><content type="html" xml:base="http://localhost:4000/springboot/upsert-mybatis-multi-row/"><![CDATA[<h2 id="mybatis-한번에-여러건-insert-or-update">Mybatis 한번에 여러건 Insert or Update</h2>
-<p>Mybatis에서 한번에 여러건의 데이터를 insert 또는 update하기 기능을 Mybatis는 이를 지원하고 있다.
-이 기능을 이용하여 약간의 성능에 도움을 받을 수 있습니다.</p>
-
-<p>Mybatis에서 여러건의 데이터를 Insert or Update 예제입니다.</p>
-
-<ul>
-  <li>다음은 Controller 입니다.</li>
-</ul>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="nd">@Slf4j</span>
-<span class="nd">@RestController</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloController</span> <span class="o">{</span>
-	<span class="nd">@Autowired</span>
-	<span class="kd">private</span> <span class="nc">SampleUserDao</span> <span class="n">sampleUserDao</span><span class="o">;</span>
-
-	<span class="nd">@ApiOperation</span><span class="o">(</span><span class="n">value</span><span class="o">=</span><span class="s">"bulkload"</span><span class="o">)</span>
-	<span class="nd">@PostMapping</span><span class="o">(</span><span class="n">value</span><span class="o">=</span><span class="s">"/users/bulkload"</span><span class="o">)</span>
-	<span class="kd">public</span> <span class="nc">ResponseEntity</span> <span class="o">&lt;?&gt;</span> <span class="n">bulkloadUser</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">SampleUser</span><span class="o">&gt;</span> <span class="n">userList</span><span class="o">)</span> <span class="o">{</span>
-		<span class="k">try</span> <span class="o">{</span>
-			<span class="n">sampleUserDao</span><span class="o">.</span><span class="na">bulkloadUsers</span><span class="o">(</span><span class="n">userList</span><span class="o">);</span>
-		<span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-			<span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
-		<span class="o">}</span>
-
-		<span class="k">return</span> <span class="nc">Response</span><span class="o">.</span><span class="na">ok</span><span class="o">(</span><span class="s">"Success"</span><span class="o">);</span>
-	<span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<ul>
-  <li>다음은 Mapper 입니다.</li>
-</ul>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Mapper</span>
-<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">SampleUserDao</span> <span class="o">{</span>	
-	
-	<span class="cm">/**
-	 * 사용자 목록을 입력받아 bulkload합니다.
-	 * @return
-	 * @throws Exception
-	 */</span>
-	<span class="kt">int</span> <span class="nf">bulkloadUsers</span><span class="o">(</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">SampleUser</span><span class="o">&gt;</span> <span class="n">userList</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span><span class="o">;</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<ul>
-  <li>다음은 VO(Value Object) 입니다.</li>
-</ul>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">lombok.Getter</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">lombok.Setter</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">lombok.ToString</span><span class="o">;</span>
-
-<span class="nd">@Getter</span>
-<span class="nd">@Setter</span>
-<span class="nd">@ToString</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SampleUser</span> <span class="o">{</span>
-	 <span class="kd">private</span> <span class="nc">String</span>  <span class="n">userId</span> 		<span class="o">;</span> <span class="c1">// 사용자 ID</span>
-	 <span class="kd">private</span> <span class="nc">String</span>  <span class="n">userNm</span> 		<span class="o">;</span> <span class="c1">// 사용자 이름</span>
-	 <span class="kd">private</span> <span class="nc">String</span>  <span class="n">addr</span> 		    <span class="o">;</span> <span class="c1">// 주소 </span>
-	 <span class="kd">private</span> <span class="nc">String</span>  <span class="n">cellPhone</span> 	    <span class="o">;</span> <span class="c1">// 핸드폰 </span>
-	 <span class="kd">private</span> <span class="nc">String</span>  <span class="n">agreeInform</span>    <span class="o">;</span> <span class="c1">// 고객정보 동의 여부 </span>
-	 <span class="kd">private</span> <span class="nc">String</span>  <span class="n">birthDt</span> 	    <span class="o">;</span> <span class="c1">// 생년 월일 </span>
-<span class="o">}</span>
-
-</code></pre></div></div>
-
-<p>다음의 그 Mybatis Mapper 파일 예제입니다.</p>
-
-<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
-<span class="cp">&lt;!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"&gt;</span>
-<span class="nt">&lt;mapper</span> <span class="na">namespace=</span><span class="s">"com.demo.microservices.dao.SampleUserDao"</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;insert</span> <span class="na">id=</span><span class="s">"bulkloadUsers"</span> <span class="na">parameterType=</span><span class="s">"list"</span><span class="nt">&gt;</span>
-		insert into tb_user00 (
-		    user_id,
-		    user_nm,
-		    addr,
-		    cell_phone,
-		    agree_inform,
-		    birth_dt
-		) values 
-		foreach collection="list" item="item" separator=","&gt;
-		(
-		    #{item.userId},
-		    #{item.userNm},
-		    #{item.addr},
-		    #{item.cellPhone},
-		    #{item.agreeInform},
-		    #{item.birthDt}
-		)
-		<span class="nt">&lt;/foreach&gt;</span> 	
-		on duplicate key update 
-		    user_nm = values(user_nm),
-		    addr = values(addr),
-		    cell_phone = values(cell_phone),
-		    agree_inform = values(agree_inform),
-		    birth_dt = values(birth_dt)
-	<span class="nt">&lt;/insert&gt;</span>
-<span class="nt">&lt;/mapper&gt;</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="mybatis" /><summary type="html"><![CDATA[Mybatis 한번에 여러건 Insert or Update Mybatis에서 한번에 여러건의 데이터를 insert 또는 update하기 기능을 Mybatis는 이를 지원하고 있다. 이 기능을 이용하여 약간의 성능에 도움을 받을 수 있습니다.]]></summary></entry><entry><title type="html">MacOS openJDK 1.8 설치하기</title><link href="http://localhost:4000/springboot/mac-jdk-switch/" rel="alternate" type="text/html" title="MacOS openJDK 1.8 설치하기" /><published>2023-03-06T00:00:00+09:00</published><updated>2023-03-06T00:00:00+09:00</updated><id>http://localhost:4000/springboot/mac-jdk-switch</id><content type="html" xml:base="http://localhost:4000/springboot/mac-jdk-switch/"><![CDATA[<h2 id="open-jdk">open jdk</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="load-on-startup" /><summary type="html"><![CDATA[load-on-startup Springboot 시작시 첫 호출이 느린 경우 application.yml에 해당 내용 추가 합니다.]]></summary></entry><entry><title type="html">MacOS openJDK 1.8 설치하기</title><link href="http://localhost:4000/springboot/mac-jdk-switch/" rel="alternate" type="text/html" title="MacOS openJDK 1.8 설치하기" /><published>2023-03-06T00:00:00+09:00</published><updated>2023-03-06T00:00:00+09:00</updated><id>http://localhost:4000/springboot/mac-jdk-switch</id><content type="html" xml:base="http://localhost:4000/springboot/mac-jdk-switch/"><![CDATA[<h2 id="open-jdk">open jdk</h2>
 <p>mac에서 open jdk를 설치합니다</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew tap AdoptOpenJDK/openjdk
@@ -450,17 +516,4 @@ vi로 ~/.zshrc 파일을 편집하고 아래의 항목을 추가합니다.</p>
 
 <p>아래의 <a href="http://patorjk.com/software/taag/">배너 링크 사이트</a>에서 배너를 작성해서 banner.txt에 내용을 붙여넣기 하면 쉽게 배너를 만들 수 있습니다.</p>
 
-<p><a href="http://patorjk.com/software/taag/">http://patorjk.com/software/taag/</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="banner" /><summary type="html"><![CDATA[배너 파일 Springboot의 왼쪽 하단에 있는 dashboard tab에서 springboot를 시작하면 console 로그에 자신만의 로고를 출력하고 싶을 때가 있습니다. 이때 베너를 추가하는 방법에 설명합니다.]]></summary></entry><entry><title type="html">mac 에서 jdk switch</title><link href="http://localhost:4000/docker/jdk-switch-on-mac/" rel="alternate" type="text/html" title="mac 에서 jdk switch" /><published>2023-03-02T00:00:00+09:00</published><updated>2023-03-02T00:00:00+09:00</updated><id>http://localhost:4000/docker/jdk%20switch-on-mac</id><content type="html" xml:base="http://localhost:4000/docker/jdk-switch-on-mac/"><![CDATA[<h2 id="jdk-11-or-8-switch">jdk 11 or 8 switch</h2>
-
-<p>java 기반 개발을 하면서 jdk 다양한 버전이 필요해서 설치하는 경우 있습니다. jdk를 switch하고자 하는 경우
-다음과 같이 .zshrc에 추가해서 사용합니다.</p>
-
-<p>~/.zshrc 파일을 editor로 열어서 다음과 같이 JAVA_HOME을 추가하면 됩니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi ~/.zshrc
-<span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span><span class="sb">`</span>/usr/libexec/java_home <span class="nt">-v</span> 1.8<span class="sb">`</span>
-
-</code></pre></div></div>
-
-<p>.zshrc 다시 적용합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">source</span> ~/.zshrc
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="jdk" /><category term="mac" /><summary type="html"><![CDATA[jdk 11 or 8 switch]]></summary></entry></feed>
+<p><a href="http://patorjk.com/software/taag/">http://patorjk.com/software/taag/</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="banner" /><summary type="html"><![CDATA[배너 파일 Springboot의 왼쪽 하단에 있는 dashboard tab에서 springboot를 시작하면 console 로그에 자신만의 로고를 출력하고 싶을 때가 있습니다. 이때 베너를 추가하는 방법에 설명합니다.]]></summary></entry></feed>
