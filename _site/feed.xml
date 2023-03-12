@@ -1,74 +1,52 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-12T17:45:37+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">AOP vs Interceptor vs Filter - Filter</title><link href="http://localhost:4000/springboot/filter-interceptor-aop/" rel="alternate" type="text/html" title="AOP vs Interceptor vs Filter - Filter" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/filter-interceptor-aop</id><content type="html" xml:base="http://localhost:4000/springboot/filter-interceptor-aop/"><![CDATA[<h2 id="aop-vs-interceptor-vs-filter">AOP vs Interceptor vs Filter</h2>
-<p>AOP 를 내용을 살펴보면 Interceptor 와 Filter에 대해 궁금해질 것입니다. 
-AOP와 Interceptor, Filter의 역할에 대해 간략하게 알아보기 위해 아래의 그램으로 표현하였습니다.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-12T19:08:53+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Filter in springboot</title><link href="http://localhost:4000/springboot/filter-using-spring/" rel="alternate" type="text/html" title="Filter in springboot" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/filter-using-spring</id><content type="html" xml:base="http://localhost:4000/springboot/filter-using-spring/"><![CDATA[<h2 id="spring을-사용한-filter">spring을 사용한 Filter</h2>
+<p>Springboot를 이용한 filter를 사용하는 방법입니다.
+이전에 GlobalLoggingFilter에서 @Component를 제거하여 이중으로 Bean이 등록되는 것을 피하고, Springboot에서 제공하는 FilterRegistrationBean 사용하여 Bean으로 등록합니다.</p>
 
-<p><img src="/assets/images/springboot/04-spring-filter-interceptor-aop.png" alt="filter interceptor aop" /></p>
-
-<h2 id="filter-란">Filter 란?</h2>
-<p>필터는 J2EE 표준 스펙으로 서블릿에 요청이 전달되기 전/후에 url 패턴에 맞는 모든 요청에 대해 원하는 처리를 할 수 있는 기능을 제공합니다. DispatcherServlet 앞단에서 처리되기 때문에 springframework 앞에서 처리가 되는 것입니다. 
-필터를 추가하기 위해서는 Filter 인터페이스를 구현해야 하며 다음의 3가지 메소드를 overriding할 수 있습니다.</p>
-
-<ul>
-  <li>init 메소드</li>
-  <li>doFilter 메소드</li>
-  <li>destory 메소드</li>
-</ul>
-
-<h4 id="init-메소드">init 메소드</h4>
-<p>컨텡이너가 1회 init 메소드를 호출하여 필터 객체를 초기화 하는 역할입니다.</p>
-
-<h4 id="dofilter-메소드">doFilter 메소드</h4>
-<p>doFilter는 원하는 filter 기능을 구현하는 영역으로 url pattern에 맞는 모든 http 요청을 중간에 capture하여 DispatchServlet에 전달되기전에 웹 컨네이터에 의해 실행되는 메소드입니다.
-FilterChain 파라미터는 FilterChain의 doFilter를 통해 다음 대상으로ㅗ 요청을 전달합니다.</p>
-
-<h4 id="dstory-메소드">dstory 메소드</h4>
-<p>destory 메소드는 필터 객체를 서비스에서 제거하고 사용하는 자원을 반환하기 위한 메소드입니다. 이 또한 웹컨테이너에 의해 1회 호출되는 메소드입니다.</p>
-
-<h2 id="filter-사용하기">Filter 사용하기</h2>
-<p>Servlet에서 제공하는 Filter Interface를 구현 예제입니다.</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">javax.servlet.Filter</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">javax.servlet.FilterChain</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">javax.servlet.ServletException</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">javax.servlet.ServletRequest</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">javax.servlet.ServletResponse</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletRequest</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletResponse</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Component</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">lombok.extern.slf4j.Slf4j</span><span class="o">;</span>
-
-<span class="nd">@Component</span>
-<span class="nd">@Slf4j</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">GlobalLoggingFIlter</span> <span class="kd">implements</span> <span class="nc">Filter</span> <span class="o">{</span>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Slf4j</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">GlobalLoggingFilter</span> <span class="kd">implements</span> <span class="nc">Filter</span> <span class="o">{</span>
 	<span class="nd">@Override</span>
 	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">doFilter</span><span class="o">(</span><span class="nc">ServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="nc">ServletResponse</span> <span class="n">response</span><span class="o">,</span> <span class="nc">FilterChain</span> <span class="n">chain</span><span class="o">)</span>
 			<span class="kd">throws</span> <span class="nc">IOException</span><span class="o">,</span> <span class="nc">ServletException</span> <span class="o">{</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"-------------------전 처리-------------------"</span><span class="o">);</span>
         <span class="nc">ContentCachingRequestWrapper</span> <span class="n">req</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ContentCachingRequestWrapper</span><span class="o">((</span><span class="nc">HttpServletRequest</span><span class="o">)</span> <span class="n">request</span><span class="o">);</span>
         <span class="nc">ContentCachingResponseWrapper</span> <span class="n">res</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ContentCachingResponseWrapper</span><span class="o">((</span><span class="nc">HttpServletResponse</span><span class="o">)</span> <span class="n">response</span><span class="o">);</span>
 
-        <span class="c1">// -------------------전 처리-------------------</span>
-        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"-------------------전 처리-------------------"</span><span class="o">);</span>
-        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"Logging Request  {} : {}"</span><span class="o">,</span> <span class="n">req</span><span class="o">.</span><span class="na">getMethod</span><span class="o">(),</span> <span class="n">req</span><span class="o">.</span><span class="na">getRequestURI</span><span class="o">());</span>
+        <span class="c1">// 전처리</span>
+        <span class="n">chain</span><span class="o">.</span><span class="na">doFilter</span><span class="o">(</span><span class="n">req</span><span class="o">,</span> <span class="n">res</span><span class="o">);</span>
+        <span class="c1">// 후처리</span>
+
+        <span class="nc">String</span> <span class="n">url</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getRequestURI</span><span class="o">();</span>
+        <span class="nc">String</span> <span class="n">reqContent</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="n">req</span><span class="o">.</span><span class="na">getContentAsByteArray</span><span class="o">());</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"request url : {}, request body : {}"</span><span class="o">,</span> <span class="n">url</span><span class="o">,</span> <span class="n">reqContent</span><span class="o">);</span>
         
-        <span class="n">chain</span><span class="o">.</span><span class="na">doFilter</span><span class="o">(</span><span class="n">request</span><span class="o">,</span> <span class="n">response</span><span class="o">);</span>
+        <span class="nc">String</span> <span class="n">resContent</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="n">res</span><span class="o">.</span><span class="na">getContentAsByteArray</span><span class="o">());</span>
+        <span class="kt">int</span> <span class="n">httpStatus</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="na">getStatus</span><span class="o">();</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"response status : {}, response body : {}"</span><span class="o">,</span> <span class="n">httpStatus</span><span class="o">,</span> <span class="n">resContent</span><span class="o">);</span>
         
         <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"-------------------후 처리-------------------"</span><span class="o">);</span>
-        <span class="nc">String</span> <span class="n">url</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getRequestURI</span><span class="o">();</span>
-        <span class="nc">String</span> <span class="n">reqContent</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="n">req</span><span class="o">.</span><span class="na">getContentAsByteArray</span><span class="o">());</span>      
-        <span class="kt">int</span> <span class="n">httpStatus</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="na">getStatus</span><span class="o">();</span>
-        <span class="nc">String</span> <span class="n">resContent</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="n">req</span><span class="o">.</span><span class="na">getContentAsByteArray</span><span class="o">());</span>
-        
-        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"request url : {}, request body : {}"</span><span class="o">,</span> <span class="n">url</span><span class="o">,</span> <span class="n">reqContent</span><span class="o">);</span>  
-        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"response status : {}, response body : {}"</span><span class="o">,</span> <span class="n">httpStatus</span><span class="o">,</span> <span class="n">resContent</span><span class="o">);</span>
 	<span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div></div>
 
-<h2 id="참조">참조</h2>
-<p><a href="https://mangkyu.tistory.com/173">망나니개발자</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><category term="filter" /><category term="interceptor" /><summary type="html"><![CDATA[AOP vs Interceptor vs Filter AOP 를 내용을 살펴보면 Interceptor 와 Filter에 대해 궁금해질 것입니다. AOP와 Interceptor, Filter의 역할에 대해 간략하게 알아보기 위해 아래의 그램으로 표현하였습니다.]]></summary></entry><entry><title type="html">AOP(Aspect Oriented Programming) 예시</title><link href="http://localhost:4000/springboot/aop-examples/" rel="alternate" type="text/html" title="AOP(Aspect Oriented Programming) 예시" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/aop-examples</id><content type="html" xml:base="http://localhost:4000/springboot/aop-examples/"><![CDATA[<h2 id="aop-예시">AOP 예시</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">javax.servlet.Filter</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.boot.web.servlet.FilterRegistrationBean</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Bean</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Configuration</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.demo.microservices.filter.GlobalLoggingFilter</span><span class="o">;</span>
+
+<span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebConfig</span> <span class="o">{</span>
+	<span class="nd">@Bean</span>
+	<span class="kd">public</span> <span class="nc">FilterRegistrationBean</span> <span class="nf">logFilter</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">FilterRegistrationBean</span><span class="o">&lt;</span><span class="nc">Filter</span><span class="o">&gt;</span> <span class="n">filterRegistrationBean</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FilterRegistrationBean</span><span class="o">&lt;&gt;();</span>
+		<span class="n">filterRegistrationBean</span><span class="o">.</span><span class="na">setFilter</span><span class="o">(</span><span class="k">new</span> <span class="nc">GlobalLoggingFilter</span><span class="o">());</span>
+											
+		<span class="k">return</span> <span class="n">filterRegistrationBean</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><category term="filter" /><category term="interceptor" /><summary type="html"><![CDATA[spring을 사용한 Filter Springboot를 이용한 filter를 사용하는 방법입니다. 이전에 GlobalLoggingFilter에서 @Component를 제거하여 이중으로 Bean이 등록되는 것을 피하고, Springboot에서 제공하는 FilterRegistrationBean 사용하여 Bean으로 등록합니다.]]></summary></entry><entry><title type="html">AOP(Aspect Oriented Programming) 예시</title><link href="http://localhost:4000/springboot/aop-examples/" rel="alternate" type="text/html" title="AOP(Aspect Oriented Programming) 예시" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/aop-examples</id><content type="html" xml:base="http://localhost:4000/springboot/aop-examples/"><![CDATA[<h2 id="aop-예시">AOP 예시</h2>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Aspect</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">AspectConfig</span> <span class="o">{</span>
@@ -134,7 +112,79 @@ FilterChain 파라미터는 FilterChain의 doFilter를 통해 다음 대상으�
 		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"----------------------------------------"</span> <span class="o">);</span>
 	<span class="o">}</span>
 <span class="o">}</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><summary type="html"><![CDATA[AOP 예시]]></summary></entry><entry><title type="html">Mybatis에 멀티 로우 insert or update</title><link href="http://localhost:4000/springboot/upsert-mybatis-multi-row/" rel="alternate" type="text/html" title="Mybatis에 멀티 로우 insert or update" /><published>2023-03-11T00:00:00+09:00</published><updated>2023-03-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/upsert-mybatis-multi-row</id><content type="html" xml:base="http://localhost:4000/springboot/upsert-mybatis-multi-row/"><![CDATA[<h2 id="mybatis-한번에-여러건-insert-or-update">Mybatis 한번에 여러건 Insert or Update</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><summary type="html"><![CDATA[AOP 예시]]></summary></entry><entry><title type="html">AOP vs Interceptor vs Filter - Filter</title><link href="http://localhost:4000/springboot/filter-interceptor-aop/" rel="alternate" type="text/html" title="AOP vs Interceptor vs Filter - Filter" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/filter-interceptor-aop</id><content type="html" xml:base="http://localhost:4000/springboot/filter-interceptor-aop/"><![CDATA[<h2 id="aop-vs-interceptor-vs-filter">AOP vs Interceptor vs Filter</h2>
+<p>AOP 를 내용을 살펴보면 Interceptor 와 Filter에 대해 궁금해질 것입니다. 
+AOP와 Interceptor, Filter의 역할에 대해 간략하게 알아보기 위해 아래의 그램으로 표현하였습니다.</p>
+
+<p><img src="/assets/images/springboot/04-spring-filter-interceptor-aop.png" alt="filter interceptor aop" /></p>
+
+<h2 id="filter-란">Filter 란?</h2>
+<p>필터는 J2EE 표준 스펙으로 서블릿에 요청이 전달되기 전/후에 url 패턴에 맞는 모든 요청에 대해 원하는 처리를 할 수 있는 기능을 제공합니다. DispatcherServlet 앞단에서 처리되기 때문에 springframework 앞에서 처리가 되는 것입니다. 
+필터를 추가하기 위해서는 Filter 인터페이스를 구현해야 하며 다음의 3가지 메소드를 overriding할 수 있습니다.</p>
+
+<ul>
+  <li>init 메소드</li>
+  <li>doFilter 메소드</li>
+  <li>destory 메소드</li>
+</ul>
+
+<h4 id="init-메소드">init 메소드</h4>
+<p>컨텡이너가 1회 init 메소드를 호출하여 필터 객체를 초기화 하는 역할입니다.</p>
+
+<h4 id="dofilter-메소드">doFilter 메소드</h4>
+<p>doFilter는 원하는 filter 기능을 구현하는 영역으로 url pattern에 맞는 모든 http 요청을 중간에 capture하여 DispatchServlet에 전달되기전에 웹 컨네이터에 의해 실행되는 메소드입니다.
+FilterChain 파라미터는 FilterChain의 doFilter를 통해 다음 대상으로ㅗ 요청을 전달합니다.</p>
+
+<h4 id="dstory-메소드">dstory 메소드</h4>
+<p>destory 메소드는 필터 객체를 서비스에서 제거하고 사용하는 자원을 반환하기 위한 메소드입니다. 이 또한 웹컨테이너에 의해 1회 호출되는 메소드입니다.</p>
+
+<h2 id="filter-사용하기">Filter 사용하기</h2>
+<p>Servlet에서 제공하는 Filter Interface를 구현 예제입니다.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.servlet.Filter</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.FilterChain</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.ServletException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.ServletRequest</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.ServletResponse</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletRequest</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletResponse</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Component</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.util.ContentCachingRequestWrapper</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.util.ContentCachingResponseWrapper</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">lombok.extern.slf4j.Slf4j</span><span class="o">;</span>
+
+<span class="nd">@Component</span>
+<span class="nd">@Slf4j</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">GlobalLoggingFilter</span> <span class="kd">implements</span> <span class="nc">Filter</span> <span class="o">{</span>
+	<span class="nd">@Override</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">doFilter</span><span class="o">(</span><span class="nc">ServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="nc">ServletResponse</span> <span class="n">response</span><span class="o">,</span> <span class="nc">FilterChain</span> <span class="n">chain</span><span class="o">)</span>
+			<span class="kd">throws</span> <span class="nc">IOException</span><span class="o">,</span> <span class="nc">ServletException</span> <span class="o">{</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"-------------------전 처리-------------------"</span><span class="o">);</span>
+        <span class="nc">ContentCachingRequestWrapper</span> <span class="n">req</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ContentCachingRequestWrapper</span><span class="o">((</span><span class="nc">HttpServletRequest</span><span class="o">)</span> <span class="n">request</span><span class="o">);</span>
+        <span class="nc">ContentCachingResponseWrapper</span> <span class="n">res</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ContentCachingResponseWrapper</span><span class="o">((</span><span class="nc">HttpServletResponse</span><span class="o">)</span> <span class="n">response</span><span class="o">);</span>
+
+        <span class="c1">// 전처리</span>
+        <span class="n">chain</span><span class="o">.</span><span class="na">doFilter</span><span class="o">(</span><span class="n">req</span><span class="o">,</span> <span class="n">res</span><span class="o">);</span>
+        <span class="c1">// 후처리</span>
+
+        <span class="nc">String</span> <span class="n">url</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getRequestURI</span><span class="o">();</span>
+        <span class="nc">String</span> <span class="n">reqContent</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="n">req</span><span class="o">.</span><span class="na">getContentAsByteArray</span><span class="o">());</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"request url : {}, request body : {}"</span><span class="o">,</span> <span class="n">url</span><span class="o">,</span> <span class="n">reqContent</span><span class="o">);</span>
+        
+        <span class="nc">String</span> <span class="n">resContent</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="n">res</span><span class="o">.</span><span class="na">getContentAsByteArray</span><span class="o">());</span>
+        <span class="kt">int</span> <span class="n">httpStatus</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="na">getStatus</span><span class="o">();</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"response status : {}, response body : {}"</span><span class="o">,</span> <span class="n">httpStatus</span><span class="o">,</span> <span class="n">resContent</span><span class="o">);</span>
+        
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"-------------------후 처리-------------------"</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="참조">참조</h2>
+<p><a href="https://mangkyu.tistory.com/173">망나니개발자</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><category term="filter" /><category term="interceptor" /><summary type="html"><![CDATA[AOP vs Interceptor vs Filter AOP 를 내용을 살펴보면 Interceptor 와 Filter에 대해 궁금해질 것입니다. AOP와 Interceptor, Filter의 역할에 대해 간략하게 알아보기 위해 아래의 그램으로 표현하였습니다.]]></summary></entry><entry><title type="html">Mybatis에 멀티 로우 insert or update</title><link href="http://localhost:4000/springboot/upsert-mybatis-multi-row/" rel="alternate" type="text/html" title="Mybatis에 멀티 로우 insert or update" /><published>2023-03-11T00:00:00+09:00</published><updated>2023-03-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/upsert-mybatis-multi-row</id><content type="html" xml:base="http://localhost:4000/springboot/upsert-mybatis-multi-row/"><![CDATA[<h2 id="mybatis-한번에-여러건-insert-or-update">Mybatis 한번에 여러건 Insert or Update</h2>
 <p>Mybatis에서 한번에 여러건의 데이터를 insert 또는 update하기 기능을 Mybatis는 이를 지원하고 있다.
 이 기능을 이용하여 약간의 성능에 도움을 받을 수 있습니다.</p>
 
@@ -559,19 +609,4 @@ springframework는 Runtime 시점에 Weaving 합니다.</p>
   <span class="na">mvc</span><span class="pi">:</span>
     <span class="na">servlet</span><span class="pi">:</span>
       <span class="na">load-on-startup</span><span class="pi">:</span> <span class="m">1</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="load-on-startup" /><summary type="html"><![CDATA[load-on-startup Springboot 시작시 첫 호출이 느린 경우 application.yml에 해당 내용 추가 합니다.]]></summary></entry><entry><title type="html">MacOS openJDK 1.8 설치하기</title><link href="http://localhost:4000/springboot/mac-jdk-switch/" rel="alternate" type="text/html" title="MacOS openJDK 1.8 설치하기" /><published>2023-03-06T00:00:00+09:00</published><updated>2023-03-06T00:00:00+09:00</updated><id>http://localhost:4000/springboot/mac-jdk-switch</id><content type="html" xml:base="http://localhost:4000/springboot/mac-jdk-switch/"><![CDATA[<h2 id="open-jdk">open jdk</h2>
-<p>mac에서 open jdk를 설치합니다</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew tap AdoptOpenJDK/openjdk
-
-brew <span class="nb">install</span> <span class="nt">--cask</span> adoptopenjdk8
-</code></pre></div></div>
-<h2 id="switch-jdk-18-to-11">switch jdk 1.8 to 11</h2>
-<p>jdk를 여러 버전을 설치한 경우 jdk를 필요에 따라 switch하고자 하는 경우 다음과 같이 합니다.<br />
-vi로 ~/.zshrc 파일을 편집하고 아래의 항목을 추가합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span><span class="sb">`</span>/usr/libexec/java_home <span class="nt">-v</span> 1.8<span class="sb">`</span>
-</code></pre></div></div>
-
-<p>zsh profile을 적용합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">source</span> ~/.zshrc
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="openjdk" /><summary type="html"><![CDATA[open jdk mac에서 open jdk를 설치합니다]]></summary></entry></feed>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="load-on-startup" /><summary type="html"><![CDATA[load-on-startup Springboot 시작시 첫 호출이 느린 경우 application.yml에 해당 내용 추가 합니다.]]></summary></entry></feed>

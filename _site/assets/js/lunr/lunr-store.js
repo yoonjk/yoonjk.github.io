@@ -376,4 +376,10 @@ var store = [{
         "tags": ["aop","filter","interceptor"],
         "url": "/springboot/filter-interceptor-aop/",
         "teaser": null
+      },{
+        "title": "Filter in springboot",
+        "excerpt":"spring을 사용한 Filter Springboot를 이용한 filter를 사용하는 방법입니다. 이전에 GlobalLoggingFilter에서 @Component를 제거하여 이중으로 Bean이 등록되는 것을 피하고, Springboot에서 제공하는 FilterRegistrationBean 사용하여 Bean으로 등록합니다. @Slf4j public class GlobalLoggingFilter implements Filter { @Override public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException { log.info(\"-------------------전 처리-------------------\"); ContentCachingRequestWrapper req = new ContentCachingRequestWrapper((HttpServletRequest)...","categories": ["springboot"],
+        "tags": ["aop","filter","interceptor"],
+        "url": "/springboot/filter-using-spring/",
+        "teaser": null
       }]

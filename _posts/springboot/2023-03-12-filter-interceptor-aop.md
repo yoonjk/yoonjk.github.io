@@ -35,7 +35,7 @@ destory 메소드는 필터 객체를 서비스에서 제거하고 사용하는 
 ## Filter 사용하기
 Servlet에서 제공하는 Filter Interface를 구현 예제입니다.  
  ```java
- import java.io.IOException;
+import java.io.IOException;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -46,32 +46,34 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.ContentCachingRequestWrapper;
+import org.springframework.web.util.ContentCachingResponseWrapper;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-public class GlobalLoggingFIlter implements Filter {
+public class GlobalLoggingFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
+        log.info("-------------------전 처리-------------------");
         ContentCachingRequestWrapper req = new ContentCachingRequestWrapper((HttpServletRequest) request);
         ContentCachingResponseWrapper res = new ContentCachingResponseWrapper((HttpServletResponse) response);
 
-        // -------------------전 처리-------------------
-        log.info("-------------------전 처리-------------------");
-        log.info("Logging Request  {} : {}", req.getMethod(), req.getRequestURI());
+        // 전처리
+        chain.doFilter(req, res);
+        // 후처리
+
+        String url = req.getRequestURI();
+        String reqContent = new String(req.getContentAsByteArray());
+        log.info("request url : {}, request body : {}", url, reqContent);
         
-        chain.doFilter(request, response);
+        String resContent = new String(res.getContentAsByteArray());
+        int httpStatus = res.getStatus();
+        log.info("response status : {}, response body : {}", httpStatus, resContent);
         
         log.info("-------------------후 처리-------------------");
-        String url = req.getRequestURI();
-        String reqContent = new String(req.getContentAsByteArray());      
-        int httpStatus = res.getStatus();
-        String resContent = new String(req.getContentAsByteArray());
-        
-        log.info("request url : {}, request body : {}", url, reqContent);  
-        log.info("response status : {}, response body : {}", httpStatus, resContent);
 	}
 }
 ```
