@@ -1,5 +1,5 @@
 ---
-title: AOP(Aspect Oriented Programming) vs Interceptor vs Filter - Filter
+title: AOP vs Interceptor vs Filter - Filter
 categories:
   - springboot
 tags: 
