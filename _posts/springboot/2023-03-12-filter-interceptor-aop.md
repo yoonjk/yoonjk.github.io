@@ -32,5 +32,49 @@ FilterChain 파라미터는 FilterChain의 doFilter를 통해 다음 대상으�
 #### dstory 메소드 
 destory 메소드는 필터 객체를 서비스에서 제거하고 사용하는 자원을 반환하기 위한 메소드입니다. 이 또한 웹컨테이너에 의해 1회 호출되는 메소드입니다.  
 
+## Filter 사용하기
+Servlet에서 제공하는 Filter Interface를 구현 예제입니다.  
+ ```java
+ import java.io.IOException;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.stereotype.Component;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Component
+@Slf4j
+public class GlobalLoggingFIlter implements Filter {
+	@Override
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+        ContentCachingRequestWrapper req = new ContentCachingRequestWrapper((HttpServletRequest) request);
+        ContentCachingResponseWrapper res = new ContentCachingResponseWrapper((HttpServletResponse) response);
+
+        // -------------------전 처리-------------------
+        log.info("-------------------전 처리-------------------");
+        log.info("Logging Request  {} : {}", req.getMethod(), req.getRequestURI());
+        
+        chain.doFilter(request, response);
+        
+        log.info("-------------------후 처리-------------------");
+        String url = req.getRequestURI();
+        String reqContent = new String(req.getContentAsByteArray());      
+        int httpStatus = res.getStatus();
+        String resContent = new String(req.getContentAsByteArray());
+        
+        log.info("request url : {}, request body : {}", url, reqContent);  
+        log.info("response status : {}, response body : {}", httpStatus, resContent);
+	}
+}
+```
+
 ## 참조 
   [망나니개발자](https://mangkyu.tistory.com/173)
