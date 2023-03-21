@@ -1,4 +1,31 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-12T19:08:53+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Filter in springboot</title><link href="http://localhost:4000/springboot/filter-using-spring/" rel="alternate" type="text/html" title="Filter in springboot" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/filter-using-spring</id><content type="html" xml:base="http://localhost:4000/springboot/filter-using-spring/"><![CDATA[<h2 id="spring을-사용한-filter">spring을 사용한 Filter</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-22T04:08:32+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">인터셉터(Interceptor) 란?</title><link href="http://localhost:4000/springboot/interceptor/" rel="alternate" type="text/html" title="인터셉터(Interceptor) 란?" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/interceptor</id><content type="html" xml:base="http://localhost:4000/springboot/interceptor/"><![CDATA[<h2 id="인터셉터의-이해">인터셉터의 이해</h2>
+<p>인터셉터는 “무엇인가를 가로챈다”라는 의미입니다. Filter가 실행된 이후 인터셉터는 Controller가 호출 전/후에 무엇인가 제어 하고자할 때 사용합니다. 그리고 Filter가 WebContainer에서 동작하는 반면에 인터셉터는 Spring Container에서 동작하는 차이점이 있습니다.
+대표적인 사용 목적은 logging과 인증처리에 많이 사용합니다.</p>
+
+<h2 id="handlerinterceptor를-구현">HandlerInterceptor를 구현</h2>
+<ul>
+  <li>preHandle</li>
+  <li>postHandle</li>
+  <li>afterCompletion</li>
+</ul>
+
+<h4 id="prehandle">preHandle</h4>
+<p>Controller의 메서드에 매핑된 특정 URI가 호출됐을 때 실행되는 메서드로, Controller를 경유(접근)하기 직전에 실행되는 메서드입니다.<br />
+Controller를 호출하기전에 동작하는 메소드로 return값이 true이면 진행, false이면 Controller 호출을 중단합니다</p>
+
+<h4 id="posthandle">postHandle</h4>
+<p>컨트롤러를 호출 후, 즉 화면(View)으로 결과를 전달하기 전에 실행되는 메서드입니다.</p>
+
+<h4 id="aftercompletion">afterCompletion</h4>
+<p>view가 정상적으로 랜더링된 후에 마지막에 실행됩니다</p>
+
+<h4 id="인록셉터-를-사용하기-위해-클래스를-빈bean으로-등록">인록셉터 를 사용하기 위해 클래스를 빈(Bean)으로 등록</h4>
+<p>인록셉터 사용하기 먼저 HandlerInterceptor를 상속받아 구현합니다.<br />
+구현하는 Method는 위에 3가지 Method이며, Bean으로 등록하기 위해 구현한 클래스에 @Component 어노테이션을 추가합니다.</p>
+
+<h2 id="인록셉터-interceptorregistry에-등록">인록셉터 InterceptorRegistry에 등록</h2>
+<p>HandlerInterceptor를 구현 후 WebMvcConfigurer를 상속받아 구현 WebMvcConfigure의 addInterceptors에 등록하고, 
+Uri PathPattern을 지정하여 어떤 Uri가 호출될 때 인터셉터를 동학하게 할지 설정합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="Interceptor" /><summary type="html"><![CDATA[인터셉터의 이해 인터셉터는 “무엇인가를 가로챈다”라는 의미입니다. Filter가 실행된 이후 인터셉터는 Controller가 호출 전/후에 무엇인가 제어 하고자할 때 사용합니다. 그리고 Filter가 WebContainer에서 동작하는 반면에 인터셉터는 Spring Container에서 동작하는 차이점이 있습니다. 대표적인 사용 목적은 logging과 인증처리에 많이 사용합니다.]]></summary></entry><entry><title type="html">Filter in springboot</title><link href="http://localhost:4000/springboot/filter-using-spring/" rel="alternate" type="text/html" title="Filter in springboot" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/filter-using-spring</id><content type="html" xml:base="http://localhost:4000/springboot/filter-using-spring/"><![CDATA[<h2 id="spring을-사용한-filter">spring을 사용한 Filter</h2>
 <p>Springboot를 이용한 filter를 사용하는 방법입니다.
 이전에 GlobalLoggingFilter에서 @Component를 제거하여 이중으로 Bean이 등록되는 것을 피하고, Springboot에서 제공하는 FilterRegistrationBean 사용하여 Bean으로 등록합니다.</p>
 
@@ -46,73 +73,7 @@
 		<span class="k">return</span> <span class="n">filterRegistrationBean</span><span class="o">;</span>
 	<span class="o">}</span>
 <span class="o">}</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><category term="filter" /><category term="interceptor" /><summary type="html"><![CDATA[spring을 사용한 Filter Springboot를 이용한 filter를 사용하는 방법입니다. 이전에 GlobalLoggingFilter에서 @Component를 제거하여 이중으로 Bean이 등록되는 것을 피하고, Springboot에서 제공하는 FilterRegistrationBean 사용하여 Bean으로 등록합니다.]]></summary></entry><entry><title type="html">AOP(Aspect Oriented Programming) 예시</title><link href="http://localhost:4000/springboot/aop-examples/" rel="alternate" type="text/html" title="AOP(Aspect Oriented Programming) 예시" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/aop-examples</id><content type="html" xml:base="http://localhost:4000/springboot/aop-examples/"><![CDATA[<h2 id="aop-예시">AOP 예시</h2>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Aspect</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AspectConfig</span> <span class="o">{</span>
-	<span class="nd">@Pointcut</span><span class="o">(</span><span class="s">"@annotation(org.springframework.web.bind.annotation.GetMapping)"</span><span class="o">)</span>
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">getMapping</span><span class="o">()</span> <span class="o">{</span>
-		
-	<span class="o">}</span>
-	
-	<span class="nd">@Pointcut</span><span class="o">(</span><span class="s">"@annotation(org.springframework.web.bind.annotation.PostMapping)"</span><span class="o">)</span>
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">postMapping</span><span class="o">()</span> <span class="o">{</span>
-		
-	<span class="o">}</span>
-	
-	<span class="nd">@Pointcut</span><span class="o">(</span><span class="s">"@annotation(org.springframework.web.bind.annotation.RequestMapping)"</span><span class="o">)</span>
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">requestMapping</span><span class="o">()</span> <span class="o">{</span>
-		
-	<span class="o">}</span>
-	
-	<span class="nd">@Pointcut</span><span class="o">(</span><span class="s">"execution(* com.demo.microservices..*.*Service.*(..))"</span><span class="o">)</span>
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">serviceExcution</span><span class="o">()</span> <span class="o">{</span>
-		
-	<span class="o">}</span>
-	
-	<span class="nd">@Around</span><span class="o">(</span><span class="n">value</span><span class="o">=</span><span class="s">"serviceExcution()"</span><span class="o">)</span>
-	<span class="kd">public</span> <span class="nc">Object</span> <span class="nf">around</span><span class="o">(</span><span class="nc">ProceedingJoinPoint</span>  <span class="n">pjt</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------- Around logging Start -------------"</span><span class="o">);</span>
-		
-		<span class="nc">Object</span> <span class="n">retValue</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-		<span class="k">try</span> <span class="o">{</span>
-			<span class="n">retValue</span> <span class="o">=</span> <span class="n">pjt</span><span class="o">.</span><span class="na">proceed</span><span class="o">();</span>
-		<span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">Throwable</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-			<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"error:{}"</span><span class="o">,</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
-			
-		<span class="o">}</span>
-
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"--------------"</span><span class="o">);</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">" return val:{}"</span><span class="o">,</span> <span class="n">retValue</span><span class="o">);</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------- Around logging end -------------"</span><span class="o">);</span>
-		<span class="k">return</span> <span class="n">retValue</span><span class="o">;</span>
-	<span class="o">}</span>
-	
-	<span class="nd">@Before</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"serviceExcution()"</span><span class="o">)</span> 
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">before</span><span class="o">(</span><span class="nc">JoinPoint</span> <span class="n">jointPoint</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------- Before logging -------------"</span> <span class="o">);</span>
-	<span class="o">}</span>
-	
-	<span class="nd">@AfterReturning</span><span class="o">(</span><span class="n">pointcut</span> <span class="o">=</span> <span class="s">"serviceExcution()"</span><span class="o">,</span> <span class="n">returning</span> <span class="o">=</span> <span class="s">"result"</span><span class="o">)</span>
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">afterRuturning</span><span class="o">(</span><span class="nc">JoinPoint</span> <span class="n">joinPoint</span><span class="o">,</span> <span class="nc">Object</span> <span class="n">result</span><span class="o">)</span> <span class="o">{</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------- AfterReturning logging -------------"</span> <span class="o">);</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">" result :{}"</span><span class="o">,</span> <span class="n">result</span><span class="o">);</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"----------------------------------------"</span> <span class="o">);</span>
-	<span class="o">}</span>
-	
-	<span class="nd">@After</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"serviceExcution()"</span><span class="o">)</span>
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">after</span><span class="o">(</span><span class="nc">JoinPoint</span> <span class="n">joinPoint</span><span class="o">)</span> <span class="o">{</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------- After logging -------------"</span><span class="o">);</span>
-	<span class="o">}</span>
-	
-	<span class="nd">@AfterThrowing</span><span class="o">(</span><span class="n">pointcut</span> <span class="o">=</span> <span class="s">"serviceExcution()"</span><span class="o">,</span> <span class="n">throwing</span> <span class="o">=</span> <span class="s">"e"</span><span class="o">)</span> 
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">afterThrowing</span><span class="o">(</span><span class="nc">JoinPoint</span> <span class="n">joinPoint</span><span class="o">,</span> <span class="nc">Throwable</span> <span class="n">e</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------- AfterThrowing logging -------------"</span><span class="o">);</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">" throwable :{}"</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"----------------------------------------"</span> <span class="o">);</span>
-	<span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><summary type="html"><![CDATA[AOP 예시]]></summary></entry><entry><title type="html">AOP vs Interceptor vs Filter - Filter</title><link href="http://localhost:4000/springboot/filter-interceptor-aop/" rel="alternate" type="text/html" title="AOP vs Interceptor vs Filter - Filter" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/filter-interceptor-aop</id><content type="html" xml:base="http://localhost:4000/springboot/filter-interceptor-aop/"><![CDATA[<h2 id="aop-vs-interceptor-vs-filter">AOP vs Interceptor vs Filter</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><category term="filter" /><category term="interceptor" /><summary type="html"><![CDATA[spring을 사용한 Filter Springboot를 이용한 filter를 사용하는 방법입니다. 이전에 GlobalLoggingFilter에서 @Component를 제거하여 이중으로 Bean이 등록되는 것을 피하고, Springboot에서 제공하는 FilterRegistrationBean 사용하여 Bean으로 등록합니다.]]></summary></entry><entry><title type="html">AOP vs Interceptor vs Filter - Filter</title><link href="http://localhost:4000/springboot/filter-interceptor-aop/" rel="alternate" type="text/html" title="AOP vs Interceptor vs Filter - Filter" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/filter-interceptor-aop</id><content type="html" xml:base="http://localhost:4000/springboot/filter-interceptor-aop/"><![CDATA[<h2 id="aop-vs-interceptor-vs-filter">AOP vs Interceptor vs Filter</h2>
 <p>AOP 를 내용을 살펴보면 Interceptor 와 Filter에 대해 궁금해질 것입니다. 
 AOP와 Interceptor, Filter의 역할에 대해 간략하게 알아보기 위해 아래의 그램으로 표현하였습니다.</p>
 
@@ -184,7 +145,150 @@ FilterChain 파라미터는 FilterChain의 doFilter를 통해 다음 대상으�
 </code></pre></div></div>
 
 <h2 id="참조">참조</h2>
-<p><a href="https://mangkyu.tistory.com/173">망나니개발자</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><category term="filter" /><category term="interceptor" /><summary type="html"><![CDATA[AOP vs Interceptor vs Filter AOP 를 내용을 살펴보면 Interceptor 와 Filter에 대해 궁금해질 것입니다. AOP와 Interceptor, Filter의 역할에 대해 간략하게 알아보기 위해 아래의 그램으로 표현하였습니다.]]></summary></entry><entry><title type="html">Mybatis에 멀티 로우 insert or update</title><link href="http://localhost:4000/springboot/upsert-mybatis-multi-row/" rel="alternate" type="text/html" title="Mybatis에 멀티 로우 insert or update" /><published>2023-03-11T00:00:00+09:00</published><updated>2023-03-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/upsert-mybatis-multi-row</id><content type="html" xml:base="http://localhost:4000/springboot/upsert-mybatis-multi-row/"><![CDATA[<h2 id="mybatis-한번에-여러건-insert-or-update">Mybatis 한번에 여러건 Insert or Update</h2>
+<p><a href="https://mangkyu.tistory.com/173">망나니개발자</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><category term="filter" /><category term="interceptor" /><summary type="html"><![CDATA[AOP vs Interceptor vs Filter AOP 를 내용을 살펴보면 Interceptor 와 Filter에 대해 궁금해질 것입니다. AOP와 Interceptor, Filter의 역할에 대해 간략하게 알아보기 위해 아래의 그램으로 표현하였습니다.]]></summary></entry><entry><title type="html">AOP(Aspect Oriented Programming) 예시</title><link href="http://localhost:4000/springboot/aop-examples/" rel="alternate" type="text/html" title="AOP(Aspect Oriented Programming) 예시" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/aop-examples</id><content type="html" xml:base="http://localhost:4000/springboot/aop-examples/"><![CDATA[<h2 id="aop-예시">AOP 예시</h2>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Aspect</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AspectConfig</span> <span class="o">{</span>
+	<span class="nd">@Pointcut</span><span class="o">(</span><span class="s">"@annotation(org.springframework.web.bind.annotation.GetMapping)"</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">getMapping</span><span class="o">()</span> <span class="o">{</span>
+		
+	<span class="o">}</span>
+	
+	<span class="nd">@Pointcut</span><span class="o">(</span><span class="s">"@annotation(org.springframework.web.bind.annotation.PostMapping)"</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">postMapping</span><span class="o">()</span> <span class="o">{</span>
+		
+	<span class="o">}</span>
+	
+	<span class="nd">@Pointcut</span><span class="o">(</span><span class="s">"@annotation(org.springframework.web.bind.annotation.RequestMapping)"</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">requestMapping</span><span class="o">()</span> <span class="o">{</span>
+		
+	<span class="o">}</span>
+	
+	<span class="nd">@Pointcut</span><span class="o">(</span><span class="s">"execution(* com.demo.microservices..*.*Service.*(..))"</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">serviceExcution</span><span class="o">()</span> <span class="o">{</span>
+		
+	<span class="o">}</span>
+	
+	<span class="nd">@Around</span><span class="o">(</span><span class="n">value</span><span class="o">=</span><span class="s">"serviceExcution()"</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="nc">Object</span> <span class="nf">around</span><span class="o">(</span><span class="nc">ProceedingJoinPoint</span>  <span class="n">pjt</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------- Around logging Start -------------"</span><span class="o">);</span>
+		
+		<span class="nc">Object</span> <span class="n">retValue</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">retValue</span> <span class="o">=</span> <span class="n">pjt</span><span class="o">.</span><span class="na">proceed</span><span class="o">();</span>
+		<span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">Throwable</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"error:{}"</span><span class="o">,</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+			
+		<span class="o">}</span>
+
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"--------------"</span><span class="o">);</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">" return val:{}"</span><span class="o">,</span> <span class="n">retValue</span><span class="o">);</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------- Around logging end -------------"</span><span class="o">);</span>
+		<span class="k">return</span> <span class="n">retValue</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="nd">@Before</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"serviceExcution()"</span><span class="o">)</span> 
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">before</span><span class="o">(</span><span class="nc">JoinPoint</span> <span class="n">jointPoint</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------- Before logging -------------"</span> <span class="o">);</span>
+	<span class="o">}</span>
+	
+	<span class="nd">@AfterReturning</span><span class="o">(</span><span class="n">pointcut</span> <span class="o">=</span> <span class="s">"serviceExcution()"</span><span class="o">,</span> <span class="n">returning</span> <span class="o">=</span> <span class="s">"result"</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">afterRuturning</span><span class="o">(</span><span class="nc">JoinPoint</span> <span class="n">joinPoint</span><span class="o">,</span> <span class="nc">Object</span> <span class="n">result</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------- AfterReturning logging -------------"</span> <span class="o">);</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">" result :{}"</span><span class="o">,</span> <span class="n">result</span><span class="o">);</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"----------------------------------------"</span> <span class="o">);</span>
+	<span class="o">}</span>
+	
+	<span class="nd">@After</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"serviceExcution()"</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">after</span><span class="o">(</span><span class="nc">JoinPoint</span> <span class="n">joinPoint</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------- After logging -------------"</span><span class="o">);</span>
+	<span class="o">}</span>
+	
+	<span class="nd">@AfterThrowing</span><span class="o">(</span><span class="n">pointcut</span> <span class="o">=</span> <span class="s">"serviceExcution()"</span><span class="o">,</span> <span class="n">throwing</span> <span class="o">=</span> <span class="s">"e"</span><span class="o">)</span> 
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">afterThrowing</span><span class="o">(</span><span class="nc">JoinPoint</span> <span class="n">joinPoint</span><span class="o">,</span> <span class="nc">Throwable</span> <span class="n">e</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------- AfterThrowing logging -------------"</span><span class="o">);</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">" throwable :{}"</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"----------------------------------------"</span> <span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><summary type="html"><![CDATA[AOP 예시]]></summary></entry><entry><title type="html">인터셉터(Interceptor) 예시</title><link href="http://localhost:4000/springboot/interceptor-example/" rel="alternate" type="text/html" title="인터셉터(Interceptor) 예시" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/interceptor-example</id><content type="html" xml:base="http://localhost:4000/springboot/interceptor-example/"><![CDATA[<h2 id="인터셉터의-사용예시">인터셉터의 사용예시</h2>
+<p>HandlerInterceptor를 구현한 MyHandler 입니다.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Component</span>
+<span class="nd">@Slf4j</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyHandler</span> <span class="kd">implements</span> <span class="nc">HandlerInterceptor</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span> <span class="no">LOG_ID</span> <span class="o">=</span> <span class="s">"logId"</span><span class="o">;</span>
+	
+	<span class="kd">private</span> <span class="kt">void</span> <span class="nf">readBody</span><span class="o">(</span><span class="kd">final</span> <span class="nc">HttpServletRequest</span> <span class="n">request</span><span class="o">)</span> <span class="o">{</span>
+
+		<span class="nc">String</span> <span class="n">reqBody</span> <span class="o">=</span> <span class="o">(</span><span class="nc">String</span><span class="o">)</span> <span class="n">request</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"requestBody"</span><span class="o">);</span>
+
+		<span class="cm">/*
+		 * reqBody 값을 읽어 임의 처리.
+		 */</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"reqBody:{}"</span><span class="o">,</span> <span class="n">reqBody</span><span class="o">);</span>
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">preHandle</span><span class="o">(</span><span class="nc">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="nc">HttpServletResponse</span> <span class="n">response</span><span class="o">,</span> <span class="nc">Object</span> <span class="n">handler</span><span class="o">)</span>
+			<span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"----------------- preHandle -------------------"</span><span class="o">);</span>
+	    <span class="nc">String</span> <span class="n">requestURI</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getRequestURI</span><span class="o">();</span>
+	    <span class="nc">String</span> <span class="n">uuid</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">randomUUID</span><span class="o">().</span><span class="na">toString</span><span class="o">();</span>
+	    <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"logId:{}"</span><span class="o">,</span> <span class="n">request</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="no">LOG_ID</span><span class="o">));</span>
+	    <span class="c1">//request.setAttribute(LOG_ID, uuid);		</span>
+
+		<span class="n">readBody</span><span class="o">(</span><span class="n">request</span><span class="o">);</span>
+
+        <span class="k">if</span> <span class="o">(</span><span class="nc">Objects</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getMethod</span><span class="o">(),</span> <span class="s">"POST"</span><span class="o">))</span> <span class="o">{</span>
+        	<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"1.req 정보: "</span><span class="o">);</span>
+<span class="c1">//            Map&lt;String, Object&gt; inputMap = new ObjectMapper().readValue(request.getInputStream(), Map.class);</span>
+<span class="c1">//</span>
+<span class="c1">//            log.info("2.req 정보: " + inputMap);</span>
+            <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"3.req URL: "</span> <span class="o">+</span> <span class="n">request</span><span class="o">.</span><span class="na">getRequestURL</span><span class="o">());</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+
+        	<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"req QueryString: "</span> <span class="o">+</span> <span class="n">request</span><span class="o">.</span><span class="na">getQueryString</span><span class="o">());</span>
+        	<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"req URL: "</span> <span class="o">+</span> <span class="n">request</span><span class="o">.</span><span class="na">getRequestURL</span><span class="o">());</span>
+        <span class="o">}</span>	
+		
+		<span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">postHandle</span><span class="o">(</span><span class="nc">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="nc">HttpServletResponse</span> <span class="n">response</span><span class="o">,</span> <span class="nc">Object</span> <span class="n">handler</span><span class="o">,</span>
+			<span class="nd">@Nullable</span> <span class="nc">ModelAndView</span> <span class="n">modelAndView</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"postHandle [{}]"</span><span class="o">,</span> <span class="n">handler</span><span class="o">);</span>
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">afterCompletion</span><span class="o">(</span><span class="nc">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="nc">HttpServletResponse</span> <span class="n">response</span><span class="o">,</span> <span class="nc">Object</span> <span class="n">handler</span><span class="o">,</span>
+			<span class="nd">@Nullable</span> <span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------------------------------"</span><span class="o">);</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"afterCompletion"</span><span class="o">);</span>
+
+        <span class="nc">String</span> <span class="n">requestURI</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getRequestURI</span><span class="o">();</span>
+        <span class="nc">String</span> <span class="n">logId</span> <span class="o">=</span> <span class="o">(</span><span class="nc">String</span><span class="o">)</span><span class="n">request</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="no">LOG_ID</span><span class="o">);</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"RESPONSE logId:[{}][{}]"</span><span class="o">,</span> <span class="n">logId</span><span class="o">,</span> <span class="n">requestURI</span><span class="o">);</span>
+        
+        <span class="k">if</span> <span class="o">(</span><span class="n">ex</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"afterCompletion error!!"</span><span class="o">,</span> <span class="n">ex</span><span class="o">);</span>
+        <span class="o">}</span>	
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------------------------------"</span><span class="o">);</span>        
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>MyHandler를 WebMvcConfigurer를 구현한  WebMvcConfigure에 등록하고 Uri PathPatttern을 지정합니다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Slf4j</span>
+<span class="nd">@RequiredArgsConstructor</span>
+<span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebMvcConfig</span> <span class="kd">implements</span> <span class="nc">WebMvcConfigurer</span> <span class="o">{</span>
+	<span class="kd">private</span> <span class="kd">final</span> <span class="nc">MyHandler</span> <span class="n">myHandler</span><span class="o">;</span>
+	
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">addInterceptors</span><span class="o">(</span><span class="nc">InterceptorRegistry</span> <span class="n">registry</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">registry</span><span class="o">.</span><span class="na">addInterceptor</span><span class="o">(</span><span class="n">myHandler</span><span class="o">)</span>
+			<span class="o">.</span><span class="na">addPathPatterns</span><span class="o">(</span><span class="s">"/test/**"</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="Interceptor" /><summary type="html"><![CDATA[인터셉터의 사용예시 HandlerInterceptor를 구현한 MyHandler 입니다. ```java @Component @Slf4j public class MyHandler implements HandlerInterceptor { public static final String LOG_ID = “logId”; private void readBody(final HttpServletRequest request) {]]></summary></entry><entry><title type="html">Mybatis에 멀티 로우 insert or update</title><link href="http://localhost:4000/springboot/upsert-mybatis-multi-row/" rel="alternate" type="text/html" title="Mybatis에 멀티 로우 insert or update" /><published>2023-03-11T00:00:00+09:00</published><updated>2023-03-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/upsert-mybatis-multi-row</id><content type="html" xml:base="http://localhost:4000/springboot/upsert-mybatis-multi-row/"><![CDATA[<h2 id="mybatis-한번에-여러건-insert-or-update">Mybatis 한번에 여러건 Insert or Update</h2>
 <p>Mybatis에서 한번에 여러건의 데이터를 insert 또는 update하기 기능을 Mybatis는 이를 지원하고 있다.
 이 기능을 이용하여 약간의 성능에 도움을 받을 수 있습니다.</p>
 
@@ -557,56 +661,4 @@ AOP기능으로 가장 많이 사용하는 로그 출력하는 AOP 예제입니�
 
 <h2 id="참조">참조</h2>
 <p><a href="https://sjh836.tistory.com/157">빨간색코딩</a><br />
-<a href="http://closer27.github.io/backend/2017/08/03/spring-aop/">어느 개발자의 한적한 공간</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><category term="pointcut" /><summary type="html"><![CDATA[PointCut 의 표현식 리턴타입 패키지경로 클래스지정 메소드지정]]></summary></entry><entry><title type="html">AOP(Aspect Oriented Programming) 구성요소</title><link href="http://localhost:4000/springboot/aop-2/" rel="alternate" type="text/html" title="AOP(Aspect Oriented Programming) 구성요소" /><published>2023-03-11T00:00:00+09:00</published><updated>2023-03-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/aop-2</id><content type="html" xml:base="http://localhost:4000/springboot/aop-2/"><![CDATA[<h2 id="aop-구성요소">AOP 구성요소</h2>
-<p>특정지정에 제어하고 싶은 대상에 제어하고자 하는 기능을 구현하는 AOP에 대해 알아보았습ㄴ다.
-이번에는 좀더 용어에 대해 상세하게 알아보겠습니다. <br />
-AOP의 구성요소는</p>
-<ul>
-  <li>Aspect</li>
-  <li>Advice</li>
-  <li>PointCut</li>
-  <li>JoinPoint</li>
-</ul>
-
-<p>로 되어 있습니다.</p>
-
-<h4 id="aspect">Aspect</h4>
-<p>Aspect는 AspectConfig 기능처럼 제어하고자 하는 모듈의 묶음을 의미하며, 이를 위해 어노테이션 @Aspect를 추가합니다.</p>
-
-<h4 id="advice">Advice</h4>
-<p>Advice는 특정 지점에서 trigger 되었을 때 실행되는 operation 입니다.<br />
-예를 들면 operation이 실행되지는 시점은 다음과 같습니다.</p>
-<ul>
-  <li>시적전/후 : @Around</li>
-  <li>시작전(Before) : @Before</li>
-  <li>성공처리 후 : @AfterReturning</li>
-  <li>에러발생시 : @AfterThrowing</li>
-  <li>처리종료 후 항상 실행 : @After</li>
-</ul>
-
-<h4 id="joinpoint">JoinPoint</h4>
-<p>JoinPoint는 어떤 Operation을 대상으로 할지 정의하는 것입니다.
-Springframework의 AOP는 operation or method 단위로 JoinPoint를 지원합니다.<br />
-대표적인 것이 execution, @Annotation 이 있습니다. 이중에서 execution JoinPoint가 가장 많이 사용되고 있습니다.</p>
-
-<h4 id="pointcut">PointCut</h4>
-<p>어느 시점(Operation or method)에 AOP 모듈을 trigger할지 정의하는 JoinPoint의 상세 스펙 또는 표현식(Expression)입니다.</p>
-
-<h4 id="기타">기타</h4>
-<ul>
-  <li>
-    <p>Weaving(위빙): Weaving은 애플리케이션의 Design/Runtime 등 시점에 Aspect를 적용하는 것<br />
-springframework는 Runtime 시점에 Weaving 합니다.</p>
-  </li>
-  <li>
-    <p>target : Aspect가 적용되는 객체를 의미합니다.</p>
-  </li>
-</ul>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><summary type="html"><![CDATA[AOP 구성요소 특정지정에 제어하고 싶은 대상에 제어하고자 하는 기능을 구현하는 AOP에 대해 알아보았습ㄴ다. 이번에는 좀더 용어에 대해 상세하게 알아보겠습니다. AOP의 구성요소는 Aspect Advice PointCut JoinPoint]]></summary></entry><entry><title type="html">load-on-startup</title><link href="http://localhost:4000/springboot/springboot-load-on-startup/" rel="alternate" type="text/html" title="load-on-startup" /><published>2023-03-11T00:00:00+09:00</published><updated>2023-03-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/springboot-load-on-startup</id><content type="html" xml:base="http://localhost:4000/springboot/springboot-load-on-startup/"><![CDATA[<h2 id="load-on-startup">load-on-startup</h2>
-<p>Springboot 시작시 첫 호출이 느린 경우 application.yml에 해당 내용 추가 합니다.</p>
-
-<p>application.yml 파일입니다.</p>
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">spring</span><span class="pi">:</span>
-  <span class="na">mvc</span><span class="pi">:</span>
-    <span class="na">servlet</span><span class="pi">:</span>
-      <span class="na">load-on-startup</span><span class="pi">:</span> <span class="m">1</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="load-on-startup" /><summary type="html"><![CDATA[load-on-startup Springboot 시작시 첫 호출이 느린 경우 application.yml에 해당 내용 추가 합니다.]]></summary></entry></feed>
+<a href="http://closer27.github.io/backend/2017/08/03/spring-aop/">어느 개발자의 한적한 공간</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><category term="pointcut" /><summary type="html"><![CDATA[PointCut 의 표현식 리턴타입 패키지경로 클래스지정 메소드지정]]></summary></entry></feed>

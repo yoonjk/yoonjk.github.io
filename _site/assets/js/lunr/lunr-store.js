@@ -382,4 +382,16 @@ var store = [{
         "tags": ["aop","filter","interceptor"],
         "url": "/springboot/filter-using-spring/",
         "teaser": null
+      },{
+        "title": "인터셉터(Interceptor) 예시",
+        "excerpt":"인터셉터의 사용예시 HandlerInterceptor를 구현한 MyHandler 입니다. @Component @Slf4j public class MyHandler implements HandlerInterceptor { public static final String LOG_ID = \"logId\"; private void readBody(final HttpServletRequest request) { String reqBody = (String) request.getAttribute(\"requestBody\"); /* * reqBody 값을 읽어 임의 처리. */ log.info(\"reqBody:{}\", reqBody); } public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object...","categories": ["springboot"],
+        "tags": ["Interceptor"],
+        "url": "/springboot/interceptor-example/",
+        "teaser": null
+      },{
+        "title": "인터셉터(Interceptor) 란?",
+        "excerpt":"인터셉터의 이해 인터셉터는 “무엇인가를 가로챈다”라는 의미입니다. Filter가 실행된 이후 인터셉터는 Controller가 호출 전/후에 무엇인가 제어 하고자할 때 사용합니다. 그리고 Filter가 WebContainer에서 동작하는 반면에 인터셉터는 Spring Container에서 동작하는 차이점이 있습니다. 대표적인 사용 목적은 logging과 인증처리에 많이 사용합니다. HandlerInterceptor를 구현 preHandle postHandle afterCompletion preHandle Controller의 메서드에 매핑된 특정 URI가 호출됐을 때 실행되는...","categories": ["springboot"],
+        "tags": ["Interceptor"],
+        "url": "/springboot/interceptor/",
+        "teaser": null
       }]
