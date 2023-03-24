@@ -10,6 +10,8 @@ tags:
 인터셉터는 "무엇인가를 가로챈다"라는 의미입니다. Filter가 실행된 이후 인터셉터는 Controller가 호출 전/후에 무엇인가 제어 하고자할 때 사용합니다. 그리고 Filter가 WebContainer에서 동작하는 반면에 인터셉터는 Spring Container에서 동작하는 차이점이 있습니다.
 대표적인 사용 목적은 logging과 인증처리에 많이 사용합니다.
 
+![filter interceptor aop]({{ "/assets/images/springboot/04-spring-filter-interceptor-aop-resolver-advice.png" }})
+
 ## HandlerInterceptor를 구현
 - preHandle
 - postHandle

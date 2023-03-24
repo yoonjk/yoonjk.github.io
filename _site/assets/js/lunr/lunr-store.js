@@ -323,30 +323,6 @@ var store = [{
         "url": "/springboot/mac-jdk-switch/",
         "teaser": null
       },{
-        "title": "AOP(Aspect Oriented Programming) 구성요소",
-        "excerpt":"AOP 구성요소 특정지정에 제어하고 싶은 대상에 제어하고자 하는 기능을 구현하는 AOP에 대해 알아보았습ㄴ다. 이번에는 좀더 용어에 대해 상세하게 알아보겠습니다. AOP의 구성요소는 Aspect Advice PointCut JoinPoint 로 되어 있습니다. Aspect Aspect는 AspectConfig 기능처럼 제어하고자 하는 모듈의 묶음을 의미하며, 이를 위해 어노테이션 @Aspect를 추가합니다. Advice Advice는 특정 지점에서 trigger 되었을 때 실행되는...","categories": ["springboot"],
-        "tags": ["aop"],
-        "url": "/springboot/aop-2/",
-        "teaser": null
-      },{
-        "title": "AOP(Aspect Oriented Programming) PointCut 표현식",
-        "excerpt":"PointCut 의 표현식 리턴타입 패키지경로 클래스지정 메소드지정 예시) execution(* com.demo.microservices..*.*Controller.*(..)) execution(* com.demo.microservices..*.*Service.*(..)) JoinPoint PointCut Spec execution * com.demo.microservices..*.*Controller.*(..) ) 리턴타입 패키지 클래스명 매소드명 매개변수 * com.demo.microservices..*. *Controller. *(..) )   리턴타입 : * : 모든 리턴타입 허용 void : 리턴타입이 void인 메소드 선택 !void : 리턴타압이 void가 아닌 메소드 선택...","categories": ["springboot"],
-        "tags": ["aop","pointcut"],
-        "url": "/springboot/aop-pointcut-detail/",
-        "teaser": null
-      },{
-        "title": "AOP(Aspect Oriented Programming) PointCut",
-        "excerpt":"PointCut 의 이해 어느 시점(Operation or method)에 AOP 모듈을 trigger할지 정의하는 JoinPoint의 상세 스펙 또는 표현식(Expression) 으로 설명하였습니다. 아래 그림으로 표현하다면 주황색의 내용으로 이해하면 좋을 것 같습니다. 주황색 유형 : JoinPoint 주황색 표현식(E) : PointCut 주황색 내용 : Advice JoinPoint 설명 execution 메소드 실행 조인 포인트를 매칭한다. 스프링 AOP에서 가장...","categories": ["springboot"],
-        "tags": ["aop","pointcut"],
-        "url": "/springboot/aop-pointcut/",
-        "teaser": null
-      },{
-        "title": "AOP(Aspect Oriented Programming) 란?",
-        "excerpt":"AOP 개요 AOP 란 관점 지향 프로그래밍입니다. 처음에 관점 지향이라고 하면 쉽게 머리속에 그려지지 않습니다. 개발을 하면서 layer 아래와 같이 Three layer로 구성하여 구현할 때 layer별로 아래와 같은 기능을 처리해야 하는 경우 logging security 에러 공통처리 등 Filter나, Intereptor, AOP를 고려합니다. AOP는 가장 상세하게 처리를 제어할 수 있습니다. 다시 본론으로...","categories": ["springboot"],
-        "tags": ["aop"],
-        "url": "/springboot/aop/",
-        "teaser": null
-      },{
         "title": "CacheMager 사용하여 data 캐시하는 방법",
         "excerpt":"cacheManager 의존성 추가 Springboot 에서 data를 Cache를 하고자 하는 경우 Solution을 시용하는 경우 Redis를 고려합니다. 그러나 Redis 를 사용할 정도의 애플리케이션 아닌 경우 Local Cache만으로 충분한 경우 Singleton 패턴으로 구현할 수도 있지만 이미 만들어진 CacheManager를 사용하면 편리합니다. Springboot에서 cacheManager를 사용하기 위해서 maven 빌드 환경에서 pom.xml에 아래의 의존성을 추가합니다. &lt;dependency&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;...","categories": ["springboot"],
         "tags": ["cacheManager"],
@@ -365,10 +341,34 @@ var store = [{
         "url": "/springboot/upsert-mybatis-multi-row/",
         "teaser": null
       },{
+        "title": "AOP(Aspect Oriented Programming) 구성요소",
+        "excerpt":"AOP 구성요소 특정지정에 제어하고 싶은 대상에 제어하고자 하는 기능을 구현하는 AOP에 대해 알아보았습ㄴ다. 이번에는 좀더 용어에 대해 상세하게 알아보겠습니다. AOP의 구성요소는 Aspect Advice PointCut JoinPoint 로 되어 있습니다. Aspect Aspect는 AspectConfig 기능처럼 제어하고자 하는 모듈의 묶음을 의미하며, 이를 위해 어노테이션 @Aspect를 추가합니다. Advice Advice는 특정 지점에서 trigger 되었을 때 실행되는...","categories": ["springboot"],
+        "tags": ["aop"],
+        "url": "/springboot/aop-2/",
+        "teaser": null
+      },{
         "title": "AOP(Aspect Oriented Programming) 예시",
         "excerpt":"AOP 예시 @Aspect public class AspectConfig { @Pointcut(\"@annotation(org.springframework.web.bind.annotation.GetMapping)\") public void getMapping() { } @Pointcut(\"@annotation(org.springframework.web.bind.annotation.PostMapping)\") public void postMapping() { } @Pointcut(\"@annotation(org.springframework.web.bind.annotation.RequestMapping)\") public void requestMapping() { } @Pointcut(\"execution(* com.demo.microservices..*.*Service.*(..))\") public void serviceExcution() { } @Around(value=\"serviceExcution()\") public Object around(ProceedingJoinPoint pjt) throws Throwable { log.info(\"------------- Around logging Start -------------\"); Object retValue = null; try...","categories": ["springboot"],
         "tags": ["aop"],
         "url": "/springboot/aop-examples/",
+        "teaser": null
+      },{
+        "title": "AOP(Aspect Oriented Programming) PointCut 표현식",
+        "excerpt":"PointCut 의 표현식 리턴타입 패키지경로 클래스지정 메소드지정 예시) execution(* com.demo.microservices..*.*Controller.*(..)) execution(* com.demo.microservices..*.*Service.*(..)) JoinPoint PointCut Spec execution * com.demo.microservices..*.*Controller.*(..) ) 리턴타입 패키지 클래스명 매소드명 매개변수 * com.demo.microservices..*. *Controller. *(..) )   리턴타입 : * : 모든 리턴타입 허용 void : 리턴타입이 void인 메소드 선택 !void : 리턴타압이 void가 아닌 메소드 선택...","categories": ["springboot"],
+        "tags": ["aop","pointcut"],
+        "url": "/springboot/aop-pointcut-detail/",
+        "teaser": null
+      },{
+        "title": "AOP(Aspect Oriented Programming) PointCut",
+        "excerpt":"PointCut 의 이해 어느 시점(Operation or method)에 AOP 모듈을 trigger할지 정의하는 JoinPoint의 상세 스펙 또는 표현식(Expression) 으로 설명하였습니다. 아래 그림으로 표현하다면 주황색의 내용으로 이해하면 좋을 것 같습니다. 주황색 유형 : JoinPoint 주황색 표현식(E) : PointCut 주황색 내용 : Advice JoinPoint 설명 execution 메소드 실행 조인 포인트를 매칭한다. 스프링 AOP에서 가장...","categories": ["springboot"],
+        "tags": ["aop","pointcut"],
+        "url": "/springboot/aop-pointcut/",
+        "teaser": null
+      },{
+        "title": "AOP(Aspect Oriented Programming) 란?",
+        "excerpt":"AOP 개요 AOP 란 관점 지향 프로그래밍입니다. 처음에 관점 지향이라고 하면 쉽게 머리속에 그려지지 않습니다. 개발을 하면서 layer 아래와 같이 Three layer로 구성하여 구현할 때 layer별로 아래와 같은 기능을 처리해야 하는 경우 logging security 에러 공통처리 등 Filter나, Intereptor, AOP를 고려합니다. AOP는 가장 상세하게 처리를 제어할 수 있습니다. 다시 본론으로...","categories": ["springboot"],
+        "tags": ["aop"],
+        "url": "/springboot/aop/",
         "teaser": null
       },{
         "title": "AOP vs Interceptor vs Filter - Filter",
