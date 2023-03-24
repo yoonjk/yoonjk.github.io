@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-25T07:48:41+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">인터셉터(Interceptor) 란?</title><link href="http://localhost:4000/springboot/interceptor/" rel="alternate" type="text/html" title="인터셉터(Interceptor) 란?" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/interceptor</id><content type="html" xml:base="http://localhost:4000/springboot/interceptor/"><![CDATA[<h2 id="인터셉터의-이해">인터셉터의 이해</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-25T07:56:09+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">인터셉터(Interceptor) 란?</title><link href="http://localhost:4000/springboot/interceptor/" rel="alternate" type="text/html" title="인터셉터(Interceptor) 란?" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/interceptor</id><content type="html" xml:base="http://localhost:4000/springboot/interceptor/"><![CDATA[<h2 id="인터셉터의-이해">인터셉터의 이해</h2>
 <p>인터셉터는 “무엇인가를 가로챈다”라는 의미입니다. Filter가 실행된 이후 인터셉터는 Controller가 호출 전/후에 무엇인가 제어 하고자할 때 사용합니다. 그리고 Filter가 WebContainer에서 동작하는 반면에 인터셉터는 Spring Container에서 동작하는 차이점이 있습니다.
 대표적인 사용 목적은 logging과 인증처리에 많이 사용합니다.</p>
 
@@ -147,7 +147,9 @@ FilterChain 파라미터는 FilterChain의 doFilter를 통해 다음 대상으�
 </code></pre></div></div>
 
 <h2 id="참조">참조</h2>
-<p><a href="https://mangkyu.tistory.com/173">망나니개발자</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><category term="filter" /><category term="interceptor" /><summary type="html"><![CDATA[AOP vs Interceptor vs Filter AOP 를 내용을 살펴보면 Interceptor 와 Filter에 대해 궁금해질 것입니다. AOP와 Interceptor, Filter의 역할에 대해 간략하게 알아보기 위해 아래의 그램으로 표현하였습니다.]]></summary></entry><entry><title type="html">AOP(Aspect Oriented Programming) 란?</title><link href="http://localhost:4000/springboot/aop/" rel="alternate" type="text/html" title="AOP(Aspect Oriented Programming) 란?" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/aop</id><content type="html" xml:base="http://localhost:4000/springboot/aop/"><![CDATA[<h2 id="aop-개요">AOP 개요</h2>
+<p><a href="https://mangkyu.tistory.com/173">망나니개발자</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><category term="filter" /><category term="interceptor" /><summary type="html"><![CDATA[AOP vs Interceptor vs Filter AOP 를 내용을 살펴보면 Interceptor 와 Filter에 대해 궁금해질 것입니다. AOP와 Interceptor, Filter의 역할에 대해 간략하게 알아보기 위해 아래의 그램으로 표현하였습니다.]]></summary></entry><entry><title type="html">ArgumentResolver</title><link href="http://localhost:4000/springboot/argumentResolver/" rel="alternate" type="text/html" title="ArgumentResolver" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/argumentResolver</id><content type="html" xml:base="http://localhost:4000/springboot/argumentResolver/"><![CDATA[<h2 id="argumentresolver">ArgumentResolver</h2>
+<p>Http Request를 제어할 수 있는 또 하나의 영역중 하나가 바로 ArgumentResolver 입니다.
+  ArgumentRoslver는 Request 데이터를 가공하여 Constroller에 전달하고 싶을 때 사용합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="Resolver" /><summary type="html"><![CDATA[ArgumentResolver Http Request를 제어할 수 있는 또 하나의 영역중 하나가 바로 ArgumentResolver 입니다. ArgumentRoslver는 Request 데이터를 가공하여 Constroller에 전달하고 싶을 때 사용합니다.]]></summary></entry><entry><title type="html">AOP(Aspect Oriented Programming) 란?</title><link href="http://localhost:4000/springboot/aop/" rel="alternate" type="text/html" title="AOP(Aspect Oriented Programming) 란?" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/aop</id><content type="html" xml:base="http://localhost:4000/springboot/aop/"><![CDATA[<h2 id="aop-개요">AOP 개요</h2>
 
 <p><img src="/assets/images/springboot/04-spring-filter-interceptor-aop-resolver-advice.png" alt="filter interceptor aop" /></p>
 
@@ -487,25 +489,21 @@ springframework는 Runtime 시점에 Weaving 합니다.</p>
 
 	<span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">preHandle</span><span class="o">(</span><span class="nc">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="nc">HttpServletResponse</span> <span class="n">response</span><span class="o">,</span> <span class="nc">Object</span> <span class="n">handler</span><span class="o">)</span>
 			<span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"----------------- preHandle -------------------"</span><span class="o">);</span>
+		  <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"----------------- preHandle -------------------"</span><span class="o">);</span>
 	    <span class="nc">String</span> <span class="n">requestURI</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getRequestURI</span><span class="o">();</span>
 	    <span class="nc">String</span> <span class="n">uuid</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">randomUUID</span><span class="o">().</span><span class="na">toString</span><span class="o">();</span>
 	    <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"logId:{}"</span><span class="o">,</span> <span class="n">request</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="no">LOG_ID</span><span class="o">));</span>
 	    <span class="c1">//request.setAttribute(LOG_ID, uuid);		</span>
 
-		<span class="n">readBody</span><span class="o">(</span><span class="n">request</span><span class="o">);</span>
+		  <span class="n">readBody</span><span class="o">(</span><span class="n">request</span><span class="o">);</span>
 
-        <span class="k">if</span> <span class="o">(</span><span class="nc">Objects</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getMethod</span><span class="o">(),</span> <span class="s">"POST"</span><span class="o">))</span> <span class="o">{</span>
-        	<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"1.req 정보: "</span><span class="o">);</span>
-<span class="c1">//            Map&lt;String, Object&gt; inputMap = new ObjectMapper().readValue(request.getInputStream(), Map.class);</span>
-<span class="c1">//</span>
-<span class="c1">//            log.info("2.req 정보: " + inputMap);</span>
-            <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"3.req URL: "</span> <span class="o">+</span> <span class="n">request</span><span class="o">.</span><span class="na">getRequestURL</span><span class="o">());</span>
-        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+      <span class="k">if</span> <span class="o">(</span><span class="nc">Objects</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getMethod</span><span class="o">(),</span> <span class="s">"POST"</span><span class="o">))</span> <span class="o">{</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"req URL: "</span> <span class="o">+</span> <span class="n">request</span><span class="o">.</span><span class="na">getRequestURL</span><span class="o">());</span>
+      <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
 
-        	<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"req QueryString: "</span> <span class="o">+</span> <span class="n">request</span><span class="o">.</span><span class="na">getQueryString</span><span class="o">());</span>
-        	<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"req URL: "</span> <span class="o">+</span> <span class="n">request</span><span class="o">.</span><span class="na">getRequestURL</span><span class="o">());</span>
-        <span class="o">}</span>	
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"req QueryString: "</span> <span class="o">+</span> <span class="n">request</span><span class="o">.</span><span class="na">getQueryString</span><span class="o">());</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"req URL: "</span> <span class="o">+</span> <span class="n">request</span><span class="o">.</span><span class="na">getRequestURL</span><span class="o">());</span>
+      <span class="o">}</span>	
 		
 		<span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
 	<span class="o">}</span>
@@ -520,13 +518,14 @@ springframework는 Runtime 시점에 Weaving 합니다.</p>
 		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------------------------------"</span><span class="o">);</span>
 		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"afterCompletion"</span><span class="o">);</span>
 
-        <span class="nc">String</span> <span class="n">requestURI</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getRequestURI</span><span class="o">();</span>
-        <span class="nc">String</span> <span class="n">logId</span> <span class="o">=</span> <span class="o">(</span><span class="nc">String</span><span class="o">)</span><span class="n">request</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="no">LOG_ID</span><span class="o">);</span>
-        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"RESPONSE logId:[{}][{}]"</span><span class="o">,</span> <span class="n">logId</span><span class="o">,</span> <span class="n">requestURI</span><span class="o">);</span>
-        
-        <span class="k">if</span> <span class="o">(</span><span class="n">ex</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"afterCompletion error!!"</span><span class="o">,</span> <span class="n">ex</span><span class="o">);</span>
-        <span class="o">}</span>	
+    <span class="nc">String</span> <span class="n">requestURI</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getRequestURI</span><span class="o">();</span>
+    <span class="nc">String</span> <span class="n">logId</span> <span class="o">=</span> <span class="o">(</span><span class="nc">String</span><span class="o">)</span><span class="n">request</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="no">LOG_ID</span><span class="o">);</span>
+    <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"RESPONSE logId:[{}][{}]"</span><span class="o">,</span> <span class="n">logId</span><span class="o">,</span> <span class="n">requestURI</span><span class="o">);</span>
+    
+    <span class="k">if</span> <span class="o">(</span><span class="n">ex</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"afterCompletion error!!"</span><span class="o">,</span> <span class="n">ex</span><span class="o">);</span>
+    <span class="o">}</span>	
+  
 		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------------------------------"</span><span class="o">);</span>        
 	<span class="o">}</span>
 <span class="o">}</span>
@@ -538,6 +537,8 @@ springframework는 Runtime 시점에 Weaving 합니다.</p>
 <span class="nd">@RequiredArgsConstructor</span>
 <span class="nd">@Configuration</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebMvcConfig</span> <span class="kd">implements</span> <span class="nc">WebMvcConfigurer</span> <span class="o">{</span>
+	<span class="kd">private</span> <span class="kd">final</span> <span class="nc">DecryptArgumentResolver</span> <span class="n">decryptArgumentResolver</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="kd">final</span> <span class="nc">ResultReturnValueHandler</span> <span class="n">resultReturnValueHandler</span><span class="o">;</span>
 	<span class="kd">private</span> <span class="kd">final</span> <span class="nc">MyHandler</span> <span class="n">myHandler</span><span class="o">;</span>
 	
 	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">addInterceptors</span><span class="o">(</span><span class="nc">InterceptorRegistry</span> <span class="n">registry</span><span class="o">)</span> <span class="o">{</span>
@@ -545,105 +546,4 @@ springframework는 Runtime 시점에 Weaving 합니다.</p>
 			<span class="o">.</span><span class="na">addPathPatterns</span><span class="o">(</span><span class="s">"/test/**"</span><span class="o">);</span>
 	<span class="o">}</span>
 <span class="o">}</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="Interceptor" /><summary type="html"><![CDATA[인터셉터의 사용예시 HandlerInterceptor를 구현한 MyHandler 입니다. ```java @Component @Slf4j public class MyHandler implements HandlerInterceptor { public static final String LOG_ID = “logId”; private void readBody(final HttpServletRequest request) {]]></summary></entry><entry><title type="html">Mybatis에 멀티 로우 insert or update</title><link href="http://localhost:4000/springboot/upsert-mybatis-multi-row/" rel="alternate" type="text/html" title="Mybatis에 멀티 로우 insert or update" /><published>2023-03-11T00:00:00+09:00</published><updated>2023-03-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/upsert-mybatis-multi-row</id><content type="html" xml:base="http://localhost:4000/springboot/upsert-mybatis-multi-row/"><![CDATA[<h2 id="mybatis-한번에-여러건-insert-or-update">Mybatis 한번에 여러건 Insert or Update</h2>
-<p>Mybatis에서 한번에 여러건의 데이터를 insert 또는 update하기 기능을 Mybatis는 이를 지원하고 있다.
-이 기능을 이용하여 약간의 성능에 도움을 받을 수 있습니다.</p>
-
-<p>Mybatis에서 여러건의 데이터를 Insert or Update 예제입니다.</p>
-
-<ul>
-  <li>다음은 Controller 입니다.</li>
-</ul>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="nd">@Slf4j</span>
-<span class="nd">@RestController</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloController</span> <span class="o">{</span>
-	<span class="nd">@Autowired</span>
-	<span class="kd">private</span> <span class="nc">SampleUserDao</span> <span class="n">sampleUserDao</span><span class="o">;</span>
-
-	<span class="nd">@ApiOperation</span><span class="o">(</span><span class="n">value</span><span class="o">=</span><span class="s">"bulkload"</span><span class="o">)</span>
-	<span class="nd">@PostMapping</span><span class="o">(</span><span class="n">value</span><span class="o">=</span><span class="s">"/users/bulkload"</span><span class="o">)</span>
-	<span class="kd">public</span> <span class="nc">ResponseEntity</span> <span class="o">&lt;?&gt;</span> <span class="n">bulkloadUser</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">SampleUser</span><span class="o">&gt;</span> <span class="n">userList</span><span class="o">)</span> <span class="o">{</span>
-		<span class="k">try</span> <span class="o">{</span>
-			<span class="n">sampleUserDao</span><span class="o">.</span><span class="na">bulkloadUsers</span><span class="o">(</span><span class="n">userList</span><span class="o">);</span>
-		<span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-			<span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
-		<span class="o">}</span>
-
-		<span class="k">return</span> <span class="nc">Response</span><span class="o">.</span><span class="na">ok</span><span class="o">(</span><span class="s">"Success"</span><span class="o">);</span>
-	<span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<ul>
-  <li>다음은 Mapper 입니다.</li>
-</ul>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Mapper</span>
-<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">SampleUserDao</span> <span class="o">{</span>	
-	
-	<span class="cm">/**
-	 * 사용자 목록을 입력받아 bulkload합니다.
-	 * @return
-	 * @throws Exception
-	 */</span>
-	<span class="kt">int</span> <span class="nf">bulkloadUsers</span><span class="o">(</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">SampleUser</span><span class="o">&gt;</span> <span class="n">userList</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span><span class="o">;</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<ul>
-  <li>다음은 VO(Value Object) 입니다.</li>
-</ul>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">lombok.Getter</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">lombok.Setter</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">lombok.ToString</span><span class="o">;</span>
-
-<span class="nd">@Getter</span>
-<span class="nd">@Setter</span>
-<span class="nd">@ToString</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SampleUser</span> <span class="o">{</span>
-	 <span class="kd">private</span> <span class="nc">String</span>  <span class="n">userId</span> 		<span class="o">;</span> <span class="c1">// 사용자 ID</span>
-	 <span class="kd">private</span> <span class="nc">String</span>  <span class="n">userNm</span> 		<span class="o">;</span> <span class="c1">// 사용자 이름</span>
-	 <span class="kd">private</span> <span class="nc">String</span>  <span class="n">addr</span> 		    <span class="o">;</span> <span class="c1">// 주소 </span>
-	 <span class="kd">private</span> <span class="nc">String</span>  <span class="n">cellPhone</span> 	    <span class="o">;</span> <span class="c1">// 핸드폰 </span>
-	 <span class="kd">private</span> <span class="nc">String</span>  <span class="n">agreeInform</span>    <span class="o">;</span> <span class="c1">// 고객정보 동의 여부 </span>
-	 <span class="kd">private</span> <span class="nc">String</span>  <span class="n">birthDt</span> 	    <span class="o">;</span> <span class="c1">// 생년 월일 </span>
-<span class="o">}</span>
-
-</code></pre></div></div>
-
-<p>다음의 그 Mybatis Mapper 파일 예제입니다.</p>
-
-<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
-<span class="cp">&lt;!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"&gt;</span>
-<span class="nt">&lt;mapper</span> <span class="na">namespace=</span><span class="s">"com.demo.microservices.dao.SampleUserDao"</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;insert</span> <span class="na">id=</span><span class="s">"bulkloadUsers"</span> <span class="na">parameterType=</span><span class="s">"list"</span><span class="nt">&gt;</span>
-		insert into tb_user00 (
-		    user_id,
-		    user_nm,
-		    addr,
-		    cell_phone,
-		    agree_inform,
-		    birth_dt
-		) values 
-		foreach collection="list" item="item" separator=","&gt;
-		(
-		    #{item.userId},
-		    #{item.userNm},
-		    #{item.addr},
-		    #{item.cellPhone},
-		    #{item.agreeInform},
-		    #{item.birthDt}
-		)
-		<span class="nt">&lt;/foreach&gt;</span> 	
-		on duplicate key update 
-		    user_nm = values(user_nm),
-		    addr = values(addr),
-		    cell_phone = values(cell_phone),
-		    agree_inform = values(agree_inform),
-		    birth_dt = values(birth_dt)
-	<span class="nt">&lt;/insert&gt;</span>
-<span class="nt">&lt;/mapper&gt;</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="mybatis" /><summary type="html"><![CDATA[Mybatis 한번에 여러건 Insert or Update Mybatis에서 한번에 여러건의 데이터를 insert 또는 update하기 기능을 Mybatis는 이를 지원하고 있다. 이 기능을 이용하여 약간의 성능에 도움을 받을 수 있습니다.]]></summary></entry></feed>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="Interceptor" /><summary type="html"><![CDATA[인터셉터의 사용예시 HandlerInterceptor를 구현한 MyHandler 입니다. ```java @Component @Slf4j public class MyHandler implements HandlerInterceptor { public static final String LOG_ID = “logId”; private void readBody(final HttpServletRequest request) {]]></summary></entry></feed>
