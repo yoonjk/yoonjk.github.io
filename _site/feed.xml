@@ -1,33 +1,82 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-25T07:56:09+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">인터셉터(Interceptor) 란?</title><link href="http://localhost:4000/springboot/interceptor/" rel="alternate" type="text/html" title="인터셉터(Interceptor) 란?" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/interceptor</id><content type="html" xml:base="http://localhost:4000/springboot/interceptor/"><![CDATA[<h2 id="인터셉터의-이해">인터셉터의 이해</h2>
-<p>인터셉터는 “무엇인가를 가로챈다”라는 의미입니다. Filter가 실행된 이후 인터셉터는 Controller가 호출 전/후에 무엇인가 제어 하고자할 때 사용합니다. 그리고 Filter가 WebContainer에서 동작하는 반면에 인터셉터는 Spring Container에서 동작하는 차이점이 있습니다.
-대표적인 사용 목적은 logging과 인증처리에 많이 사용합니다.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-25T08:01:18+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">ArgumentResolver</title><link href="http://localhost:4000/springboot/argumentResolver/" rel="alternate" type="text/html" title="ArgumentResolver" /><published>2023-03-13T00:00:00+09:00</published><updated>2023-03-13T00:00:00+09:00</updated><id>http://localhost:4000/springboot/argumentResolver</id><content type="html" xml:base="http://localhost:4000/springboot/argumentResolver/"><![CDATA[<h2 id="argumentresolver">ArgumentResolver</h2>
+<p>Http Request를 제어할 수 있는 또 하나의 영역중 하나가 바로 ArgumentResolver 입니다.
+  ArgumentRoslver는 Request 데이터를 가공하여 Constroller에 전달하고 싶을 때 사용합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="Resolver" /><summary type="html"><![CDATA[ArgumentResolver Http Request를 제어할 수 있는 또 하나의 영역중 하나가 바로 ArgumentResolver 입니다. ArgumentRoslver는 Request 데이터를 가공하여 Constroller에 전달하고 싶을 때 사용합니다.]]></summary></entry><entry><title type="html">인터셉터(Interceptor) 예시</title><link href="http://localhost:4000/springboot/interceptor-example/" rel="alternate" type="text/html" title="인터셉터(Interceptor) 예시" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/interceptor-example</id><content type="html" xml:base="http://localhost:4000/springboot/interceptor-example/"><![CDATA[<h2 id="인터셉터의-사용예시">인터셉터의 사용예시</h2>
+<p>HandlerInterceptor를 구현한 MyHandler 입니다.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Component</span>
+<span class="nd">@Slf4j</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyHandler</span> <span class="kd">implements</span> <span class="nc">HandlerInterceptor</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span> <span class="no">LOG_ID</span> <span class="o">=</span> <span class="s">"logId"</span><span class="o">;</span>
+	
+	<span class="kd">private</span> <span class="kt">void</span> <span class="nf">readBody</span><span class="o">(</span><span class="kd">final</span> <span class="nc">HttpServletRequest</span> <span class="n">request</span><span class="o">)</span> <span class="o">{</span>
 
-<p><img src="/assets/images/springboot/04-spring-filter-interceptor-aop-resolver-advice.png" alt="filter interceptor aop" /></p>
+		<span class="nc">String</span> <span class="n">reqBody</span> <span class="o">=</span> <span class="o">(</span><span class="nc">String</span><span class="o">)</span> <span class="n">request</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"requestBody"</span><span class="o">);</span>
 
-<h2 id="handlerinterceptor를-구현">HandlerInterceptor를 구현</h2>
-<ul>
-  <li>preHandle</li>
-  <li>postHandle</li>
-  <li>afterCompletion</li>
-</ul>
+		<span class="cm">/*
+		 * reqBody 값을 읽어 임의 처리.
+		 */</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"reqBody:{}"</span><span class="o">,</span> <span class="n">reqBody</span><span class="o">);</span>
+	<span class="o">}</span>
 
-<h4 id="prehandle">preHandle</h4>
-<p>Controller의 메서드에 매핑된 특정 URI가 호출됐을 때 실행되는 메서드로, Controller를 경유(접근)하기 직전에 실행되는 메서드입니다.<br />
-Controller를 호출하기전에 동작하는 메소드로 return값이 true이면 진행, false이면 Controller 호출을 중단합니다</p>
+	<span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">preHandle</span><span class="o">(</span><span class="nc">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="nc">HttpServletResponse</span> <span class="n">response</span><span class="o">,</span> <span class="nc">Object</span> <span class="n">handler</span><span class="o">)</span>
+			<span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+		  <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"----------------- preHandle -------------------"</span><span class="o">);</span>
+	    <span class="nc">String</span> <span class="n">requestURI</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getRequestURI</span><span class="o">();</span>
+	    <span class="nc">String</span> <span class="n">uuid</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">randomUUID</span><span class="o">().</span><span class="na">toString</span><span class="o">();</span>
+	    <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"logId:{}"</span><span class="o">,</span> <span class="n">request</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="no">LOG_ID</span><span class="o">));</span>
+	    <span class="c1">//request.setAttribute(LOG_ID, uuid);		</span>
 
-<h4 id="posthandle">postHandle</h4>
-<p>컨트롤러를 호출 후, 즉 화면(View)으로 결과를 전달하기 전에 실행되는 메서드입니다.</p>
+		  <span class="n">readBody</span><span class="o">(</span><span class="n">request</span><span class="o">);</span>
 
-<h4 id="aftercompletion">afterCompletion</h4>
-<p>view가 정상적으로 랜더링된 후에 마지막에 실행됩니다</p>
+      <span class="k">if</span> <span class="o">(</span><span class="nc">Objects</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getMethod</span><span class="o">(),</span> <span class="s">"POST"</span><span class="o">))</span> <span class="o">{</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"req URL: "</span> <span class="o">+</span> <span class="n">request</span><span class="o">.</span><span class="na">getRequestURL</span><span class="o">());</span>
+      <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
 
-<h4 id="인록셉터-를-사용하기-위해-클래스를-빈bean으로-등록">인록셉터 를 사용하기 위해 클래스를 빈(Bean)으로 등록</h4>
-<p>인록셉터 사용하기 먼저 HandlerInterceptor를 상속받아 구현합니다.<br />
-구현하는 Method는 위에 3가지 Method이며, Bean으로 등록하기 위해 구현한 클래스에 @Component 어노테이션을 추가합니다.</p>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"req QueryString: "</span> <span class="o">+</span> <span class="n">request</span><span class="o">.</span><span class="na">getQueryString</span><span class="o">());</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"req URL: "</span> <span class="o">+</span> <span class="n">request</span><span class="o">.</span><span class="na">getRequestURL</span><span class="o">());</span>
+      <span class="o">}</span>	
+		
+		<span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+	<span class="o">}</span>
 
-<h2 id="인록셉터-interceptorregistry에-등록">인록셉터 InterceptorRegistry에 등록</h2>
-<p>HandlerInterceptor를 구현 후 WebMvcConfigurer를 상속받아 구현 WebMvcConfigure의 addInterceptors에 등록하고, 
-Uri PathPattern을 지정하여 어떤 Uri가 호출될 때 인터셉터를 동학하게 할지 설정합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="Interceptor" /><summary type="html"><![CDATA[인터셉터의 이해 인터셉터는 “무엇인가를 가로챈다”라는 의미입니다. Filter가 실행된 이후 인터셉터는 Controller가 호출 전/후에 무엇인가 제어 하고자할 때 사용합니다. 그리고 Filter가 WebContainer에서 동작하는 반면에 인터셉터는 Spring Container에서 동작하는 차이점이 있습니다. 대표적인 사용 목적은 logging과 인증처리에 많이 사용합니다.]]></summary></entry><entry><title type="html">Filter in springboot</title><link href="http://localhost:4000/springboot/filter-using-spring/" rel="alternate" type="text/html" title="Filter in springboot" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/filter-using-spring</id><content type="html" xml:base="http://localhost:4000/springboot/filter-using-spring/"><![CDATA[<h2 id="spring을-사용한-filter">spring을 사용한 Filter</h2>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">postHandle</span><span class="o">(</span><span class="nc">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="nc">HttpServletResponse</span> <span class="n">response</span><span class="o">,</span> <span class="nc">Object</span> <span class="n">handler</span><span class="o">,</span>
+			<span class="nd">@Nullable</span> <span class="nc">ModelAndView</span> <span class="n">modelAndView</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"postHandle [{}]"</span><span class="o">,</span> <span class="n">handler</span><span class="o">);</span>
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">afterCompletion</span><span class="o">(</span><span class="nc">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="nc">HttpServletResponse</span> <span class="n">response</span><span class="o">,</span> <span class="nc">Object</span> <span class="n">handler</span><span class="o">,</span>
+			<span class="nd">@Nullable</span> <span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------------------------------"</span><span class="o">);</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"afterCompletion"</span><span class="o">);</span>
+
+    <span class="nc">String</span> <span class="n">requestURI</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getRequestURI</span><span class="o">();</span>
+    <span class="nc">String</span> <span class="n">logId</span> <span class="o">=</span> <span class="o">(</span><span class="nc">String</span><span class="o">)</span><span class="n">request</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="no">LOG_ID</span><span class="o">);</span>
+    <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"RESPONSE logId:[{}][{}]"</span><span class="o">,</span> <span class="n">logId</span><span class="o">,</span> <span class="n">requestURI</span><span class="o">);</span>
+    
+    <span class="k">if</span> <span class="o">(</span><span class="n">ex</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"afterCompletion error!!"</span><span class="o">,</span> <span class="n">ex</span><span class="o">);</span>
+    <span class="o">}</span>	
+  
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------------------------------"</span><span class="o">);</span>        
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>MyHandler를 WebMvcConfigurer를 구현한  WebMvcConfigure에 등록하고 Uri PathPatttern을 지정합니다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Slf4j</span>
+<span class="nd">@RequiredArgsConstructor</span>
+<span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebMvcConfig</span> <span class="kd">implements</span> <span class="nc">WebMvcConfigurer</span> <span class="o">{</span>
+	<span class="kd">private</span> <span class="kd">final</span> <span class="nc">DecryptArgumentResolver</span> <span class="n">decryptArgumentResolver</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="kd">final</span> <span class="nc">ResultReturnValueHandler</span> <span class="n">resultReturnValueHandler</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="kd">final</span> <span class="nc">MyHandler</span> <span class="n">myHandler</span><span class="o">;</span>
+	
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">addInterceptors</span><span class="o">(</span><span class="nc">InterceptorRegistry</span> <span class="n">registry</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">registry</span><span class="o">.</span><span class="na">addInterceptor</span><span class="o">(</span><span class="n">myHandler</span><span class="o">)</span>
+			<span class="o">.</span><span class="na">addPathPatterns</span><span class="o">(</span><span class="s">"/test/**"</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="Interceptor" /><summary type="html"><![CDATA[인터셉터의 사용예시 HandlerInterceptor를 구현한 MyHandler 입니다. ```java @Component @Slf4j public class MyHandler implements HandlerInterceptor { public static final String LOG_ID = “logId”; private void readBody(final HttpServletRequest request) {]]></summary></entry><entry><title type="html">Filter in springboot</title><link href="http://localhost:4000/springboot/filter-using-spring/" rel="alternate" type="text/html" title="Filter in springboot" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/filter-using-spring</id><content type="html" xml:base="http://localhost:4000/springboot/filter-using-spring/"><![CDATA[<h2 id="spring을-사용한-filter">spring을 사용한 Filter</h2>
 <p>Springboot를 이용한 filter를 사용하는 방법입니다.
 이전에 GlobalLoggingFilter에서 @Component를 제거하여 이중으로 Bean이 등록되는 것을 피하고, Springboot에서 제공하는 FilterRegistrationBean 사용하여 Bean으로 등록합니다.</p>
 
@@ -147,9 +196,7 @@ FilterChain 파라미터는 FilterChain의 doFilter를 통해 다음 대상으�
 </code></pre></div></div>
 
 <h2 id="참조">참조</h2>
-<p><a href="https://mangkyu.tistory.com/173">망나니개발자</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><category term="filter" /><category term="interceptor" /><summary type="html"><![CDATA[AOP vs Interceptor vs Filter AOP 를 내용을 살펴보면 Interceptor 와 Filter에 대해 궁금해질 것입니다. AOP와 Interceptor, Filter의 역할에 대해 간략하게 알아보기 위해 아래의 그램으로 표현하였습니다.]]></summary></entry><entry><title type="html">ArgumentResolver</title><link href="http://localhost:4000/springboot/argumentResolver/" rel="alternate" type="text/html" title="ArgumentResolver" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/argumentResolver</id><content type="html" xml:base="http://localhost:4000/springboot/argumentResolver/"><![CDATA[<h2 id="argumentresolver">ArgumentResolver</h2>
-<p>Http Request를 제어할 수 있는 또 하나의 영역중 하나가 바로 ArgumentResolver 입니다.
-  ArgumentRoslver는 Request 데이터를 가공하여 Constroller에 전달하고 싶을 때 사용합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="Resolver" /><summary type="html"><![CDATA[ArgumentResolver Http Request를 제어할 수 있는 또 하나의 영역중 하나가 바로 ArgumentResolver 입니다. ArgumentRoslver는 Request 데이터를 가공하여 Constroller에 전달하고 싶을 때 사용합니다.]]></summary></entry><entry><title type="html">AOP(Aspect Oriented Programming) 란?</title><link href="http://localhost:4000/springboot/aop/" rel="alternate" type="text/html" title="AOP(Aspect Oriented Programming) 란?" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/aop</id><content type="html" xml:base="http://localhost:4000/springboot/aop/"><![CDATA[<h2 id="aop-개요">AOP 개요</h2>
+<p><a href="https://mangkyu.tistory.com/173">망나니개발자</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><category term="filter" /><category term="interceptor" /><summary type="html"><![CDATA[AOP vs Interceptor vs Filter AOP 를 내용을 살펴보면 Interceptor 와 Filter에 대해 궁금해질 것입니다. AOP와 Interceptor, Filter의 역할에 대해 간략하게 알아보기 위해 아래의 그램으로 표현하였습니다.]]></summary></entry><entry><title type="html">AOP(Aspect Oriented Programming) 란?</title><link href="http://localhost:4000/springboot/aop/" rel="alternate" type="text/html" title="AOP(Aspect Oriented Programming) 란?" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/aop</id><content type="html" xml:base="http://localhost:4000/springboot/aop/"><![CDATA[<h2 id="aop-개요">AOP 개요</h2>
 
 <p><img src="/assets/images/springboot/04-spring-filter-interceptor-aop-resolver-advice.png" alt="filter interceptor aop" /></p>
 
@@ -470,80 +517,33 @@ springframework는 Runtime 시점에 Weaving 합니다.</p>
   <li>
     <p>target : Aspect가 적용되는 객체를 의미합니다.</p>
   </li>
-</ul>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><summary type="html"><![CDATA[AOP 구성요소 특정지정에 제어하고 싶은 대상에 제어하고자 하는 기능을 구현하는 AOP에 대해 알아보았습ㄴ다. 이번에는 좀더 용어에 대해 상세하게 알아보겠습니다. AOP의 구성요소는 Aspect Advice PointCut JoinPoint]]></summary></entry><entry><title type="html">인터셉터(Interceptor) 예시</title><link href="http://localhost:4000/springboot/interceptor-example/" rel="alternate" type="text/html" title="인터셉터(Interceptor) 예시" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/interceptor-example</id><content type="html" xml:base="http://localhost:4000/springboot/interceptor-example/"><![CDATA[<h2 id="인터셉터의-사용예시">인터셉터의 사용예시</h2>
-<p>HandlerInterceptor를 구현한 MyHandler 입니다.</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Component</span>
-<span class="nd">@Slf4j</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyHandler</span> <span class="kd">implements</span> <span class="nc">HandlerInterceptor</span> <span class="o">{</span>
-	<span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span> <span class="no">LOG_ID</span> <span class="o">=</span> <span class="s">"logId"</span><span class="o">;</span>
-	
-	<span class="kd">private</span> <span class="kt">void</span> <span class="nf">readBody</span><span class="o">(</span><span class="kd">final</span> <span class="nc">HttpServletRequest</span> <span class="n">request</span><span class="o">)</span> <span class="o">{</span>
+</ul>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><summary type="html"><![CDATA[AOP 구성요소 특정지정에 제어하고 싶은 대상에 제어하고자 하는 기능을 구현하는 AOP에 대해 알아보았습ㄴ다. 이번에는 좀더 용어에 대해 상세하게 알아보겠습니다. AOP의 구성요소는 Aspect Advice PointCut JoinPoint]]></summary></entry><entry><title type="html">인터셉터(Interceptor) 란?</title><link href="http://localhost:4000/springboot/interceptor/" rel="alternate" type="text/html" title="인터셉터(Interceptor) 란?" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/interceptor</id><content type="html" xml:base="http://localhost:4000/springboot/interceptor/"><![CDATA[<h2 id="인터셉터의-이해">인터셉터의 이해</h2>
+<p>인터셉터는 “무엇인가를 가로챈다”라는 의미입니다. Filter가 실행된 이후 인터셉터는 Controller가 호출 전/후에 무엇인가 제어 하고자할 때 사용합니다. 그리고 Filter가 WebContainer에서 동작하는 반면에 인터셉터는 Spring Container에서 동작하는 차이점이 있습니다.
+대표적인 사용 목적은 logging과 인증처리에 많이 사용합니다.</p>
 
-		<span class="nc">String</span> <span class="n">reqBody</span> <span class="o">=</span> <span class="o">(</span><span class="nc">String</span><span class="o">)</span> <span class="n">request</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"requestBody"</span><span class="o">);</span>
+<p><img src="/assets/images/springboot/04-spring-filter-interceptor-aop-resolver-advice.png" alt="filter interceptor aop" /></p>
 
-		<span class="cm">/*
-		 * reqBody 값을 읽어 임의 처리.
-		 */</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"reqBody:{}"</span><span class="o">,</span> <span class="n">reqBody</span><span class="o">);</span>
-	<span class="o">}</span>
+<h2 id="handlerinterceptor를-구현">HandlerInterceptor를 구현</h2>
+<ul>
+  <li>preHandle</li>
+  <li>postHandle</li>
+  <li>afterCompletion</li>
+</ul>
 
-	<span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">preHandle</span><span class="o">(</span><span class="nc">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="nc">HttpServletResponse</span> <span class="n">response</span><span class="o">,</span> <span class="nc">Object</span> <span class="n">handler</span><span class="o">)</span>
-			<span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
-		  <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"----------------- preHandle -------------------"</span><span class="o">);</span>
-	    <span class="nc">String</span> <span class="n">requestURI</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getRequestURI</span><span class="o">();</span>
-	    <span class="nc">String</span> <span class="n">uuid</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">randomUUID</span><span class="o">().</span><span class="na">toString</span><span class="o">();</span>
-	    <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"logId:{}"</span><span class="o">,</span> <span class="n">request</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="no">LOG_ID</span><span class="o">));</span>
-	    <span class="c1">//request.setAttribute(LOG_ID, uuid);		</span>
+<h4 id="prehandle">preHandle</h4>
+<p>Controller의 메서드에 매핑된 특정 URI가 호출됐을 때 실행되는 메서드로, Controller를 경유(접근)하기 직전에 실행되는 메서드입니다.<br />
+Controller를 호출하기전에 동작하는 메소드로 return값이 true이면 진행, false이면 Controller 호출을 중단합니다</p>
 
-		  <span class="n">readBody</span><span class="o">(</span><span class="n">request</span><span class="o">);</span>
+<h4 id="posthandle">postHandle</h4>
+<p>컨트롤러를 호출 후, 즉 화면(View)으로 결과를 전달하기 전에 실행되는 메서드입니다.</p>
 
-      <span class="k">if</span> <span class="o">(</span><span class="nc">Objects</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getMethod</span><span class="o">(),</span> <span class="s">"POST"</span><span class="o">))</span> <span class="o">{</span>
-        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"req URL: "</span> <span class="o">+</span> <span class="n">request</span><span class="o">.</span><span class="na">getRequestURL</span><span class="o">());</span>
-      <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+<h4 id="aftercompletion">afterCompletion</h4>
+<p>view가 정상적으로 랜더링된 후에 마지막에 실행됩니다</p>
 
-        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"req QueryString: "</span> <span class="o">+</span> <span class="n">request</span><span class="o">.</span><span class="na">getQueryString</span><span class="o">());</span>
-        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"req URL: "</span> <span class="o">+</span> <span class="n">request</span><span class="o">.</span><span class="na">getRequestURL</span><span class="o">());</span>
-      <span class="o">}</span>	
-		
-		<span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
-	<span class="o">}</span>
+<h4 id="인록셉터-를-사용하기-위해-클래스를-빈bean으로-등록">인록셉터 를 사용하기 위해 클래스를 빈(Bean)으로 등록</h4>
+<p>인록셉터 사용하기 먼저 HandlerInterceptor를 상속받아 구현합니다.<br />
+구현하는 Method는 위에 3가지 Method이며, Bean으로 등록하기 위해 구현한 클래스에 @Component 어노테이션을 추가합니다.</p>
 
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">postHandle</span><span class="o">(</span><span class="nc">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="nc">HttpServletResponse</span> <span class="n">response</span><span class="o">,</span> <span class="nc">Object</span> <span class="n">handler</span><span class="o">,</span>
-			<span class="nd">@Nullable</span> <span class="nc">ModelAndView</span> <span class="n">modelAndView</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"postHandle [{}]"</span><span class="o">,</span> <span class="n">handler</span><span class="o">);</span>
-	<span class="o">}</span>
-
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">afterCompletion</span><span class="o">(</span><span class="nc">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="nc">HttpServletResponse</span> <span class="n">response</span><span class="o">,</span> <span class="nc">Object</span> <span class="n">handler</span><span class="o">,</span>
-			<span class="nd">@Nullable</span> <span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------------------------------"</span><span class="o">);</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"afterCompletion"</span><span class="o">);</span>
-
-    <span class="nc">String</span> <span class="n">requestURI</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getRequestURI</span><span class="o">();</span>
-    <span class="nc">String</span> <span class="n">logId</span> <span class="o">=</span> <span class="o">(</span><span class="nc">String</span><span class="o">)</span><span class="n">request</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="no">LOG_ID</span><span class="o">);</span>
-    <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"RESPONSE logId:[{}][{}]"</span><span class="o">,</span> <span class="n">logId</span><span class="o">,</span> <span class="n">requestURI</span><span class="o">);</span>
-    
-    <span class="k">if</span> <span class="o">(</span><span class="n">ex</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-      <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"afterCompletion error!!"</span><span class="o">,</span> <span class="n">ex</span><span class="o">);</span>
-    <span class="o">}</span>	
-  
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------------------------------"</span><span class="o">);</span>        
-	<span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<p>MyHandler를 WebMvcConfigurer를 구현한  WebMvcConfigure에 등록하고 Uri PathPatttern을 지정합니다.</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Slf4j</span>
-<span class="nd">@RequiredArgsConstructor</span>
-<span class="nd">@Configuration</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebMvcConfig</span> <span class="kd">implements</span> <span class="nc">WebMvcConfigurer</span> <span class="o">{</span>
-	<span class="kd">private</span> <span class="kd">final</span> <span class="nc">DecryptArgumentResolver</span> <span class="n">decryptArgumentResolver</span><span class="o">;</span>
-	<span class="kd">private</span> <span class="kd">final</span> <span class="nc">ResultReturnValueHandler</span> <span class="n">resultReturnValueHandler</span><span class="o">;</span>
-	<span class="kd">private</span> <span class="kd">final</span> <span class="nc">MyHandler</span> <span class="n">myHandler</span><span class="o">;</span>
-	
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">addInterceptors</span><span class="o">(</span><span class="nc">InterceptorRegistry</span> <span class="n">registry</span><span class="o">)</span> <span class="o">{</span>
-		<span class="n">registry</span><span class="o">.</span><span class="na">addInterceptor</span><span class="o">(</span><span class="n">myHandler</span><span class="o">)</span>
-			<span class="o">.</span><span class="na">addPathPatterns</span><span class="o">(</span><span class="s">"/test/**"</span><span class="o">);</span>
-	<span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="Interceptor" /><summary type="html"><![CDATA[인터셉터의 사용예시 HandlerInterceptor를 구현한 MyHandler 입니다. ```java @Component @Slf4j public class MyHandler implements HandlerInterceptor { public static final String LOG_ID = “logId”; private void readBody(final HttpServletRequest request) {]]></summary></entry></feed>
+<h2 id="인록셉터-interceptorregistry에-등록">인록셉터 InterceptorRegistry에 등록</h2>
+<p>HandlerInterceptor를 구현 후 WebMvcConfigurer를 상속받아 구현 WebMvcConfigure의 addInterceptors에 등록하고, 
+Uri PathPattern을 지정하여 어떤 Uri가 호출될 때 인터셉터를 동학하게 할지 설정합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="Interceptor" /><summary type="html"><![CDATA[인터셉터의 이해 인터셉터는 “무엇인가를 가로챈다”라는 의미입니다. Filter가 실행된 이후 인터셉터는 Controller가 호출 전/후에 무엇인가 제어 하고자할 때 사용합니다. 그리고 Filter가 WebContainer에서 동작하는 반면에 인터셉터는 Spring Container에서 동작하는 차이점이 있습니다. 대표적인 사용 목적은 logging과 인증처리에 많이 사용합니다.]]></summary></entry></feed>
