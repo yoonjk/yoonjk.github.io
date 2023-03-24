@@ -26,25 +26,21 @@ public class MyHandler implements HandlerInterceptor {
 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		log.info("----------------- preHandle -------------------");
+		  log.info("----------------- preHandle -------------------");
 	    String requestURI = request.getRequestURI();
 	    String uuid = UUID.randomUUID().toString();
 	    log.info("logId:{}", request.getAttribute(LOG_ID));
 	    //request.setAttribute(LOG_ID, uuid);		
 
-		readBody(request);
+		  readBody(request);
 
-        if (Objects.equals(request.getMethod(), "POST")) {
-        	log.info("1.req 정보: ");
-//            Map<String, Object> inputMap = new ObjectMapper().readValue(request.getInputStream(), Map.class);
-//
-//            log.info("2.req 정보: " + inputMap);
-            log.info("3.req URL: " + request.getRequestURL());
-        } else {
+      if (Objects.equals(request.getMethod(), "POST")) {
+        log.info("req URL: " + request.getRequestURL());
+      } else {
 
-        	log.info("req QueryString: " + request.getQueryString());
-        	log.info("req URL: " + request.getRequestURL());
-        }	
+        log.info("req QueryString: " + request.getQueryString());
+        log.info("req URL: " + request.getRequestURL());
+      }	
 		
 		return true;
 	}
@@ -59,13 +55,14 @@ public class MyHandler implements HandlerInterceptor {
 		log.info("------------------------------------");
 		log.info("afterCompletion");
 
-        String requestURI = request.getRequestURI();
-        String logId = (String)request.getAttribute(LOG_ID);
-        log.info("RESPONSE logId:[{}][{}]", logId, requestURI);
-        
-        if (ex != null) {
-            log.error("afterCompletion error!!", ex);
-        }	
+    String requestURI = request.getRequestURI();
+    String logId = (String)request.getAttribute(LOG_ID);
+    log.info("RESPONSE logId:[{}][{}]", logId, requestURI);
+    
+    if (ex != null) {
+      log.error("afterCompletion error!!", ex);
+    }	
+  
 		log.info("------------------------------------");        
 	}
 }
@@ -78,6 +75,8 @@ MyHandler를 WebMvcConfigurer를 구현한  WebMvcConfigure에 등록하고 Uri 
 @RequiredArgsConstructor
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
+	private final DecryptArgumentResolver decryptArgumentResolver;
+	private final ResultReturnValueHandler resultReturnValueHandler;
 	private final MyHandler myHandler;
 	
 	public void addInterceptors(InterceptorRegistry registry) {
