@@ -1,4 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-25T12:38:10+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">ArgumentResolver</title><link href="http://localhost:4000/springboot/argumentResolver/" rel="alternate" type="text/html" title="ArgumentResolver" /><published>2023-03-13T00:00:00+09:00</published><updated>2023-03-13T00:00:00+09:00</updated><id>http://localhost:4000/springboot/argumentResolver</id><content type="html" xml:base="http://localhost:4000/springboot/argumentResolver/"><![CDATA[<h2 id="argumentresolver">ArgumentResolver</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-25T12:43:51+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">RequestBodyAdvice</title><link href="http://localhost:4000/springboot/requestbodyadvisor/" rel="alternate" type="text/html" title="RequestBodyAdvice" /><published>2023-03-24T00:00:00+09:00</published><updated>2023-03-24T00:00:00+09:00</updated><id>http://localhost:4000/springboot/requestbodyadvisor</id><content type="html" xml:base="http://localhost:4000/springboot/requestbodyadvisor/"><![CDATA[<h2 id="requestbodyadvice">RequestBodyAdvice</h2>
+<p>Http Request를 제어 또는 가공(Decrpt)할 수 있는 또 하나의 영역중 하나가 바로 RequestBodyAdvice 입니다.
+  ArgumentRoslver는 RestController에는 약간의 제약사항이 있으나 RequestBodyAdvice는 그러한 제약사항이 없습니다.
+  적용하는 방법은 ArgumentResolver와 유사하자 좀더 상세하고 제어가 가능합니다.</p>
+
+<p><img src="/assets/images/springboot/04-spring-filter-interceptor-aop-resolver-advice.png" alt="filter interceptor aop" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="Advice" /><summary type="html"><![CDATA[RequestBodyAdvice Http Request를 제어 또는 가공(Decrpt)할 수 있는 또 하나의 영역중 하나가 바로 RequestBodyAdvice 입니다. ArgumentRoslver는 RestController에는 약간의 제약사항이 있으나 RequestBodyAdvice는 그러한 제약사항이 없습니다. 적용하는 방법은 ArgumentResolver와 유사하자 좀더 상세하고 제어가 가능합니다.]]></summary></entry><entry><title type="html">ArgumentResolver</title><link href="http://localhost:4000/springboot/argumentResolver/" rel="alternate" type="text/html" title="ArgumentResolver" /><published>2023-03-13T00:00:00+09:00</published><updated>2023-03-13T00:00:00+09:00</updated><id>http://localhost:4000/springboot/argumentResolver</id><content type="html" xml:base="http://localhost:4000/springboot/argumentResolver/"><![CDATA[<h2 id="argumentresolver">ArgumentResolver</h2>
 <p>Http Request를 제어 또는 가공(Decrpt)할 수 있는 또 하나의 영역중 하나가 바로 ArgumentResolver 입니다.
   ArgumentRoslver는 Request 데이터를 가공하여 Constroller에 전달하고 싶을 때 사용합니다.
   제어할 때상으로는 아래와 같은 유형을 대상으로 ArgumentResolver를 적용할 수 있습니다.</p>
@@ -80,203 +85,7 @@
 		<span class="k">return</span> <span class="n">reqMap</span><span class="o">;</span>
 	<span class="o">}</span>
 <span class="o">}</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="Resolver" /><summary type="html"><![CDATA[ArgumentResolver Http Request를 제어 또는 가공(Decrpt)할 수 있는 또 하나의 영역중 하나가 바로 ArgumentResolver 입니다. ArgumentRoslver는 Request 데이터를 가공하여 Constroller에 전달하고 싶을 때 사용합니다. 제어할 때상으로는 아래와 같은 유형을 대상으로 ArgumentResolver를 적용할 수 있습니다.]]></summary></entry><entry><title type="html">인터셉터(Interceptor) 예시</title><link href="http://localhost:4000/springboot/interceptor-example/" rel="alternate" type="text/html" title="인터셉터(Interceptor) 예시" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/interceptor-example</id><content type="html" xml:base="http://localhost:4000/springboot/interceptor-example/"><![CDATA[<h2 id="인터셉터의-사용예시">인터셉터의 사용예시</h2>
-<p>HandlerInterceptor를 구현한 MyHandler 입니다.</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Component</span>
-<span class="nd">@Slf4j</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyHandler</span> <span class="kd">implements</span> <span class="nc">HandlerInterceptor</span> <span class="o">{</span>
-	<span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span> <span class="no">LOG_ID</span> <span class="o">=</span> <span class="s">"logId"</span><span class="o">;</span>
-	
-	<span class="kd">private</span> <span class="kt">void</span> <span class="nf">readBody</span><span class="o">(</span><span class="kd">final</span> <span class="nc">HttpServletRequest</span> <span class="n">request</span><span class="o">)</span> <span class="o">{</span>
-
-		<span class="nc">String</span> <span class="n">reqBody</span> <span class="o">=</span> <span class="o">(</span><span class="nc">String</span><span class="o">)</span> <span class="n">request</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"requestBody"</span><span class="o">);</span>
-
-		<span class="cm">/*
-		 * reqBody 값을 읽어 임의 처리.
-		 */</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"reqBody:{}"</span><span class="o">,</span> <span class="n">reqBody</span><span class="o">);</span>
-	<span class="o">}</span>
-
-	<span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">preHandle</span><span class="o">(</span><span class="nc">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="nc">HttpServletResponse</span> <span class="n">response</span><span class="o">,</span> <span class="nc">Object</span> <span class="n">handler</span><span class="o">)</span>
-			<span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
-		  <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"----------------- preHandle -------------------"</span><span class="o">);</span>
-	    <span class="nc">String</span> <span class="n">requestURI</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getRequestURI</span><span class="o">();</span>
-	    <span class="nc">String</span> <span class="n">uuid</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">randomUUID</span><span class="o">().</span><span class="na">toString</span><span class="o">();</span>
-	    <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"logId:{}"</span><span class="o">,</span> <span class="n">request</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="no">LOG_ID</span><span class="o">));</span>
-	    <span class="c1">//request.setAttribute(LOG_ID, uuid);		</span>
-
-		  <span class="n">readBody</span><span class="o">(</span><span class="n">request</span><span class="o">);</span>
-
-      <span class="k">if</span> <span class="o">(</span><span class="nc">Objects</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getMethod</span><span class="o">(),</span> <span class="s">"POST"</span><span class="o">))</span> <span class="o">{</span>
-        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"req URL: "</span> <span class="o">+</span> <span class="n">request</span><span class="o">.</span><span class="na">getRequestURL</span><span class="o">());</span>
-      <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-
-        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"req QueryString: "</span> <span class="o">+</span> <span class="n">request</span><span class="o">.</span><span class="na">getQueryString</span><span class="o">());</span>
-        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"req URL: "</span> <span class="o">+</span> <span class="n">request</span><span class="o">.</span><span class="na">getRequestURL</span><span class="o">());</span>
-      <span class="o">}</span>	
-		
-		<span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
-	<span class="o">}</span>
-
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">postHandle</span><span class="o">(</span><span class="nc">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="nc">HttpServletResponse</span> <span class="n">response</span><span class="o">,</span> <span class="nc">Object</span> <span class="n">handler</span><span class="o">,</span>
-			<span class="nd">@Nullable</span> <span class="nc">ModelAndView</span> <span class="n">modelAndView</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"postHandle [{}]"</span><span class="o">,</span> <span class="n">handler</span><span class="o">);</span>
-	<span class="o">}</span>
-
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">afterCompletion</span><span class="o">(</span><span class="nc">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="nc">HttpServletResponse</span> <span class="n">response</span><span class="o">,</span> <span class="nc">Object</span> <span class="n">handler</span><span class="o">,</span>
-			<span class="nd">@Nullable</span> <span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------------------------------"</span><span class="o">);</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"afterCompletion"</span><span class="o">);</span>
-
-    <span class="nc">String</span> <span class="n">requestURI</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getRequestURI</span><span class="o">();</span>
-    <span class="nc">String</span> <span class="n">logId</span> <span class="o">=</span> <span class="o">(</span><span class="nc">String</span><span class="o">)</span><span class="n">request</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="no">LOG_ID</span><span class="o">);</span>
-    <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"RESPONSE logId:[{}][{}]"</span><span class="o">,</span> <span class="n">logId</span><span class="o">,</span> <span class="n">requestURI</span><span class="o">);</span>
-    
-    <span class="k">if</span> <span class="o">(</span><span class="n">ex</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-      <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"afterCompletion error!!"</span><span class="o">,</span> <span class="n">ex</span><span class="o">);</span>
-    <span class="o">}</span>	
-  
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------------------------------"</span><span class="o">);</span>        
-	<span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<p>MyHandler를 WebMvcConfigurer를 구현한  WebMvcConfigure에 등록하고 Uri PathPatttern을 지정합니다.</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Slf4j</span>
-<span class="nd">@RequiredArgsConstructor</span>
-<span class="nd">@Configuration</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebMvcConfig</span> <span class="kd">implements</span> <span class="nc">WebMvcConfigurer</span> <span class="o">{</span>
-	<span class="kd">private</span> <span class="kd">final</span> <span class="nc">DecryptArgumentResolver</span> <span class="n">decryptArgumentResolver</span><span class="o">;</span>
-	<span class="kd">private</span> <span class="kd">final</span> <span class="nc">ResultReturnValueHandler</span> <span class="n">resultReturnValueHandler</span><span class="o">;</span>
-	<span class="kd">private</span> <span class="kd">final</span> <span class="nc">MyHandler</span> <span class="n">myHandler</span><span class="o">;</span>
-	
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">addInterceptors</span><span class="o">(</span><span class="nc">InterceptorRegistry</span> <span class="n">registry</span><span class="o">)</span> <span class="o">{</span>
-		<span class="n">registry</span><span class="o">.</span><span class="na">addInterceptor</span><span class="o">(</span><span class="n">myHandler</span><span class="o">)</span>
-			<span class="o">.</span><span class="na">addPathPatterns</span><span class="o">(</span><span class="s">"/test/**"</span><span class="o">);</span>
-	<span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="Interceptor" /><summary type="html"><![CDATA[인터셉터의 사용예시 HandlerInterceptor를 구현한 MyHandler 입니다. ```java @Component @Slf4j public class MyHandler implements HandlerInterceptor { public static final String LOG_ID = “logId”; private void readBody(final HttpServletRequest request) {]]></summary></entry><entry><title type="html">Filter in springboot</title><link href="http://localhost:4000/springboot/filter-using-spring/" rel="alternate" type="text/html" title="Filter in springboot" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/filter-using-spring</id><content type="html" xml:base="http://localhost:4000/springboot/filter-using-spring/"><![CDATA[<h2 id="spring을-사용한-filter">spring을 사용한 Filter</h2>
-<p>Springboot를 이용한 filter를 사용하는 방법입니다.
-이전에 GlobalLoggingFilter에서 @Component를 제거하여 이중으로 Bean이 등록되는 것을 피하고, Springboot에서 제공하는 FilterRegistrationBean 사용하여 Bean으로 등록합니다.</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Slf4j</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">GlobalLoggingFilter</span> <span class="kd">implements</span> <span class="nc">Filter</span> <span class="o">{</span>
-	<span class="nd">@Override</span>
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">doFilter</span><span class="o">(</span><span class="nc">ServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="nc">ServletResponse</span> <span class="n">response</span><span class="o">,</span> <span class="nc">FilterChain</span> <span class="n">chain</span><span class="o">)</span>
-			<span class="kd">throws</span> <span class="nc">IOException</span><span class="o">,</span> <span class="nc">ServletException</span> <span class="o">{</span>
-        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"-------------------전 처리-------------------"</span><span class="o">);</span>
-        <span class="nc">ContentCachingRequestWrapper</span> <span class="n">req</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ContentCachingRequestWrapper</span><span class="o">((</span><span class="nc">HttpServletRequest</span><span class="o">)</span> <span class="n">request</span><span class="o">);</span>
-        <span class="nc">ContentCachingResponseWrapper</span> <span class="n">res</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ContentCachingResponseWrapper</span><span class="o">((</span><span class="nc">HttpServletResponse</span><span class="o">)</span> <span class="n">response</span><span class="o">);</span>
-
-        <span class="c1">// 전처리</span>
-        <span class="n">chain</span><span class="o">.</span><span class="na">doFilter</span><span class="o">(</span><span class="n">req</span><span class="o">,</span> <span class="n">res</span><span class="o">);</span>
-        <span class="c1">// 후처리</span>
-
-        <span class="nc">String</span> <span class="n">url</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getRequestURI</span><span class="o">();</span>
-        <span class="nc">String</span> <span class="n">reqContent</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="n">req</span><span class="o">.</span><span class="na">getContentAsByteArray</span><span class="o">());</span>
-        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"request url : {}, request body : {}"</span><span class="o">,</span> <span class="n">url</span><span class="o">,</span> <span class="n">reqContent</span><span class="o">);</span>
-        
-        <span class="nc">String</span> <span class="n">resContent</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="n">res</span><span class="o">.</span><span class="na">getContentAsByteArray</span><span class="o">());</span>
-        <span class="kt">int</span> <span class="n">httpStatus</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="na">getStatus</span><span class="o">();</span>
-        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"response status : {}, response body : {}"</span><span class="o">,</span> <span class="n">httpStatus</span><span class="o">,</span> <span class="n">resContent</span><span class="o">);</span>
-        
-        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"-------------------후 처리-------------------"</span><span class="o">);</span>
-	<span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">javax.servlet.Filter</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">org.springframework.boot.web.servlet.FilterRegistrationBean</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Bean</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Configuration</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">com.demo.microservices.filter.GlobalLoggingFilter</span><span class="o">;</span>
-
-<span class="nd">@Configuration</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebConfig</span> <span class="o">{</span>
-	<span class="nd">@Bean</span>
-	<span class="kd">public</span> <span class="nc">FilterRegistrationBean</span> <span class="nf">logFilter</span><span class="o">()</span> <span class="o">{</span>
-		<span class="nc">FilterRegistrationBean</span><span class="o">&lt;</span><span class="nc">Filter</span><span class="o">&gt;</span> <span class="n">filterRegistrationBean</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FilterRegistrationBean</span><span class="o">&lt;&gt;();</span>
-		<span class="n">filterRegistrationBean</span><span class="o">.</span><span class="na">setFilter</span><span class="o">(</span><span class="k">new</span> <span class="nc">GlobalLoggingFilter</span><span class="o">());</span>
-											
-		<span class="k">return</span> <span class="n">filterRegistrationBean</span><span class="o">;</span>
-	<span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><category term="filter" /><category term="interceptor" /><summary type="html"><![CDATA[spring을 사용한 Filter Springboot를 이용한 filter를 사용하는 방법입니다. 이전에 GlobalLoggingFilter에서 @Component를 제거하여 이중으로 Bean이 등록되는 것을 피하고, Springboot에서 제공하는 FilterRegistrationBean 사용하여 Bean으로 등록합니다.]]></summary></entry><entry><title type="html">AOP vs Interceptor vs Filter - Filter</title><link href="http://localhost:4000/springboot/filter-interceptor-aop/" rel="alternate" type="text/html" title="AOP vs Interceptor vs Filter - Filter" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/filter-interceptor-aop</id><content type="html" xml:base="http://localhost:4000/springboot/filter-interceptor-aop/"><![CDATA[<h2 id="aop-vs-interceptor-vs-filter">AOP vs Interceptor vs Filter</h2>
-<p>AOP 를 내용을 살펴보면 Interceptor 와 Filter에 대해 궁금해질 것입니다. 
-AOP와 Interceptor, Filter의 역할에 대해 간략하게 알아보기 위해 아래의 그램으로 표현하였습니다.</p>
-
-<p><img src="/assets/images/springboot/04-spring-filter-interceptor-aop-resolver-advice.png" alt="filter interceptor aop" /></p>
-
-<h2 id="filter-란">Filter 란?</h2>
-<p>필터는 J2EE 표준 스펙으로 서블릿에 요청이 전달되기 전/후에 url 패턴에 맞는 모든 요청에 대해 원하는 처리를 할 수 있는 기능을 제공합니다. DispatcherServlet 앞단에서 처리되기 때문에 springframework 앞에서 처리가 되는 것입니다. 
-필터를 추가하기 위해서는 Filter 인터페이스를 구현해야 하며 다음의 3가지 메소드를 overriding할 수 있습니다.</p>
-
-<ul>
-  <li>init 메소드</li>
-  <li>doFilter 메소드</li>
-  <li>destory 메소드</li>
-</ul>
-
-<h4 id="init-메소드">init 메소드</h4>
-<p>컨텡이너가 1회 init 메소드를 호출하여 필터 객체를 초기화 하는 역할입니다.</p>
-
-<h4 id="dofilter-메소드">doFilter 메소드</h4>
-<p>doFilter는 원하는 filter 기능을 구현하는 영역으로 url pattern에 맞는 모든 http 요청을 중간에 capture하여 DispatchServlet에 전달되기전에 웹 컨네이터에 의해 실행되는 메소드입니다.
-FilterChain 파라미터는 FilterChain의 doFilter를 통해 다음 대상으로ㅗ 요청을 전달합니다.</p>
-
-<h4 id="dstory-메소드">dstory 메소드</h4>
-<p>destory 메소드는 필터 객체를 서비스에서 제거하고 사용하는 자원을 반환하기 위한 메소드입니다. 이 또한 웹컨테이너에 의해 1회 호출되는 메소드입니다.</p>
-
-<h2 id="filter-사용하기">Filter 사용하기</h2>
-<p>Servlet에서 제공하는 Filter Interface를 구현 예제입니다.</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">javax.servlet.Filter</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">javax.servlet.FilterChain</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">javax.servlet.ServletException</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">javax.servlet.ServletRequest</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">javax.servlet.ServletResponse</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletRequest</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletResponse</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Component</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.web.util.ContentCachingRequestWrapper</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.web.util.ContentCachingResponseWrapper</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">lombok.extern.slf4j.Slf4j</span><span class="o">;</span>
-
-<span class="nd">@Component</span>
-<span class="nd">@Slf4j</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">GlobalLoggingFilter</span> <span class="kd">implements</span> <span class="nc">Filter</span> <span class="o">{</span>
-	<span class="nd">@Override</span>
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">doFilter</span><span class="o">(</span><span class="nc">ServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="nc">ServletResponse</span> <span class="n">response</span><span class="o">,</span> <span class="nc">FilterChain</span> <span class="n">chain</span><span class="o">)</span>
-			<span class="kd">throws</span> <span class="nc">IOException</span><span class="o">,</span> <span class="nc">ServletException</span> <span class="o">{</span>
-        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"-------------------전 처리-------------------"</span><span class="o">);</span>
-        <span class="nc">ContentCachingRequestWrapper</span> <span class="n">req</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ContentCachingRequestWrapper</span><span class="o">((</span><span class="nc">HttpServletRequest</span><span class="o">)</span> <span class="n">request</span><span class="o">);</span>
-        <span class="nc">ContentCachingResponseWrapper</span> <span class="n">res</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ContentCachingResponseWrapper</span><span class="o">((</span><span class="nc">HttpServletResponse</span><span class="o">)</span> <span class="n">response</span><span class="o">);</span>
-
-        <span class="c1">// 전처리</span>
-        <span class="n">chain</span><span class="o">.</span><span class="na">doFilter</span><span class="o">(</span><span class="n">req</span><span class="o">,</span> <span class="n">res</span><span class="o">);</span>
-        <span class="c1">// 후처리</span>
-
-        <span class="nc">String</span> <span class="n">url</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getRequestURI</span><span class="o">();</span>
-        <span class="nc">String</span> <span class="n">reqContent</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="n">req</span><span class="o">.</span><span class="na">getContentAsByteArray</span><span class="o">());</span>
-        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"request url : {}, request body : {}"</span><span class="o">,</span> <span class="n">url</span><span class="o">,</span> <span class="n">reqContent</span><span class="o">);</span>
-        
-        <span class="nc">String</span> <span class="n">resContent</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="n">res</span><span class="o">.</span><span class="na">getContentAsByteArray</span><span class="o">());</span>
-        <span class="kt">int</span> <span class="n">httpStatus</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="na">getStatus</span><span class="o">();</span>
-        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"response status : {}, response body : {}"</span><span class="o">,</span> <span class="n">httpStatus</span><span class="o">,</span> <span class="n">resContent</span><span class="o">);</span>
-        
-        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"-------------------후 처리-------------------"</span><span class="o">);</span>
-	<span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<h2 id="참조">참조</h2>
-<p><a href="https://mangkyu.tistory.com/173">망나니개발자</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><category term="filter" /><category term="interceptor" /><summary type="html"><![CDATA[AOP vs Interceptor vs Filter AOP 를 내용을 살펴보면 Interceptor 와 Filter에 대해 궁금해질 것입니다. AOP와 Interceptor, Filter의 역할에 대해 간략하게 알아보기 위해 아래의 그램으로 표현하였습니다.]]></summary></entry><entry><title type="html">AOP(Aspect Oriented Programming) 란?</title><link href="http://localhost:4000/springboot/aop/" rel="alternate" type="text/html" title="AOP(Aspect Oriented Programming) 란?" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/aop</id><content type="html" xml:base="http://localhost:4000/springboot/aop/"><![CDATA[<h2 id="aop-개요">AOP 개요</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="Resolver" /><summary type="html"><![CDATA[ArgumentResolver Http Request를 제어 또는 가공(Decrpt)할 수 있는 또 하나의 영역중 하나가 바로 ArgumentResolver 입니다. ArgumentRoslver는 Request 데이터를 가공하여 Constroller에 전달하고 싶을 때 사용합니다. 제어할 때상으로는 아래와 같은 유형을 대상으로 ArgumentResolver를 적용할 수 있습니다.]]></summary></entry><entry><title type="html">AOP(Aspect Oriented Programming) 란?</title><link href="http://localhost:4000/springboot/aop/" rel="alternate" type="text/html" title="AOP(Aspect Oriented Programming) 란?" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/aop</id><content type="html" xml:base="http://localhost:4000/springboot/aop/"><![CDATA[<h2 id="aop-개요">AOP 개요</h2>
 
 <p><img src="/assets/images/springboot/04-spring-filter-interceptor-aop-resolver-advice.png" alt="filter interceptor aop" /></p>
 
@@ -626,4 +435,128 @@ Controller를 호출하기전에 동작하는 메소드로 return값이 true이�
 
 <h2 id="인록셉터-interceptorregistry에-등록">인록셉터 InterceptorRegistry에 등록</h2>
 <p>HandlerInterceptor를 구현 후 WebMvcConfigurer를 상속받아 구현 WebMvcConfigure의 addInterceptors에 등록하고, 
-Uri PathPattern을 지정하여 어떤 Uri가 호출될 때 인터셉터를 동학하게 할지 설정합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="Interceptor" /><summary type="html"><![CDATA[인터셉터의 이해 인터셉터는 “무엇인가를 가로챈다”라는 의미입니다. Filter가 실행된 이후 인터셉터는 Controller가 호출 전/후에 무엇인가 제어 하고자할 때 사용합니다. 그리고 Filter가 WebContainer에서 동작하는 반면에 인터셉터는 Spring Container에서 동작하는 차이점이 있습니다. 대표적인 사용 목적은 logging과 인증처리에 많이 사용합니다.]]></summary></entry></feed>
+Uri PathPattern을 지정하여 어떤 Uri가 호출될 때 인터셉터를 동학하게 할지 설정합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="Interceptor" /><summary type="html"><![CDATA[인터셉터의 이해 인터셉터는 “무엇인가를 가로챈다”라는 의미입니다. Filter가 실행된 이후 인터셉터는 Controller가 호출 전/후에 무엇인가 제어 하고자할 때 사용합니다. 그리고 Filter가 WebContainer에서 동작하는 반면에 인터셉터는 Spring Container에서 동작하는 차이점이 있습니다. 대표적인 사용 목적은 logging과 인증처리에 많이 사용합니다.]]></summary></entry><entry><title type="html">인터셉터(Interceptor) 예시</title><link href="http://localhost:4000/springboot/interceptor-example/" rel="alternate" type="text/html" title="인터셉터(Interceptor) 예시" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/interceptor-example</id><content type="html" xml:base="http://localhost:4000/springboot/interceptor-example/"><![CDATA[<h2 id="인터셉터의-사용예시">인터셉터의 사용예시</h2>
+<p>HandlerInterceptor를 구현한 MyHandler 입니다.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Component</span>
+<span class="nd">@Slf4j</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyHandler</span> <span class="kd">implements</span> <span class="nc">HandlerInterceptor</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span> <span class="no">LOG_ID</span> <span class="o">=</span> <span class="s">"logId"</span><span class="o">;</span>
+	
+	<span class="kd">private</span> <span class="kt">void</span> <span class="nf">readBody</span><span class="o">(</span><span class="kd">final</span> <span class="nc">HttpServletRequest</span> <span class="n">request</span><span class="o">)</span> <span class="o">{</span>
+
+		<span class="nc">String</span> <span class="n">reqBody</span> <span class="o">=</span> <span class="o">(</span><span class="nc">String</span><span class="o">)</span> <span class="n">request</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"requestBody"</span><span class="o">);</span>
+
+		<span class="cm">/*
+		 * reqBody 값을 읽어 임의 처리.
+		 */</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"reqBody:{}"</span><span class="o">,</span> <span class="n">reqBody</span><span class="o">);</span>
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">preHandle</span><span class="o">(</span><span class="nc">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="nc">HttpServletResponse</span> <span class="n">response</span><span class="o">,</span> <span class="nc">Object</span> <span class="n">handler</span><span class="o">)</span>
+			<span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+		  <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"----------------- preHandle -------------------"</span><span class="o">);</span>
+	    <span class="nc">String</span> <span class="n">requestURI</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getRequestURI</span><span class="o">();</span>
+	    <span class="nc">String</span> <span class="n">uuid</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">randomUUID</span><span class="o">().</span><span class="na">toString</span><span class="o">();</span>
+	    <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"logId:{}"</span><span class="o">,</span> <span class="n">request</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="no">LOG_ID</span><span class="o">));</span>
+	    <span class="c1">//request.setAttribute(LOG_ID, uuid);		</span>
+
+		  <span class="n">readBody</span><span class="o">(</span><span class="n">request</span><span class="o">);</span>
+
+      <span class="k">if</span> <span class="o">(</span><span class="nc">Objects</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getMethod</span><span class="o">(),</span> <span class="s">"POST"</span><span class="o">))</span> <span class="o">{</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"req URL: "</span> <span class="o">+</span> <span class="n">request</span><span class="o">.</span><span class="na">getRequestURL</span><span class="o">());</span>
+      <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"req QueryString: "</span> <span class="o">+</span> <span class="n">request</span><span class="o">.</span><span class="na">getQueryString</span><span class="o">());</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"req URL: "</span> <span class="o">+</span> <span class="n">request</span><span class="o">.</span><span class="na">getRequestURL</span><span class="o">());</span>
+      <span class="o">}</span>	
+		
+		<span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">postHandle</span><span class="o">(</span><span class="nc">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="nc">HttpServletResponse</span> <span class="n">response</span><span class="o">,</span> <span class="nc">Object</span> <span class="n">handler</span><span class="o">,</span>
+			<span class="nd">@Nullable</span> <span class="nc">ModelAndView</span> <span class="n">modelAndView</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"postHandle [{}]"</span><span class="o">,</span> <span class="n">handler</span><span class="o">);</span>
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">afterCompletion</span><span class="o">(</span><span class="nc">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="nc">HttpServletResponse</span> <span class="n">response</span><span class="o">,</span> <span class="nc">Object</span> <span class="n">handler</span><span class="o">,</span>
+			<span class="nd">@Nullable</span> <span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------------------------------"</span><span class="o">);</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"afterCompletion"</span><span class="o">);</span>
+
+    <span class="nc">String</span> <span class="n">requestURI</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getRequestURI</span><span class="o">();</span>
+    <span class="nc">String</span> <span class="n">logId</span> <span class="o">=</span> <span class="o">(</span><span class="nc">String</span><span class="o">)</span><span class="n">request</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="no">LOG_ID</span><span class="o">);</span>
+    <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"RESPONSE logId:[{}][{}]"</span><span class="o">,</span> <span class="n">logId</span><span class="o">,</span> <span class="n">requestURI</span><span class="o">);</span>
+    
+    <span class="k">if</span> <span class="o">(</span><span class="n">ex</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"afterCompletion error!!"</span><span class="o">,</span> <span class="n">ex</span><span class="o">);</span>
+    <span class="o">}</span>	
+  
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------------------------------"</span><span class="o">);</span>        
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>MyHandler를 WebMvcConfigurer를 구현한  WebMvcConfigure에 등록하고 Uri PathPatttern을 지정합니다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Slf4j</span>
+<span class="nd">@RequiredArgsConstructor</span>
+<span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebMvcConfig</span> <span class="kd">implements</span> <span class="nc">WebMvcConfigurer</span> <span class="o">{</span>
+	<span class="kd">private</span> <span class="kd">final</span> <span class="nc">DecryptArgumentResolver</span> <span class="n">decryptArgumentResolver</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="kd">final</span> <span class="nc">ResultReturnValueHandler</span> <span class="n">resultReturnValueHandler</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="kd">final</span> <span class="nc">MyHandler</span> <span class="n">myHandler</span><span class="o">;</span>
+	
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">addInterceptors</span><span class="o">(</span><span class="nc">InterceptorRegistry</span> <span class="n">registry</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">registry</span><span class="o">.</span><span class="na">addInterceptor</span><span class="o">(</span><span class="n">myHandler</span><span class="o">)</span>
+			<span class="o">.</span><span class="na">addPathPatterns</span><span class="o">(</span><span class="s">"/test/**"</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="Interceptor" /><summary type="html"><![CDATA[인터셉터의 사용예시 HandlerInterceptor를 구현한 MyHandler 입니다. ```java @Component @Slf4j public class MyHandler implements HandlerInterceptor { public static final String LOG_ID = “logId”; private void readBody(final HttpServletRequest request) {]]></summary></entry><entry><title type="html">Filter in springboot</title><link href="http://localhost:4000/springboot/filter-using-spring/" rel="alternate" type="text/html" title="Filter in springboot" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/filter-using-spring</id><content type="html" xml:base="http://localhost:4000/springboot/filter-using-spring/"><![CDATA[<h2 id="spring을-사용한-filter">spring을 사용한 Filter</h2>
+<p>Springboot를 이용한 filter를 사용하는 방법입니다.
+이전에 GlobalLoggingFilter에서 @Component를 제거하여 이중으로 Bean이 등록되는 것을 피하고, Springboot에서 제공하는 FilterRegistrationBean 사용하여 Bean으로 등록합니다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Slf4j</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">GlobalLoggingFilter</span> <span class="kd">implements</span> <span class="nc">Filter</span> <span class="o">{</span>
+	<span class="nd">@Override</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">doFilter</span><span class="o">(</span><span class="nc">ServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="nc">ServletResponse</span> <span class="n">response</span><span class="o">,</span> <span class="nc">FilterChain</span> <span class="n">chain</span><span class="o">)</span>
+			<span class="kd">throws</span> <span class="nc">IOException</span><span class="o">,</span> <span class="nc">ServletException</span> <span class="o">{</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"-------------------전 처리-------------------"</span><span class="o">);</span>
+        <span class="nc">ContentCachingRequestWrapper</span> <span class="n">req</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ContentCachingRequestWrapper</span><span class="o">((</span><span class="nc">HttpServletRequest</span><span class="o">)</span> <span class="n">request</span><span class="o">);</span>
+        <span class="nc">ContentCachingResponseWrapper</span> <span class="n">res</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ContentCachingResponseWrapper</span><span class="o">((</span><span class="nc">HttpServletResponse</span><span class="o">)</span> <span class="n">response</span><span class="o">);</span>
+
+        <span class="c1">// 전처리</span>
+        <span class="n">chain</span><span class="o">.</span><span class="na">doFilter</span><span class="o">(</span><span class="n">req</span><span class="o">,</span> <span class="n">res</span><span class="o">);</span>
+        <span class="c1">// 후처리</span>
+
+        <span class="nc">String</span> <span class="n">url</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getRequestURI</span><span class="o">();</span>
+        <span class="nc">String</span> <span class="n">reqContent</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="n">req</span><span class="o">.</span><span class="na">getContentAsByteArray</span><span class="o">());</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"request url : {}, request body : {}"</span><span class="o">,</span> <span class="n">url</span><span class="o">,</span> <span class="n">reqContent</span><span class="o">);</span>
+        
+        <span class="nc">String</span> <span class="n">resContent</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="n">res</span><span class="o">.</span><span class="na">getContentAsByteArray</span><span class="o">());</span>
+        <span class="kt">int</span> <span class="n">httpStatus</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="na">getStatus</span><span class="o">();</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"response status : {}, response body : {}"</span><span class="o">,</span> <span class="n">httpStatus</span><span class="o">,</span> <span class="n">resContent</span><span class="o">);</span>
+        
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"-------------------후 처리-------------------"</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">javax.servlet.Filter</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.boot.web.servlet.FilterRegistrationBean</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Bean</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Configuration</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.demo.microservices.filter.GlobalLoggingFilter</span><span class="o">;</span>
+
+<span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebConfig</span> <span class="o">{</span>
+	<span class="nd">@Bean</span>
+	<span class="kd">public</span> <span class="nc">FilterRegistrationBean</span> <span class="nf">logFilter</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">FilterRegistrationBean</span><span class="o">&lt;</span><span class="nc">Filter</span><span class="o">&gt;</span> <span class="n">filterRegistrationBean</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FilterRegistrationBean</span><span class="o">&lt;&gt;();</span>
+		<span class="n">filterRegistrationBean</span><span class="o">.</span><span class="na">setFilter</span><span class="o">(</span><span class="k">new</span> <span class="nc">GlobalLoggingFilter</span><span class="o">());</span>
+											
+		<span class="k">return</span> <span class="n">filterRegistrationBean</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><category term="filter" /><category term="interceptor" /><summary type="html"><![CDATA[spring을 사용한 Filter Springboot를 이용한 filter를 사용하는 방법입니다. 이전에 GlobalLoggingFilter에서 @Component를 제거하여 이중으로 Bean이 등록되는 것을 피하고, Springboot에서 제공하는 FilterRegistrationBean 사용하여 Bean으로 등록합니다.]]></summary></entry></feed>
