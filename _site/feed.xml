@@ -1,6 +1,86 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-25T08:01:18+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">ArgumentResolver</title><link href="http://localhost:4000/springboot/argumentResolver/" rel="alternate" type="text/html" title="ArgumentResolver" /><published>2023-03-13T00:00:00+09:00</published><updated>2023-03-13T00:00:00+09:00</updated><id>http://localhost:4000/springboot/argumentResolver</id><content type="html" xml:base="http://localhost:4000/springboot/argumentResolver/"><![CDATA[<h2 id="argumentresolver">ArgumentResolver</h2>
-<p>Http Request를 제어할 수 있는 또 하나의 영역중 하나가 바로 ArgumentResolver 입니다.
-  ArgumentRoslver는 Request 데이터를 가공하여 Constroller에 전달하고 싶을 때 사용합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="Resolver" /><summary type="html"><![CDATA[ArgumentResolver Http Request를 제어할 수 있는 또 하나의 영역중 하나가 바로 ArgumentResolver 입니다. ArgumentRoslver는 Request 데이터를 가공하여 Constroller에 전달하고 싶을 때 사용합니다.]]></summary></entry><entry><title type="html">인터셉터(Interceptor) 예시</title><link href="http://localhost:4000/springboot/interceptor-example/" rel="alternate" type="text/html" title="인터셉터(Interceptor) 예시" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/interceptor-example</id><content type="html" xml:base="http://localhost:4000/springboot/interceptor-example/"><![CDATA[<h2 id="인터셉터의-사용예시">인터셉터의 사용예시</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-25T12:38:10+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">ArgumentResolver</title><link href="http://localhost:4000/springboot/argumentResolver/" rel="alternate" type="text/html" title="ArgumentResolver" /><published>2023-03-13T00:00:00+09:00</published><updated>2023-03-13T00:00:00+09:00</updated><id>http://localhost:4000/springboot/argumentResolver</id><content type="html" xml:base="http://localhost:4000/springboot/argumentResolver/"><![CDATA[<h2 id="argumentresolver">ArgumentResolver</h2>
+<p>Http Request를 제어 또는 가공(Decrpt)할 수 있는 또 하나의 영역중 하나가 바로 ArgumentResolver 입니다.
+  ArgumentRoslver는 Request 데이터를 가공하여 Constroller에 전달하고 싶을 때 사용합니다.
+  제어할 때상으로는 아래와 같은 유형을 대상으로 ArgumentResolver를 적용할 수 있습니다.</p>
+
+<ul>
+  <li>적용대상 Controller</li>
+  <li>Annotation 이용</li>
+  <li>Argument Type 등</li>
+</ul>
+
+<p><img src="/assets/images/springboot/04-spring-filter-interceptor-aop-resolver-advice.png" alt="filter interceptor aop" /></p>
+
+<h2 id="handlermethodargumentresolver-상속하여-구현">HandlerMethodArgumentResolver 상속하여 구현</h2>
+<p>ArgumentResolver를 이용하여 Http 요청의 데이터를 가공하고 싶을 때는 HandlerMethodArgumentResolver 상속받아 구현하면 됩니다. HandlerMethodArgumentResolver는 아래의 2개의 Method를 구현해야 합니다.</p>
+
+<ul>
+  <li>public boolean supportsParameter(MethodParameter parameter)</li>
+  <li>public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
+        NativeWebRequest webReq터est, WebDataBinderFactory binderFactory) throws Exception</li>
+</ul>
+
+<p>첫번째는 ArgumentResolver를 적용할 대상을 선정하는 부분입니다. 여기에서 대상 Controller나 Annotation인 경우 return 을 true로 반환하면 resolveArgument 가 실행되어 webRequest에서 데이터를 읽어서 원하는 형식의 데이터를 만들어 반환하면 됩니다.</p>
+
+<p>## 예시</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.io.InputStream</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.nio.charset.StandardCharsets</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Map</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletRequest</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.core.MethodParameter</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Component</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.support.WebDataBinderFactory</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.context.request.NativeWebRequest</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.method.support.HandlerMethodArgumentResolver</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.method.support.ModelAndViewContainer</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.demo.microservices.annotation.Decrypted</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.demo.microservices.util.AESUtil</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.demo.microservices.util.IOUtils</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.fasterxml.jackson.databind.ObjectMapper</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">lombok.extern.slf4j.Slf4j</span><span class="o">;</span>
+
+<span class="nd">@Slf4j</span>
+<span class="nd">@Component</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DecryptArgumentResolver</span> <span class="kd">implements</span> <span class="nc">HandlerMethodArgumentResolver</span> <span class="o">{</span>
+	
+
+	<span class="nd">@Override</span>
+	<span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">supportsParameter</span><span class="o">(</span><span class="nc">MethodParameter</span> <span class="n">parameter</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"supportsParameter:{}"</span><span class="o">,</span> <span class="n">parameter</span><span class="o">.</span><span class="na">getContainingClass</span><span class="o">());</span>
+        <span class="k">return</span> <span class="n">parameter</span><span class="o">.</span><span class="na">hasParameterAnnotation</span><span class="o">(</span><span class="nc">Decrypted</span><span class="o">.</span><span class="na">class</span><span class="o">)</span> <span class="o">&amp;&amp;</span>
+        		<span class="n">parameter</span><span class="o">.</span><span class="na">getParameterType</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="nc">Map</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+	<span class="o">}</span>
+
+	<span class="nd">@Override</span>
+	<span class="kd">public</span> <span class="nc">Map</span> <span class="nf">resolveArgument</span><span class="o">(</span><span class="nc">MethodParameter</span> <span class="n">parameter</span><span class="o">,</span> <span class="nc">ModelAndViewContainer</span> <span class="n">mavContainer</span><span class="o">,</span>
+			<span class="nc">NativeWebRequest</span> <span class="n">webRequest</span><span class="o">,</span> <span class="nc">WebDataBinderFactory</span> <span class="n">binderFactory</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+		<span class="nc">ObjectMapper</span> <span class="n">objectMapper</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ObjectMapper</span><span class="o">();</span>
+		<span class="nc">HttpServletRequest</span> <span class="n">request</span> <span class="o">=</span> <span class="o">(</span><span class="nc">HttpServletRequest</span><span class="o">)</span> <span class="n">webRequest</span><span class="o">.</span><span class="na">getNativeRequest</span><span class="o">();</span>
+		<span class="kt">byte</span><span class="o">[]</span> <span class="n">rawData</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">String</span> <span class="n">decodingBody</span><span class="o">;</span>
+		<span class="nc">Map</span> <span class="n">reqMap</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		
+        <span class="k">try</span> <span class="o">{</span>
+        	<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"decodingBody:"</span><span class="o">);</span>
+            <span class="nc">InputStream</span> <span class="n">inputStream</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">();</span>
+            <span class="n">rawData</span> <span class="o">=</span> <span class="nc">IOUtils</span><span class="o">.</span><span class="na">toByteArray</span><span class="o">(</span><span class="n">inputStream</span><span class="o">);</span>
+            <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"rawData:{}"</span><span class="o">,</span> <span class="n">rawData</span><span class="o">);</span>
+            <span class="nc">AESUtil</span> <span class="n">aesUtil</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">AESUtil</span><span class="o">();</span>
+            <span class="n">decodingBody</span> <span class="o">=</span> <span class="n">aesUtil</span><span class="o">.</span><span class="na">decrypt</span><span class="o">(</span><span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="n">rawData</span><span class="o">,</span> <span class="nc">StandardCharsets</span><span class="o">.</span><span class="na">UTF_8</span><span class="o">));</span>
+            <span class="n">reqMap</span> <span class="o">=</span> <span class="n">objectMapper</span><span class="o">.</span><span class="na">readValue</span><span class="o">(</span><span class="n">decodingBody</span><span class="o">,</span> <span class="nc">Map</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+            <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"decodingBody:{}"</span><span class="o">,</span> <span class="n">decodingBody</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+		<span class="k">return</span> <span class="n">reqMap</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="Resolver" /><summary type="html"><![CDATA[ArgumentResolver Http Request를 제어 또는 가공(Decrpt)할 수 있는 또 하나의 영역중 하나가 바로 ArgumentResolver 입니다. ArgumentRoslver는 Request 데이터를 가공하여 Constroller에 전달하고 싶을 때 사용합니다. 제어할 때상으로는 아래와 같은 유형을 대상으로 ArgumentResolver를 적용할 수 있습니다.]]></summary></entry><entry><title type="html">인터셉터(Interceptor) 예시</title><link href="http://localhost:4000/springboot/interceptor-example/" rel="alternate" type="text/html" title="인터셉터(Interceptor) 예시" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/interceptor-example</id><content type="html" xml:base="http://localhost:4000/springboot/interceptor-example/"><![CDATA[<h2 id="인터셉터의-사용예시">인터셉터의 사용예시</h2>
 <p>HandlerInterceptor를 구현한 MyHandler 입니다.</p>
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Component</span>
 <span class="nd">@Slf4j</span>

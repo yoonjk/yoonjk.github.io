@@ -396,7 +396,7 @@ var store = [{
         "teaser": null
       },{
         "title": "ArgumentResolver",
-        "excerpt":"ArgumentResolver  Http Request를 제어할 수 있는 또 하나의 영역중 하나가 바로 ArgumentResolver 입니다.   ArgumentRoslver는 Request 데이터를 가공하여 Constroller에 전달하고 싶을 때 사용합니다.   ","categories": ["springboot"],
+        "excerpt":"ArgumentResolver Http Request를 제어 또는 가공(Decrpt)할 수 있는 또 하나의 영역중 하나가 바로 ArgumentResolver 입니다. ArgumentRoslver는 Request 데이터를 가공하여 Constroller에 전달하고 싶을 때 사용합니다. 제어할 때상으로는 아래와 같은 유형을 대상으로 ArgumentResolver를 적용할 수 있습니다. 적용대상 Controller Annotation 이용 Argument Type 등 HandlerMethodArgumentResolver 상속하여 구현 ArgumentResolver를 이용하여 Http 요청의 데이터를 가공하고...","categories": ["springboot"],
         "tags": ["Resolver"],
         "url": "/springboot/argumentResolver/",
         "teaser": null
