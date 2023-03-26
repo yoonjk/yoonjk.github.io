@@ -1,5 +1,5 @@
 ---
-title: Http 응답데이터를 암호화하기 - ResponseBodyAdvice
+title: Http 응답을 암호화하기 - ResponseBodyAdvice
 categories:
   - springboot
 tags: 
