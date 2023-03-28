@@ -1,5 +1,5 @@
 ---
-title: "cache"
+title: "Cache"
 layout: archive
 permalink: categories/cache
 author_profile: true
