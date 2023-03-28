@@ -55,7 +55,13 @@
                 {% endif %}
             {% endfor %}
         </ul>            
-
+        <ul>
+            {% for category in site.categories %}
+                {% if category[0] == "cache" %}
+                    <li><a href="/categories/cache" class="">Cache ({{category[1].size}})</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>  
       </li>
 
 
