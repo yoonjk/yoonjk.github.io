@@ -8,7 +8,7 @@
             📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">{{sum}}</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
         </li>
         <li>
-        <span class="nav__sub-title">Workflow</span>
+            <span class="nav__sub-title">Workflow</span>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "workflow" %}
@@ -26,42 +26,42 @@
 
 
 
-        <span class="nav__sub-title">Kubernetes</span>
-        <ul>
-            {% for category in site.categories %}
-                {% if category[0] == "devops" %}
-                    <li><a href="/categories/devops" class="">DevOps ({{category[1].size}})</a></li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-        <ul>
-            {% for category in site.categories %}
-                {% if category[0] == "kubernetes" %}
-                    <li><a href="/categories/kubernetes" class="">Kubernetes ({{category[1].size}})</a></li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-        <ul>
-            {% for category in site.categories %}
-                {% if category[0] == "docker" %}
-                    <li><a href="/categories/docker" class="">Docker ({{category[1].size}})</a></li>
-                {% endif %}
-            {% endfor %}
-        </ul>           
-        <ul>
-            {% for category in site.categories %}
-                {% if category[0] == "springboot" %}
-                    <li><a href="/categories/springboot" class="">Springboot ({{category[1].size}})</a></li>
-                {% endif %}
-            {% endfor %}
-        </ul>            
-        <ul>
-            {% for category in site.categories %}
-                {% if category[0] == "cache" %}
-                    <li><a href="/categories/cache" class="">Cache ({{category[1].size}})</a></li>
-                {% endif %}
-            {% endfor %}
-        </ul>  
+            <span class="nav__sub-title">Kubernetes</span>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "devops" %}
+                        <li><a href="/categories/devops" class="">DevOps ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "kubernetes" %}
+                        <li><a href="/categories/kubernetes" class="">Kubernetes ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "docker" %}
+                        <li><a href="/categories/docker" class="">Docker ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>           
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "springboot" %}
+                        <li><a href="/categories/springboot" class="">Springboot ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>            
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "cache" %}
+                        <li><a href="/categories/cache" class="">Cache ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>  
       </li>
 
 

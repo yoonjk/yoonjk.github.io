@@ -5,7 +5,6 @@ categories:
 tags: 
   - redis
   - jupyter
-
 ---
 
 ## Setup Redis on Docker
