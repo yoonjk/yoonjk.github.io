@@ -45,7 +45,7 @@ docker logs -f jupyter
 위에서 docker log에서 token 값을 확인 후  
 ![Jupyter log]({{ "/assets/images/cache/01-cache-jupyter-log.png" }})  
 
-아래와 같이 token값을 입력하고 패스워드를 입력하고 Lo in and set new password 버튼을 클릭합니다.  
+아래와 같이 token값을 입력하고 패스워드를 입력하고 Log in and set new password 버튼을 클릭합니다.  
 
 ![Jupyter log]({{ "/assets/images/cache/02-cache-setup-a-password.png" }})
 
