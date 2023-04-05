@@ -296,7 +296,7 @@ var store = [{
         "title": "docker-compose로 postgreSQL 실행",
         "excerpt":"PostgresSQL docker-compose 파일 새로운 응용 프로그램을 만들 때 PostgreSQL을 데이터베이스 엔진으로 자주 사용합니다. 빠르고 사용하기 쉬우 며 인터넷상의 거의 모든 프로그래밍 언어 및 플랫폼과 매우 잘 통합됩니다. Windows 시스템을 실행하지 않고 macOS 또는 Linux에서 PostgreSQL 데이터베이스를 실행해야하는 경우 Docker를 사용할 수 있습니다. 몇 가지 간단한 명령만으로 도커에서 PostgreSQL을 시작하는 것은...","categories": ["docker"],
         "tags": ["postgresSQL"],
-        "url": "/docker/redis-docker-compose-copy/",
+        "url": "/docker/postgresql-docker-compose/",
         "teaser": null
       },{
         "title": "docker-compose로 redis standalone으로 실행",
@@ -401,9 +401,33 @@ var store = [{
         "url": "/springboot/argumentResolver/",
         "teaser": null
       },{
-        "title": "RequestBodyAdvice",
-        "excerpt":"RequestBodyAdvice Http Request를 제어 또는 가공(Decrpt)할 수 있는 또 하나의 영역중 하나가 바로 RequestBodyAdvice 입니다. ArgumentRoslver는 RestController에는 약간의 제약사항이 있으나 RequestBodyAdvice는 그러한 제약사항이 없습니다. 적용하는 방법은 ArgumentResolver와 유사하자 좀더 상세하고 제어가 가능합니다. RequestBodyAdvice를 상속받아 구현 Http 요청을 했을 때 body 데이터를 제어하고자 할 떄 RequestBodyAdvice를 상속받아 아래와 같이 3개의 Method를...","categories": ["springboot"],
+        "title": "Http 요청을 복호화하여 Controller에 전달하기 - RequestBodyAdvice",
+        "excerpt":"화 RequestBodyAdvice Http Request를 제어 또는 가공(Decrpt)할 수 있는 또 하나의 영역중 하나가 바로 RequestBodyAdvice 입니다. ArgumentRoslver는 RestController에는 약간의 제약사항이 있으나 RequestBodyAdvice는 그러한 제약사항이 없습니다. 적용하는 방법은 ArgumentResolver와 유사하고 점도 섬세한 제어가 가능합니다. RequestBodyAdvice를 상속받아 구현 Http 요청을 했을 때 body 데이터를 제어하고자 할 떄 RequestBodyAdvice를 상속받아 아래와 같이 3개의...","categories": ["springboot"],
         "tags": ["Advice"],
         "url": "/springboot/requestbodyadvisor/",
+        "teaser": null
+      },{
+        "title": "Controller에서 응답을 암호화하여 내보내기 - ResponseBodyAdvice",
+        "excerpt":"ResponseBodyAdvice Http Response를 제어 또는 가공(Decrpt)할 수 있는 또 하나의 영역중 하나가 바로를 ReponseBodyAdvice 입니다. ReturnValueHandler는 RestController에는 적용할 수 없습니다. RequestBodyAdvice는 그러한 제약사항이 없습니다. 적용하는 방법은 RequestBodyAdvice와 유사합니다. ResponseBodyAdvice를 상속받아 구현 Http 요청을 했을 때 body 데이터를 제어하고자 할 떄 RequestBodyAdvice를 상속받아 아래와 같이 3개의 Method를 구현해야 합니다. public boolean...","categories": ["springboot"],
+        "tags": ["Advice"],
+        "url": "/springboot/responsebodyadvice/",
+        "teaser": null
+      },{
+        "title": "Docker을 이용하여 Jupyter 실행",
+        "excerpt":"Run Jupyter using docker   Docker 기반 Jupyter 실행  유형1  docker run -it --rm -p 10000:8888 -v \"${PWD}\":/home/jovyan/work jupyter/datascience-notebook   유형2  docker run -p 10000:8888 jupyter/scipy-notebook   Run Jupyter using docker-compose  docker-compose를 사용하여 Jupyter를 실행합니다.   version: \"3.9\"  services:   jupyter:     container_name: jupyter     image: jupyter/datascience-notebook     ports:       - \"10000:8888\"     volumes:       - ${PWD}:/home/jovyan/work  ","categories": ["docker"],
+        "tags": ["Jupyter"],
+        "url": "/docker/jupyter/",
+        "teaser": null
+      },{
+        "title": "DTO에서 null인 항목은 json에서 제거",
+        "excerpt":"DTO에서 null인 항목은 json에서 제거  @ToString @Getter @Setter public class CodeDto {     private int code;      @JsonInclude(Include.NON_NULL)     private String codeName; }  ","categories": ["springboot"],
+        "tags": ["Advice"],
+        "url": "/springboot/remove-null-dto/",
+        "teaser": null
+      },{
+        "title": "Getting Start Redis using Jupyter Notebook",
+        "excerpt":"Jupyter Notebook을 이용하여 Redis를 실습할 수 있는 환경을 구성합니다. Setup Redis on Docker 설치형 redis를 하지않고 학습용으로 최적의 환경인 docker를 사용하여 간단히 Redis를 실행합니다. 아래의 docker-compose.yaml 파일을 작성하고 작성된 폴더위치에서 다음과 같이 docker-compose를 실행하여 redis를 실행합니다. 그러면 redis docker image를 pull 받아서 background로 실행합니다. version: '3.7' services: redis: image: redis:alpine...","categories": ["cache"],
+        "tags": ["redis","jupyter"],
+        "url": "/cache/getting-starting-jupyter/",
         "teaser": null
       }]
