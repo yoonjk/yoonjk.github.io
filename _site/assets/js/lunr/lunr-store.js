@@ -425,9 +425,15 @@ var store = [{
         "url": "/springboot/remove-null-dto/",
         "teaser": null
       },{
-        "title": "Getting Start Redis using Jupyter Notebook",
-        "excerpt":"Jupyter Notebook을 이용하여 Redis를 실습할 수 있는 환경을 구성합니다. Setup Redis on Docker 설치형 redis를 하지않고 학습용으로 최적의 환경인 docker를 사용하여 간단히 Redis를 실행합니다. 아래의 docker-compose.yaml 파일을 작성하고 작성된 폴더위치에서 다음과 같이 docker-compose를 실행하여 redis를 실행합니다. 그러면 redis docker image를 pull 받아서 background로 실행합니다. version: '3.7' services: redis: image: redis:alpine...","categories": ["cache"],
+        "title": "Getting Start Redis using Jupyter Notebook - get/set",
+        "excerpt":"Jupyter Notebook을 환경에서 Python을 이용하여 Redis를 알아봅니다. redis-py를 이용하여 redis를 연결하고, 다음과 같이 데이터를 set/get을 수행하여 결과를 확인합니다.  Connect  import redis  redisClient = redis.Redis(host='localhost', port=6379, decode_responses=True)  redisClient.set('foo', 'bar') redisClient.get('foo')   ","categories": ["cache"],
         "tags": ["redis","jupyter"],
         "url": "/cache/getting-starting-jupyter/",
+        "teaser": null
+      },{
+        "title": "Getting Start Redis using Jupyter Notebook - 설치",
+        "excerpt":"Jupyter Notebook을 이용하여 Redis를 실습할 수 있는 환경을 구성합니다. Setup Redis on Docker 설치형 redis를 하지않고 학습용으로 최적의 환경인 docker를 사용하여 간단히 Redis를 실행합니다. 아래의 docker-compose.yaml 파일을 작성하고 작성된 폴더위치에서 다음과 같이 docker-compose를 실행하여 redis를 실행합니다. 그러면 redis docker image를 pull 받아서 background로 실행합니다. version: '3.7' services: redis: image: redis:alpine...","categories": ["cache"],
+        "tags": ["redis","jupyter"],
+        "url": "/cache/setup-jupyter/",
         "teaser": null
       }]

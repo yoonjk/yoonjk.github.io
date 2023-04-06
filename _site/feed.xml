@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-05T21:03:40+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Getting Start Redis using Jupyter Notebook</title><link href="http://localhost:4000/cache/getting-starting-jupyter/" rel="alternate" type="text/html" title="Getting Start Redis using Jupyter Notebook" /><published>2023-03-29T00:00:00+09:00</published><updated>2023-03-29T00:00:00+09:00</updated><id>http://localhost:4000/cache/getting-starting-jupyter</id><content type="html" xml:base="http://localhost:4000/cache/getting-starting-jupyter/"><![CDATA[<p>Jupyter Notebook을 이용하여 Redis를 실습할 수 있는 환경을 구성합니다.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-07T05:02:02+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Getting Start Redis using Jupyter Notebook - 설치</title><link href="http://localhost:4000/cache/setup-jupyter/" rel="alternate" type="text/html" title="Getting Start Redis using Jupyter Notebook - 설치" /><published>2023-03-29T00:00:00+09:00</published><updated>2023-03-29T00:00:00+09:00</updated><id>http://localhost:4000/cache/setup-jupyter</id><content type="html" xml:base="http://localhost:4000/cache/setup-jupyter/"><![CDATA[<p>Jupyter Notebook을 이용하여 Redis를 실습할 수 있는 환경을 구성합니다.</p>
 
 <h2 id="setup-redis-on-docker">Setup Redis on Docker</h2>
 <p>설치형 redis를 하지않고 학습용으로 최적의 환경인 docker를 사용하여 간단히 Redis를 실행합니다.
@@ -43,12 +43,20 @@ docker logs <span class="nt">-f</span> jupyter
 <p>Notebook category에서 python3를 선택합니다.<br />
 <img src="/assets/images/cache/04-cache-python3-notebook.png" alt="Jupyter log" /></p>
 
-<p>python에서 redis를 연결하기 위해 redis module을 다음과 같이 notebook에 입력하고 실행버튼을 클릭하여 redis module을 설치합니다.</p>
+<p>python에서 redis를 연결하기 위해 redis-py module을 설치해야 합니다. 다음과 같이 notebook에 입력하고 실행버튼을 클릭하여 redis-py module을 설치합니다.</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">!</span>pip <span class="nb">install </span>redis
 </code></pre></div></div>
 
-<p><img src="/assets/images/cache/05-cache-pip-install-redis.png" alt="Jupyter log" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[Jupyter Notebook을 이용하여 Redis를 실습할 수 있는 환경을 구성합니다.]]></summary></entry><entry><title type="html">DTO에서 null인 항목은 json에서 제거</title><link href="http://localhost:4000/springboot/remove-null-dto/" rel="alternate" type="text/html" title="DTO에서 null인 항목은 json에서 제거" /><published>2023-03-28T00:00:00+09:00</published><updated>2023-03-28T00:00:00+09:00</updated><id>http://localhost:4000/springboot/remove-null-dto</id><content type="html" xml:base="http://localhost:4000/springboot/remove-null-dto/"><![CDATA[<h2 id="dto에서-null인-항목은-json에서-제거">DTO에서 null인 항목은 json에서 제거</h2>
+<p><img src="/assets/images/cache/05-cache-pip-install-redis.png" alt="Jupyter log" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[Jupyter Notebook을 이용하여 Redis를 실습할 수 있는 환경을 구성합니다.]]></summary></entry><entry><title type="html">Getting Start Redis using Jupyter Notebook - get/set</title><link href="http://localhost:4000/cache/getting-starting-jupyter/" rel="alternate" type="text/html" title="Getting Start Redis using Jupyter Notebook - get/set" /><published>2023-03-29T00:00:00+09:00</published><updated>2023-03-29T00:00:00+09:00</updated><id>http://localhost:4000/cache/getting-starting-jupyter</id><content type="html" xml:base="http://localhost:4000/cache/getting-starting-jupyter/"><![CDATA[<p>Jupyter Notebook을 환경에서 Python을 이용하여 Redis를 알아봅니다. redis-py를 이용하여 redis를 연결하고, 다음과 같이 데이터를 set/get을 수행하여 결과를 확인합니다.</p>
+<h2 id="connect">Connect</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">redis</span>
+
+<span class="n">redisClient</span> <span class="o">=</span> <span class="n">redis</span><span class="p">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s">'localhost'</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span> <span class="n">decode_responses</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">redisClient</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="s">'foo'</span><span class="p">,</span> <span class="s">'bar'</span><span class="p">)</span>
+<span class="n">redisClient</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'foo'</span><span class="p">)</span>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[Jupyter Notebook을 환경에서 Python을 이용하여 Redis를 알아봅니다. redis-py를 이용하여 redis를 연결하고, 다음과 같이 데이터를 set/get을 수행하여 결과를 확인합니다. Connect ```python import redis]]></summary></entry><entry><title type="html">DTO에서 null인 항목은 json에서 제거</title><link href="http://localhost:4000/springboot/remove-null-dto/" rel="alternate" type="text/html" title="DTO에서 null인 항목은 json에서 제거" /><published>2023-03-28T00:00:00+09:00</published><updated>2023-03-28T00:00:00+09:00</updated><id>http://localhost:4000/springboot/remove-null-dto</id><content type="html" xml:base="http://localhost:4000/springboot/remove-null-dto/"><![CDATA[<h2 id="dto에서-null인-항목은-json에서-제거">DTO에서 null인 항목은 json에서 제거</h2>
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@ToString</span>
 <span class="nd">@Getter</span>
 <span class="nd">@Setter</span>
@@ -82,7 +90,101 @@ docker logs <span class="nt">-f</span> jupyter
       <span class="pi">-</span> <span class="s2">"</span><span class="s">10000:8888"</span>
     <span class="na">volumes</span><span class="pi">:</span>
       <span class="pi">-</span> <span class="s">${PWD}:/home/jovyan/work</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="Jupyter" /><summary type="html"><![CDATA[Run Jupyter using docker]]></summary></entry><entry><title type="html">Http 요청을 복호화하여 Controller에 전달하기 - RequestBodyAdvice</title><link href="http://localhost:4000/springboot/requestbodyadvisor/" rel="alternate" type="text/html" title="Http 요청을 복호화하여 Controller에 전달하기 - RequestBodyAdvice" /><published>2023-03-24T00:00:00+09:00</published><updated>2023-03-24T00:00:00+09:00</updated><id>http://localhost:4000/springboot/requestbodyadvisor</id><content type="html" xml:base="http://localhost:4000/springboot/requestbodyadvisor/"><![CDATA[<p>화</p>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="Jupyter" /><summary type="html"><![CDATA[Run Jupyter using docker]]></summary></entry><entry><title type="html">Controller에서 응답을 암호화하여 내보내기 - ResponseBodyAdvice</title><link href="http://localhost:4000/springboot/responsebodyadvice/" rel="alternate" type="text/html" title="Controller에서 응답을 암호화하여 내보내기 - ResponseBodyAdvice" /><published>2023-03-24T00:00:00+09:00</published><updated>2023-03-24T00:00:00+09:00</updated><id>http://localhost:4000/springboot/responsebodyadvice</id><content type="html" xml:base="http://localhost:4000/springboot/responsebodyadvice/"><![CDATA[<h2 id="responsebodyadvice">ResponseBodyAdvice</h2>
+<p>Http Response를 제어 또는 가공(Decrpt)할 수 있는 또 하나의 영역중 하나가 바로를 ReponseBodyAdvice 입니다.
+  ReturnValueHandler는 RestController에는 적용할 수 없습니다. RequestBodyAdvice는 그러한 제약사항이 없습니다.
+  적용하는 방법은 RequestBodyAdvice와 유사합니다.</p>
+
+<p><img src="/assets/images/springboot/04-spring-filter-interceptor-aop-resolver-advice.png" alt="filter interceptor aop" /></p>
+
+<h2 id="responsebodyadvice를-상속받아-구현">ResponseBodyAdvice를 상속받아 구현</h2>
+<p>Http 요청을 했을 때 body 데이터를 제어하고자 할 떄 RequestBodyAdvice를 상속받아 아래와 같이 3개의 Method를 구현해야 합니다.</p>
+<ul>
+  <li>public boolean supports(…)</li>
+  <li>public Object beforeBodyWrite(…)</li>
+</ul>
+
+<p>supports에서는 대상 Controller나 대상 Parameter Type에 따라 대상을 선택할 수 있습니다. 
+beforeBodyWrite 는 사용자 Controller에서 받은 return 값을 가공할 수 있는 영역입니다.
+선택된 converter를 이용하여 json으로 변환하기 직전에 호출되는 것이다.<br />
+사용하는 주요 용도로 아래와 같이</p>
+<ul>
+  <li>로깅</li>
+  <li>Decrypt</li>
+</ul>
+
+<p>로 사용할 수 있는 영역입니다. 다음 예제는 ResponseBodyAdvice를 Decrypt 로 사용하고 있습니다.</p>
+
+<h2 id="responsebodyadvice를---예시">ResponseBodyAdvice를 - 예시</h2>
+<p>아래의 예제는 ResponseBodyAdvice를 구현한 EncryptResponseBodyAdvice입니다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.nio.charset.StandardCharsets</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.core.MethodParameter</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.http.MediaType</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.http.converter.HttpMessageConverter</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.http.server.ServerHttpRequest</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.http.server.ServerHttpResponse</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.lang.Nullable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RestControllerAdvice</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.demo.microservices.controller.UserController</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.demo.microservices.util.AESUtil</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.fasterxml.jackson.databind.ObjectMapper</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">lombok.extern.slf4j.Slf4j</span><span class="o">;</span>
+
+<span class="nd">@Slf4j</span>
+<span class="nd">@RestControllerAdvice</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">EncryptAdviceController</span> <span class="kd">implements</span> <span class="nc">ResponseBodyAdvice</span><span class="o">&lt;</span><span class="nc">Object</span><span class="o">&gt;{</span>
+	<span class="cm">/**
+	 * Whether this component supports the given controller method return type
+	 * and the selected {@code HttpMessageConverter} type.
+	 * @param returnType the return type
+	 * @param converterType the selected converter type
+	 * @return {@code true} if {@link #beforeBodyWrite} should be invoked;
+	 * {@code false} otherwise
+	 */</span>
+	<span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">supports</span><span class="o">(</span><span class="nc">MethodParameter</span> <span class="n">returnType</span><span class="o">,</span> <span class="nc">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="nc">HttpMessageConverter</span><span class="o">&lt;?&gt;&gt;</span> <span class="n">converterType</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------ beforeBodyRead ------------ "</span><span class="o">);</span>
+		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------ supports"</span><span class="o">);</span>
+		<span class="k">return</span> <span class="n">returnType</span><span class="o">.</span><span class="na">getContainingClass</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="nc">UserController</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+	<span class="o">}</span>
+
+	<span class="cm">/**
+	 * Invoked after an {@code HttpMessageConverter} is selected and just before
+	 * its write method is invoked.
+	 * @param body the body to be written
+	 * @param returnType the return type of the controller method
+	 * @param selectedContentType the content type selected through content negotiation
+	 * @param selectedConverterType the converter type selected to write to the response
+	 * @param request the current request
+	 * @param response the current response
+	 * @return the body that was passed in or a modified (possibly new) instance
+	 */</span>
+	<span class="nd">@Nullable</span>
+	<span class="kd">public</span> <span class="nc">Object</span> <span class="nf">beforeBodyWrite</span><span class="o">(</span><span class="nd">@Nullable</span> <span class="nc">Object</span> <span class="n">body</span><span class="o">,</span> <span class="nc">MethodParameter</span> <span class="n">returnType</span><span class="o">,</span> <span class="nc">MediaType</span> <span class="n">selectedContentType</span><span class="o">,</span>
+			<span class="nc">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="nc">HttpMessageConverter</span><span class="o">&lt;?&gt;&gt;</span> <span class="n">selectedConverterType</span><span class="o">,</span>
+			<span class="nc">ServerHttpRequest</span> <span class="n">request</span><span class="o">,</span> <span class="nc">ServerHttpResponse</span> <span class="n">response</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">ObjectMapper</span> <span class="n">objectMapper</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ObjectMapper</span><span class="o">();</span>
+		<span class="nc">String</span> <span class="n">responseMessage</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="nc">AESUtil</span> <span class="n">aesUtil</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">AESUtil</span><span class="o">();</span>
+        
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">responseMessage</span> <span class="o">=</span> <span class="n">objectMapper</span><span class="o">.</span><span class="na">writeValueAsString</span><span class="o">(</span><span class="n">body</span><span class="o">);</span>
+	    <span class="kt">byte</span><span class="o">[]</span> <span class="n">encRawData</span> <span class="o">=</span> <span class="n">aesUtil</span><span class="o">.</span><span class="na">encrypt</span><span class="o">(</span><span class="n">responseMessage</span><span class="o">).</span><span class="na">getBytes</span><span class="o">(</span><span class="nc">StandardCharsets</span><span class="o">.</span><span class="na">UTF_8</span><span class="o">);</span>
+	    <span class="n">response</span><span class="o">.</span><span class="na">getBody</span><span class="o">().</span><span class="na">write</span><span class="o">(</span><span class="n">encRawData</span><span class="o">);</span>
+	    <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"encData:{}"</span><span class="o">,</span> <span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="n">encRawData</span><span class="o">));</span>
+	    <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"orgBody:{}"</span><span class="o">,</span><span class="n">body</span><span class="o">);</span>
+		<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">();</span>
+		<span class="o">}</span>
+		
+    <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="Advice" /><summary type="html"><![CDATA[ResponseBodyAdvice Http Response를 제어 또는 가공(Decrpt)할 수 있는 또 하나의 영역중 하나가 바로를 ReponseBodyAdvice 입니다. ReturnValueHandler는 RestController에는 적용할 수 없습니다. RequestBodyAdvice는 그러한 제약사항이 없습니다. 적용하는 방법은 RequestBodyAdvice와 유사합니다.]]></summary></entry><entry><title type="html">Http 요청을 복호화하여 Controller에 전달하기 - RequestBodyAdvice</title><link href="http://localhost:4000/springboot/requestbodyadvisor/" rel="alternate" type="text/html" title="Http 요청을 복호화하여 Controller에 전달하기 - RequestBodyAdvice" /><published>2023-03-24T00:00:00+09:00</published><updated>2023-03-24T00:00:00+09:00</updated><id>http://localhost:4000/springboot/requestbodyadvisor</id><content type="html" xml:base="http://localhost:4000/springboot/requestbodyadvisor/"><![CDATA[<p>화</p>
 <h2 id="requestbodyadvice">RequestBodyAdvice</h2>
 <p>Http Request를 제어 또는 가공(Decrpt)할 수 있는 또 하나의 영역중 하나가 바로 RequestBodyAdvice 입니다.
   ArgumentRoslver는 RestController에는 약간의 제약사항이 있으나 RequestBodyAdvice는 그러한 제약사항이 없습니다.
@@ -207,101 +309,7 @@ afterBodyRead는  Controller의 Input Type을 body로 넘어오며 그것을 가
 		<span class="k">return</span> <span class="n">body</span><span class="o">;</span>
 	<span class="o">}</span>
 <span class="o">}</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="Advice" /><summary type="html"><![CDATA[화 RequestBodyAdvice Http Request를 제어 또는 가공(Decrpt)할 수 있는 또 하나의 영역중 하나가 바로 RequestBodyAdvice 입니다. ArgumentRoslver는 RestController에는 약간의 제약사항이 있으나 RequestBodyAdvice는 그러한 제약사항이 없습니다. 적용하는 방법은 ArgumentResolver와 유사하고 점도 섬세한 제어가 가능합니다.]]></summary></entry><entry><title type="html">Controller에서 응답을 암호화하여 내보내기 - ResponseBodyAdvice</title><link href="http://localhost:4000/springboot/responsebodyadvice/" rel="alternate" type="text/html" title="Controller에서 응답을 암호화하여 내보내기 - ResponseBodyAdvice" /><published>2023-03-24T00:00:00+09:00</published><updated>2023-03-24T00:00:00+09:00</updated><id>http://localhost:4000/springboot/responsebodyadvice</id><content type="html" xml:base="http://localhost:4000/springboot/responsebodyadvice/"><![CDATA[<h2 id="responsebodyadvice">ResponseBodyAdvice</h2>
-<p>Http Response를 제어 또는 가공(Decrpt)할 수 있는 또 하나의 영역중 하나가 바로를 ReponseBodyAdvice 입니다.
-  ReturnValueHandler는 RestController에는 적용할 수 없습니다. RequestBodyAdvice는 그러한 제약사항이 없습니다.
-  적용하는 방법은 RequestBodyAdvice와 유사합니다.</p>
-
-<p><img src="/assets/images/springboot/04-spring-filter-interceptor-aop-resolver-advice.png" alt="filter interceptor aop" /></p>
-
-<h2 id="responsebodyadvice를-상속받아-구현">ResponseBodyAdvice를 상속받아 구현</h2>
-<p>Http 요청을 했을 때 body 데이터를 제어하고자 할 떄 RequestBodyAdvice를 상속받아 아래와 같이 3개의 Method를 구현해야 합니다.</p>
-<ul>
-  <li>public boolean supports(…)</li>
-  <li>public Object beforeBodyWrite(…)</li>
-</ul>
-
-<p>supports에서는 대상 Controller나 대상 Parameter Type에 따라 대상을 선택할 수 있습니다. 
-beforeBodyWrite 는 사용자 Controller에서 받은 return 값을 가공할 수 있는 영역입니다.
-선택된 converter를 이용하여 json으로 변환하기 직전에 호출되는 것이다.<br />
-사용하는 주요 용도로 아래와 같이</p>
-<ul>
-  <li>로깅</li>
-  <li>Decrypt</li>
-</ul>
-
-<p>로 사용할 수 있는 영역입니다. 다음 예제는 ResponseBodyAdvice를 Decrypt 로 사용하고 있습니다.</p>
-
-<h2 id="responsebodyadvice를---예시">ResponseBodyAdvice를 - 예시</h2>
-<p>아래의 예제는 ResponseBodyAdvice를 구현한 EncryptResponseBodyAdvice입니다.</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.nio.charset.StandardCharsets</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">org.springframework.core.MethodParameter</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.http.MediaType</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.http.converter.HttpMessageConverter</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.http.server.ServerHttpRequest</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.http.server.ServerHttpResponse</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.lang.Nullable</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RestControllerAdvice</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">com.demo.microservices.controller.UserController</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.demo.microservices.util.AESUtil</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.fasterxml.jackson.databind.ObjectMapper</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">lombok.extern.slf4j.Slf4j</span><span class="o">;</span>
-
-<span class="nd">@Slf4j</span>
-<span class="nd">@RestControllerAdvice</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">EncryptAdviceController</span> <span class="kd">implements</span> <span class="nc">ResponseBodyAdvice</span><span class="o">&lt;</span><span class="nc">Object</span><span class="o">&gt;{</span>
-	<span class="cm">/**
-	 * Whether this component supports the given controller method return type
-	 * and the selected {@code HttpMessageConverter} type.
-	 * @param returnType the return type
-	 * @param converterType the selected converter type
-	 * @return {@code true} if {@link #beforeBodyWrite} should be invoked;
-	 * {@code false} otherwise
-	 */</span>
-	<span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">supports</span><span class="o">(</span><span class="nc">MethodParameter</span> <span class="n">returnType</span><span class="o">,</span> <span class="nc">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="nc">HttpMessageConverter</span><span class="o">&lt;?&gt;&gt;</span> <span class="n">converterType</span><span class="o">)</span> <span class="o">{</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------ beforeBodyRead ------------ "</span><span class="o">);</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------ supports"</span><span class="o">);</span>
-		<span class="k">return</span> <span class="n">returnType</span><span class="o">.</span><span class="na">getContainingClass</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="nc">UserController</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-	<span class="o">}</span>
-
-	<span class="cm">/**
-	 * Invoked after an {@code HttpMessageConverter} is selected and just before
-	 * its write method is invoked.
-	 * @param body the body to be written
-	 * @param returnType the return type of the controller method
-	 * @param selectedContentType the content type selected through content negotiation
-	 * @param selectedConverterType the converter type selected to write to the response
-	 * @param request the current request
-	 * @param response the current response
-	 * @return the body that was passed in or a modified (possibly new) instance
-	 */</span>
-	<span class="nd">@Nullable</span>
-	<span class="kd">public</span> <span class="nc">Object</span> <span class="nf">beforeBodyWrite</span><span class="o">(</span><span class="nd">@Nullable</span> <span class="nc">Object</span> <span class="n">body</span><span class="o">,</span> <span class="nc">MethodParameter</span> <span class="n">returnType</span><span class="o">,</span> <span class="nc">MediaType</span> <span class="n">selectedContentType</span><span class="o">,</span>
-			<span class="nc">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="nc">HttpMessageConverter</span><span class="o">&lt;?&gt;&gt;</span> <span class="n">selectedConverterType</span><span class="o">,</span>
-			<span class="nc">ServerHttpRequest</span> <span class="n">request</span><span class="o">,</span> <span class="nc">ServerHttpResponse</span> <span class="n">response</span><span class="o">)</span> <span class="o">{</span>
-		<span class="nc">ObjectMapper</span> <span class="n">objectMapper</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ObjectMapper</span><span class="o">();</span>
-		<span class="nc">String</span> <span class="n">responseMessage</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-    <span class="nc">AESUtil</span> <span class="n">aesUtil</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">AESUtil</span><span class="o">();</span>
-        
-		<span class="k">try</span> <span class="o">{</span>
-			<span class="n">responseMessage</span> <span class="o">=</span> <span class="n">objectMapper</span><span class="o">.</span><span class="na">writeValueAsString</span><span class="o">(</span><span class="n">body</span><span class="o">);</span>
-	    <span class="kt">byte</span><span class="o">[]</span> <span class="n">encRawData</span> <span class="o">=</span> <span class="n">aesUtil</span><span class="o">.</span><span class="na">encrypt</span><span class="o">(</span><span class="n">responseMessage</span><span class="o">).</span><span class="na">getBytes</span><span class="o">(</span><span class="nc">StandardCharsets</span><span class="o">.</span><span class="na">UTF_8</span><span class="o">);</span>
-	    <span class="n">response</span><span class="o">.</span><span class="na">getBody</span><span class="o">().</span><span class="na">write</span><span class="o">(</span><span class="n">encRawData</span><span class="o">);</span>
-	    <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"encData:{}"</span><span class="o">,</span> <span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="n">encRawData</span><span class="o">));</span>
-	    <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"orgBody:{}"</span><span class="o">,</span><span class="n">body</span><span class="o">);</span>
-		<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-			<span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">();</span>
-		<span class="o">}</span>
-		
-    <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
-	<span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="Advice" /><summary type="html"><![CDATA[ResponseBodyAdvice Http Response를 제어 또는 가공(Decrpt)할 수 있는 또 하나의 영역중 하나가 바로를 ReponseBodyAdvice 입니다. ReturnValueHandler는 RestController에는 적용할 수 없습니다. RequestBodyAdvice는 그러한 제약사항이 없습니다. 적용하는 방법은 RequestBodyAdvice와 유사합니다.]]></summary></entry><entry><title type="html">ArgumentResolver</title><link href="http://localhost:4000/springboot/argumentResolver/" rel="alternate" type="text/html" title="ArgumentResolver" /><published>2023-03-13T00:00:00+09:00</published><updated>2023-03-13T00:00:00+09:00</updated><id>http://localhost:4000/springboot/argumentResolver</id><content type="html" xml:base="http://localhost:4000/springboot/argumentResolver/"><![CDATA[<h2 id="argumentresolver">ArgumentResolver</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="Advice" /><summary type="html"><![CDATA[화 RequestBodyAdvice Http Request를 제어 또는 가공(Decrpt)할 수 있는 또 하나의 영역중 하나가 바로 RequestBodyAdvice 입니다. ArgumentRoslver는 RestController에는 약간의 제약사항이 있으나 RequestBodyAdvice는 그러한 제약사항이 없습니다. 적용하는 방법은 ArgumentResolver와 유사하고 점도 섬세한 제어가 가능합니다.]]></summary></entry><entry><title type="html">ArgumentResolver</title><link href="http://localhost:4000/springboot/argumentResolver/" rel="alternate" type="text/html" title="ArgumentResolver" /><published>2023-03-13T00:00:00+09:00</published><updated>2023-03-13T00:00:00+09:00</updated><id>http://localhost:4000/springboot/argumentResolver</id><content type="html" xml:base="http://localhost:4000/springboot/argumentResolver/"><![CDATA[<h2 id="argumentresolver">ArgumentResolver</h2>
 <p>Http Request를 제어 또는 가공(Decrpt)할 수 있는 또 하나의 영역중 하나가 바로 ArgumentResolver 입니다.
   ArgumentRoslver는 Request 데이터를 가공하여 Constroller에 전달하고 싶을 때 사용합니다.
   제어할 때상으로는 아래와 같은 유형을 대상으로 ArgumentResolver를 적용할 수 있습니다.</p>
@@ -577,33 +585,4 @@ springframework는 Runtime 시점에 Weaving 합니다.</p>
   <li>
     <p>target : Aspect가 적용되는 객체를 의미합니다.</p>
   </li>
-</ul>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><summary type="html"><![CDATA[AOP 구성요소 특정지정에 제어하고 싶은 대상에 제어하고자 하는 기능을 구현하는 AOP에 대해 알아보았습ㄴ다. 이번에는 좀더 용어에 대해 상세하게 알아보겠습니다. AOP의 구성요소는 Aspect Advice PointCut JoinPoint]]></summary></entry><entry><title type="html">인터셉터(Interceptor) 란?</title><link href="http://localhost:4000/springboot/interceptor/" rel="alternate" type="text/html" title="인터셉터(Interceptor) 란?" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/interceptor</id><content type="html" xml:base="http://localhost:4000/springboot/interceptor/"><![CDATA[<h2 id="인터셉터의-이해">인터셉터의 이해</h2>
-<p>인터셉터는 “무엇인가를 가로챈다”라는 의미입니다. Filter가 실행된 이후 인터셉터는 Controller가 호출 전/후에 무엇인가 제어 하고자할 때 사용합니다. 그리고 Filter가 WebContainer에서 동작하는 반면에 인터셉터는 Spring Container에서 동작하는 차이점이 있습니다.
-대표적인 사용 목적은 logging과 인증처리에 많이 사용합니다.</p>
-
-<p><img src="/assets/images/springboot/04-spring-filter-interceptor-aop-resolver-advice.png" alt="filter interceptor aop" /></p>
-
-<h2 id="handlerinterceptor를-구현">HandlerInterceptor를 구현</h2>
-<ul>
-  <li>preHandle</li>
-  <li>postHandle</li>
-  <li>afterCompletion</li>
-</ul>
-
-<h4 id="prehandle">preHandle</h4>
-<p>Controller의 메서드에 매핑된 특정 URI가 호출됐을 때 실행되는 메서드로, Controller를 경유(접근)하기 직전에 실행되는 메서드입니다.<br />
-Controller를 호출하기전에 동작하는 메소드로 return값이 true이면 진행, false이면 Controller 호출을 중단합니다</p>
-
-<h4 id="posthandle">postHandle</h4>
-<p>컨트롤러를 호출 후, 즉 화면(View)으로 결과를 전달하기 전에 실행되는 메서드입니다.</p>
-
-<h4 id="aftercompletion">afterCompletion</h4>
-<p>view가 정상적으로 랜더링된 후에 마지막에 실행됩니다</p>
-
-<h4 id="인록셉터-를-사용하기-위해-클래스를-빈bean으로-등록">인록셉터 를 사용하기 위해 클래스를 빈(Bean)으로 등록</h4>
-<p>인록셉터 사용하기 먼저 HandlerInterceptor를 상속받아 구현합니다.<br />
-구현하는 Method는 위에 3가지 Method이며, Bean으로 등록하기 위해 구현한 클래스에 @Component 어노테이션을 추가합니다.</p>
-
-<h2 id="인록셉터-interceptorregistry에-등록">인록셉터 InterceptorRegistry에 등록</h2>
-<p>HandlerInterceptor를 구현 후 WebMvcConfigurer를 상속받아 구현 WebMvcConfigure의 addInterceptors에 등록하고, 
-Uri PathPattern을 지정하여 어떤 Uri가 호출될 때 인터셉터를 동학하게 할지 설정합니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="Interceptor" /><summary type="html"><![CDATA[인터셉터의 이해 인터셉터는 “무엇인가를 가로챈다”라는 의미입니다. Filter가 실행된 이후 인터셉터는 Controller가 호출 전/후에 무엇인가 제어 하고자할 때 사용합니다. 그리고 Filter가 WebContainer에서 동작하는 반면에 인터셉터는 Spring Container에서 동작하는 차이점이 있습니다. 대표적인 사용 목적은 logging과 인증처리에 많이 사용합니다.]]></summary></entry></feed>
+</ul>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><summary type="html"><![CDATA[AOP 구성요소 특정지정에 제어하고 싶은 대상에 제어하고자 하는 기능을 구현하는 AOP에 대해 알아보았습ㄴ다. 이번에는 좀더 용어에 대해 상세하게 알아보겠습니다. AOP의 구성요소는 Aspect Advice PointCut JoinPoint]]></summary></entry></feed>
