@@ -17,5 +17,5 @@ redisClient.set('foo', 'bar')
 redisClient.get('foo')
 ```
 
-![Jupyter log]({{ "/assets/images/cache/05-cache-get-set.png" }})
+![Jupyter log]({{ "/assets/images/cache/06-cache-get-set.png" }})
 
