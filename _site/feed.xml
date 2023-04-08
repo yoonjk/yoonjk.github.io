@@ -1,4 +1,109 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-08T11:45:18+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Redis 데이터 타입 - Redis Key 규칙</title><link href="http://localhost:4000/cache/cache-data-management/" rel="alternate" type="text/html" title="Redis 데이터 타입 - Redis Key 규칙" /><published>2023-04-07T00:00:00+09:00</published><updated>2023-04-07T00:00:00+09:00</updated><id>http://localhost:4000/cache/cache%20data%20management</id><content type="html" xml:base="http://localhost:4000/cache/cache-data-management/"><![CDATA[<h2 id="기본-redis-데이터-형식-및-사용-방법">기본 Redis 데이터 형식 및 사용 방법</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-08T12:15:26+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Getting Start Redis - String</title><link href="http://localhost:4000/cache/string/" rel="alternate" type="text/html" title="Getting Start Redis - String" /><published>2023-04-07T00:00:00+09:00</published><updated>2023-04-07T00:00:00+09:00</updated><id>http://localhost:4000/cache/string</id><content type="html" xml:base="http://localhost:4000/cache/string/"><![CDATA[<h2 id="strings">Strings</h2>
+<p>Redis 문자열 유형은 Redis 키와 연결할 수 있는 가장 간단한 값 유형입니다. Memcached의 유일한 데이터 유형이므로 신규 사용자가 Redis에서 사용하는 것도 매우 자연스러운 일입니다.
+Redis 키는 문자열이므로 문자열 유형도 값으로 사용할 때 문자열을 다른 문자열에 매핑합니다. 문자열 데이터 형식은 HTML 조각 또는 페이지 캐싱과 같은 다양한 사용 사례에 유용합니다.
+redis-cli를 사용하여 문자열 유형을 약간 사용해 보겠습니다<br />
+(모든 예제는  이 자습서에서 redis-cli를 통해 수행됨).</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">set </span>mykey somevalue
+OK
+get mykey
+<span class="s2">"somevalue"</span>
+</code></pre></div></div>
+
+<p><a href="https://redis.io/commands/set">SET</a>과 <a href="https://redis.io/commands/get">GET</a> 명령을 사용하여 볼 수 있듯이  문자열 값을 설정하고 검색하는 방법입니다. SET은 키가  문자열이 아닌 값과 연결된 경우에도 키가 이미 존재하는 경우 키에 이미 저장된 기존 값을 대체합니다. 따라서 SET은 할당을 수행합니다.<br />
+값은 모든 종류의 문자열 (바이너리 데이터 포함) 일 수 있습니다.</p>
+
+<p>(예 : 값 안에 jpeg 이미지를 저장할 수 있음). 값은 512MB보다 클 수 없습니다.</p>
+
+<p>SET 명령에는 추가 인수로 제공되는 흥미로운 옵션이 있습니다. 예를 들어  키가 이미 존재하는 경우 SET에 실패하도록 요청하거나 그 반대로 키가 이미 존재하는 경우에만 성공하도록 요청할 수 있습니다.:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">set </span>mykey newval nx
+<span class="o">(</span>nil<span class="o">)</span>
+<span class="nb">set </span>mykey newval xx
+OK
+</code></pre></div></div>
+
+<p>문자열이 Redis의 기본 값이더라도 문자열로 수행할 수 있는 흥미로운 작업이 있습니다. 예를 들어, 하나는 <a href="https://ko.wikipedia.org/wiki/%EC%9B%90%EC%9E%90%EC%84%B1_(%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4_%EC%8B%9C%EC%8A%A4%ED%85%9C)">원자성</a> 증분입니다.
+원자성(atomicity)은 데이터베이스 시스템에서 ACID 트랜잭션 특성 중의 하나입니다. 하나의 원자 트랜잭션은 모두 성공하거나 또는 실패하는 데이터베이스 운용의 집합이다. 원자성의 보증은 데이터베이스의 부분적인 갱신으로 더 큰 문제가 야기되는 것을 방지합니다.
+:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">set </span>counter 100
+OK
+incr counter
+<span class="o">(</span>integer<span class="o">)</span> 101
+incr counter
+<span class="o">(</span>integer<span class="o">)</span> 102
+incrby counter 50
+<span class="o">(</span>integer<span class="o">)</span> 152
+</code></pre></div></div>
+
+<p>INCR 명령은 문자열 값을 정수로 구문 분석하고 1씩 증가시킨 다음 마지막으로 가져온 값을 새 값으로 설정합니다.<br />
+INCRBY, DECR 및 DECRBY와 같은 다른 유사한 명령이 있습니다.<br />
+내부적으로는 항상 동일한 명령이며 약간 다른 방식으로 작동합니다.<br />
+INCR이 원자적이라는 것은 무엇을 의미합니까? 동일한 키에 대해 INCR을 발행하는 여러 클라이언트라도 경쟁 조건에 빠지지 않습니다. 예를 들어, 클라이언트 1은 “10”을 읽고 클라이언트 2는 동시에 “10”을 읽고 둘 다 11로 증가하고 새 값을 11로 설정하는 경우는 발생하지 않습니다. 최종 값은 항상 12이며 읽기-증분-집합 작업은 다른 모든 클라이언트가 동시에 명령을 실행하지 않는 동안 수행됩니다..
+문자열에서 작동하기위한 여러 명령이 있습니다. 예를 들어, GETSET 명령은 키를 새 값으로 설정하고 이전 값을 결과로 리턴합니다. 예를 들어 웹 사이트에서 새 방문자를 받을 때마다 INCR을 사용하여 Redis 키를 증가시키는 시스템이 있는 경우 이 명령을 사용할 수 있습니다  . 이 정보는 한 번에 한 번씩 수집하여 증분을 한 번도 손실하지 않고 수집할 수 있습니다.  키를 GETSET 할 수 있으며  새 값 “0”을 할당하고 이전 값을 다시 읽을 수 있습니다..
+단일 명령에서 여러 키의 값을 설정하거나 검색하는 기능은 대기 시간을 줄이는 데에도 유용합니다.<br />
+이러한 이유로 MSET 및 MGET 명령이 있습니다.:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> mset a 10 b 20 c 30
+OK
+<span class="o">&gt;</span> mget a b c
+1<span class="o">)</span> <span class="s2">"10"</span>
+2<span class="o">)</span> <span class="s2">"20"</span>
+3<span class="o">)</span> <span class="s2">"30"</span>
+</code></pre></div></div>
+
+<p>단일 명령에서 여러 키의 값을 설정하거나 검색하는 기능은 대기 시간을 줄이는 데에도 유용합니다. 이러한 이유로 MSET 및 MGET 명령이 있습니다.
+Altering and querying the key space
+특정 유형에 정의되지 않았지만 키 공간과 상호 작용하는 데 유용한 명령이 있으므로 모든 유형의 키와 함께 사용할 수 있습니다..
+예를 들어, EXISTS 명령은  주어진 키가 데이터베이스에 존재하는지 여부를 알리기 위해 1 또는 0을 반환하는 반면, DEL 명령은 값이 무엇이든 키 및 관련 값을 삭제합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">set </span>mykey hello
+OK
+exists mykey
+<span class="o">(</span>integer<span class="o">)</span> 1
+del mykey
+<span class="o">(</span>integer<span class="o">)</span> 1
+exists mykey
+<span class="o">(</span>integer<span class="o">)</span> 0
+</code></pre></div></div>
+
+<p>예제에서  DEL 자체가 키가 제거되었는지 (존재했는지) 여부에 따라 1 또는 0을 반환하는 방법을 볼 수 있습니다 (해당 이름의 키가 없음)..
+많은 키 공간 관련 명령이 있지만 위의 두 명령은  지정된 키에 저장된 값의 종류를 반환하는 TYPE 명령과 함께 필수적인 명령입니다.:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="nb">set </span>mykey x
+OK
+<span class="o">&gt;</span> <span class="nb">type </span>mykey
+string
+<span class="o">&gt;</span> del mykey
+<span class="o">(</span>integer<span class="o">)</span> 1
+<span class="o">&gt;</span> <span class="nb">type </span>mykey
+none
+</code></pre></div></div>
+<p>Key expiration
+계속 진행하기 전에 저장하는 값 유형에 관계없이 작동하는 중요한 Redis 기능인 키 만료를 살펴봐야 합니다. 키 만료를 사용하면 “Time to Live” 또는 “TTL”이라고도 하는 키에 대한 시간 제한을 설정할 수 있습니다. 생존 시간이 경과하면 키가 자동으로 파괴됩니다..
+키 만료에 대한 몇 가지 중요한 참고 사항:
+•	초 또는 밀리초 정밀도를 사용하여 둘 다 설정할 수 있습니다..
+•	그러나 만료 시간 해상도는 항상 1밀리초입니다..
+•	만료에 대한 정보는 디스크에 복제되고 유지되며, Redis 서버가 중지된 상태로 유지되는 시간은 사실상 경과합니다(즉, Redis는 키가 만료되는 날짜를 저장함)..
+EXPIRE 명령을 사용하여 키의 만료 설정:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="nb">set </span>key some-value
+OK
+<span class="o">&gt;</span> expire key 5
+<span class="o">(</span>integer<span class="o">)</span> 1
+<span class="o">&gt;</span> get key <span class="o">(</span>immediately<span class="o">)</span>
+<span class="s2">"some-value"</span>
+<span class="o">&gt;</span> get key <span class="o">(</span>after some <span class="nb">time</span><span class="o">)</span>
+<span class="o">(</span>nil<span class="o">)</span>
+</code></pre></div></div>
+<p>두 번째 호출이 5초 이상 지연되었으므로 두 GET 호출 사이에 키가 사라졌습니다. 위의 예에서는  만료를 설정하기 위해 EXPIRE를 사용했습니다 (만료를 제거하고 키를 영원히 지속시키기 위해 PERSIST를 사용할 수있는  것처럼 이미 만료 된 키에 다른 만료를 설정하는 데에도 사용할 수  있습니다). 그러나 다른 Redis 명령을 사용하여 만료 된 키를 만들 수도 있습니다. 예를 들어 SET 옵션 사용:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="nb">set </span>key 100 ex 10
+OK
+<span class="o">&gt;</span> ttl key
+<span class="o">(</span>integer<span class="o">)</span> 9
+</code></pre></div></div>
+<p>위의 예제에서는 문자열 값이 100이고 만료 시간이 10초인 키를 설정합니다. 나중에  TTL 명령이 호출되어 키의 남은 생존 시간을 확인합니다..
+밀리초 단위로 만료를 설정하고 확인하려면 PEXPIRE 및 PTTL 명령과 SET 옵션의 전체 목록을 확인하십시오. .</p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[Strings Redis 문자열 유형은 Redis 키와 연결할 수 있는 가장 간단한 값 유형입니다. Memcached의 유일한 데이터 유형이므로 신규 사용자가 Redis에서 사용하는 것도 매우 자연스러운 일입니다. Redis 키는 문자열이므로 문자열 유형도 값으로 사용할 때 문자열을 다른 문자열에 매핑합니다. 문자열 데이터 형식은 HTML 조각 또는 페이지 캐싱과 같은 다양한 사용 사례에 유용합니다. redis-cli를 사용하여 문자열 유형을 약간 사용해 보겠습니다 (모든 예제는 이 자습서에서 redis-cli를 통해 수행됨).]]></summary></entry><entry><title type="html">Redis 데이터 타입 - Redis Key 규칙</title><link href="http://localhost:4000/cache/cache-data-management/" rel="alternate" type="text/html" title="Redis 데이터 타입 - Redis Key 규칙" /><published>2023-04-07T00:00:00+09:00</published><updated>2023-04-07T00:00:00+09:00</updated><id>http://localhost:4000/cache/cache%20data%20management</id><content type="html" xml:base="http://localhost:4000/cache/cache-data-management/"><![CDATA[<h2 id="기본-redis-데이터-형식-및-사용-방법">기본 Redis 데이터 형식 및 사용 방법</h2>
 <p>다음은 Redis CLI를 사용하여 핵심 <a href="https://redis.io/docs/data-types/">Redis 데이터 유형</a>을 학습하는 실습 자습서입니다.  데이터 형식에 대한 일반적인 개요는 데이터 형식 소개를 참조하세요.</p>
 <h4 id="keys">Keys</h4>
 <p>Redis 키는 바이너리로부터 안전하므로 “foo”와 같은 문자열에서 JPEG 파일의 내용에 이르기까지 모든 바이너리 시퀀스를 키로 사용할 수 있습니다. 빈 문자열도 유효한 키입니다.</p>
@@ -16,17 +121,7 @@
 <p>•	<em>스키마를 갖는 키</em><br />
 예를 들어 “object-type:id”는 “user:1000”에서와 같이 좋은 생각입니다. 점 또는 대시는 “comment:4321:reply.to” 또는 “comment:4321:reply-to”와 같이 여러 단어로 된 필드에 자주 사용됩니다.</p>
 
-<p>•	<em>허용 된 최대 키 크기는 512MB입니다.</em></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[기본 Redis 데이터 형식 및 사용 방법 다음은 Redis CLI를 사용하여 핵심 Redis 데이터 유형을 학습하는 실습 자습서입니다. 데이터 형식에 대한 일반적인 개요는 데이터 형식 소개를 참조하세요. Keys Redis 키는 바이너리로부터 안전하므로 “foo”와 같은 문자열에서 JPEG 파일의 내용에 이르기까지 모든 바이너리 시퀀스를 키로 사용할 수 있습니다. 빈 문자열도 유효한 키입니다.]]></summary></entry><entry><title type="html">Getting Start Redis using Jupyter Notebook - get/set</title><link href="http://localhost:4000/cache/getting-starting-jupyter/" rel="alternate" type="text/html" title="Getting Start Redis using Jupyter Notebook - get/set" /><published>2023-03-29T00:00:00+09:00</published><updated>2023-03-29T00:00:00+09:00</updated><id>http://localhost:4000/cache/getting-starting-jupyter</id><content type="html" xml:base="http://localhost:4000/cache/getting-starting-jupyter/"><![CDATA[<p>Jupyter Notebook을 환경에서 Python을 이용하여 Redis를 알아봅니다. redis-py를 이용하여 redis를 연결하고, 다음과 같이 데이터를 set/get을 수행하여 결과를 확인합니다.</p>
-<h2 id="connect">Connect</h2>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">redis</span>
-
-<span class="n">redisClient</span> <span class="o">=</span> <span class="n">redis</span><span class="p">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s">'localhost'</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span> <span class="n">decode_responses</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-
-<span class="n">redisClient</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="s">'foo'</span><span class="p">,</span> <span class="s">'bar'</span><span class="p">)</span>
-<span class="n">redisClient</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'foo'</span><span class="p">)</span>
-</code></pre></div></div>
-
-<p><img src="/assets/images/cache/06-cache-get-set.png" alt="Jupyter log" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[Jupyter Notebook을 환경에서 Python을 이용하여 Redis를 알아봅니다. redis-py를 이용하여 redis를 연결하고, 다음과 같이 데이터를 set/get을 수행하여 결과를 확인합니다. Connect ```python import redis]]></summary></entry><entry><title type="html">Getting Start Redis using Jupyter Notebook - 설치</title><link href="http://localhost:4000/cache/setup-jupyter/" rel="alternate" type="text/html" title="Getting Start Redis using Jupyter Notebook - 설치" /><published>2023-03-29T00:00:00+09:00</published><updated>2023-03-29T00:00:00+09:00</updated><id>http://localhost:4000/cache/setup-jupyter</id><content type="html" xml:base="http://localhost:4000/cache/setup-jupyter/"><![CDATA[<p>Jupyter Notebook을 이용하여 Redis를 실습할 수 있는 환경을 구성합니다.</p>
+<p>•	<em>허용 된 최대 키 크기는 512MB입니다.</em></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[기본 Redis 데이터 형식 및 사용 방법 다음은 Redis CLI를 사용하여 핵심 Redis 데이터 유형을 학습하는 실습 자습서입니다. 데이터 형식에 대한 일반적인 개요는 데이터 형식 소개를 참조하세요. Keys Redis 키는 바이너리로부터 안전하므로 “foo”와 같은 문자열에서 JPEG 파일의 내용에 이르기까지 모든 바이너리 시퀀스를 키로 사용할 수 있습니다. 빈 문자열도 유효한 키입니다.]]></summary></entry><entry><title type="html">Getting Start Redis using Jupyter Notebook - 설치</title><link href="http://localhost:4000/cache/setup-jupyter/" rel="alternate" type="text/html" title="Getting Start Redis using Jupyter Notebook - 설치" /><published>2023-03-29T00:00:00+09:00</published><updated>2023-03-29T00:00:00+09:00</updated><id>http://localhost:4000/cache/setup-jupyter</id><content type="html" xml:base="http://localhost:4000/cache/setup-jupyter/"><![CDATA[<p>Jupyter Notebook을 이용하여 Redis를 실습할 수 있는 환경을 구성합니다.</p>
 
 <h2 id="setup-redis-on-docker">Setup Redis on Docker</h2>
 <p>설치형 redis를 하지않고 학습용으로 최적의 환경인 docker를 사용하여 간단히 Redis를 실행합니다.
@@ -76,7 +171,17 @@ docker logs <span class="nt">-f</span> jupyter
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">!</span>pip <span class="nb">install </span>redis
 </code></pre></div></div>
 
-<p><img src="/assets/images/cache/05-cache-pip-install-redis.png" alt="Jupyter log" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[Jupyter Notebook을 이용하여 Redis를 실습할 수 있는 환경을 구성합니다.]]></summary></entry><entry><title type="html">DTO에서 null인 항목은 json에서 제거</title><link href="http://localhost:4000/springboot/remove-null-dto/" rel="alternate" type="text/html" title="DTO에서 null인 항목은 json에서 제거" /><published>2023-03-28T00:00:00+09:00</published><updated>2023-03-28T00:00:00+09:00</updated><id>http://localhost:4000/springboot/remove-null-dto</id><content type="html" xml:base="http://localhost:4000/springboot/remove-null-dto/"><![CDATA[<h2 id="dto에서-null인-항목은-json에서-제거">DTO에서 null인 항목은 json에서 제거</h2>
+<p><img src="/assets/images/cache/05-cache-pip-install-redis.png" alt="Jupyter log" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[Jupyter Notebook을 이용하여 Redis를 실습할 수 있는 환경을 구성합니다.]]></summary></entry><entry><title type="html">Getting Start Redis using Jupyter Notebook - get/set</title><link href="http://localhost:4000/cache/getting-starting-jupyter/" rel="alternate" type="text/html" title="Getting Start Redis using Jupyter Notebook - get/set" /><published>2023-03-29T00:00:00+09:00</published><updated>2023-03-29T00:00:00+09:00</updated><id>http://localhost:4000/cache/getting-starting-jupyter</id><content type="html" xml:base="http://localhost:4000/cache/getting-starting-jupyter/"><![CDATA[<p>Jupyter Notebook을 환경에서 Python을 이용하여 Redis를 알아봅니다. redis-py를 이용하여 redis를 연결하고, 다음과 같이 데이터를 set/get을 수행하여 결과를 확인합니다.</p>
+<h2 id="connect">Connect</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">redis</span>
+
+<span class="n">redisClient</span> <span class="o">=</span> <span class="n">redis</span><span class="p">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s">'localhost'</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span> <span class="n">decode_responses</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">redisClient</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="s">'foo'</span><span class="p">,</span> <span class="s">'bar'</span><span class="p">)</span>
+<span class="n">redisClient</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'foo'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/cache/06-cache-get-set.png" alt="Jupyter log" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[Jupyter Notebook을 환경에서 Python을 이용하여 Redis를 알아봅니다. redis-py를 이용하여 redis를 연결하고, 다음과 같이 데이터를 set/get을 수행하여 결과를 확인합니다. Connect ```python import redis]]></summary></entry><entry><title type="html">DTO에서 null인 항목은 json에서 제거</title><link href="http://localhost:4000/springboot/remove-null-dto/" rel="alternate" type="text/html" title="DTO에서 null인 항목은 json에서 제거" /><published>2023-03-28T00:00:00+09:00</published><updated>2023-03-28T00:00:00+09:00</updated><id>http://localhost:4000/springboot/remove-null-dto</id><content type="html" xml:base="http://localhost:4000/springboot/remove-null-dto/"><![CDATA[<h2 id="dto에서-null인-항목은-json에서-제거">DTO에서 null인 항목은 json에서 제거</h2>
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@ToString</span>
 <span class="nd">@Getter</span>
 <span class="nd">@Setter</span>
@@ -495,70 +600,4 @@ afterBodyRead는  Controller의 Input Type을 body로 넘어오며 그것을 가
 
 <h2 id="참조">참조</h2>
 <p><a href="https://sjh836.tistory.com/157">빨간색코딩</a><br />
-<a href="http://closer27.github.io/backend/2017/08/03/spring-aop/">어느 개발자의 한적한 공간</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><category term="pointcut" /><summary type="html"><![CDATA[PointCut 의 표현식 리턴타입 패키지경로 클래스지정 메소드지정]]></summary></entry><entry><title type="html">AOP(Aspect Oriented Programming) 예시</title><link href="http://localhost:4000/springboot/aop-examples/" rel="alternate" type="text/html" title="AOP(Aspect Oriented Programming) 예시" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/aop-examples</id><content type="html" xml:base="http://localhost:4000/springboot/aop-examples/"><![CDATA[<h2 id="aop-예시">AOP 예시</h2>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Aspect</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AspectConfig</span> <span class="o">{</span>
-	<span class="nd">@Pointcut</span><span class="o">(</span><span class="s">"@annotation(org.springframework.web.bind.annotation.GetMapping)"</span><span class="o">)</span>
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">getMapping</span><span class="o">()</span> <span class="o">{</span>
-		
-	<span class="o">}</span>
-	
-	<span class="nd">@Pointcut</span><span class="o">(</span><span class="s">"@annotation(org.springframework.web.bind.annotation.PostMapping)"</span><span class="o">)</span>
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">postMapping</span><span class="o">()</span> <span class="o">{</span>
-		
-	<span class="o">}</span>
-	
-	<span class="nd">@Pointcut</span><span class="o">(</span><span class="s">"@annotation(org.springframework.web.bind.annotation.RequestMapping)"</span><span class="o">)</span>
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">requestMapping</span><span class="o">()</span> <span class="o">{</span>
-		
-	<span class="o">}</span>
-	
-	<span class="nd">@Pointcut</span><span class="o">(</span><span class="s">"execution(* com.demo.microservices..*.*Service.*(..))"</span><span class="o">)</span>
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">serviceExcution</span><span class="o">()</span> <span class="o">{</span>
-		
-	<span class="o">}</span>
-	
-	<span class="nd">@Around</span><span class="o">(</span><span class="n">value</span><span class="o">=</span><span class="s">"serviceExcution()"</span><span class="o">)</span>
-	<span class="kd">public</span> <span class="nc">Object</span> <span class="nf">around</span><span class="o">(</span><span class="nc">ProceedingJoinPoint</span>  <span class="n">pjt</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------- Around logging Start -------------"</span><span class="o">);</span>
-		
-		<span class="nc">Object</span> <span class="n">retValue</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-		<span class="k">try</span> <span class="o">{</span>
-			<span class="n">retValue</span> <span class="o">=</span> <span class="n">pjt</span><span class="o">.</span><span class="na">proceed</span><span class="o">();</span>
-		<span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">Throwable</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-			<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"error:{}"</span><span class="o">,</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
-			
-		<span class="o">}</span>
-
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"--------------"</span><span class="o">);</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">" return val:{}"</span><span class="o">,</span> <span class="n">retValue</span><span class="o">);</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------- Around logging end -------------"</span><span class="o">);</span>
-		<span class="k">return</span> <span class="n">retValue</span><span class="o">;</span>
-	<span class="o">}</span>
-	
-	<span class="nd">@Before</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"serviceExcution()"</span><span class="o">)</span> 
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">before</span><span class="o">(</span><span class="nc">JoinPoint</span> <span class="n">jointPoint</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------- Before logging -------------"</span> <span class="o">);</span>
-	<span class="o">}</span>
-	
-	<span class="nd">@AfterReturning</span><span class="o">(</span><span class="n">pointcut</span> <span class="o">=</span> <span class="s">"serviceExcution()"</span><span class="o">,</span> <span class="n">returning</span> <span class="o">=</span> <span class="s">"result"</span><span class="o">)</span>
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">afterRuturning</span><span class="o">(</span><span class="nc">JoinPoint</span> <span class="n">joinPoint</span><span class="o">,</span> <span class="nc">Object</span> <span class="n">result</span><span class="o">)</span> <span class="o">{</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------- AfterReturning logging -------------"</span> <span class="o">);</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">" result :{}"</span><span class="o">,</span> <span class="n">result</span><span class="o">);</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"----------------------------------------"</span> <span class="o">);</span>
-	<span class="o">}</span>
-	
-	<span class="nd">@After</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"serviceExcution()"</span><span class="o">)</span>
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">after</span><span class="o">(</span><span class="nc">JoinPoint</span> <span class="n">joinPoint</span><span class="o">)</span> <span class="o">{</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------- After logging -------------"</span><span class="o">);</span>
-	<span class="o">}</span>
-	
-	<span class="nd">@AfterThrowing</span><span class="o">(</span><span class="n">pointcut</span> <span class="o">=</span> <span class="s">"serviceExcution()"</span><span class="o">,</span> <span class="n">throwing</span> <span class="o">=</span> <span class="s">"e"</span><span class="o">)</span> 
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">afterThrowing</span><span class="o">(</span><span class="nc">JoinPoint</span> <span class="n">joinPoint</span><span class="o">,</span> <span class="nc">Throwable</span> <span class="n">e</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------- AfterThrowing logging -------------"</span><span class="o">);</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">" throwable :{}"</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"----------------------------------------"</span> <span class="o">);</span>
-	<span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><summary type="html"><![CDATA[AOP 예시]]></summary></entry></feed>
+<a href="http://closer27.github.io/backend/2017/08/03/spring-aop/">어느 개발자의 한적한 공간</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><category term="pointcut" /><summary type="html"><![CDATA[PointCut 의 표현식 리턴타입 패키지경로 클래스지정 메소드지정]]></summary></entry></feed>
