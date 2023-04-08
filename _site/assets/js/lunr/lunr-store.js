@@ -443,6 +443,18 @@ var store = [{
         "url": "/cache/naming-rule/",
         "teaser": null
       },{
+        "title": "Getting Start Redis - Sorted Sets",
+        "excerpt":"Sorted Sets 정렬된 집합은 Set과 해시 간의 혼합과 유사한 데이터 유형입니다. 집합과 마찬가지로 정렬된 집합은 반복되지 않는 고유한 문자열 요소로 구성되므로 어떤 의미에서는 정렬된 집합도 집합입니다. 그러나 집합 내의 요소는 정렬되지 않지만 정렬 된 집합의 모든 요소는 score라고하는 부동 소수점 값과 연결됩니다 (모든 요소가 값에 매핑되기 때문에 유형이 해시와 유사한...","categories": ["cache"],
+        "tags": ["redis","jupyter"],
+        "url": "/cache/sorted-sets/",
+        "teaser": null
+      },{
+        "title": "Getting Start Redis - Set",
+        "excerpt":"Sets Redis 집합은 순서가 지정되지 않은 문자열 컬렉션입니다. SADD 명령은 세트에 새 요소를 추가합니다. 주어진 요소가 이미 존재하는지 테스트, 여러 집합 간의 교차, 합집합 또는 차이 수행 등과 같은 집합에 대해 여러 가지 다른 작업을 수행 할 수도 있습니다. &gt; sadd myset 1 2 3 (integer) 3 &gt; smembers myset...","categories": ["cache"],
+        "tags": ["redis","jupyter"],
+        "url": "/cache/set/",
+        "teaser": null
+      },{
         "title": "Getting Start Redis - Hashes",
         "excerpt":"Hashes Redis 해시는 필드-값 쌍을 사용하여 “해시”가 어떻게 보이는지 정확히 보여줍니다.: &gt; hset user:1000 username antirez birthyear 1977 verified 1 (integer) 3 &gt; hget user:1000 username \"antirez\" &gt; hget user:1000 birthyear \"1977\" &gt; hgetall user:1000 1) \"username\" 2) \"antirez\" 3) \"birthyear\" 4) \"1977\" 5) \"verified\" 6) \"1\" 해시는 객체를 나타내는...","categories": ["cache"],
         "tags": ["redis","jupyter"],
@@ -453,18 +465,6 @@ var store = [{
         "excerpt":"List List 데이터 유형을 설명하려면 List라는 용어가 정보 기술 담당자에 의해 부적절한 방식으로 자주 사용되기 때문에 약간의 이론으로 시작하는 것이 좋습니다. 예를 들어 “파이썬 목록”은 이름이 암시하는 것 (연결 목록)이 아니라 배열 (실제로 Ruby에서는 동일한 데이터 유형을 배열이라고 함)입니다. 매우 일반적인 관점에서 List는 정렬된 요소의 시퀀스일 뿐입니다: 10,20,1,2,3은 목록입니다. 그러나...","categories": ["cache"],
         "tags": ["redis"],
         "url": "/cache/list/",
-        "teaser": null
-      },{
-        "title": "Getting Start Redis - Set",
-        "excerpt":"Sets Redis 집합은 순서가 지정되지 않은 문자열 컬렉션입니다. SADD 명령은 세트에 새 요소를 추가합니다. 주어진 요소가 이미 존재하는지 테스트, 여러 집합 간의 교차, 합집합 또는 차이 수행 등과 같은 집합에 대해 여러 가지 다른 작업을 수행 할 수도 있습니다. &gt; sadd myset 1 2 3 (integer) 3 &gt; smembers myset...","categories": ["cache"],
-        "tags": ["redis","jupyter"],
-        "url": "/cache/set/",
-        "teaser": null
-      },{
-        "title": "Getting Start Redis - Sorted Sets",
-        "excerpt":"Sorted Sets 정렬된 집합은 Set과 해시 간의 혼합과 유사한 데이터 유형입니다. 집합과 마찬가지로 정렬된 집합은 반복되지 않는 고유한 문자열 요소로 구성되므로 어떤 의미에서는 정렬된 집합도 집합입니다. 그러나 집합 내의 요소는 정렬되지 않지만 정렬 된 집합의 모든 요소는 score라고하는 부동 소수점 값과 연결됩니다 (모든 요소가 값에 매핑되기 때문에 유형이 해시와 유사한...","categories": ["cache"],
-        "tags": ["redis","jupyter"],
-        "url": "/cache/sorted-sets/",
         "teaser": null
       },{
         "title": "Getting Start Redis - String",
