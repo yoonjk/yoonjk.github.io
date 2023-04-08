@@ -1,4 +1,40 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-08T18:21:35+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Getting Start Redis - List</title><link href="http://localhost:4000/cache/list/" rel="alternate" type="text/html" title="Getting Start Redis - List" /><published>2023-04-07T00:00:00+09:00</published><updated>2023-04-07T00:00:00+09:00</updated><id>http://localhost:4000/cache/list</id><content type="html" xml:base="http://localhost:4000/cache/list/"><![CDATA[<h2 id="list">List</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-08T19:06:05+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">redis 설치 - Centos</title><link href="http://localhost:4000/cache/install-redis/" rel="alternate" type="text/html" title="redis 설치 - Centos" /><published>2023-04-08T00:00:00+09:00</published><updated>2023-04-08T00:00:00+09:00</updated><id>http://localhost:4000/cache/install%20redis</id><content type="html" xml:base="http://localhost:4000/cache/install-redis/"><![CDATA[<h2 id="redis-설치-준비">redis 설치 준비</h2>
+<ul>
+  <li>OS 업데이트</li>
+  <li>Development Tools 설치</li>
+  <li>Centos7 OS 버전을 최신으로 업그레이드 하고, Development Tools를 설치합니다. Redis <a href="http://download.redis.io/releases/">download</a> site 에 가서 원하는 redis 를 확인하고 address link를 복사합니다.
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum update <span class="nt">-y</span>
+yum groupinstall <span class="s1">'Development Tools'</span>
+<span class="nb">sudo </span>wget http://download.redis.io/releases/redis-7.0.10.tar.gz
+<span class="nb">tar </span>xvzf redis-7.0.10.tar.gz
+<span class="nb">cd </span>redis-7.0.10
+</code></pre></div>    </div>
+    <p>Redis 압축파일을 해제한 후 make 명령어를 수행하면 아래처럼 jemalloc No such file or directory 오류가 발생합니다.
+이를 해결하기 위해서는 deps 폴더에서 compile을 해야합니다.</p>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make clean
+<span class="nb">cd </span>deps
+make hiredis jemalloc linenoise lua
+<span class="nb">cd</span> ..
+</code></pre></div>    </div>
+    <p>Redis 압축 해제했던 폴더로 되돌아와서 다시 build합니다.</p>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># redis-7.0.10</span>
+make
+make <span class="nb">install</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="redis-서버-실행">redis 서버 실행</h2>
+<p>redis 를 install 후 redis 서버를 실행합니다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>src/redis-server redis.conf
+</code></pre></div></div>
+
+<p>redis를 접속하기 위해 terminal을 1개 열어 redis가 설치된 서버에 접속합니다.
+src 폴더에 있는 redis-cli를 이용하여 redis 서버에 접속합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>redis-cli
+<span class="nb">set </span>k1 v1
+get k1
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><summary type="html"><![CDATA[redis 설치 준비 OS 업데이트 Development Tools 설치 Centos7 OS 버전을 최신으로 업그레이드 하고, Development Tools를 설치합니다. Redis download site 에 가서 원하는 redis 를 확인하고 address link를 복사합니다. sudo yum update -y yum groupinstall 'Development Tools' sudo wget http://download.redis.io/releases/redis-7.0.10.tar.gz tar xvzf redis-7.0.10.tar.gz cd redis-7.0.10 Redis 압축파일을 해제한 후 make 명령어를 수행하면 아래처럼 jemalloc No such file or directory 오류가 발생합니다. 이를 해결하기 위해서는 deps 폴더에서 compile을 해야합니다. make clean cd deps make hiredis jemalloc linenoise lua cd .. Redis 압축 해제했던 폴더로 되돌아와서 다시 build합니다. # redis-7.0.10 make make install]]></summary></entry><entry><title type="html">Getting Start Redis - List</title><link href="http://localhost:4000/cache/list/" rel="alternate" type="text/html" title="Getting Start Redis - List" /><published>2023-04-07T00:00:00+09:00</published><updated>2023-04-07T00:00:00+09:00</updated><id>http://localhost:4000/cache/list</id><content type="html" xml:base="http://localhost:4000/cache/list/"><![CDATA[<h2 id="list">List</h2>
 <p>List 데이터 유형을 설명하려면 List라는 용어가  정보 기술 담당자에 의해 부적절한 방식으로 자주 사용되기 때문에 약간의 이론으로 시작하는 것이 좋습니다. 예를 들어 “파이썬 목록”은 이름이 암시하는 것 (연결 목록)이 아니라 배열 (실제로 Ruby에서는 동일한 데이터 유형을 배열이라고 함)입니다.<br />
 매우 일반적인 관점에서 List는 정렬된 요소의 시퀀스일 뿐입니다:<br />
 10,20,1,2,3은 목록입니다.<br />
@@ -172,7 +208,40 @@ Example of rule 3:</p>
 <span class="o">(</span>integer<span class="o">)</span> 0
 <span class="o">&gt;</span> lpop mylist
 <span class="o">(</span>nil<span class="o">)</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><summary type="html"><![CDATA[List List 데이터 유형을 설명하려면 List라는 용어가 정보 기술 담당자에 의해 부적절한 방식으로 자주 사용되기 때문에 약간의 이론으로 시작하는 것이 좋습니다. 예를 들어 “파이썬 목록”은 이름이 암시하는 것 (연결 목록)이 아니라 배열 (실제로 Ruby에서는 동일한 데이터 유형을 배열이라고 함)입니다. 매우 일반적인 관점에서 List는 정렬된 요소의 시퀀스일 뿐입니다: 10,20,1,2,3은 목록입니다. 그러나 Array를 사용하여 구현된 List의 속성은 연결된 목록을 사용하여 구현된 List의 속성과 매우 다릅니다. Redis 목록은 연결된 목록을 통해 구현됩니다. 즉, 목록 내에 수백만 개의 요소가 있더라도 목록의 머리 또는 꼬리에 새 요소를 추가하는 작업은 일정한 시간에 수행됩니다. LPUSH 명령을 사용하여 새 요소를 10개의 요소가 있는 목록의 헤드에 추가하는 속도는 1,000만 개의 요소가 있는 목록의 헤드에 요소를 추가하는 것과 같습니다. 단점은 무엇입니까? 인덱스로 요소에 액세스하는 것은 Array (일정한 시간 인덱싱 된 액세스)로 구현 된 목록에서 매우 빠르며 연결된 목록으로 구현 된 목록 (액세스 된 요소의 인덱스에 비례하는 작업량이 필요한 경우)에서는 그렇게 빠르지 않습니다. Redis List는 데이터베이스 시스템의 경우 매우 빠른 방법으로 매우 긴 목록에 요소를 추가할 수 있어야 하기 때문에 연결된 목록으로 구현됩니다. 잠시 후에 볼 수 있듯이 또 다른 강력한 이점은 Redis 목록을 일정한 시간에 일정한 길이로 가져올 수 있다는 것입니다. 큰 요소 컬렉션의 중간에 빠르게 액세스하는 것이 중요한 경우 정렬된 집합이라고 하는 다른 데이터 구조를 사용할 수 있습니다. 정렬된 집합은 이 자습서의 뒷부분에서 다룹니다.]]></summary></entry><entry><title type="html">Getting Start Redis - String</title><link href="http://localhost:4000/cache/string/" rel="alternate" type="text/html" title="Getting Start Redis - String" /><published>2023-04-07T00:00:00+09:00</published><updated>2023-04-07T00:00:00+09:00</updated><id>http://localhost:4000/cache/string</id><content type="html" xml:base="http://localhost:4000/cache/string/"><![CDATA[<h2 id="strings">Strings</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><summary type="html"><![CDATA[List List 데이터 유형을 설명하려면 List라는 용어가 정보 기술 담당자에 의해 부적절한 방식으로 자주 사용되기 때문에 약간의 이론으로 시작하는 것이 좋습니다. 예를 들어 “파이썬 목록”은 이름이 암시하는 것 (연결 목록)이 아니라 배열 (실제로 Ruby에서는 동일한 데이터 유형을 배열이라고 함)입니다. 매우 일반적인 관점에서 List는 정렬된 요소의 시퀀스일 뿐입니다: 10,20,1,2,3은 목록입니다. 그러나 Array를 사용하여 구현된 List의 속성은 연결된 목록을 사용하여 구현된 List의 속성과 매우 다릅니다. Redis 목록은 연결된 목록을 통해 구현됩니다. 즉, 목록 내에 수백만 개의 요소가 있더라도 목록의 머리 또는 꼬리에 새 요소를 추가하는 작업은 일정한 시간에 수행됩니다. LPUSH 명령을 사용하여 새 요소를 10개의 요소가 있는 목록의 헤드에 추가하는 속도는 1,000만 개의 요소가 있는 목록의 헤드에 요소를 추가하는 것과 같습니다. 단점은 무엇입니까? 인덱스로 요소에 액세스하는 것은 Array (일정한 시간 인덱싱 된 액세스)로 구현 된 목록에서 매우 빠르며 연결된 목록으로 구현 된 목록 (액세스 된 요소의 인덱스에 비례하는 작업량이 필요한 경우)에서는 그렇게 빠르지 않습니다. Redis List는 데이터베이스 시스템의 경우 매우 빠른 방법으로 매우 긴 목록에 요소를 추가할 수 있어야 하기 때문에 연결된 목록으로 구현됩니다. 잠시 후에 볼 수 있듯이 또 다른 강력한 이점은 Redis 목록을 일정한 시간에 일정한 길이로 가져올 수 있다는 것입니다. 큰 요소 컬렉션의 중간에 빠르게 액세스하는 것이 중요한 경우 정렬된 집합이라고 하는 다른 데이터 구조를 사용할 수 있습니다. 정렬된 집합은 이 자습서의 뒷부분에서 다룹니다.]]></summary></entry><entry><title type="html">Getting Start Redis - Hashes</title><link href="http://localhost:4000/cache/hashes/" rel="alternate" type="text/html" title="Getting Start Redis - Hashes" /><published>2023-04-07T00:00:00+09:00</published><updated>2023-04-07T00:00:00+09:00</updated><id>http://localhost:4000/cache/hashes</id><content type="html" xml:base="http://localhost:4000/cache/hashes/"><![CDATA[<h2 id="hashes">Hashes</h2>
+<p>Redis 해시는 필드-값 쌍을 사용하여 “해시”가 어떻게 보이는지 정확히 보여줍니다.:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> hset user:1000 username antirez birthyear 1977 verified 1
+<span class="o">(</span>integer<span class="o">)</span> 3
+<span class="o">&gt;</span> hget user:1000 username
+<span class="s2">"antirez"</span>
+<span class="o">&gt;</span> hget user:1000 birthyear
+<span class="s2">"1977"</span>
+<span class="o">&gt;</span> hgetall user:1000
+1<span class="o">)</span> <span class="s2">"username"</span>
+2<span class="o">)</span> <span class="s2">"antirez"</span>
+3<span class="o">)</span> <span class="s2">"birthyear"</span>
+4<span class="o">)</span> <span class="s2">"1977"</span>
+5<span class="o">)</span> <span class="s2">"verified"</span>
+6<span class="o">)</span> <span class="s2">"1"</span>
+</code></pre></div></div>
+<p>해시는 객체를 나타내는 데 편리하지만 실제로 해시 안에 넣을 수있는 필드 수에는 사용 가능한 메모리 이외의 실질적인 제한이 없으므로 응용 프로그램 내에서 다양한 방법으로 해시를 사용할 수 있습니다.<br />
+<a href="https://redis.io/commands/hset">HSET</a> 명령은  해시의 여러 필드를 설정하는 반면 HGET는 단일 필드를 검색합니다.</p>
+
+<p><a href="https://redis.io/commands/hmget">HMGET</a>은 HGET와 유사  하지만 값 배열을 반환합니다.:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> hmget user:1000 username birthyear no-such-field
+1<span class="o">)</span> <span class="s2">"antirez"</span>
+2<span class="o">)</span> <span class="s2">"1977"</span>
+3<span class="o">)</span> <span class="o">(</span>nil<span class="o">)</span>
+</code></pre></div></div>
+
+<p><a href="https://redis.io/commands/hincrby">HINCRBY</a>와 같이 개별 필드에 대한 작업을 수행 할 수있는 명령도 있습니다.:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> hincrby user:1000 birthyear 10
+<span class="o">(</span>integer<span class="o">)</span> 1987
+<span class="o">&gt;</span> hincrby user:1000 birthyear 10
+<span class="o">(</span>integer<span class="o">)</span> 1997
+</code></pre></div></div>
+<p>설명서에서 해시 명령의 전체 목록을 찾을 수 있습니다.
+작은 해시 (즉, 작은 값을 가진 몇 가지 요소)가 메모리에서 특별한 방식으로 인코딩되어 메모리 효율이 매우 높다는 점은 주목할 가치가 있습니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[Hashes Redis 해시는 필드-값 쌍을 사용하여 “해시”가 어떻게 보이는지 정확히 보여줍니다.: &gt; hset user:1000 username antirez birthyear 1977 verified 1 (integer) 3 &gt; hget user:1000 username "antirez" &gt; hget user:1000 birthyear "1977" &gt; hgetall user:1000 1) "username" 2) "antirez" 3) "birthyear" 4) "1977" 5) "verified" 6) "1" 해시는 객체를 나타내는 데 편리하지만 실제로 해시 안에 넣을 수있는 필드 수에는 사용 가능한 메모리 이외의 실질적인 제한이 없으므로 응용 프로그램 내에서 다양한 방법으로 해시를 사용할 수 있습니다. HSET 명령은 해시의 여러 필드를 설정하는 반면 HGET는 단일 필드를 검색합니다.]]></summary></entry><entry><title type="html">Getting Start Redis - String</title><link href="http://localhost:4000/cache/string/" rel="alternate" type="text/html" title="Getting Start Redis - String" /><published>2023-04-07T00:00:00+09:00</published><updated>2023-04-07T00:00:00+09:00</updated><id>http://localhost:4000/cache/string</id><content type="html" xml:base="http://localhost:4000/cache/string/"><![CDATA[<h2 id="strings">Strings</h2>
 <p>Redis 문자열 유형은 Redis 키와 연결할 수 있는 가장 간단한 값 유형입니다. Memcached의 유일한 데이터 유형이므로 신규 사용자가 Redis에서 사용하는 것도 매우 자연스러운 일입니다.
 Redis 키는 문자열이므로 문자열 유형도 값으로 사용할 때 문자열을 다른 문자열에 매핑합니다. 문자열 데이터 형식은 HTML 조각 또는 페이지 캐싱과 같은 다양한 사용 사례에 유용합니다.
 redis-cli를 사용하여 문자열 유형을 약간 사용해 보겠습니다<br />
@@ -286,40 +355,7 @@ OK
 밀리초 단위로 만료를 설정하고 확인하려면 <a href="https://redis.io/commands/pexpire">PEXPIRE</a> 및 <a href="https://redis.io/commands/pttl">PTTL</a> 명령과 SET 옵션의 전체 목록을 확인하십시오. .</p>
 
 <h2 id="redis-정보">Redis 정보</h2>
-<p><a href="https://sungwookkang.com/category/Redis">Data Science Lab</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[Strings Redis 문자열 유형은 Redis 키와 연결할 수 있는 가장 간단한 값 유형입니다. Memcached의 유일한 데이터 유형이므로 신규 사용자가 Redis에서 사용하는 것도 매우 자연스러운 일입니다. Redis 키는 문자열이므로 문자열 유형도 값으로 사용할 때 문자열을 다른 문자열에 매핑합니다. 문자열 데이터 형식은 HTML 조각 또는 페이지 캐싱과 같은 다양한 사용 사례에 유용합니다. redis-cli를 사용하여 문자열 유형을 약간 사용해 보겠습니다 (모든 예제는 이 자습서에서 redis-cli를 통해 수행됨).]]></summary></entry><entry><title type="html">Getting Start Redis - Hashes</title><link href="http://localhost:4000/cache/hashes/" rel="alternate" type="text/html" title="Getting Start Redis - Hashes" /><published>2023-04-07T00:00:00+09:00</published><updated>2023-04-07T00:00:00+09:00</updated><id>http://localhost:4000/cache/hashes</id><content type="html" xml:base="http://localhost:4000/cache/hashes/"><![CDATA[<h2 id="hashes">Hashes</h2>
-<p>Redis 해시는 필드-값 쌍을 사용하여 “해시”가 어떻게 보이는지 정확히 보여줍니다.:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> hset user:1000 username antirez birthyear 1977 verified 1
-<span class="o">(</span>integer<span class="o">)</span> 3
-<span class="o">&gt;</span> hget user:1000 username
-<span class="s2">"antirez"</span>
-<span class="o">&gt;</span> hget user:1000 birthyear
-<span class="s2">"1977"</span>
-<span class="o">&gt;</span> hgetall user:1000
-1<span class="o">)</span> <span class="s2">"username"</span>
-2<span class="o">)</span> <span class="s2">"antirez"</span>
-3<span class="o">)</span> <span class="s2">"birthyear"</span>
-4<span class="o">)</span> <span class="s2">"1977"</span>
-5<span class="o">)</span> <span class="s2">"verified"</span>
-6<span class="o">)</span> <span class="s2">"1"</span>
-</code></pre></div></div>
-<p>해시는 객체를 나타내는 데 편리하지만 실제로 해시 안에 넣을 수있는 필드 수에는 사용 가능한 메모리 이외의 실질적인 제한이 없으므로 응용 프로그램 내에서 다양한 방법으로 해시를 사용할 수 있습니다.<br />
-<a href="https://redis.io/commands/hset">HSET</a> 명령은  해시의 여러 필드를 설정하는 반면 HGET는 단일 필드를 검색합니다.</p>
-
-<p><a href="https://redis.io/commands/hmget">HMGET</a>은 HGET와 유사  하지만 값 배열을 반환합니다.:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> hmget user:1000 username birthyear no-such-field
-1<span class="o">)</span> <span class="s2">"antirez"</span>
-2<span class="o">)</span> <span class="s2">"1977"</span>
-3<span class="o">)</span> <span class="o">(</span>nil<span class="o">)</span>
-</code></pre></div></div>
-
-<p><a href="https://redis.io/commands/hincrby">HINCRBY</a>와 같이 개별 필드에 대한 작업을 수행 할 수있는 명령도 있습니다.:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> hincrby user:1000 birthyear 10
-<span class="o">(</span>integer<span class="o">)</span> 1987
-<span class="o">&gt;</span> hincrby user:1000 birthyear 10
-<span class="o">(</span>integer<span class="o">)</span> 1997
-</code></pre></div></div>
-<p>설명서에서 해시 명령의 전체 목록을 찾을 수 있습니다.
-작은 해시 (즉, 작은 값을 가진 몇 가지 요소)가 메모리에서 특별한 방식으로 인코딩되어 메모리 효율이 매우 높다는 점은 주목할 가치가 있습니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[Hashes Redis 해시는 필드-값 쌍을 사용하여 “해시”가 어떻게 보이는지 정확히 보여줍니다.: &gt; hset user:1000 username antirez birthyear 1977 verified 1 (integer) 3 &gt; hget user:1000 username "antirez" &gt; hget user:1000 birthyear "1977" &gt; hgetall user:1000 1) "username" 2) "antirez" 3) "birthyear" 4) "1977" 5) "verified" 6) "1" 해시는 객체를 나타내는 데 편리하지만 실제로 해시 안에 넣을 수있는 필드 수에는 사용 가능한 메모리 이외의 실질적인 제한이 없으므로 응용 프로그램 내에서 다양한 방법으로 해시를 사용할 수 있습니다. HSET 명령은 해시의 여러 필드를 설정하는 반면 HGET는 단일 필드를 검색합니다.]]></summary></entry><entry><title type="html">Getting Start Redis - Set</title><link href="http://localhost:4000/cache/set/" rel="alternate" type="text/html" title="Getting Start Redis - Set" /><published>2023-04-06T00:00:00+09:00</published><updated>2023-04-06T00:00:00+09:00</updated><id>http://localhost:4000/cache/set</id><content type="html" xml:base="http://localhost:4000/cache/set/"><![CDATA[<h2 id="sets">Sets</h2>
+<p><a href="https://sungwookkang.com/category/Redis">Data Science Lab</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[Strings Redis 문자열 유형은 Redis 키와 연결할 수 있는 가장 간단한 값 유형입니다. Memcached의 유일한 데이터 유형이므로 신규 사용자가 Redis에서 사용하는 것도 매우 자연스러운 일입니다. Redis 키는 문자열이므로 문자열 유형도 값으로 사용할 때 문자열을 다른 문자열에 매핑합니다. 문자열 데이터 형식은 HTML 조각 또는 페이지 캐싱과 같은 다양한 사용 사례에 유용합니다. redis-cli를 사용하여 문자열 유형을 약간 사용해 보겠습니다 (모든 예제는 이 자습서에서 redis-cli를 통해 수행됨).]]></summary></entry><entry><title type="html">Getting Start Redis - Set</title><link href="http://localhost:4000/cache/set/" rel="alternate" type="text/html" title="Getting Start Redis - Set" /><published>2023-04-06T00:00:00+09:00</published><updated>2023-04-06T00:00:00+09:00</updated><id>http://localhost:4000/cache/set</id><content type="html" xml:base="http://localhost:4000/cache/set/"><![CDATA[<h2 id="sets">Sets</h2>
 <p>Redis 집합은 순서가 지정되지 않은 문자열 컬렉션입니다. <a href="https://redis.io/commands/sadd">SADD</a> 명령은 세트에 새 요소를 추가합니다. 주어진 요소가 이미 존재하는지 테스트, 여러 집합 간의 교차, 합집합 또는 차이 수행 등과 같은 집합에 대해 여러 가지 다른 작업을 수행 할 수도 있습니다.</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> sadd myset 1 2 3
 <span class="o">(</span>integer<span class="o">)</span> 3
@@ -591,7 +627,17 @@ Sorted Set는 이보다 더 강력합니다. 범위에서 작동 할 수 있습�
 <p>•	<em>키를 구분자를 이용하여 그룹으로 분류</em><br />
 예를 들어 “object-type:id”는 “user:1000”에서와 같이 <strong>콜론(:)</strong> 을 구분자하여 그룹을 만드는 것은 좋은 생각입니다. 점 또는 대시는 “comment:4321:reply.to” 또는 “comment:4321:reply-to”와 같이 여러 단어로 된 필드에 자주 사용됩니다.</p>
 
-<p>•	<em>허용 된 최대 키 크기는 512MB입니다.</em></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[기본 Redis 데이터 형식 및 사용 방법 다음은 Redis CLI를 사용하여 핵심 Redis 데이터 유형을 학습하는 실습 자습서입니다. 데이터 형식에 대한 일반적인 개요는 데이터 형식 소개를 참조하세요. Keys Redis 키는 바이너리로부터 안전하므로 “foo”와 같은 문자열에서 JPEG 파일의 내용에 이르기까지 모든 바이너리 시퀀스를 키로 사용할 수 있습니다. 빈 문자열도 유효한 키입니다.]]></summary></entry><entry><title type="html">Getting Start Redis - Jupyter Notebook 설치</title><link href="http://localhost:4000/cache/setup-jupyter/" rel="alternate" type="text/html" title="Getting Start Redis - Jupyter Notebook 설치" /><published>2023-03-29T00:00:00+09:00</published><updated>2023-03-29T00:00:00+09:00</updated><id>http://localhost:4000/cache/setup-jupyter</id><content type="html" xml:base="http://localhost:4000/cache/setup-jupyter/"><![CDATA[<p>Jupyter Notebook을 이용하여 Redis를 실습할 수 있는 환경을 구성합니다.</p>
+<p>•	<em>허용 된 최대 키 크기는 512MB입니다.</em></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[기본 Redis 데이터 형식 및 사용 방법 다음은 Redis CLI를 사용하여 핵심 Redis 데이터 유형을 학습하는 실습 자습서입니다. 데이터 형식에 대한 일반적인 개요는 데이터 형식 소개를 참조하세요. Keys Redis 키는 바이너리로부터 안전하므로 “foo”와 같은 문자열에서 JPEG 파일의 내용에 이르기까지 모든 바이너리 시퀀스를 키로 사용할 수 있습니다. 빈 문자열도 유효한 키입니다.]]></summary></entry><entry><title type="html">Getting Start Redis - Jupyter Notebook</title><link href="http://localhost:4000/cache/getting-starting-jupyter/" rel="alternate" type="text/html" title="Getting Start Redis - Jupyter Notebook" /><published>2023-03-29T00:00:00+09:00</published><updated>2023-03-29T00:00:00+09:00</updated><id>http://localhost:4000/cache/getting-starting-jupyter</id><content type="html" xml:base="http://localhost:4000/cache/getting-starting-jupyter/"><![CDATA[<p>Jupyter Notebook을 환경에서 Python을 이용하여 Redis를 알아봅니다. redis-py를 이용하여 redis를 연결하고, 다음과 같이 데이터를 set/get을 수행하여 결과를 확인합니다.</p>
+<h2 id="connect">Connect</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">redis</span>
+
+<span class="n">redisClient</span> <span class="o">=</span> <span class="n">redis</span><span class="p">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s">'localhost'</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span> <span class="n">decode_responses</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">redisClient</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="s">'foo'</span><span class="p">,</span> <span class="s">'bar'</span><span class="p">)</span>
+<span class="n">redisClient</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'foo'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/cache/06-cache-get-set.png" alt="Jupyter log" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[Jupyter Notebook을 환경에서 Python을 이용하여 Redis를 알아봅니다. redis-py를 이용하여 redis를 연결하고, 다음과 같이 데이터를 set/get을 수행하여 결과를 확인합니다. Connect ```python import redis]]></summary></entry><entry><title type="html">Getting Start Redis - Jupyter Notebook 설치</title><link href="http://localhost:4000/cache/setup-jupyter/" rel="alternate" type="text/html" title="Getting Start Redis - Jupyter Notebook 설치" /><published>2023-03-29T00:00:00+09:00</published><updated>2023-03-29T00:00:00+09:00</updated><id>http://localhost:4000/cache/setup-jupyter</id><content type="html" xml:base="http://localhost:4000/cache/setup-jupyter/"><![CDATA[<p>Jupyter Notebook을 이용하여 Redis를 실습할 수 있는 환경을 구성합니다.</p>
 
 <h2 id="setup-redis-on-docker">Setup Redis on Docker</h2>
 <p>설치형 redis를 하지않고 학습용으로 최적의 환경인 docker를 사용하여 간단히 Redis를 실행합니다.
@@ -641,24 +687,4 @@ docker logs <span class="nt">-f</span> jupyter
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">!</span>pip <span class="nb">install </span>redis
 </code></pre></div></div>
 
-<p><img src="/assets/images/cache/05-cache-pip-install-redis.png" alt="Jupyter log" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[Jupyter Notebook을 이용하여 Redis를 실습할 수 있는 환경을 구성합니다.]]></summary></entry><entry><title type="html">Getting Start Redis - Jupyter Notebook</title><link href="http://localhost:4000/cache/getting-starting-jupyter/" rel="alternate" type="text/html" title="Getting Start Redis - Jupyter Notebook" /><published>2023-03-29T00:00:00+09:00</published><updated>2023-03-29T00:00:00+09:00</updated><id>http://localhost:4000/cache/getting-starting-jupyter</id><content type="html" xml:base="http://localhost:4000/cache/getting-starting-jupyter/"><![CDATA[<p>Jupyter Notebook을 환경에서 Python을 이용하여 Redis를 알아봅니다. redis-py를 이용하여 redis를 연결하고, 다음과 같이 데이터를 set/get을 수행하여 결과를 확인합니다.</p>
-<h2 id="connect">Connect</h2>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">redis</span>
-
-<span class="n">redisClient</span> <span class="o">=</span> <span class="n">redis</span><span class="p">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s">'localhost'</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span> <span class="n">decode_responses</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-
-<span class="n">redisClient</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="s">'foo'</span><span class="p">,</span> <span class="s">'bar'</span><span class="p">)</span>
-<span class="n">redisClient</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'foo'</span><span class="p">)</span>
-</code></pre></div></div>
-
-<p><img src="/assets/images/cache/06-cache-get-set.png" alt="Jupyter log" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[Jupyter Notebook을 환경에서 Python을 이용하여 Redis를 알아봅니다. redis-py를 이용하여 redis를 연결하고, 다음과 같이 데이터를 set/get을 수행하여 결과를 확인합니다. Connect ```python import redis]]></summary></entry><entry><title type="html">DTO에서 null인 항목은 json에서 제거</title><link href="http://localhost:4000/springboot/remove-null-dto/" rel="alternate" type="text/html" title="DTO에서 null인 항목은 json에서 제거" /><published>2023-03-28T00:00:00+09:00</published><updated>2023-03-28T00:00:00+09:00</updated><id>http://localhost:4000/springboot/remove-null-dto</id><content type="html" xml:base="http://localhost:4000/springboot/remove-null-dto/"><![CDATA[<h2 id="dto에서-null인-항목은-json에서-제거">DTO에서 null인 항목은 json에서 제거</h2>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@ToString</span>
-<span class="nd">@Getter</span>
-<span class="nd">@Setter</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CodeDto</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="kt">int</span> <span class="n">code</span><span class="o">;</span>
-
-    <span class="nd">@JsonInclude</span><span class="o">(</span><span class="nc">Include</span><span class="o">.</span><span class="na">NON_NULL</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="nc">String</span> <span class="n">codeName</span><span class="o">;</span>
-<span class="o">}</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="Advice" /><summary type="html"><![CDATA[DTO에서 null인 항목은 json에서 제거 ```java @ToString @Getter @Setter public class CodeDto { private int code;]]></summary></entry></feed>
+<p><img src="/assets/images/cache/05-cache-pip-install-redis.png" alt="Jupyter log" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[Jupyter Notebook을 이용하여 Redis를 실습할 수 있는 환경을 구성합니다.]]></summary></entry></feed>
