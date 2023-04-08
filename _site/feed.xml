@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-08T12:24:11+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Getting Start Redis - String</title><link href="http://localhost:4000/cache/string/" rel="alternate" type="text/html" title="Getting Start Redis - String" /><published>2023-04-07T00:00:00+09:00</published><updated>2023-04-07T00:00:00+09:00</updated><id>http://localhost:4000/cache/string</id><content type="html" xml:base="http://localhost:4000/cache/string/"><![CDATA[<h2 id="strings">Strings</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-08T12:41:08+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Getting Start Redis - String</title><link href="http://localhost:4000/cache/string/" rel="alternate" type="text/html" title="Getting Start Redis - String" /><published>2023-04-07T00:00:00+09:00</published><updated>2023-04-07T00:00:00+09:00</updated><id>http://localhost:4000/cache/string</id><content type="html" xml:base="http://localhost:4000/cache/string/"><![CDATA[<h2 id="strings">Strings</h2>
 <p>Redis 문자열 유형은 Redis 키와 연결할 수 있는 가장 간단한 값 유형입니다. Memcached의 유일한 데이터 유형이므로 신규 사용자가 Redis에서 사용하는 것도 매우 자연스러운 일입니다.
 Redis 키는 문자열이므로 문자열 유형도 값으로 사용할 때 문자열을 다른 문자열에 매핑합니다. 문자열 데이터 형식은 HTML 조각 또는 페이지 캐싱과 같은 다양한 사용 사례에 유용합니다.
 redis-cli를 사용하여 문자열 유형을 약간 사용해 보겠습니다<br />
@@ -10,12 +10,13 @@ get mykey
 <span class="s2">"somevalue"</span>
 </code></pre></div></div>
 
-<p><a href="https://redis.io/commands/set">SET</a>과 <a href="https://redis.io/commands/get">GET</a> 명령을 사용하여 볼 수 있듯이  문자열 값을 설정하고 검색하는 방법입니다. SET은 키가  문자열이 아닌 값과 연결된 경우에도 키가 이미 존재하는 경우 키에 이미 저장된 기존 값을 대체합니다. 따라서 SET은 할당을 수행합니다.<br />
+<p><a href="https://redis.io/commands/set">SET</a>과 <a href="https://redis.io/commands/get">GET</a> 명령을 사용하여 볼 수 있듯이  문자열 값을 설정하고 검색하는 방법입니다. <a href="https://redis.io/commands/set">SET</a>은 키가  문자열이 아닌 값과 연결된 경우에도 키가 이미 존재하는 경우 키에 이미 저장된 기존 값을 대체합니다. 따라서 <a href="https://redis.io/commands/set">SET</a>은 할당을 수행합니다.<br />
 값은 모든 종류의 문자열 (바이너리 데이터 포함) 일 수 있습니다.</p>
 
-<p>(예 : 값 안에 jpeg 이미지를 저장할 수 있음). 값은 512MB보다 클 수 없습니다.</p>
+<p>(예 : 값 안에 jpeg 이미지를 저장할 수 있음)<br />
+값은 <strong>512MB</strong> 보다 클 수 없습니다.</p>
 
-<p>SET 명령에는 추가 인수로 제공되는 흥미로운 옵션이 있습니다. 예를 들어  키가 이미 존재하는 경우 SET에 실패하도록 요청하거나 그 반대로 키가 이미 존재하는 경우에만 성공하도록 요청할 수 있습니다.:</p>
+<p><a href="https://redis.io/commands/set">SET</a> 명령에는 추가 인수로 제공되는 흥미로운 옵션이 있습니다. 예를 들어  키가 이미 존재하는 경우 <a href="https://redis.io/commands/set">SET</a>에 실패하도록 요청하거나 그 반대로 키가 이미 존재하는 경우에만 성공하도록 요청할 수 있습니다.:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">set </span>mykey newval nx
 <span class="o">(</span>nil<span class="o">)</span>
@@ -37,11 +38,13 @@ incrby counter 50
 <span class="o">(</span>integer<span class="o">)</span> 152
 </code></pre></div></div>
 
-<p>INCR 명령은 문자열 값을 정수로 구문 분석하고 1씩 증가시킨 다음 마지막으로 가져온 값을 새 값으로 설정합니다.<br />
-INCRBY, DECR 및 DECRBY와 같은 다른 유사한 명령이 있습니다.<br />
+<p><a href="https://redis.io/commands/incr">INCR</a> 명령은 문자열 값을 정수로 구문 분석하고 1씩 증가시킨 다음 마지막으로 가져온 값을 새 값으로 설정합니다.<br />
+<a href="https://redis.io/commands/incrby">INCRBY</a>, <a href="https://redis.io/commands/decr">DECR</a> 및 <a href="https://redis.io/commands/decrby">DECRBY</a>와 같은 다른 유사한 명령이 있습니다.<br />
 내부적으로는 항상 동일한 명령이며 약간 다른 방식으로 작동합니다.<br />
-INCR이 원자적이라는 것은 무엇을 의미합니까? 동일한 키에 대해 INCR을 발행하는 여러 클라이언트라도 경쟁 조건에 빠지지 않습니다. 예를 들어, 클라이언트 1은 “10”을 읽고 클라이언트 2는 동시에 “10”을 읽고 둘 다 11로 증가하고 새 값을 11로 설정하는 경우는 발생하지 않습니다. 최종 값은 항상 12이며 읽기-증분-집합 작업은 다른 모든 클라이언트가 동시에 명령을 실행하지 않는 동안 수행됩니다..
-문자열에서 작동하기위한 여러 명령이 있습니다. 예를 들어, GETSET 명령은 키를 새 값으로 설정하고 이전 값을 결과로 리턴합니다. 예를 들어 웹 사이트에서 새 방문자를 받을 때마다 INCR을 사용하여 Redis 키를 증가시키는 시스템이 있는 경우 이 명령을 사용할 수 있습니다  . 이 정보는 한 번에 한 번씩 수집하여 증분을 한 번도 손실하지 않고 수집할 수 있습니다.  키를 GETSET 할 수 있으며  새 값 “0”을 할당하고 이전 값을 다시 읽을 수 있습니다..
+<a href="https://redis.io/commands/incr">INCR</a>이 원자적이라는 것은 무엇을 의미합니까? 동일한 키에 대해 <a href="https://redis.io/commands/incr">INCR</a>을 발행하는 여러 클라이언트라도 경쟁 조건에 빠지지 않습니다. 예를 들어, 클라이언트 1은 “10”을 읽고 클라이언트 2는 동시에 “10”을 읽고 둘 다 11로 증가하고 새 값을 11로 설정하는 경우는 발생하지 않습니다. 최종 값은 항상 12이며 읽기-증분-집합 작업은 다른 모든 클라이언트가 동시에 명령을 실행하지 않는 동안 수행됩니다.<br />
+문자열에서 작동하기위한 여러 명령이 있습니다.<br />
+예를 들어, <a href="https://redis.io/commands/getset">GETSET</a> 명령은 키를 새 값으로 설정하고 이전 값을 결과로 리턴합니다.<br />
+예를 들어 웹 사이트에서 새 방문자를 받을 때마다 INCR을 사용하여 Redis 키를 증가시키는 시스템이 있는 경우 이 명령을 사용할 수 있습니다. 이 정보는 한 번에 한 번씩 수집하여 증분을 한 번도 손실하지 않고 수집할 수 있습니다.  키를 <a href="https://redis.io/commands/getset">GETSET</a> 할 수 있으며  새 값 “0”을 할당하고 이전 값을 다시 읽을 수 있습니다.<br />
 단일 명령에서 여러 키의 값을 설정하거나 검색하는 기능은 대기 시간을 줄이는 데에도 유용합니다.<br />
 이러한 이유로 MSET 및 MGET 명령이 있습니다.:</p>
 
@@ -81,12 +84,15 @@ string
 none
 </code></pre></div></div>
 <p>Key expiration
-계속 진행하기 전에 저장하는 값 유형에 관계없이 작동하는 중요한 Redis 기능인 키 만료를 살펴봐야 합니다. 키 만료를 사용하면 “Time to Live” 또는 “TTL”이라고도 하는 키에 대한 시간 제한을 설정할 수 있습니다. 생존 시간이 경과하면 키가 자동으로 파괴됩니다..
-키 만료에 대한 몇 가지 중요한 참고 사항:
-•	초 또는 밀리초 정밀도를 사용하여 둘 다 설정할 수 있습니다..
-•	그러나 만료 시간 해상도는 항상 1밀리초입니다..
-•	만료에 대한 정보는 디스크에 복제되고 유지되며, Redis 서버가 중지된 상태로 유지되는 시간은 사실상 경과합니다(즉, Redis는 키가 만료되는 날짜를 저장함)..
-EXPIRE 명령을 사용하여 키의 만료 설정:</p>
+계속 진행하기 전에 저장하는 값 유형에 관계없이 작동하는 중요한 Redis 기능인 키 만료를 살펴봐야 합니다. 키 만료를 사용하면 “Time to Live” 또는 “TTL”이라고도 하는 키에 대한 시간 제한을 설정할 수 있습니다. 생존 시간이 경과하면 키가 자동으로 파괴됩니다.</p>
+
+<p><strong>키 만료에 대한 몇 가지 중요한 참고 사항:</strong><br />
+•	초 또는 밀리초 정밀도를 사용하여 둘 다 설정할 수 있습니다.<br />
+•	그러나 만료 시간 해상도는 항상 1밀리초입니다.<br />
+•	만료에 대한 정보는 디스크에 복제되고 유지되며, Redis 서버가 중지된 상태로 유지되는 시간은 사실상 경과합니다.<br />
+(즉, Redis는 키가 만료되는 날짜를 저장함).</p>
+
+<p>EXPIRE 명령을 사용하여 키의 만료 설정:</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">set </span>key some-value
 OK
 expire key 5
@@ -102,8 +108,8 @@ OK
 ttl key
 <span class="o">(</span>integer<span class="o">)</span> 9
 </code></pre></div></div>
-<p>위의 예제에서는 문자열 값이 100이고 만료 시간이 10초인 키를 설정합니다. 나중에  TTL 명령이 호출되어 키의 남은 생존 시간을 확인합니다..
-밀리초 단위로 만료를 설정하고 확인하려면 PEXPIRE 및 PTTL 명령과 SET 옵션의 전체 목록을 확인하십시오. .</p>
+<p>위의 예제에서는 문자열 값이 100이고 만료 시간이 10초인 키를 설정합니다. 나중에  TTL 명령이 호출되어 키의 남은 생존 시간을 확인합니다.
+밀리초 단위로 만료를 설정하고 확인하려면 <a href="https://redis.io/commands/pexpire">PEXPIRE</a> 및 <a href="https://redis.io/commands/pttl">PTTL</a> 명령과 SET 옵션의 전체 목록을 확인하십시오. .</p>
 
 <h2 id="redis-정보">Redis 정보</h2>
 <p><a href="https://sungwookkang.com/category/Redis">Data Science Lab</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[Strings Redis 문자열 유형은 Redis 키와 연결할 수 있는 가장 간단한 값 유형입니다. Memcached의 유일한 데이터 유형이므로 신규 사용자가 Redis에서 사용하는 것도 매우 자연스러운 일입니다. Redis 키는 문자열이므로 문자열 유형도 값으로 사용할 때 문자열을 다른 문자열에 매핑합니다. 문자열 데이터 형식은 HTML 조각 또는 페이지 캐싱과 같은 다양한 사용 사례에 유용합니다. redis-cli를 사용하여 문자열 유형을 약간 사용해 보겠습니다 (모든 예제는 이 자습서에서 redis-cli를 통해 수행됨).]]></summary></entry><entry><title type="html">Redis 데이터 타입 - Redis Key 규칙</title><link href="http://localhost:4000/cache/cache-data-management/" rel="alternate" type="text/html" title="Redis 데이터 타입 - Redis Key 규칙" /><published>2023-04-07T00:00:00+09:00</published><updated>2023-04-07T00:00:00+09:00</updated><id>http://localhost:4000/cache/cache%20data%20management</id><content type="html" xml:base="http://localhost:4000/cache/cache-data-management/"><![CDATA[<h2 id="기본-redis-데이터-형식-및-사용-방법">기본 Redis 데이터 형식 및 사용 방법</h2>
