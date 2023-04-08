@@ -437,16 +437,16 @@ var store = [{
         "url": "/cache/setup-jupyter/",
         "teaser": null
       },{
-        "title": "Redis 데이터 타입 - Redis Key 규칙",
-        "excerpt":"기본 Redis 데이터 형식 및 사용 방법 다음은 Redis CLI를 사용하여 핵심 Redis 데이터 유형을 학습하는 실습 자습서입니다. 데이터 형식에 대한 일반적인 개요는 데이터 형식 소개를 참조하세요. Keys Redis 키는 바이너리로부터 안전하므로 “foo”와 같은 문자열에서 JPEG 파일의 내용에 이르기까지 모든 바이너리 시퀀스를 키로 사용할 수 있습니다. 빈 문자열도 유효한 키입니다....","categories": ["cache"],
-        "tags": ["redis","jupyter"],
-        "url": "/cache/cache-data-management/",
-        "teaser": null
-      },{
         "title": "Getting Start Redis - List",
         "excerpt":"List List 데이터 유형을 설명하려면 List라는 용어가 정보 기술 담당자에 의해 부적절한 방식으로 자주 사용되기 때문에 약간의 이론으로 시작하는 것이 좋습니다. 예를 들어 “파이썬 목록”은 이름이 암시하는 것 (연결 목록)이 아니라 배열 (실제로 Ruby에서는 동일한 데이터 유형을 배열이라고 함)입니다.. 매우 일반적인 관점에서 List는 정렬된 요소의 시퀀스일 뿐입니다: 10,20,1,2,3은 목록입니다. 그러나...","categories": ["cache"],
         "tags": ["redis"],
         "url": "/cache/list/",
+        "teaser": null
+      },{
+        "title": "Redis 데이터 타입 - Redis Key 규칙",
+        "excerpt":"기본 Redis 데이터 형식 및 사용 방법 다음은 Redis CLI를 사용하여 핵심 Redis 데이터 유형을 학습하는 실습 자습서입니다. 데이터 형식에 대한 일반적인 개요는 데이터 형식 소개를 참조하세요. Keys Redis 키는 바이너리로부터 안전하므로 “foo”와 같은 문자열에서 JPEG 파일의 내용에 이르기까지 모든 바이너리 시퀀스를 키로 사용할 수 있습니다. 빈 문자열도 유효한 키입니다....","categories": ["cache"],
+        "tags": ["redis","jupyter"],
+        "url": "/cache/naming-rule/",
         "teaser": null
       },{
         "title": "Getting Start Redis - String",
