@@ -19,3 +19,4 @@ redisClient.get('foo')
 
 ![Jupyter log]({{ "/assets/images/cache/06-cache-get-set.png" }})
 
+

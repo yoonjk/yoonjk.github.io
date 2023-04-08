@@ -1,4 +1,32 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-07T05:13:09+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Getting Start Redis using Jupyter Notebook - 설치</title><link href="http://localhost:4000/cache/setup-jupyter/" rel="alternate" type="text/html" title="Getting Start Redis using Jupyter Notebook - 설치" /><published>2023-03-29T00:00:00+09:00</published><updated>2023-03-29T00:00:00+09:00</updated><id>http://localhost:4000/cache/setup-jupyter</id><content type="html" xml:base="http://localhost:4000/cache/setup-jupyter/"><![CDATA[<p>Jupyter Notebook을 이용하여 Redis를 실습할 수 있는 환경을 구성합니다.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-08T11:45:18+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Redis 데이터 타입 - Redis Key 규칙</title><link href="http://localhost:4000/cache/cache-data-management/" rel="alternate" type="text/html" title="Redis 데이터 타입 - Redis Key 규칙" /><published>2023-04-07T00:00:00+09:00</published><updated>2023-04-07T00:00:00+09:00</updated><id>http://localhost:4000/cache/cache%20data%20management</id><content type="html" xml:base="http://localhost:4000/cache/cache-data-management/"><![CDATA[<h2 id="기본-redis-데이터-형식-및-사용-방법">기본 Redis 데이터 형식 및 사용 방법</h2>
+<p>다음은 Redis CLI를 사용하여 핵심 <a href="https://redis.io/docs/data-types/">Redis 데이터 유형</a>을 학습하는 실습 자습서입니다.  데이터 형식에 대한 일반적인 개요는 데이터 형식 소개를 참조하세요.</p>
+<h4 id="keys">Keys</h4>
+<p>Redis 키는 바이너리로부터 안전하므로 “foo”와 같은 문자열에서 JPEG 파일의 내용에 이르기까지 모든 바이너리 시퀀스를 키로 사용할 수 있습니다. 빈 문자열도 유효한 키입니다.</p>
+
+<p><strong>Redis  Key에 대한 몇 가지 다른 규칙:</strong><br />
+•	<em>매우 긴 키는 좋은 생각이 아닙니다</em><br />
+예를 들어 1024바이트의 키는 메모리 측면에서 뿐만 아니라 데이터 세트에서 키를 조회하는 데 비용이 많이 드는 여러 키 비교가 필요할 수 있기 때문에 좋지 않습니다. <br />
+당면한 작업이 큰 값의 존재와 일치하는 경우에도 특히 메모리 및 대역폭의 관점에서 해시하는 것이 더 좋습니다<br />
+(예 : SHA1 사용).</p>
+
+<p>•	<em>매우 짧은 키는 종종 좋은 생각이 아닙니다</em><br />
+대신 “user:1000:followers”를 쓸 수 있다면 “u1000flw”를 키로 쓰는 것은 거의 의미가 없습니다. 후자는 더 읽기 쉽고 추가 된 공간은 키 객체 자체와 값 객체에서 사용하는 공간에 비해 작습니다.<br />
+짧은 키는 분명히 메모리를 조금 덜 소비하지만 올바른 균형을 찾는 것이 키 설계자의 역량입니다.</p>
+
+<p>•	<em>스키마를 갖는 키</em><br />
+예를 들어 “object-type:id”는 “user:1000”에서와 같이 좋은 생각입니다. 점 또는 대시는 “comment:4321:reply.to” 또는 “comment:4321:reply-to”와 같이 여러 단어로 된 필드에 자주 사용됩니다.</p>
+
+<p>•	<em>허용 된 최대 키 크기는 512MB입니다.</em></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[기본 Redis 데이터 형식 및 사용 방법 다음은 Redis CLI를 사용하여 핵심 Redis 데이터 유형을 학습하는 실습 자습서입니다. 데이터 형식에 대한 일반적인 개요는 데이터 형식 소개를 참조하세요. Keys Redis 키는 바이너리로부터 안전하므로 “foo”와 같은 문자열에서 JPEG 파일의 내용에 이르기까지 모든 바이너리 시퀀스를 키로 사용할 수 있습니다. 빈 문자열도 유효한 키입니다.]]></summary></entry><entry><title type="html">Getting Start Redis using Jupyter Notebook - get/set</title><link href="http://localhost:4000/cache/getting-starting-jupyter/" rel="alternate" type="text/html" title="Getting Start Redis using Jupyter Notebook - get/set" /><published>2023-03-29T00:00:00+09:00</published><updated>2023-03-29T00:00:00+09:00</updated><id>http://localhost:4000/cache/getting-starting-jupyter</id><content type="html" xml:base="http://localhost:4000/cache/getting-starting-jupyter/"><![CDATA[<p>Jupyter Notebook을 환경에서 Python을 이용하여 Redis를 알아봅니다. redis-py를 이용하여 redis를 연결하고, 다음과 같이 데이터를 set/get을 수행하여 결과를 확인합니다.</p>
+<h2 id="connect">Connect</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">redis</span>
+
+<span class="n">redisClient</span> <span class="o">=</span> <span class="n">redis</span><span class="p">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s">'localhost'</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span> <span class="n">decode_responses</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">redisClient</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="s">'foo'</span><span class="p">,</span> <span class="s">'bar'</span><span class="p">)</span>
+<span class="n">redisClient</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'foo'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/cache/06-cache-get-set.png" alt="Jupyter log" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[Jupyter Notebook을 환경에서 Python을 이용하여 Redis를 알아봅니다. redis-py를 이용하여 redis를 연결하고, 다음과 같이 데이터를 set/get을 수행하여 결과를 확인합니다. Connect ```python import redis]]></summary></entry><entry><title type="html">Getting Start Redis using Jupyter Notebook - 설치</title><link href="http://localhost:4000/cache/setup-jupyter/" rel="alternate" type="text/html" title="Getting Start Redis using Jupyter Notebook - 설치" /><published>2023-03-29T00:00:00+09:00</published><updated>2023-03-29T00:00:00+09:00</updated><id>http://localhost:4000/cache/setup-jupyter</id><content type="html" xml:base="http://localhost:4000/cache/setup-jupyter/"><![CDATA[<p>Jupyter Notebook을 이용하여 Redis를 실습할 수 있는 환경을 구성합니다.</p>
 
 <h2 id="setup-redis-on-docker">Setup Redis on Docker</h2>
 <p>설치형 redis를 하지않고 학습용으로 최적의 환경인 docker를 사용하여 간단히 Redis를 실행합니다.
@@ -48,17 +76,7 @@ docker logs <span class="nt">-f</span> jupyter
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">!</span>pip <span class="nb">install </span>redis
 </code></pre></div></div>
 
-<p><img src="/assets/images/cache/05-cache-pip-install-redis.png" alt="Jupyter log" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[Jupyter Notebook을 이용하여 Redis를 실습할 수 있는 환경을 구성합니다.]]></summary></entry><entry><title type="html">Getting Start Redis using Jupyter Notebook - get/set</title><link href="http://localhost:4000/cache/getting-starting-jupyter/" rel="alternate" type="text/html" title="Getting Start Redis using Jupyter Notebook - get/set" /><published>2023-03-29T00:00:00+09:00</published><updated>2023-03-29T00:00:00+09:00</updated><id>http://localhost:4000/cache/getting-starting-jupyter</id><content type="html" xml:base="http://localhost:4000/cache/getting-starting-jupyter/"><![CDATA[<p>Jupyter Notebook을 환경에서 Python을 이용하여 Redis를 알아봅니다. redis-py를 이용하여 redis를 연결하고, 다음과 같이 데이터를 set/get을 수행하여 결과를 확인합니다.</p>
-<h2 id="connect">Connect</h2>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">redis</span>
-
-<span class="n">redisClient</span> <span class="o">=</span> <span class="n">redis</span><span class="p">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s">'localhost'</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span> <span class="n">decode_responses</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-
-<span class="n">redisClient</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="s">'foo'</span><span class="p">,</span> <span class="s">'bar'</span><span class="p">)</span>
-<span class="n">redisClient</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'foo'</span><span class="p">)</span>
-</code></pre></div></div>
-
-<p><img src="/assets/images/cache/06-cache-get-set.png" alt="Jupyter log" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[Jupyter Notebook을 환경에서 Python을 이용하여 Redis를 알아봅니다. redis-py를 이용하여 redis를 연결하고, 다음과 같이 데이터를 set/get을 수행하여 결과를 확인합니다. Connect ```python import redis]]></summary></entry><entry><title type="html">DTO에서 null인 항목은 json에서 제거</title><link href="http://localhost:4000/springboot/remove-null-dto/" rel="alternate" type="text/html" title="DTO에서 null인 항목은 json에서 제거" /><published>2023-03-28T00:00:00+09:00</published><updated>2023-03-28T00:00:00+09:00</updated><id>http://localhost:4000/springboot/remove-null-dto</id><content type="html" xml:base="http://localhost:4000/springboot/remove-null-dto/"><![CDATA[<h2 id="dto에서-null인-항목은-json에서-제거">DTO에서 null인 항목은 json에서 제거</h2>
+<p><img src="/assets/images/cache/05-cache-pip-install-redis.png" alt="Jupyter log" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[Jupyter Notebook을 이용하여 Redis를 실습할 수 있는 환경을 구성합니다.]]></summary></entry><entry><title type="html">DTO에서 null인 항목은 json에서 제거</title><link href="http://localhost:4000/springboot/remove-null-dto/" rel="alternate" type="text/html" title="DTO에서 null인 항목은 json에서 제거" /><published>2023-03-28T00:00:00+09:00</published><updated>2023-03-28T00:00:00+09:00</updated><id>http://localhost:4000/springboot/remove-null-dto</id><content type="html" xml:base="http://localhost:4000/springboot/remove-null-dto/"><![CDATA[<h2 id="dto에서-null인-항목은-json에서-제거">DTO에서 null인 항목은 json에서 제거</h2>
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@ToString</span>
 <span class="nd">@Getter</span>
 <span class="nd">@Setter</span>
@@ -543,48 +561,4 @@ afterBodyRead는  Controller의 Input Type을 body로 넘어오며 그것을 가
 		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"----------------------------------------"</span> <span class="o">);</span>
 	<span class="o">}</span>
 <span class="o">}</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><summary type="html"><![CDATA[AOP 예시]]></summary></entry><entry><title type="html">AOP(Aspect Oriented Programming) 구성요소</title><link href="http://localhost:4000/springboot/aop-2/" rel="alternate" type="text/html" title="AOP(Aspect Oriented Programming) 구성요소" /><published>2023-03-12T00:00:00+09:00</published><updated>2023-03-12T00:00:00+09:00</updated><id>http://localhost:4000/springboot/aop-2</id><content type="html" xml:base="http://localhost:4000/springboot/aop-2/"><![CDATA[<h2 id="aop-구성요소">AOP 구성요소</h2>
-<p>특정지정에 제어하고 싶은 대상에 제어하고자 하는 기능을 구현하는 AOP에 대해 알아보았습ㄴ다.
-이번에는 좀더 용어에 대해 상세하게 알아보겠습니다. <br />
-AOP의 구성요소는</p>
-<ul>
-  <li>Aspect</li>
-  <li>Advice</li>
-  <li>PointCut</li>
-  <li>JoinPoint</li>
-</ul>
-
-<p>로 되어 있습니다.</p>
-
-<h4 id="aspect">Aspect</h4>
-<p>Aspect는 AspectConfig 기능처럼 제어하고자 하는 모듈의 묶음을 의미하며, 이를 위해 어노테이션 @Aspect를 추가합니다.</p>
-
-<h4 id="advice">Advice</h4>
-<p>Advice는 특정 지점에서 trigger 되었을 때 실행되는 operation 입니다.<br />
-예를 들면 operation이 실행되지는 시점은 다음과 같습니다.</p>
-<ul>
-  <li>시적전/후 : @Around</li>
-  <li>시작전(Before) : @Before</li>
-  <li>성공처리 후 : @AfterReturning</li>
-  <li>에러발생시 : @AfterThrowing</li>
-  <li>처리종료 후 항상 실행 : @After</li>
-</ul>
-
-<h4 id="joinpoint">JoinPoint</h4>
-<p>JoinPoint는 어떤 Operation을 대상으로 할지 정의하는 것입니다.
-Springframework의 AOP는 operation or method 단위로 JoinPoint를 지원합니다.<br />
-대표적인 것이 execution, @Annotation 이 있습니다. 이중에서 execution JoinPoint가 가장 많이 사용되고 있습니다.</p>
-
-<h4 id="pointcut">PointCut</h4>
-<p>어느 시점(Operation or method)에 AOP 모듈을 trigger할지 정의하는 JoinPoint의 상세 스펙 또는 표현식(Expression)입니다.</p>
-
-<h4 id="기타">기타</h4>
-<ul>
-  <li>
-    <p>Weaving(위빙): Weaving은 애플리케이션의 Design/Runtime 등 시점에 Aspect를 적용하는 것<br />
-springframework는 Runtime 시점에 Weaving 합니다.</p>
-  </li>
-  <li>
-    <p>target : Aspect가 적용되는 객체를 의미합니다.</p>
-  </li>
-</ul>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><summary type="html"><![CDATA[AOP 구성요소 특정지정에 제어하고 싶은 대상에 제어하고자 하는 기능을 구현하는 AOP에 대해 알아보았습ㄴ다. 이번에는 좀더 용어에 대해 상세하게 알아보겠습니다. AOP의 구성요소는 Aspect Advice PointCut JoinPoint]]></summary></entry></feed>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="aop" /><summary type="html"><![CDATA[AOP 예시]]></summary></entry></feed>
