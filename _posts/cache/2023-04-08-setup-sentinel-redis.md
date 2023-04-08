@@ -96,13 +96,14 @@ src/sentinel-server redis_5001.conf
 src/sentinel-server redis_5002.conf
 ```
 
-## redis failure over 테스트
-redis master를 강제 종료시 slave가 master로 승격되는 확인하기 위해, sentinel 서버의 로그를 모니터링합니다.
+## redis failover 테스트
+redis master를 강제 종료시 slave가 master로 승격되는 확인하기 위해, sentinel 서버의 로그를 모니터링 합니다.
 
 ```bash
 tail -f logs/redis_5000.log
 ```
-redis master process를 확인하고 서버를 강제로 종료합니다. 그러면 sentinel에서 자동으로 redis slave를 master로 승격하는 것을 확인 할 수 있습니다.
+redis master process를 확인하고 서버를 강제로 종료합니다.  
+그러면 sentinel에서 자동으로 redis slave를 master로 승격하는 것을 확인 할 수 있습니다.
 ```bash
 ps -ef|grep redis
 
