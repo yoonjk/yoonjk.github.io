@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-08T16:40:24+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Getting Start Redis - String</title><link href="http://localhost:4000/cache/string/" rel="alternate" type="text/html" title="Getting Start Redis - String" /><published>2023-04-07T00:00:00+09:00</published><updated>2023-04-07T00:00:00+09:00</updated><id>http://localhost:4000/cache/string</id><content type="html" xml:base="http://localhost:4000/cache/string/"><![CDATA[<h2 id="strings">Strings</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-08T17:03:30+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Getting Start Redis - String</title><link href="http://localhost:4000/cache/string/" rel="alternate" type="text/html" title="Getting Start Redis - String" /><published>2023-04-07T00:00:00+09:00</published><updated>2023-04-07T00:00:00+09:00</updated><id>http://localhost:4000/cache/string</id><content type="html" xml:base="http://localhost:4000/cache/string/"><![CDATA[<h2 id="strings">Strings</h2>
 <p>Redis 문자열 유형은 Redis 키와 연결할 수 있는 가장 간단한 값 유형입니다. Memcached의 유일한 데이터 유형이므로 신규 사용자가 Redis에서 사용하는 것도 매우 자연스러운 일입니다.
 Redis 키는 문자열이므로 문자열 유형도 값으로 사용할 때 문자열을 다른 문자열에 매핑합니다. 문자열 데이터 형식은 HTML 조각 또는 페이지 캐싱과 같은 다양한 사용 사례에 유용합니다.
 redis-cli를 사용하여 문자열 유형을 약간 사용해 보겠습니다<br />
@@ -112,40 +112,7 @@ OK
 밀리초 단위로 만료를 설정하고 확인하려면 <a href="https://redis.io/commands/pexpire">PEXPIRE</a> 및 <a href="https://redis.io/commands/pttl">PTTL</a> 명령과 SET 옵션의 전체 목록을 확인하십시오. .</p>
 
 <h2 id="redis-정보">Redis 정보</h2>
-<p><a href="https://sungwookkang.com/category/Redis">Data Science Lab</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[Strings Redis 문자열 유형은 Redis 키와 연결할 수 있는 가장 간단한 값 유형입니다. Memcached의 유일한 데이터 유형이므로 신규 사용자가 Redis에서 사용하는 것도 매우 자연스러운 일입니다. Redis 키는 문자열이므로 문자열 유형도 값으로 사용할 때 문자열을 다른 문자열에 매핑합니다. 문자열 데이터 형식은 HTML 조각 또는 페이지 캐싱과 같은 다양한 사용 사례에 유용합니다. redis-cli를 사용하여 문자열 유형을 약간 사용해 보겠습니다 (모든 예제는 이 자습서에서 redis-cli를 통해 수행됨).]]></summary></entry><entry><title type="html">Getting Start Redis - Hashes</title><link href="http://localhost:4000/cache/hashes/" rel="alternate" type="text/html" title="Getting Start Redis - Hashes" /><published>2023-04-07T00:00:00+09:00</published><updated>2023-04-07T00:00:00+09:00</updated><id>http://localhost:4000/cache/hashes</id><content type="html" xml:base="http://localhost:4000/cache/hashes/"><![CDATA[<h2 id="hashes">Hashes</h2>
-<p>Redis 해시는 필드-값 쌍을 사용하여 “해시”가 어떻게 보이는지 정확히 보여줍니다.:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> hset user:1000 username antirez birthyear 1977 verified 1
-<span class="o">(</span>integer<span class="o">)</span> 3
-<span class="o">&gt;</span> hget user:1000 username
-<span class="s2">"antirez"</span>
-<span class="o">&gt;</span> hget user:1000 birthyear
-<span class="s2">"1977"</span>
-<span class="o">&gt;</span> hgetall user:1000
-1<span class="o">)</span> <span class="s2">"username"</span>
-2<span class="o">)</span> <span class="s2">"antirez"</span>
-3<span class="o">)</span> <span class="s2">"birthyear"</span>
-4<span class="o">)</span> <span class="s2">"1977"</span>
-5<span class="o">)</span> <span class="s2">"verified"</span>
-6<span class="o">)</span> <span class="s2">"1"</span>
-</code></pre></div></div>
-<p>해시는 객체를 나타내는 데 편리하지만 실제로 해시 안에 넣을 수있는 필드 수에는 사용 가능한 메모리 이외의 실질적인 제한이 없으므로 응용 프로그램 내에서 다양한 방법으로 해시를 사용할 수 있습니다.<br />
-<a href="https://redis.io/commands/hset">HSET</a> 명령은  해시의 여러 필드를 설정하는 반면 HGET는 단일 필드를 검색합니다.</p>
-
-<p><a href="https://redis.io/commands/hmget">HMGET</a>은 HGET와 유사  하지만 값 배열을 반환합니다.:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> hmget user:1000 username birthyear no-such-field
-1<span class="o">)</span> <span class="s2">"antirez"</span>
-2<span class="o">)</span> <span class="s2">"1977"</span>
-3<span class="o">)</span> <span class="o">(</span>nil<span class="o">)</span>
-</code></pre></div></div>
-
-<p><a href="https://redis.io/commands/hincrby">HINCRBY</a>와 같이 개별 필드에 대한 작업을 수행 할 수있는 명령도 있습니다.:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> hincrby user:1000 birthyear 10
-<span class="o">(</span>integer<span class="o">)</span> 1987
-<span class="o">&gt;</span> hincrby user:1000 birthyear 10
-<span class="o">(</span>integer<span class="o">)</span> 1997
-</code></pre></div></div>
-<p>설명서에서 해시 명령의 전체 목록을 찾을 수 있습니다.
-작은 해시 (즉, 작은 값을 가진 몇 가지 요소)가 메모리에서 특별한 방식으로 인코딩되어 메모리 효율이 매우 높다는 점은 주목할 가치가 있습니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[Hashes Redis 해시는 필드-값 쌍을 사용하여 “해시”가 어떻게 보이는지 정확히 보여줍니다.: &gt; hset user:1000 username antirez birthyear 1977 verified 1 (integer) 3 &gt; hget user:1000 username "antirez" &gt; hget user:1000 birthyear "1977" &gt; hgetall user:1000 1) "username" 2) "antirez" 3) "birthyear" 4) "1977" 5) "verified" 6) "1" 해시는 객체를 나타내는 데 편리하지만 실제로 해시 안에 넣을 수있는 필드 수에는 사용 가능한 메모리 이외의 실질적인 제한이 없으므로 응용 프로그램 내에서 다양한 방법으로 해시를 사용할 수 있습니다. HSET 명령은 해시의 여러 필드를 설정하는 반면 HGET는 단일 필드를 검색합니다.]]></summary></entry><entry><title type="html">Getting Start Redis - List</title><link href="http://localhost:4000/cache/list/" rel="alternate" type="text/html" title="Getting Start Redis - List" /><published>2023-04-07T00:00:00+09:00</published><updated>2023-04-07T00:00:00+09:00</updated><id>http://localhost:4000/cache/list</id><content type="html" xml:base="http://localhost:4000/cache/list/"><![CDATA[<h2 id="list">List</h2>
+<p><a href="https://sungwookkang.com/category/Redis">Data Science Lab</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[Strings Redis 문자열 유형은 Redis 키와 연결할 수 있는 가장 간단한 값 유형입니다. Memcached의 유일한 데이터 유형이므로 신규 사용자가 Redis에서 사용하는 것도 매우 자연스러운 일입니다. Redis 키는 문자열이므로 문자열 유형도 값으로 사용할 때 문자열을 다른 문자열에 매핑합니다. 문자열 데이터 형식은 HTML 조각 또는 페이지 캐싱과 같은 다양한 사용 사례에 유용합니다. redis-cli를 사용하여 문자열 유형을 약간 사용해 보겠습니다 (모든 예제는 이 자습서에서 redis-cli를 통해 수행됨).]]></summary></entry><entry><title type="html">Getting Start Redis - List</title><link href="http://localhost:4000/cache/list/" rel="alternate" type="text/html" title="Getting Start Redis - List" /><published>2023-04-07T00:00:00+09:00</published><updated>2023-04-07T00:00:00+09:00</updated><id>http://localhost:4000/cache/list</id><content type="html" xml:base="http://localhost:4000/cache/list/"><![CDATA[<h2 id="list">List</h2>
 <p>List 데이터 유형을 설명하려면 List라는 용어가  정보 기술 담당자에 의해 부적절한 방식으로 자주 사용되기 때문에 약간의 이론으로 시작하는 것이 좋습니다. 예를 들어 “파이썬 목록”은 이름이 암시하는 것 (연결 목록)이 아니라 배열 (실제로 Ruby에서는 동일한 데이터 유형을 배열이라고 함)입니다.<br />
 매우 일반적인 관점에서 List는 정렬된 요소의 시퀀스일 뿐입니다:<br />
 10,20,1,2,3은 목록입니다.<br />
@@ -319,7 +286,121 @@ Example of rule 3:</p>
 <span class="o">(</span>integer<span class="o">)</span> 0
 <span class="o">&gt;</span> lpop mylist
 <span class="o">(</span>nil<span class="o">)</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><summary type="html"><![CDATA[List List 데이터 유형을 설명하려면 List라는 용어가 정보 기술 담당자에 의해 부적절한 방식으로 자주 사용되기 때문에 약간의 이론으로 시작하는 것이 좋습니다. 예를 들어 “파이썬 목록”은 이름이 암시하는 것 (연결 목록)이 아니라 배열 (실제로 Ruby에서는 동일한 데이터 유형을 배열이라고 함)입니다. 매우 일반적인 관점에서 List는 정렬된 요소의 시퀀스일 뿐입니다: 10,20,1,2,3은 목록입니다. 그러나 Array를 사용하여 구현된 List의 속성은 연결된 목록을 사용하여 구현된 List의 속성과 매우 다릅니다. Redis 목록은 연결된 목록을 통해 구현됩니다. 즉, 목록 내에 수백만 개의 요소가 있더라도 목록의 머리 또는 꼬리에 새 요소를 추가하는 작업은 일정한 시간에 수행됩니다. LPUSH 명령을 사용하여 새 요소를 10개의 요소가 있는 목록의 헤드에 추가하는 속도는 1,000만 개의 요소가 있는 목록의 헤드에 요소를 추가하는 것과 같습니다. 단점은 무엇입니까? 인덱스로 요소에 액세스하는 것은 Array (일정한 시간 인덱싱 된 액세스)로 구현 된 목록에서 매우 빠르며 연결된 목록으로 구현 된 목록 (액세스 된 요소의 인덱스에 비례하는 작업량이 필요한 경우)에서는 그렇게 빠르지 않습니다. Redis List는 데이터베이스 시스템의 경우 매우 빠른 방법으로 매우 긴 목록에 요소를 추가할 수 있어야 하기 때문에 연결된 목록으로 구현됩니다. 잠시 후에 볼 수 있듯이 또 다른 강력한 이점은 Redis 목록을 일정한 시간에 일정한 길이로 가져올 수 있다는 것입니다. 큰 요소 컬렉션의 중간에 빠르게 액세스하는 것이 중요한 경우 정렬된 집합이라고 하는 다른 데이터 구조를 사용할 수 있습니다. 정렬된 집합은 이 자습서의 뒷부분에서 다룹니다.]]></summary></entry><entry><title type="html">Getting Start Redis - Redis Key 규칙</title><link href="http://localhost:4000/cache/naming-rule/" rel="alternate" type="text/html" title="Getting Start Redis - Redis Key 규칙" /><published>2023-04-06T00:00:00+09:00</published><updated>2023-04-06T00:00:00+09:00</updated><id>http://localhost:4000/cache/naming%20rule</id><content type="html" xml:base="http://localhost:4000/cache/naming-rule/"><![CDATA[<h2 id="기본-redis-데이터-형식-및-사용-방법">기본 Redis 데이터 형식 및 사용 방법</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><summary type="html"><![CDATA[List List 데이터 유형을 설명하려면 List라는 용어가 정보 기술 담당자에 의해 부적절한 방식으로 자주 사용되기 때문에 약간의 이론으로 시작하는 것이 좋습니다. 예를 들어 “파이썬 목록”은 이름이 암시하는 것 (연결 목록)이 아니라 배열 (실제로 Ruby에서는 동일한 데이터 유형을 배열이라고 함)입니다. 매우 일반적인 관점에서 List는 정렬된 요소의 시퀀스일 뿐입니다: 10,20,1,2,3은 목록입니다. 그러나 Array를 사용하여 구현된 List의 속성은 연결된 목록을 사용하여 구현된 List의 속성과 매우 다릅니다. Redis 목록은 연결된 목록을 통해 구현됩니다. 즉, 목록 내에 수백만 개의 요소가 있더라도 목록의 머리 또는 꼬리에 새 요소를 추가하는 작업은 일정한 시간에 수행됩니다. LPUSH 명령을 사용하여 새 요소를 10개의 요소가 있는 목록의 헤드에 추가하는 속도는 1,000만 개의 요소가 있는 목록의 헤드에 요소를 추가하는 것과 같습니다. 단점은 무엇입니까? 인덱스로 요소에 액세스하는 것은 Array (일정한 시간 인덱싱 된 액세스)로 구현 된 목록에서 매우 빠르며 연결된 목록으로 구현 된 목록 (액세스 된 요소의 인덱스에 비례하는 작업량이 필요한 경우)에서는 그렇게 빠르지 않습니다. Redis List는 데이터베이스 시스템의 경우 매우 빠른 방법으로 매우 긴 목록에 요소를 추가할 수 있어야 하기 때문에 연결된 목록으로 구현됩니다. 잠시 후에 볼 수 있듯이 또 다른 강력한 이점은 Redis 목록을 일정한 시간에 일정한 길이로 가져올 수 있다는 것입니다. 큰 요소 컬렉션의 중간에 빠르게 액세스하는 것이 중요한 경우 정렬된 집합이라고 하는 다른 데이터 구조를 사용할 수 있습니다. 정렬된 집합은 이 자습서의 뒷부분에서 다룹니다.]]></summary></entry><entry><title type="html">Getting Start Redis - Hashes</title><link href="http://localhost:4000/cache/hashes/" rel="alternate" type="text/html" title="Getting Start Redis - Hashes" /><published>2023-04-07T00:00:00+09:00</published><updated>2023-04-07T00:00:00+09:00</updated><id>http://localhost:4000/cache/hashes</id><content type="html" xml:base="http://localhost:4000/cache/hashes/"><![CDATA[<h2 id="hashes">Hashes</h2>
+<p>Redis 해시는 필드-값 쌍을 사용하여 “해시”가 어떻게 보이는지 정확히 보여줍니다.:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> hset user:1000 username antirez birthyear 1977 verified 1
+<span class="o">(</span>integer<span class="o">)</span> 3
+<span class="o">&gt;</span> hget user:1000 username
+<span class="s2">"antirez"</span>
+<span class="o">&gt;</span> hget user:1000 birthyear
+<span class="s2">"1977"</span>
+<span class="o">&gt;</span> hgetall user:1000
+1<span class="o">)</span> <span class="s2">"username"</span>
+2<span class="o">)</span> <span class="s2">"antirez"</span>
+3<span class="o">)</span> <span class="s2">"birthyear"</span>
+4<span class="o">)</span> <span class="s2">"1977"</span>
+5<span class="o">)</span> <span class="s2">"verified"</span>
+6<span class="o">)</span> <span class="s2">"1"</span>
+</code></pre></div></div>
+<p>해시는 객체를 나타내는 데 편리하지만 실제로 해시 안에 넣을 수있는 필드 수에는 사용 가능한 메모리 이외의 실질적인 제한이 없으므로 응용 프로그램 내에서 다양한 방법으로 해시를 사용할 수 있습니다.<br />
+<a href="https://redis.io/commands/hset">HSET</a> 명령은  해시의 여러 필드를 설정하는 반면 HGET는 단일 필드를 검색합니다.</p>
+
+<p><a href="https://redis.io/commands/hmget">HMGET</a>은 HGET와 유사  하지만 값 배열을 반환합니다.:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> hmget user:1000 username birthyear no-such-field
+1<span class="o">)</span> <span class="s2">"antirez"</span>
+2<span class="o">)</span> <span class="s2">"1977"</span>
+3<span class="o">)</span> <span class="o">(</span>nil<span class="o">)</span>
+</code></pre></div></div>
+
+<p><a href="https://redis.io/commands/hincrby">HINCRBY</a>와 같이 개별 필드에 대한 작업을 수행 할 수있는 명령도 있습니다.:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> hincrby user:1000 birthyear 10
+<span class="o">(</span>integer<span class="o">)</span> 1987
+<span class="o">&gt;</span> hincrby user:1000 birthyear 10
+<span class="o">(</span>integer<span class="o">)</span> 1997
+</code></pre></div></div>
+<p>설명서에서 해시 명령의 전체 목록을 찾을 수 있습니다.
+작은 해시 (즉, 작은 값을 가진 몇 가지 요소)가 메모리에서 특별한 방식으로 인코딩되어 메모리 효율이 매우 높다는 점은 주목할 가치가 있습니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[Hashes Redis 해시는 필드-값 쌍을 사용하여 “해시”가 어떻게 보이는지 정확히 보여줍니다.: &gt; hset user:1000 username antirez birthyear 1977 verified 1 (integer) 3 &gt; hget user:1000 username "antirez" &gt; hget user:1000 birthyear "1977" &gt; hgetall user:1000 1) "username" 2) "antirez" 3) "birthyear" 4) "1977" 5) "verified" 6) "1" 해시는 객체를 나타내는 데 편리하지만 실제로 해시 안에 넣을 수있는 필드 수에는 사용 가능한 메모리 이외의 실질적인 제한이 없으므로 응용 프로그램 내에서 다양한 방법으로 해시를 사용할 수 있습니다. HSET 명령은 해시의 여러 필드를 설정하는 반면 HGET는 단일 필드를 검색합니다.]]></summary></entry><entry><title type="html">Getting Start Redis - Set</title><link href="http://localhost:4000/cache/set/" rel="alternate" type="text/html" title="Getting Start Redis - Set" /><published>2023-04-07T00:00:00+09:00</published><updated>2023-04-07T00:00:00+09:00</updated><id>http://localhost:4000/cache/set</id><content type="html" xml:base="http://localhost:4000/cache/set/"><![CDATA[<h2 id="sets">Sets</h2>
+<p>Redis 집합은 순서가 지정되지 않은 문자열 컬렉션입니다. <a href="https://redis.io/commands/sadd">SADD</a> 명령은 세트에 새 요소를 추가합니다. 주어진 요소가 이미 존재하는지 테스트, 여러 집합 간의 교차, 합집합 또는 차이 수행 등과 같은 집합에 대해 여러 가지 다른 작업을 수행 할 수도 있습니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> sadd myset 1 2 3
+<span class="o">(</span>integer<span class="o">)</span> 3
+<span class="o">&gt;</span> smembers myset
+1. 3
+2. 1
+3. 2
+</code></pre></div></div>
+<p>여기에 세 가지 요소를 세트에 추가하고 Redis에게 모든 요소를 반환하도록 지시했습니다. 보시다시피 정렬되지 않았습니다 - Redis는 요소 순서에 대한 사용자와 계약이 없기 때문에 모든 호출에서 임의의 순서로 요소를 반환 할 수 있습니다.
+Redis에는 멤버십을 테스트하는 명령이 있습니다. 
+예를 들어 요소가 있는지 확인합니다.:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> sismember myset 3
+<span class="o">(</span>integer<span class="o">)</span> 1
+<span class="o">&gt;</span> sismember myset 30
+<span class="o">(</span>integer<span class="o">)</span> 0
+</code></pre></div></div>
+<p>“3” is a member of the set, while “30” is not.
+집합은 개체 간의 관계를 표현하는 데 유용합니다. 예를 들어 태그를 구현하기 위해 집합을 쉽게 사용할 수 있습니다..
+이 문제를 모델링하는 간단한 방법은 태그를 지정하려는 모든 객체에 대한 집합을 갖는 것입니다. 집합에는 개체와 연결된 태그의 ID가 포함됩니다.<br />
+한 가지 예는 뉴스 기사에 태그를 지정하는 것입니다. 기사 ID 1000에 태그 1, 2, 5 및 77 태그가 지정된 경우 집합은 이러한 태그 ID를 뉴스 항목과 연결할 수 있습니다.:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> sadd news:1000:tags 1 2 5 77
+<span class="o">(</span>integer<span class="o">)</span> 4
+</code></pre></div></div>
+<p>우리는 또한 역관계를 원할 수도 있습니다 : 주어진 태그로 태그 된 모든 뉴스의 목록:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> sadd tag:1:news 1000
+<span class="o">(</span>integer<span class="o">)</span> 1
+<span class="o">&gt;</span> sadd tag:2:news 1000
+<span class="o">(</span>integer<span class="o">)</span> 1
+<span class="o">&gt;</span> sadd tag:5:news 1000
+<span class="o">(</span>integer<span class="o">)</span> 1
+<span class="o">&gt;</span> sadd tag:77:news 1000
+<span class="o">(</span>integer<span class="o">)</span> 1
+</code></pre></div></div>
+<p>주어진 객체에 대한 모든 태그를 가져 오는 것은 간단합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> smembers news:1000:tags
+1. 5
+2. 1
+3. 77
+4. 2
+</code></pre></div></div>
+<p>Note: 예제에서는 태그 ID를 태그 이름에 매핑하는 Redis 해시와 같은 다른 데이터 구조가 있다고 가정합니다..
+올바른 Redis 명령을 사용하여 구현하기 쉬운 다른 사소한 작업이 있습니다. 예를 들어 태그 1, 2, 10 및 27을 함께 사용하는 모든 객체 목록을 원할 수 있습니다. 서로 다른 세트 간의 교차를 수행하는 <a href="https://redis.io/commands/sinter">SINTER</a> 명령을 사용하여이 작업을 수행 할 수  있습니다. 우리는 사용할 수 있습니다:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> sinter tag:1:news tag:2:news tag:10:news tag:27:news
+... results here ...
+</code></pre></div></div>
+<p>교차 외에도 합집합, 차이, 무작위 요소 추출 등을 수행할 수 있습니다..
+요소를 추출하는 명령을 <a href="https://redis.io/commands/spop">SPOP</a>라고 하며 특정 문제를 모델링하는 데 편리합니다. 예를 들어 웹 기반 포커 게임을 구현하려면 덱을 세트로 표현할 수 있습니다. (C) lubs, (D) iamonds, (H) earts, (S) pades에 대해 1 자 접두사를 사용한다고 상상해보십시오.:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> sadd deck C1 C2 C3 C4 C5 C6 C7 C8 C9 C10 CJ CQ CK
+  D1 D2 D3 D4 D5 D6 D7 D8 D9 D10 DJ DQ DK H1 H2 H3
+  H4 H5 H6 H7 H8 H9 H10 HJ HQ HK S1 S2 S3 S4 S5 S6
+  S7 S8 S9 S10 SJ SQ SK
+<span class="o">(</span>integer<span class="o">)</span> 52
+</code></pre></div></div>
+<p>이제 각 플레이어에게 5장의 카드를 제공하고자 합니다. <a href="https://redis.io/commands/spop">SPOP</a> 명령은 임의의 요소를 제거하여 클라이언트로 반환하므로이 경우 완벽한 작업입니다.<br />
+그러나 덱에 대해 직접 호출하면 다음 게임 플레이에서 카드 덱을 다시 채워야 하므로 이상적이지 않을 수 있습니다.<br />
+먼저 덱 키에 저장된 세트의 복사본을 게임에 만들 수 있습니다 : 
+이 작업은 일반적으로 여러 집합 간의 합집합을 수행하고 결과를 다른 집합에 저장하는 <a href="https://redis.io/commands/sunionstore">SUNIONSTORE</a>를 사용하여 수행됩니다.</p>
+
+<p>그러나 단일 세트의 합집합 자체이기 때문에 내 데크를 복사할 수 있습니다.:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> sunionstore game:1:deck deck
+<span class="o">(</span>integer<span class="o">)</span> 52
+</code></pre></div></div>
+<p>이제 첫 번째 플레이어에게 5장의 카드를 제공할 준비가 되었습니다.:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> spop game:1:deck
+<span class="s2">"C6"</span>
+<span class="o">&gt;</span> spop game:1:deck
+<span class="s2">"CQ"</span>
+<span class="o">&gt;</span> spop game:1:deck
+<span class="s2">"D1"</span>
+<span class="o">&gt;</span> spop game:1:deck
+<span class="s2">"CJ"</span>
+<span class="o">&gt;</span> spop game:1:deck
+<span class="s2">"SJ"</span>
+</code></pre></div></div>
+<p>One pair of jacks, not great…
+집합 내의 요소 수를 제공하는 set 명령을 소개하기에 좋은 시기입니다. 이것은 종종 집합 이론의 맥락에서 집합의 카디널리티라고 불리  므로 Redis 명령을 SCARD라고합니다..</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> scard game:1:deck
+<span class="o">(</span>integer<span class="o">)</span> 47
+</code></pre></div></div>
+<p>계산: 52 - 5 = 47.
+세트에서 제거하지 않고 임의의 요소를 가져와야 하는 경우 작업에 적합한 <a href="https://redis.io/commands/srandmember">SRANDMEMBER</a> 명령이 있습니다. 또한 반복되는 요소와 반복되지 않는 요소를 모두 반환하는 기능이 있습니다..</p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[Sets Redis 집합은 순서가 지정되지 않은 문자열 컬렉션입니다. SADD 명령은 세트에 새 요소를 추가합니다. 주어진 요소가 이미 존재하는지 테스트, 여러 집합 간의 교차, 합집합 또는 차이 수행 등과 같은 집합에 대해 여러 가지 다른 작업을 수행 할 수도 있습니다. &gt; sadd myset 1 2 3 (integer) 3 &gt; smembers myset 1. 3 2. 1 3. 2 여기에 세 가지 요소를 세트에 추가하고 Redis에게 모든 요소를 반환하도록 지시했습니다. 보시다시피 정렬되지 않았습니다 - Redis는 요소 순서에 대한 사용자와 계약이 없기 때문에 모든 호출에서 임의의 순서로 요소를 반환 할 수 있습니다. Redis에는 멤버십을 테스트하는 명령이 있습니다. 예를 들어 요소가 있는지 확인합니다.: &gt; sismember myset 3 (integer) 1 &gt; sismember myset 30 (integer) 0 “3” is a member of the set, while “30” is not. 집합은 개체 간의 관계를 표현하는 데 유용합니다. 예를 들어 태그를 구현하기 위해 집합을 쉽게 사용할 수 있습니다.. 이 문제를 모델링하는 간단한 방법은 태그를 지정하려는 모든 객체에 대한 집합을 갖는 것입니다. 집합에는 개체와 연결된 태그의 ID가 포함됩니다. 한 가지 예는 뉴스 기사에 태그를 지정하는 것입니다. 기사 ID 1000에 태그 1, 2, 5 및 77 태그가 지정된 경우 집합은 이러한 태그 ID를 뉴스 항목과 연결할 수 있습니다.: &gt; sadd news:1000:tags 1 2 5 77 (integer) 4 우리는 또한 역관계를 원할 수도 있습니다 : 주어진 태그로 태그 된 모든 뉴스의 목록: &gt; sadd tag:1:news 1000 (integer) 1 &gt; sadd tag:2:news 1000 (integer) 1 &gt; sadd tag:5:news 1000 (integer) 1 &gt; sadd tag:77:news 1000 (integer) 1 주어진 객체에 대한 모든 태그를 가져 오는 것은 간단합니다. &gt; smembers news:1000:tags 1. 5 2. 1 3. 77 4. 2 Note: 예제에서는 태그 ID를 태그 이름에 매핑하는 Redis 해시와 같은 다른 데이터 구조가 있다고 가정합니다.. 올바른 Redis 명령을 사용하여 구현하기 쉬운 다른 사소한 작업이 있습니다. 예를 들어 태그 1, 2, 10 및 27을 함께 사용하는 모든 객체 목록을 원할 수 있습니다. 서로 다른 세트 간의 교차를 수행하는 SINTER 명령을 사용하여이 작업을 수행 할 수 있습니다. 우리는 사용할 수 있습니다: &gt; sinter tag:1:news tag:2:news tag:10:news tag:27:news ... results here ... 교차 외에도 합집합, 차이, 무작위 요소 추출 등을 수행할 수 있습니다.. 요소를 추출하는 명령을 SPOP라고 하며 특정 문제를 모델링하는 데 편리합니다. 예를 들어 웹 기반 포커 게임을 구현하려면 덱을 세트로 표현할 수 있습니다. (C) lubs, (D) iamonds, (H) earts, (S) pades에 대해 1 자 접두사를 사용한다고 상상해보십시오.: &gt; sadd deck C1 C2 C3 C4 C5 C6 C7 C8 C9 C10 CJ CQ CK D1 D2 D3 D4 D5 D6 D7 D8 D9 D10 DJ DQ DK H1 H2 H3 H4 H5 H6 H7 H8 H9 H10 HJ HQ HK S1 S2 S3 S4 S5 S6 S7 S8 S9 S10 SJ SQ SK (integer) 52 이제 각 플레이어에게 5장의 카드를 제공하고자 합니다. SPOP 명령은 임의의 요소를 제거하여 클라이언트로 반환하므로이 경우 완벽한 작업입니다. 그러나 덱에 대해 직접 호출하면 다음 게임 플레이에서 카드 덱을 다시 채워야 하므로 이상적이지 않을 수 있습니다. 먼저 덱 키에 저장된 세트의 복사본을 게임에 만들 수 있습니다 : 이 작업은 일반적으로 여러 집합 간의 합집합을 수행하고 결과를 다른 집합에 저장하는 SUNIONSTORE를 사용하여 수행됩니다.]]></summary></entry><entry><title type="html">Getting Start Redis - Redis Key 규칙</title><link href="http://localhost:4000/cache/naming-rule/" rel="alternate" type="text/html" title="Getting Start Redis - Redis Key 규칙" /><published>2023-04-06T00:00:00+09:00</published><updated>2023-04-06T00:00:00+09:00</updated><id>http://localhost:4000/cache/naming%20rule</id><content type="html" xml:base="http://localhost:4000/cache/naming-rule/"><![CDATA[<h2 id="기본-redis-데이터-형식-및-사용-방법">기본 Redis 데이터 형식 및 사용 방법</h2>
 <p>다음은 Redis CLI를 사용하여 핵심 <a href="https://redis.io/docs/data-types/">Redis 데이터 유형</a>을 학습하는 실습 자습서입니다.  데이터 형식에 대한 일반적인 개요는 데이터 형식 소개를 참조하세요.</p>
 <h4 id="keys">Keys</h4>
 <p>Redis 키는 바이너리로부터 안전하므로 “foo”와 같은 문자열에서 JPEG 파일의 내용에 이르기까지 모든 바이너리 시퀀스를 키로 사용할 수 있습니다. 빈 문자열도 유효한 키입니다.</p>
@@ -525,129 +606,4 @@ beforeBodyWrite 는 사용자 Controller에서 받은 return 값을 가공할 �
     <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
 	<span class="o">}</span>
 <span class="o">}</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="Advice" /><summary type="html"><![CDATA[ResponseBodyAdvice Http Response를 제어 또는 가공(Decrpt)할 수 있는 또 하나의 영역중 하나가 바로를 ReponseBodyAdvice 입니다. ReturnValueHandler는 RestController에는 적용할 수 없습니다. RequestBodyAdvice는 그러한 제약사항이 없습니다. 적용하는 방법은 RequestBodyAdvice와 유사합니다.]]></summary></entry><entry><title type="html">Http 요청을 복호화하여 Controller에 전달하기 - RequestBodyAdvice</title><link href="http://localhost:4000/springboot/requestbodyadvisor/" rel="alternate" type="text/html" title="Http 요청을 복호화하여 Controller에 전달하기 - RequestBodyAdvice" /><published>2023-03-24T00:00:00+09:00</published><updated>2023-03-24T00:00:00+09:00</updated><id>http://localhost:4000/springboot/requestbodyadvisor</id><content type="html" xml:base="http://localhost:4000/springboot/requestbodyadvisor/"><![CDATA[<p>화</p>
-<h2 id="requestbodyadvice">RequestBodyAdvice</h2>
-<p>Http Request를 제어 또는 가공(Decrpt)할 수 있는 또 하나의 영역중 하나가 바로 RequestBodyAdvice 입니다.
-  ArgumentRoslver는 RestController에는 약간의 제약사항이 있으나 RequestBodyAdvice는 그러한 제약사항이 없습니다.
-  적용하는 방법은 ArgumentResolver와 유사하고 점도 섬세한 제어가 가능합니다.</p>
-
-<p><img src="/assets/images/springboot/04-spring-filter-interceptor-aop-resolver-advice.png" alt="filter interceptor aop" /></p>
-
-<h2 id="requestbodyadvice를-상속받아-구현">RequestBodyAdvice를 상속받아 구현</h2>
-<p>Http 요청을 했을 때 body 데이터를 제어하고자 할 떄 RequestBodyAdvice를 상속받아 아래와 같이 3개의 Method를 구현해야 합니다.</p>
-<ul>
-  <li>public boolean supports(…)</li>
-  <li>public HttpInputMessage beforeBodyRead(…) throws IOException</li>
-  <li>public Object afterBodyRead(…)</li>
-</ul>
-
-<p>supports에서는 대상 Controller나 대상 Parameter Type에 따라 대상을 선택할 수 있습니다. 
-beforeBodyRead 는 Http Body를 읽기전에 처리하거나 afterBodyRead 는 Http Body를 읽은후에 처리합니다.<br />
-beforeBodyRead에서는 inputMessage의 getHeader와 getBody를 읽어서와 원하는 작업을 할 수 있수 있습니다.
-afterBodyRead는  Controller의 Input Type을 body로 넘어오며 그것을 가공할 수 있습니다.</p>
-
-<h2 id="requestbodyadvice---예시">RequestBodyAdvice - 예시</h2>
-<p>아래의 예제는 RequestBodyAdvice를 구현한 DecryptRequestBodyAdvice입니다.</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.io.ByteArrayInputStream</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.io.InputStream</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.reflect.Type</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.nio.charset.StandardCharsets</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">org.springframework.core.MethodParameter</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.http.HttpHeaders</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.http.HttpInputMessage</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.http.converter.HttpMessageConverter</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RestControllerAdvice</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.web.servlet.mvc.method.annotation.RequestBodyAdvice</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">com.demo.microservices.controller.UserController</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.demo.microservices.util.AESUtil</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.demo.microservices.util.IOUtils</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">lombok.extern.slf4j.Slf4j</span><span class="o">;</span>
-
-<span class="nd">@Slf4j</span>
-<span class="nd">@RestControllerAdvice</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DecryptRequestBodyController</span> <span class="kd">implements</span> <span class="nc">RequestBodyAdvice</span> <span class="o">{</span>
-	<span class="kd">private</span> <span class="nc">String</span> <span class="n">decodingBody</span><span class="o">;</span>
-	<span class="kd">private</span> <span class="kt">byte</span><span class="o">[]</span> <span class="n">rawData</span><span class="o">;</span>
-
-	<span class="nd">@Override</span>
-	<span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">supports</span><span class="o">(</span><span class="nc">MethodParameter</span> <span class="n">methodParameter</span><span class="o">,</span> <span class="nc">Type</span> <span class="n">targetType</span><span class="o">,</span>
-			<span class="nc">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="nc">HttpMessageConverter</span><span class="o">&lt;?&gt;&gt;</span> <span class="n">converterType</span><span class="o">)</span> <span class="o">{</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------ DecryptRequestBodyController ------------ "</span><span class="o">);</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"supports:{}"</span><span class="o">,</span> <span class="n">methodParameter</span><span class="o">.</span><span class="na">getContainingClass</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="nc">UserController</span><span class="o">.</span><span class="na">class</span><span class="o">));</span>
-		<span class="k">return</span> <span class="n">methodParameter</span><span class="o">.</span><span class="na">getContainingClass</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="nc">UserController</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-	<span class="o">}</span>
-
-	<span class="nd">@Override</span>
-	<span class="kd">public</span> <span class="nc">HttpInputMessage</span> <span class="nf">beforeBodyRead</span><span class="o">(</span><span class="nc">HttpInputMessage</span> <span class="n">inputMessage</span><span class="o">,</span> <span class="nc">MethodParameter</span> <span class="n">parameter</span><span class="o">,</span> <span class="nc">Type</span> <span class="n">targetType</span><span class="o">,</span>
-			<span class="nc">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="nc">HttpMessageConverter</span><span class="o">&lt;?&gt;&gt;</span> <span class="n">converterType</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span> <span class="o">{</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------ beforeBodyRead ------------ "</span><span class="o">);</span>
-
-		<span class="nc">HttpHeaders</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">inputMessage</span><span class="o">.</span><span class="na">getHeaders</span><span class="o">();</span>
-		<span class="nc">AESUtil</span> <span class="n">aesUtil</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">AESUtil</span><span class="o">();</span>
-
-		<span class="k">try</span> <span class="o">{</span>
-			<span class="nc">InputStream</span> <span class="n">inputStream</span> <span class="o">=</span> <span class="n">inputMessage</span><span class="o">.</span><span class="na">getBody</span><span class="o">();</span>
-			<span class="n">rawData</span> <span class="o">=</span> <span class="nc">IOUtils</span><span class="o">.</span><span class="na">toByteArray</span><span class="o">(</span><span class="n">inputStream</span><span class="o">);</span>
-			<span class="n">decodingBody</span> <span class="o">=</span> <span class="n">aesUtil</span><span class="o">.</span><span class="na">decrypt</span><span class="o">(</span><span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="n">rawData</span><span class="o">,</span> <span class="nc">StandardCharsets</span><span class="o">.</span><span class="na">UTF_8</span><span class="o">));</span>
-			<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"decodingBody:{}"</span><span class="o">,</span> <span class="n">decodingBody</span><span class="o">);</span>
-		<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-			<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-		<span class="o">}</span>
-
-		<span class="k">return</span> <span class="k">new</span> <span class="nf">DecodeHttpInputMessage</span><span class="o">(</span><span class="n">headers</span><span class="o">,</span> <span class="k">new</span> <span class="nc">ByteArrayInputStream</span><span class="o">(</span><span class="n">decodingBody</span><span class="o">.</span><span class="na">getBytes</span><span class="o">()));</span>
-	<span class="o">}</span>
-
-	<span class="nd">@Override</span>
-	<span class="kd">public</span> <span class="nc">Object</span> <span class="nf">afterBodyRead</span><span class="o">(</span><span class="nc">Object</span> <span class="n">body</span><span class="o">,</span> <span class="nc">HttpInputMessage</span> <span class="n">inputMessage</span><span class="o">,</span> <span class="nc">MethodParameter</span> <span class="n">parameter</span><span class="o">,</span> <span class="nc">Type</span> <span class="n">targetType</span><span class="o">,</span>
-			<span class="nc">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="nc">HttpMessageConverter</span><span class="o">&lt;?&gt;&gt;</span> <span class="n">converterType</span><span class="o">)</span> <span class="o">{</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"------------ afterBodyRead ------------ "</span><span class="o">);</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"body:{}"</span><span class="o">,</span> <span class="n">body</span><span class="o">);</span>
-		<span class="k">return</span> <span class="n">body</span><span class="o">;</span>
-	<span class="o">}</span>
-
-	<span class="nd">@Override</span>
-	<span class="kd">public</span> <span class="nc">Object</span> <span class="nf">handleEmptyBody</span><span class="o">(</span><span class="nc">Object</span> <span class="n">body</span><span class="o">,</span> <span class="nc">HttpInputMessage</span> <span class="n">inputMessage</span><span class="o">,</span> <span class="nc">MethodParameter</span> <span class="n">parameter</span><span class="o">,</span>
-			<span class="nc">Type</span> <span class="n">targetType</span><span class="o">,</span> <span class="nc">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="nc">HttpMessageConverter</span><span class="o">&lt;?&gt;&gt;</span> <span class="n">converterType</span><span class="o">)</span> <span class="o">{</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"handleEmptyBody "</span><span class="o">,</span> <span class="n">targetType</span><span class="o">);</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"body:{}"</span><span class="o">,</span> <span class="n">body</span><span class="o">);</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"targetType:{}"</span><span class="o">,</span> <span class="n">targetType</span><span class="o">);</span>
-		<span class="k">return</span> <span class="n">body</span><span class="o">;</span>
-	<span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
-<p>DecodeHttpInputMessage.java 파일입니다.</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.io.InputStream</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">org.springframework.http.HttpHeaders</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.http.HttpInputMessage</span><span class="o">;</span>
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DecodeHttpInputMessage</span> <span class="kd">implements</span> <span class="nc">HttpInputMessage</span> <span class="o">{</span>
-	<span class="kd">private</span> <span class="nc">HttpHeaders</span> <span class="n">headers</span><span class="o">;</span>
-	<span class="kd">private</span> <span class="nc">InputStream</span> <span class="n">body</span><span class="o">;</span>
-
-	<span class="kd">public</span> <span class="nf">DecodeHttpInputMessage</span><span class="o">(</span><span class="nc">HttpHeaders</span> <span class="n">headers</span><span class="o">,</span> <span class="nc">InputStream</span> <span class="n">body</span><span class="o">)</span> <span class="o">{</span>
-		<span class="kd">super</span><span class="o">();</span>
-		<span class="k">this</span><span class="o">.</span><span class="na">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="o">;</span>
-		<span class="k">this</span><span class="o">.</span><span class="na">body</span> <span class="o">=</span> <span class="n">body</span><span class="o">;</span>
-	<span class="o">}</span>
-
-	<span class="nd">@Override</span>
-	<span class="kd">public</span> <span class="nc">HttpHeaders</span> <span class="nf">getHeaders</span><span class="o">()</span> <span class="o">{</span>
-		<span class="c1">// TODO Auto-generated method stub</span>
-		<span class="k">return</span> <span class="n">headers</span><span class="o">;</span>
-	<span class="o">}</span>
-
-	<span class="nd">@Override</span>
-	<span class="kd">public</span> <span class="nc">InputStream</span> <span class="nf">getBody</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">IOException</span> <span class="o">{</span>
-		<span class="c1">// TODO Auto-generated method stub</span>
-		<span class="k">return</span> <span class="n">body</span><span class="o">;</span>
-	<span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="Advice" /><summary type="html"><![CDATA[화 RequestBodyAdvice Http Request를 제어 또는 가공(Decrpt)할 수 있는 또 하나의 영역중 하나가 바로 RequestBodyAdvice 입니다. ArgumentRoslver는 RestController에는 약간의 제약사항이 있으나 RequestBodyAdvice는 그러한 제약사항이 없습니다. 적용하는 방법은 ArgumentResolver와 유사하고 점도 섬세한 제어가 가능합니다.]]></summary></entry></feed>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="Advice" /><summary type="html"><![CDATA[ResponseBodyAdvice Http Response를 제어 또는 가공(Decrpt)할 수 있는 또 하나의 영역중 하나가 바로를 ReponseBodyAdvice 입니다. ReturnValueHandler는 RestController에는 적용할 수 없습니다. RequestBodyAdvice는 그러한 제약사항이 없습니다. 적용하는 방법은 RequestBodyAdvice와 유사합니다.]]></summary></entry></feed>
