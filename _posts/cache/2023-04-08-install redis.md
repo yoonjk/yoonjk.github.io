@@ -1,12 +1,12 @@
 ---
-title: redis 설치 - Centos
+title: Redis 설치 - Centos
 categories:
   - cache 
 tags: 
   - redis 
 --- 
 
-## redis 설치 준비
+## Redis 설치 준비
 Redis를 다음의 절차로 설치합니다.  
 - OS 업데이트
 - Development Tools 설치
@@ -37,7 +37,7 @@ make
 make install
 ```
 
-## redis 서버 실행
+## Redis 서버 실행
 redis 를 install 후 redis 서버를 실행합니다. 
 ```
 src/redis-server redis.conf

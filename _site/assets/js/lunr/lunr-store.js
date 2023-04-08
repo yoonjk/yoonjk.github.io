@@ -479,9 +479,15 @@ var store = [{
         "url": "/cache/string/",
         "teaser": null
       },{
-        "title": "redis 설치 - Centos",
-        "excerpt":"redis 설치 준비 Redis를 다음의 절차로 설치합니다. OS 업데이트 Development Tools 설치 redis download redis build redis install Centos7 OS 버전을 최신으로 업그레이드 하고, Development Tools를 설치합니다. Redis download site 에 가서 원하는 redis 를 확인하고 address link를 복사합니다. sudo yum update -y yum groupinstall 'Development Tools' sudo wget http://download.redis.io/releases/redis-7.0.10.tar.gz...","categories": ["cache"],
+        "title": "Redis 설치 - Centos",
+        "excerpt":"Redis 설치 준비 Redis를 다음의 절차로 설치합니다. OS 업데이트 Development Tools 설치 redis download redis build redis install Centos7 OS 버전을 최신으로 업그레이드 하고, Development Tools를 설치합니다. Redis download site 에 가서 원하는 redis 를 확인하고 address link를 복사합니다. sudo yum update -y yum groupinstall 'Development Tools' sudo wget http://download.redis.io/releases/redis-7.0.10.tar.gz...","categories": ["cache"],
         "tags": ["redis"],
         "url": "/cache/install-redis/",
+        "teaser": null
+      },{
+        "title": "Redis Sentinel 구성",
+        "excerpt":"Redis Sentinel 구성 Redis를 다음의 링크를 참조하여 설치합니다. Redis 를 HA 구성하는 방법은 몇가지 방법은 아래와 같이 구성할 수 있습니다. 첫번째 방법은 Master가 장애가 발생하면 서비스 장애가 발생하는 구성이지만 구성은 간단합니다. 두번째 방법 Sentinel 방법은 Redis Master가 장애가 발생하여도 slave가 master로 승격되어 지속적인 서비스가 가능합니다. 장애가 발생했던 master가 복귀되면 이전의...","categories": ["cache"],
+        "tags": ["redis","sentinel"],
+        "url": "/cache/setup-sentinel-redis/",
         "teaser": null
       }]
