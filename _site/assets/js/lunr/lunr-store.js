@@ -444,7 +444,7 @@ var store = [{
         "teaser": null
       },{
         "title": "Getting Start Redis - Bitmap",
-        "excerpt":"Bitmaps 비트맵은 실제 데이터 형식이 아니라 String 형식에 정의된 비트 지향 작업 집합입니다. 문자열은 이진 안전 Blob이고 최대 길이는 512MB이므로 최대 2^32비트를 설정하는 데 적합합니다.. 비트 연산은 두 그룹으로 나뉩니다: 비트를 1 또는 0으로 설정하거나 값을 가져오는 것과 같은 상수 시간 단일 비트 연산과 비트 그룹에 대한 연산(예: 지정된 비트...","categories": ["cache"],
+        "excerpt":"Bitmaps 비트맵은 실제 데이터 형식이 아니라 String 형식에 정의된 비트 지향 작업 집합입니다. 문자열은 이진 안전 Blob이고 최대 길이는 512MB이므로 최대 2^32비트를 설정하는 데 적합합니다. 비트 연산은 두 그룹으로 나뉩니다: 비트를 1 또는 0으로 설정하거나 값을 가져오는 것과 같은 상수 시간 단일 비트 연산과 비트 그룹에 대한 연산(예: 지정된 비트...","categories": ["cache"],
         "tags": ["redis"],
         "url": "/cache/bitmap/",
         "teaser": null
