@@ -35,8 +35,8 @@ tags:
 > zadd hackers 1912 "Alan Turing"
 (integer) 1
 ```
-보시다시피 ZADD는 SADD와 유사하지만 점수 인 하나의 추가 인수 (추가 할 요소 앞에 배치)를 사용합니다.  
-ZADD(https://redis.io/commands/zadd)는 또한 가변적이므로 위의 예에서 사용되지 않더라도 여러 점수-값 쌍을 자유롭게 지정할 수 있습니다..
+보시다시피 [ZADD](https://redis.io/commands/zadd)는 [SADD](https://redis.io/commands/sadd)와 유사하지만 점수 인 하나의 추가 인수 (추가 할 요소 앞에 배치)를 사용합니다.  
+[ZADD](https://redis.io/commands/zadd)는 또한 가변적이므로 위의 예에서 사용되지 않더라도 여러 점수-값 쌍을 자유롭게 지정할 수 있습니다..
 정렬 된 세트를 사용하면 실제로 이미 정렬되어 있기 때문에 출생 연도별로 정렬 된 해커 목록을 반환하는 것은 간단합니다..
 구현 참고 사항 : 정렬 된 세트는 건너 뛰기 목록과 해시 테이블을 모두 포함하는 이중 포트 데이터 구조를 통해 구현되므로 요소를 추가 할 때마다 Redis는 O (log (N)) 작업을 수행합니다. 좋지만 정렬 된 요소를 요청하면 Redis는 작업을 전혀 수행 할 필요가 없으며 이미 모두 정렬되어 있습니다.:
 ```bash
@@ -113,7 +113,13 @@ Redis에 음의 무한대와 1950 사이의 점수로 모든 요소를 반환하
 
 Lexicographical scores
 최신 버전의 Redis 2.8에서는 정렬된 집합의 요소가 모두 동일한 동일한 점수로 삽입된다고 가정하고 사전순으로 범위를 가져올 수 있는 새로운 기능이 도입되었습니다(요소는 C memcmp 함수와 비교  되므로 데이터 정렬이 없고 모든 Redis 인스턴스가 동일한 출력으로 응답함).
-사전 범위로 작동하는 주요 명령은 [ZRANGEBYLEX](https://redis.io/commands/zrangebylex), [ZREVRANGEBYLEX](https://redis.io/commands/zrevrangebylex), [ZREMRANGEBYLEX](https://redis.io/commands/zremrangebylex) 및  [ZLEXCOUNT](https://redis.io/commands/zlexcount)입니다..
+
+사전 범위로 작동하는 주요 명령은  
+- [ZRANGEBYLEX](https://redis.io/commands/zrangebylex)  
+- [ZREVRANGEBYLEX](https://redis.io/commands/zrevrangebylex)  
+- [ZREMRANGEBYLEX](https://redis.io/commands/zremrangebylex)    
+- [ZLEXCOUNT](https://redis.io/commands/zlexcount)  
+
 예를 들어 유명한 해커 목록을 다시 추가하지만 이번에는 모든 요소에 대해 0점을 사용합니다.:
 ```bash
 > zadd hackers 0 "Alan Kay" 0 "Sophie Wilson" 0 "Richard Stallman" 0
