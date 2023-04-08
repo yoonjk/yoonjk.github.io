@@ -7,9 +7,13 @@ tags:
 --- 
 
 ## redis 설치 준비
+Redis를 다음의 절차로 설치합니다.  
 - OS 업데이트
 - Development Tools 설치
-- 
+- redis download
+- redis build
+- redis install  
+
 Centos7 OS 버전을 최신으로 업그레이드 하고, Development Tools를 설치합니다. Redis [download](http://download.redis.io/releases/) site 에 가서 원하는 redis 를 확인하고 address link를 복사합니다.
 ```bash
 sudo yum update -y

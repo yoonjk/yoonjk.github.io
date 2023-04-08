@@ -480,7 +480,7 @@ var store = [{
         "teaser": null
       },{
         "title": "redis 설치 - Centos",
-        "excerpt":"redis 설치 준비 OS 업데이트 Development Tools 설치 Centos7 OS 버전을 최신으로 업그레이드 하고, Development Tools를 설치합니다. Redis download site 에 가서 원하는 redis 를 확인하고 address link를 복사합니다. sudo yum update -y yum groupinstall 'Development Tools' sudo wget http://download.redis.io/releases/redis-7.0.10.tar.gz tar xvzf redis-7.0.10.tar.gz cd redis-7.0.10 Redis 압축파일을 해제한 후 make...","categories": ["cache"],
+        "excerpt":"redis 설치 준비 Redis를 다음의 절차로 설치합니다. OS 업데이트 Development Tools 설치 redis download redis build redis install Centos7 OS 버전을 최신으로 업그레이드 하고, Development Tools를 설치합니다. Redis download site 에 가서 원하는 redis 를 확인하고 address link를 복사합니다. sudo yum update -y yum groupinstall 'Development Tools' sudo wget http://download.redis.io/releases/redis-7.0.10.tar.gz...","categories": ["cache"],
         "tags": ["redis"],
         "url": "/cache/install-redis/",
         "teaser": null
