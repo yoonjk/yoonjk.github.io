@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-08T12:51:11+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Getting Start Redis - String</title><link href="http://localhost:4000/cache/string/" rel="alternate" type="text/html" title="Getting Start Redis - String" /><published>2023-04-07T00:00:00+09:00</published><updated>2023-04-07T00:00:00+09:00</updated><id>http://localhost:4000/cache/string</id><content type="html" xml:base="http://localhost:4000/cache/string/"><![CDATA[<h2 id="strings">Strings</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-08T12:53:58+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Getting Start Redis - String</title><link href="http://localhost:4000/cache/string/" rel="alternate" type="text/html" title="Getting Start Redis - String" /><published>2023-04-07T00:00:00+09:00</published><updated>2023-04-07T00:00:00+09:00</updated><id>http://localhost:4000/cache/string</id><content type="html" xml:base="http://localhost:4000/cache/string/"><![CDATA[<h2 id="strings">Strings</h2>
 <p>Redis 문자열 유형은 Redis 키와 연결할 수 있는 가장 간단한 값 유형입니다. Memcached의 유일한 데이터 유형이므로 신규 사용자가 Redis에서 사용하는 것도 매우 자연스러운 일입니다.
 Redis 키는 문자열이므로 문자열 유형도 값으로 사용할 때 문자열을 다른 문자열에 매핑합니다. 문자열 데이터 형식은 HTML 조각 또는 페이지 캐싱과 같은 다양한 사용 사례에 유용합니다.
 redis-cli를 사용하여 문자열 유형을 약간 사용해 보겠습니다<br />
 (모든 예제는  이 자습서에서 redis-cli를 통해 수행됨).</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">set </span>mykey somevalue
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="nb">set </span>mykey somevalue
 OK
-get mykey
+<span class="o">&gt;</span> get mykey
 <span class="s2">"somevalue"</span>
 </code></pre></div></div>
 
@@ -18,9 +18,9 @@ get mykey
 
 <p><a href="https://redis.io/commands/set">SET</a> 명령에는 추가 인수로 제공되는 흥미로운 옵션이 있습니다. 예를 들어  키가 이미 존재하는 경우 <a href="https://redis.io/commands/set">SET</a>에 실패하도록 요청하거나 그 반대로 키가 이미 존재하는 경우에만 성공하도록 요청할 수 있습니다.:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">set </span>mykey newval nx
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="nb">set </span>mykey newval nx
 <span class="o">(</span>nil<span class="o">)</span>
-<span class="nb">set </span>mykey newval xx
+<span class="o">&gt;</span> <span class="nb">set </span>mykey newval xx
 OK
 </code></pre></div></div>
 
@@ -28,13 +28,13 @@ OK
 원자성(atomicity)은 데이터베이스 시스템에서 ACID 트랜잭션 특성 중의 하나입니다. 하나의 원자 트랜잭션은 모두 성공하거나 또는 실패하는 데이터베이스 운용의 집합이다. 원자성의 보증은 데이터베이스의 부분적인 갱신으로 더 큰 문제가 야기되는 것을 방지합니다.
 :</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">set </span>counter 100
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="nb">set </span>counter 100
 OK
-incr counter
+<span class="o">&gt;</span> incr counter
 <span class="o">(</span>integer<span class="o">)</span> 101
-incr counter
+<span class="o">&gt;</span> incr counter
 <span class="o">(</span>integer<span class="o">)</span> 102
-incrby counter 50
+<span class="o">&gt;</span> incrby counter 50
 <span class="o">(</span>integer<span class="o">)</span> 152
 </code></pre></div></div>
 
@@ -61,13 +61,13 @@ Altering and querying the key space
 특정 유형에 정의되지 않았지만 키 공간과 상호 작용하는 데 유용한 명령이 있으므로 모든 유형의 키와 함께 사용할 수 있습니다..
 예를 들어, EXISTS 명령은  주어진 키가 데이터베이스에 존재하는지 여부를 알리기 위해 1 또는 0을 반환하는 반면, DEL 명령은 값이 무엇이든 키 및 관련 값을 삭제합니다.</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">set </span>mykey hello
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="nb">set </span>mykey hello
 OK
-exists mykey
+<span class="o">&gt;</span> exists mykey
 <span class="o">(</span>integer<span class="o">)</span> 1
-del mykey
+<span class="o">&gt;</span> del mykey
 <span class="o">(</span>integer<span class="o">)</span> 1
-exists mykey
+<span class="o">&gt;</span> exists mykey
 <span class="o">(</span>integer<span class="o">)</span> 0
 </code></pre></div></div>
 
@@ -93,19 +93,19 @@ none
 (즉, Redis는 키가 만료되는 날짜를 저장함).</p>
 
 <p>EXPIRE 명령을 사용하여 키의 만료 설정:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">set </span>key some-value
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="nb">set </span>key some-value
 OK
-expire key 5
+<span class="o">&gt;</span> expire key 5
 <span class="o">(</span>integer<span class="o">)</span> 1
-get key <span class="o">(</span>immediately<span class="o">)</span>
+<span class="o">&gt;</span> get key <span class="o">(</span>immediately<span class="o">)</span>
 <span class="s2">"some-value"</span>
-get key <span class="o">(</span>after some <span class="nb">time</span><span class="o">)</span>
+<span class="o">&gt;</span> get key <span class="o">(</span>after some <span class="nb">time</span><span class="o">)</span>
 <span class="o">(</span>nil<span class="o">)</span>
 </code></pre></div></div>
 <p>두 번째 호출이 5초 이상 지연되었으므로 두 GET 호출 사이에 키가 사라졌습니다. 위의 예에서는  만료를 설정하기 위해 EXPIRE를 사용했습니다 (만료를 제거하고 키를 영원히 지속시키기 위해 PERSIST를 사용할 수있는  것처럼 이미 만료 된 키에 다른 만료를 설정하는 데에도 사용할 수  있습니다). 그러나 다른 Redis 명령을 사용하여 만료 된 키를 만들 수도 있습니다. 예를 들어 SET 옵션 사용:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">set </span>key 100 ex 10
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="nb">set </span>key 100 ex 10
 OK
-ttl key
+<span class="o">&gt;</span> ttl key
 <span class="o">(</span>integer<span class="o">)</span> 9
 </code></pre></div></div>
 <p>위의 예제에서는 문자열 값이 100이고 만료 시간이 10초인 키를 설정합니다. 나중에  TTL 명령이 호출되어 키의 남은 생존 시간을 확인합니다.
@@ -139,48 +139,49 @@ Redis List는 데이터베이스 시스템의 경우 매우 빠른 방법으로 
 큰 요소 컬렉션의 중간에 빠르게 액세스하는 것이 중요한 경우 정렬된 집합이라고 하는 다른 데이터 구조를 사용할 수 있습니다. 정렬된 집합은 이 자습서의 뒷부분에서 다룹니다..
 First steps with Redis Lists
 LPUSH 명령은  왼쪽(머리)의 목록에 새 요소를 추가하는 반면, RPUSH 명령은 오른쪽(맨 끝)의 목록에 새 요소를 추가합니다. 마지막으로 LRANGE 명령은 목록에서 요소 범위를 추출합니다.:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> rpush mylist A
-<span class="o">(</span>integer<span class="o">)</span> 1
-<span class="o">&gt;</span> rpush mylist B
-<span class="o">(</span>integer<span class="o">)</span> 2
-<span class="o">&gt;</span> lpush mylist first
-<span class="o">(</span>integer<span class="o">)</span> 3
-<span class="o">&gt;</span> lrange mylist 0 <span class="nt">-1</span>
-1<span class="o">)</span> <span class="s2">"first"</span>
-2<span class="o">)</span> <span class="s2">"A"</span>
-3<span class="o">)</span> <span class="s2">"B"</span>
-</code></pre></div></div>
-<p>LRANGE는  반환할 범위의 첫 번째 요소와 마지막 요소인 두 개의 인덱스를 사용합니다. 두 인덱스 모두 음수일 수 있으므로 Redis에게 끝에서 계산을 시작하도록 지시합니다. 따라서 -1은 마지막 요소이고 -2는 목록의 끝에서 두 번째 요소입니다..
+<blockquote>
+  <p>rpush mylist A
+(integer) 1
+rpush mylist B
+(integer) 2
+lpush mylist first
+(integer) 3
+lrange mylist 0 -1
+1) “first”
+2) “A”
+3) “B”</p>
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LRANGE는  반환할 범위의 첫 번째 요소와 마지막 요소인 두 개의 인덱스를 사용합니다. 두 인덱스 모두 음수일 수 있으므로 Redis에게 끝에서 계산을 시작하도록 지시합니다. 따라서 -1은 마지막 요소이고 -2는 목록의 끝에서 두 번째 요소입니다..
 보시다시피 RPUSH는  목록의 오른쪽에 요소를 추가하고 최종 LPUSH는  왼쪽에 요소를 추가했습니다..
-두 명령 모두 가변 명령이므로 한 번의 호출로 여러 요소를 목록으로 자유롭게 푸시 할 수 있습니다.:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> rpush mylist 1 2 3 4 5 <span class="s2">"foo bar"</span>
-<span class="o">(</span>integer<span class="o">)</span> 9
-<span class="o">&gt;</span> lrange mylist 0 <span class="nt">-1</span>
-1<span class="o">)</span> <span class="s2">"first"</span>
-2<span class="o">)</span> <span class="s2">"A"</span>
-3<span class="o">)</span> <span class="s2">"B"</span>
-4<span class="o">)</span> <span class="s2">"1"</span>
-5<span class="o">)</span> <span class="s2">"2"</span>
-6<span class="o">)</span> <span class="s2">"3"</span>
-7<span class="o">)</span> <span class="s2">"4"</span>
-8<span class="o">)</span> <span class="s2">"5"</span>
-9<span class="o">)</span> <span class="s2">"foo bar"</span>
-</code></pre></div></div>
-<p>Redis 목록에 정의된 중요한 작업은 요소를 팝하는 기능입니다. 요소를 팝핑하는 작업은 목록에서 요소를 검색하는 동시에 목록에서 제거하는 작업입니다. 목록의 양쪽에 요소를 푸시하는 방법과 유사하게 왼쪽과 오른쪽에서 요소를 팝 할 수 있습니다.:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> rpush mylist a b c
+두 명령 모두 가변 명령이므로 한 번의 호출로 여러 요소를 목록으로 자유롭게 푸시 할 수 있습니다.:
+```bash
+rpush mylist 1 2 3 4 5 "foo bar"
+(integer) 9
+lrange mylist 0 -1
+1) "first"
+2) "A"
+3) "B"
+4) "1"
+5) "2"
+6) "3"
+7) "4"
+8) "5"
+9) "foo bar"
+</code></pre></div>  </div>
+  <p>Redis 목록에 정의된 중요한 작업은 요소를 팝하는 기능입니다. 요소를 팝핑하는 작업은 목록에서 요소를 검색하는 동시에 목록에서 제거하는 작업입니다. 목록의 양쪽에 요소를 푸시하는 방법과 유사하게 왼쪽과 오른쪽에서 요소를 팝 할 수 있습니다.:</p>
+  <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rpush mylist a b c
 <span class="o">(</span>integer<span class="o">)</span> 3
-<span class="o">&gt;</span> rpop mylist
+rpop mylist
 <span class="s2">"c"</span>
-<span class="o">&gt;</span> rpop mylist
+rpop mylist
 <span class="s2">"b"</span>
-<span class="o">&gt;</span> rpop mylist
+rpop mylist
 <span class="s2">"a"</span>
-</code></pre></div></div>
-<p>세 개의 요소를 추가하고 세 개의 요소를 팝했으므로 이 명령 시퀀스가 끝나면 목록이 비어 있고 더 이상 팝업할 요소가 없습니다. 또 다른 요소를 터뜨리려고 하면 이것이 우리가 얻는 결과입니다.:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> rpop mylist
+</code></pre></div>  </div>
+  <p>세 개의 요소를 추가하고 세 개의 요소를 팝했으므로 이 명령 시퀀스가 끝나면 목록이 비어 있고 더 이상 팝업할 요소가 없습니다. 또 다른 요소를 터뜨리려고 하면 이것이 우리가 얻는 결과입니다.:</p>
+  <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rpop mylist
 <span class="o">(</span>nil<span class="o">)</span>
-</code></pre></div></div>
-<p>Redis는 목록에 요소가 없음을 알리기 위해 NULL 값을 반환했습니다..
+</code></pre></div>  </div>
+  <p>Redis는 목록에 요소가 없음을 알리기 위해 NULL 값을 반환했습니다..
 Common use cases for lists
 목록은 여러 작업에 유용하며 두 가지 매우 대표적인 사용 사례는 다음과 같습니다.:
 •	사용자가 소셜 네트워크에 게시 한 최신 업데이트 기억.
@@ -195,20 +196,20 @@ Capped lists
 Redis를 사용하면 목록을 제한 된 컬렉션으로 사용할 수 있으며 최신 N 항목 만 기억하고 LTRIM 명령을 사용하여 가장 오래된 항목을 모두 삭제할 수 있습니다..
 LTRIM 명령은 LRANGE와 유사하지만 지정된 요소 범위를 표시하는 대신 이 범위를 새 목록 값으로 설정합니다. 주어진 범위를 벗어난 모든 요소가 제거됩니다..
 An example will make it more clear:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> rpush mylist 1 2 3 4 5
+  <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rpush mylist 1 2 3 4 5
 <span class="o">(</span>integer<span class="o">)</span> 5
-<span class="o">&gt;</span> ltrim mylist 0 2
+ltrim mylist 0 2
 OK
-<span class="o">&gt;</span> lrange mylist 0 <span class="nt">-1</span>
+lrange mylist 0 <span class="nt">-1</span>
 1<span class="o">)</span> <span class="s2">"1"</span>
 2<span class="o">)</span> <span class="s2">"2"</span>
 3<span class="o">)</span> <span class="s2">"3"</span>
-</code></pre></div></div>
-<p>위의 LTRIM 명령은 Redis에게 인덱스 0에서 2까지의 목록 요소 만 가져 오도록 지시하고 다른 모든 것은 삭제됩니다. 이것은 매우 간단하지만 유용한 패턴을 허용합니다 : 목록 푸시 작업 + 목록 트리밍 작업을 함께 수행하여 새 요소를 추가하고 제한을 초과하는 요소를 삭제합니다.:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LPUSH mylist &lt;some element&gt;
+</code></pre></div>  </div>
+  <p>위의 LTRIM 명령은 Redis에게 인덱스 0에서 2까지의 목록 요소 만 가져 오도록 지시하고 다른 모든 것은 삭제됩니다. 이것은 매우 간단하지만 유용한 패턴을 허용합니다 : 목록 푸시 작업 + 목록 트리밍 작업을 함께 수행하여 새 요소를 추가하고 제한을 초과하는 요소를 삭제합니다.:</p>
+  <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LPUSH mylist &lt;some element&gt;
 LTRIM mylist 0 999
-</code></pre></div></div>
-<p>위의 조합은 새 요소를 추가하고 1000개의 최신 요소만 목록에 가져옵니다. LRANGE를 사용하면 아주 오래된 데이터를 기억할 필요없이 상위 항목에 액세스 할 수 있습니다..
+</code></pre></div>  </div>
+  <p>위의 조합은 새 요소를 추가하고 1000개의 최신 요소만 목록에 가져옵니다. LRANGE를 사용하면 아주 오래된 데이터를 기억할 필요없이 상위 항목에 액세스 할 수 있습니다..
 Note: LRANGE는 기술적으로 O (N) 명령이지만 목록의 머리 또는 꼬리쪽으로 작은 범위에 액세스하는 것은 일정한 시간 작업입니다..
 Blocking operations on lists
 목록에는 대기열을 구현하는 데 적합한 특수 기능이 있으며 일반적으로 프로세스 간 통신 시스템의 빌딩 블록으로 사용됩니다. 차단 작업.
@@ -216,22 +217,22 @@ Blocking operations on lists
 •	항목을 목록에 푸시하기 위해 생산자는 LPUSH를 호출합니다..
 •	목록에서 항목을 추출/처리하기 위해 소비자는 RPOP를 호출합니다..
 그러나 때로는 목록이 비어 있고 처리 할 것이 없으므로 RPOP는  NULL을 반환합니다. 이 경우 소비자는 잠시 기다렸다가 RPOP를 사용하여 다시 시도해야 합니다. 이것을 폴링이라고하며 몇 가지 단점이 있기 때문에이 맥락에서 좋은 생각이 아닙니다.:</p>
-<ol>
-  <li>Redis와 클라이언트가 쓸모없는 명령을 처리하도록합니다 (목록이 비어있을 때 모든 요청은 실제 작업을 수행하지 않고 NULL을 반환합니다).</li>
-  <li>작업자가 NULL을 받은 후 잠시 기다리므로 항목 처리에 지연을 추가합니다. 지연을 줄이기 위해 RPOP에 대한 호출 사이에 더 적은 대기 시간을 할애할 수 있으며, 문제 번호 1, 즉 Redis에 대한 더 쓸모없는 호출을 증폭시키는 효과가 있습니다..
+  <ol>
+    <li>Redis와 클라이언트가 쓸모없는 명령을 처리하도록합니다 (목록이 비어있을 때 모든 요청은 실제 작업을 수행하지 않고 NULL을 반환합니다).</li>
+    <li>작업자가 NULL을 받은 후 잠시 기다리므로 항목 처리에 지연을 추가합니다. 지연을 줄이기 위해 RPOP에 대한 호출 사이에 더 적은 대기 시간을 할애할 수 있으며, 문제 번호 1, 즉 Redis에 대한 더 쓸모없는 호출을 증폭시키는 효과가 있습니다..
 따라서 Redis는 목록이 비어 있는 경우 차단할 수 있는 RPOP 및 LPOP 버전인 BRPOP 및 BLPOP라는 명령을 구현합니다. 새  요소가 목록에 추가되거나 사용자 지정 시간 초과에 도달할 때만 호출자에게 반환됩니다. .
 이것은  작업자에서 사용할 수 있는 BRPOP 호출의 예입니다.:
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> brpop tasks 5
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brpop tasks 5
 1<span class="o">)</span> <span class="s2">"tasks"</span>
 2<span class="o">)</span> <span class="s2">"do_something"</span>
-</code></pre></div>    </div>
-    <p>즉, “목록 작업의 요소를 기다리지 만 5 초 후에 사용할 수있는 요소가 없으면 반환합니다.”.
+</code></pre></div>      </div>
+      <p>즉, “목록 작업의 요소를 기다리지 만 5 초 후에 사용할 수있는 요소가 없으면 반환합니다.”.
 요소를 영원히 기다리는 시간 제한으로 0을 사용할 수 있으며, 동시에 여러 목록에서 대기하고 첫 번째 목록이 요소를 받을 때 알림을 받기 위해 하나가 아닌 여러 목록을 지정할 수도 있습니다..
 BRPOP에 대해 주의해야 할 몇 가지 사항:</p>
-  </li>
-  <li>클라이언트는 정렬된 방식으로 제공됩니다: 목록 대기를 차단한 첫 번째 클라이언트는 다른 클라이언트에 의해 요소가 푸시될 때 먼저 제공됩니다..</li>
-  <li>반환 값은 RPOP와 다릅니다 : BRPOP 및 BLPOP이  여러 목록의 요소를 기다리는 것을 차단할 수 있기 때문에 키 이름도 포함하므로 2 요소 배열입니다..</li>
-  <li>시간 제한에 도달하면 NULL이 반환됩니다..
+    </li>
+    <li>클라이언트는 정렬된 방식으로 제공됩니다: 목록 대기를 차단한 첫 번째 클라이언트는 다른 클라이언트에 의해 요소가 푸시될 때 먼저 제공됩니다..</li>
+    <li>반환 값은 RPOP와 다릅니다 : BRPOP 및 BLPOP이  여러 목록의 요소를 기다리는 것을 차단할 수 있기 때문에 키 이름도 포함하므로 2 요소 배열입니다..</li>
+    <li>시간 제한에 도달하면 NULL이 반환됩니다..
 목록 및 차단 작업에 대해 알아야 할 사항이 더 있습니다. 다음에 대해 자세히 읽어 보시기 바랍니다.:
 •	LMOVE를 사용하여 더 안전한 대기열 또는 순환 대기열을 구축할 수 있습니다..
 •	BLMOVE라는 명령의 차단 변형도 있습니다..
@@ -239,49 +240,50 @@ Automatic creation and removal of keys
 지금까지 예제에서는 요소를 푸시하기 전에 빈 목록을 만들거나 더 이상 내부에 요소가 없을 때 빈 목록을 제거 할 필요가 없었습니다. 목록이 비어있을 때 키를 삭제하거나 키가 존재하지 않고 요소를 추가하려는 경우 빈 목록을 만드는 것은 Redis의 책임입니다 (예 : LPUSH를 사용하여)..
 이는 목록에만 국한된 것이 아니라 여러 요소(스트림, 집합, 정렬된 집합 및 해시)로 구성된 모든 Redis 데이터 형식에 적용됩니다.
 기본적으로 세 가지 규칙으로 행동을 요약 할 수 있습니다.:</li>
-  <li>집계 데이터 형식에 요소를 추가할 때 대상 키가 없으면 요소를 추가하기 전에 빈 집계 데이터 형식이 만들어집니다..</li>
-  <li>집계 데이터 유형에서 요소를 제거할 때 값이 비어 있으면 키가 자동으로 삭제됩니다. Stream 데이터 형식은 이 규칙의 유일한 예외입니다..</li>
-  <li>LLEN(목록의 길이를 반환함)과 같은 읽기 전용 명령 또는 빈 키를 사용하여 요소를 제거하는 쓰기 명령을 호출하면 키가 명령이 찾을 것으로 예상되는 유형의 빈 집계 유형을 보유하고 있는 경우와 항상 동일한 결과가 생성됩니다..
+    <li>집계 데이터 형식에 요소를 추가할 때 대상 키가 없으면 요소를 추가하기 전에 빈 집계 데이터 형식이 만들어집니다..</li>
+    <li>집계 데이터 유형에서 요소를 제거할 때 값이 비어 있으면 키가 자동으로 삭제됩니다. Stream 데이터 형식은 이 규칙의 유일한 예외입니다..</li>
+    <li>LLEN(목록의 길이를 반환함)과 같은 읽기 전용 명령 또는 빈 키를 사용하여 요소를 제거하는 쓰기 명령을 호출하면 키가 명령이 찾을 것으로 예상되는 유형의 빈 집계 유형을 보유하고 있는 경우와 항상 동일한 결과가 생성됩니다..
 Examples of rule 1:
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; del mylist
+      <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>del mylist
 (integer) 1
-&gt; lpush mylist 1 2 3
+lpush mylist 1 2 3
 (integer) 3
-</code></pre></div>    </div>
-    <p>However we can’t perform operations against the wrong type if the key exists:</p>
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="nb">set </span>foo bar
+</code></pre></div>      </div>
+      <p>However we can’t perform operations against the wrong type if the key exists:</p>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">set </span>foo bar
 OK
-<span class="o">&gt;</span> lpush foo 1 2 3
-</code></pre></div>    </div>
-    <p>(error) WRONGTYPE Operation against a key holding the wrong kind of value</p>
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="nb">type </span>foo
+lpush foo 1 2 3
+</code></pre></div>      </div>
+      <p>(error) WRONGTYPE Operation against a key holding the wrong kind of value</p>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">type </span>foo
 string
-</code></pre></div>    </div>
-    <p>Example of rule 2:</p>
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> lpush mylist 1 2 3
+</code></pre></div>      </div>
+      <p>Example of rule 2:</p>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lpush mylist 1 2 3
 <span class="o">(</span>integer<span class="o">)</span> 3
-<span class="o">&gt;</span> exists mylist
+exists mylist
 <span class="o">(</span>integer<span class="o">)</span> 1
-<span class="o">&gt;</span> lpop mylist
+lpop mylist
 <span class="s2">"3"</span>
-<span class="o">&gt;</span> lpop mylist
+lpop mylist
 <span class="s2">"2"</span>
-<span class="o">&gt;</span> lpop mylist
+lpop mylist
 <span class="s2">"1"</span>
-<span class="o">&gt;</span> exists mylist
+exists mylist
 <span class="o">(</span>integer<span class="o">)</span> 0
-</code></pre></div>    </div>
-    <p>The key no longer exists after all the elements are popped.
+</code></pre></div>      </div>
+      <p>The key no longer exists after all the elements are popped.
 Example of rule 3:</p>
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> del mylist
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>del mylist
 <span class="o">(</span>integer<span class="o">)</span> 0
-<span class="o">&gt;</span> llen mylist
+llen mylist
 <span class="o">(</span>integer<span class="o">)</span> 0
-<span class="o">&gt;</span> lpop mylist
+lpop mylist
 <span class="o">(</span>nil<span class="o">)</span>
-</code></pre></div>    </div>
-  </li>
-</ol>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><summary type="html"><![CDATA[List List 데이터 유형을 설명하려면 List라는 용어가 정보 기술 담당자에 의해 부적절한 방식으로 자주 사용되기 때문에 약간의 이론으로 시작하는 것이 좋습니다. 예를 들어 “파이썬 목록”은 이름이 암시하는 것 (연결 목록)이 아니라 배열 (실제로 Ruby에서는 동일한 데이터 유형을 배열이라고 함)입니다.. 매우 일반적인 관점에서 List는 정렬된 요소의 시퀀스일 뿐입니다: 10,20,1,2,3은 목록입니다. 그러나 Array를 사용하여 구현된 List의 속성은 연결된 목록을 사용하여 구현된 List의 속성과 매우 다릅니다.. Redis 목록은 연결된 목록을 통해 구현됩니다. 즉, 목록 내에 수백만 개의 요소가 있더라도 목록의 머리 또는 꼬리에 새 요소를 추가하는 작업은 일정한 시간에 수행됩니다. LPUSH 명령을 사용하여 새 요소를 10개의 요소가 있는 목록의 헤드에 추가하는 속도는 1,000만 개의 요소가 있는 목록의 헤드에 요소를 추가하는 것과 같습니다. 단점은 무엇입니까? 인덱스로 요소에 액세스하는 것은 Array (일정한 시간 인덱싱 된 액세스)로 구현 된 목록에서 매우 빠르며 연결된 목록으로 구현 된 목록 (액세스 된 요소의 인덱스에 비례하는 작업량이 필요한 경우)에서는 그렇게 빠르지 않습니다.. Redis List는 데이터베이스 시스템의 경우 매우 빠른 방법으로 매우 긴 목록에 요소를 추가할 수 있어야 하기 때문에 연결된 목록으로 구현됩니다. 잠시 후에 볼 수 있듯이 또 다른 강력한 이점은 Redis 목록을 일정한 시간에 일정한 길이로 가져올 수 있다는 것입니다.. 큰 요소 컬렉션의 중간에 빠르게 액세스하는 것이 중요한 경우 정렬된 집합이라고 하는 다른 데이터 구조를 사용할 수 있습니다. 정렬된 집합은 이 자습서의 뒷부분에서 다룹니다.. First steps with Redis Lists LPUSH 명령은 왼쪽(머리)의 목록에 새 요소를 추가하는 반면, RPUSH 명령은 오른쪽(맨 끝)의 목록에 새 요소를 추가합니다. 마지막으로 LRANGE 명령은 목록에서 요소 범위를 추출합니다.: &gt; rpush mylist A (integer) 1 &gt; rpush mylist B (integer) 2 &gt; lpush mylist first (integer) 3 &gt; lrange mylist 0 -1 1) "first" 2) "A" 3) "B" LRANGE는 반환할 범위의 첫 번째 요소와 마지막 요소인 두 개의 인덱스를 사용합니다. 두 인덱스 모두 음수일 수 있으므로 Redis에게 끝에서 계산을 시작하도록 지시합니다. 따라서 -1은 마지막 요소이고 -2는 목록의 끝에서 두 번째 요소입니다.. 보시다시피 RPUSH는 목록의 오른쪽에 요소를 추가하고 최종 LPUSH는 왼쪽에 요소를 추가했습니다.. 두 명령 모두 가변 명령이므로 한 번의 호출로 여러 요소를 목록으로 자유롭게 푸시 할 수 있습니다.: &gt; rpush mylist 1 2 3 4 5 "foo bar" (integer) 9 &gt; lrange mylist 0 -1 1) "first" 2) "A" 3) "B" 4) "1" 5) "2" 6) "3" 7) "4" 8) "5" 9) "foo bar" Redis 목록에 정의된 중요한 작업은 요소를 팝하는 기능입니다. 요소를 팝핑하는 작업은 목록에서 요소를 검색하는 동시에 목록에서 제거하는 작업입니다. 목록의 양쪽에 요소를 푸시하는 방법과 유사하게 왼쪽과 오른쪽에서 요소를 팝 할 수 있습니다.: &gt; rpush mylist a b c (integer) 3 &gt; rpop mylist "c" &gt; rpop mylist "b" &gt; rpop mylist "a" 세 개의 요소를 추가하고 세 개의 요소를 팝했으므로 이 명령 시퀀스가 끝나면 목록이 비어 있고 더 이상 팝업할 요소가 없습니다. 또 다른 요소를 터뜨리려고 하면 이것이 우리가 얻는 결과입니다.: &gt; rpop mylist (nil) Redis는 목록에 요소가 없음을 알리기 위해 NULL 값을 반환했습니다.. Common use cases for lists 목록은 여러 작업에 유용하며 두 가지 매우 대표적인 사용 사례는 다음과 같습니다.: • 사용자가 소셜 네트워크에 게시 한 최신 업데이트 기억. • 생산자가 항목을 목록으로 푸시하고 소비자(일반적으로 작업자)가 해당 항목을 소비하고 작업을 실행하는 소비자-생산자 패턴을 사용하는 프로세스 간의 통신입니다. Redis에는 이 사용 사례를 보다 안정적이고 효율적으로 만드는 특수 목록 명령이 있습니다.. 예를 들어 인기있는 Ruby 라이브러리 resque와 sidekiq는 백그라운드 작업을 구현하기 위해 내부적으로 Redis 목록을 사용합니다.. 인기있는 트위터 소셜 네트워크는 사용자가 게시 한 최신 트윗을 Redis 목록으로 가져옵니다. 일반적인 사용 사례를 단계별로 설명하기 위해 홈페이지에 사진 공유 소셜 네트워크에 게시된 최신 사진이 표시되고 액세스 속도를 높이고 싶다고 가정해 보겠습니다.. • 사용자가 새 사진을 게시 할 때마다 LPUSH를 사용하여 ID를 목록에 추가합니다.. • 사용자가 홈페이지를 방문하면 LRANGE 0 9를 사용하여 최신 10 개의 게시 된 항목을 가져옵니다.. Capped lists 많은 사용 사례에서 우리는 목록을 사용하여 소셜 네트워크 업데이트, 로그 또는 기타 무엇이든 최신 항목을 저장하려고합니다.. Redis를 사용하면 목록을 제한 된 컬렉션으로 사용할 수 있으며 최신 N 항목 만 기억하고 LTRIM 명령을 사용하여 가장 오래된 항목을 모두 삭제할 수 있습니다.. LTRIM 명령은 LRANGE와 유사하지만 지정된 요소 범위를 표시하는 대신 이 범위를 새 목록 값으로 설정합니다. 주어진 범위를 벗어난 모든 요소가 제거됩니다.. An example will make it more clear: &gt; rpush mylist 1 2 3 4 5 (integer) 5 &gt; ltrim mylist 0 2 OK &gt; lrange mylist 0 -1 1) "1" 2) "2" 3) "3" 위의 LTRIM 명령은 Redis에게 인덱스 0에서 2까지의 목록 요소 만 가져 오도록 지시하고 다른 모든 것은 삭제됩니다. 이것은 매우 간단하지만 유용한 패턴을 허용합니다 : 목록 푸시 작업 + 목록 트리밍 작업을 함께 수행하여 새 요소를 추가하고 제한을 초과하는 요소를 삭제합니다.: LPUSH mylist &lt;some element&gt; LTRIM mylist 0 999 위의 조합은 새 요소를 추가하고 1000개의 최신 요소만 목록에 가져옵니다. LRANGE를 사용하면 아주 오래된 데이터를 기억할 필요없이 상위 항목에 액세스 할 수 있습니다.. Note: LRANGE는 기술적으로 O (N) 명령이지만 목록의 머리 또는 꼬리쪽으로 작은 범위에 액세스하는 것은 일정한 시간 작업입니다.. Blocking operations on lists 목록에는 대기열을 구현하는 데 적합한 특수 기능이 있으며 일반적으로 프로세스 간 통신 시스템의 빌딩 블록으로 사용됩니다. 차단 작업. 하나의 프로세스가있는 목록으로 항목을 푸시하고 실제로 해당 항목으로 어떤 종류의 작업을 수행하기 위해 다른 프로세스를 사용한다고 가정 해보십시오. 이것은 일반적인 생산자 / 소비자 설정이며 다음과 같은 간단한 방법으로 구현할 수 있습니다.: • 항목을 목록에 푸시하기 위해 생산자는 LPUSH를 호출합니다.. • 목록에서 항목을 추출/처리하기 위해 소비자는 RPOP를 호출합니다.. 그러나 때로는 목록이 비어 있고 처리 할 것이 없으므로 RPOP는 NULL을 반환합니다. 이 경우 소비자는 잠시 기다렸다가 RPOP를 사용하여 다시 시도해야 합니다. 이것을 폴링이라고하며 몇 가지 단점이 있기 때문에이 맥락에서 좋은 생각이 아닙니다.: Redis와 클라이언트가 쓸모없는 명령을 처리하도록합니다 (목록이 비어있을 때 모든 요청은 실제 작업을 수행하지 않고 NULL을 반환합니다). 작업자가 NULL을 받은 후 잠시 기다리므로 항목 처리에 지연을 추가합니다. 지연을 줄이기 위해 RPOP에 대한 호출 사이에 더 적은 대기 시간을 할애할 수 있으며, 문제 번호 1, 즉 Redis에 대한 더 쓸모없는 호출을 증폭시키는 효과가 있습니다.. 따라서 Redis는 목록이 비어 있는 경우 차단할 수 있는 RPOP 및 LPOP 버전인 BRPOP 및 BLPOP라는 명령을 구현합니다. 새 요소가 목록에 추가되거나 사용자 지정 시간 초과에 도달할 때만 호출자에게 반환됩니다. . 이것은 작업자에서 사용할 수 있는 BRPOP 호출의 예입니다.: &gt; brpop tasks 5 1) "tasks" 2) "do_something" 즉, “목록 작업의 요소를 기다리지 만 5 초 후에 사용할 수있는 요소가 없으면 반환합니다.”. 요소를 영원히 기다리는 시간 제한으로 0을 사용할 수 있으며, 동시에 여러 목록에서 대기하고 첫 번째 목록이 요소를 받을 때 알림을 받기 위해 하나가 아닌 여러 목록을 지정할 수도 있습니다.. BRPOP에 대해 주의해야 할 몇 가지 사항: 클라이언트는 정렬된 방식으로 제공됩니다: 목록 대기를 차단한 첫 번째 클라이언트는 다른 클라이언트에 의해 요소가 푸시될 때 먼저 제공됩니다.. 반환 값은 RPOP와 다릅니다 : BRPOP 및 BLPOP이 여러 목록의 요소를 기다리는 것을 차단할 수 있기 때문에 키 이름도 포함하므로 2 요소 배열입니다.. 시간 제한에 도달하면 NULL이 반환됩니다.. 목록 및 차단 작업에 대해 알아야 할 사항이 더 있습니다. 다음에 대해 자세히 읽어 보시기 바랍니다.: • LMOVE를 사용하여 더 안전한 대기열 또는 순환 대기열을 구축할 수 있습니다.. • BLMOVE라는 명령의 차단 변형도 있습니다.. Automatic creation and removal of keys 지금까지 예제에서는 요소를 푸시하기 전에 빈 목록을 만들거나 더 이상 내부에 요소가 없을 때 빈 목록을 제거 할 필요가 없었습니다. 목록이 비어있을 때 키를 삭제하거나 키가 존재하지 않고 요소를 추가하려는 경우 빈 목록을 만드는 것은 Redis의 책임입니다 (예 : LPUSH를 사용하여).. 이는 목록에만 국한된 것이 아니라 여러 요소(스트림, 집합, 정렬된 집합 및 해시)로 구성된 모든 Redis 데이터 형식에 적용됩니다. 기본적으로 세 가지 규칙으로 행동을 요약 할 수 있습니다.: 집계 데이터 형식에 요소를 추가할 때 대상 키가 없으면 요소를 추가하기 전에 빈 집계 데이터 형식이 만들어집니다.. 집계 데이터 유형에서 요소를 제거할 때 값이 비어 있으면 키가 자동으로 삭제됩니다. Stream 데이터 형식은 이 규칙의 유일한 예외입니다.. LLEN(목록의 길이를 반환함)과 같은 읽기 전용 명령 또는 빈 키를 사용하여 요소를 제거하는 쓰기 명령을 호출하면 키가 명령이 찾을 것으로 예상되는 유형의 빈 집계 유형을 보유하고 있는 경우와 항상 동일한 결과가 생성됩니다.. Examples of rule 1: &gt; del mylist (integer) 1 &gt; lpush mylist 1 2 3 (integer) 3 However we can’t perform operations against the wrong type if the key exists: &gt; set foo bar OK &gt; lpush foo 1 2 3 (error) WRONGTYPE Operation against a key holding the wrong kind of value &gt; type foo string Example of rule 2: &gt; lpush mylist 1 2 3 (integer) 3 &gt; exists mylist (integer) 1 &gt; lpop mylist "3" &gt; lpop mylist "2" &gt; lpop mylist "1" &gt; exists mylist (integer) 0 The key no longer exists after all the elements are popped. Example of rule 3: &gt; del mylist (integer) 0 &gt; llen mylist (integer) 0 &gt; lpop mylist (nil)]]></summary></entry><entry><title type="html">Getting Start Redis using Jupyter Notebook - 설치</title><link href="http://localhost:4000/cache/setup-jupyter/" rel="alternate" type="text/html" title="Getting Start Redis using Jupyter Notebook - 설치" /><published>2023-03-29T00:00:00+09:00</published><updated>2023-03-29T00:00:00+09:00</updated><id>http://localhost:4000/cache/setup-jupyter</id><content type="html" xml:base="http://localhost:4000/cache/setup-jupyter/"><![CDATA[<p>Jupyter Notebook을 이용하여 Redis를 실습할 수 있는 환경을 구성합니다.</p>
+</code></pre></div>      </div>
+    </li>
+  </ol>
+</blockquote>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><summary type="html"><![CDATA[List List 데이터 유형을 설명하려면 List라는 용어가 정보 기술 담당자에 의해 부적절한 방식으로 자주 사용되기 때문에 약간의 이론으로 시작하는 것이 좋습니다. 예를 들어 “파이썬 목록”은 이름이 암시하는 것 (연결 목록)이 아니라 배열 (실제로 Ruby에서는 동일한 데이터 유형을 배열이라고 함)입니다.. 매우 일반적인 관점에서 List는 정렬된 요소의 시퀀스일 뿐입니다: 10,20,1,2,3은 목록입니다. 그러나 Array를 사용하여 구현된 List의 속성은 연결된 목록을 사용하여 구현된 List의 속성과 매우 다릅니다.. Redis 목록은 연결된 목록을 통해 구현됩니다. 즉, 목록 내에 수백만 개의 요소가 있더라도 목록의 머리 또는 꼬리에 새 요소를 추가하는 작업은 일정한 시간에 수행됩니다. LPUSH 명령을 사용하여 새 요소를 10개의 요소가 있는 목록의 헤드에 추가하는 속도는 1,000만 개의 요소가 있는 목록의 헤드에 요소를 추가하는 것과 같습니다. 단점은 무엇입니까? 인덱스로 요소에 액세스하는 것은 Array (일정한 시간 인덱싱 된 액세스)로 구현 된 목록에서 매우 빠르며 연결된 목록으로 구현 된 목록 (액세스 된 요소의 인덱스에 비례하는 작업량이 필요한 경우)에서는 그렇게 빠르지 않습니다.. Redis List는 데이터베이스 시스템의 경우 매우 빠른 방법으로 매우 긴 목록에 요소를 추가할 수 있어야 하기 때문에 연결된 목록으로 구현됩니다. 잠시 후에 볼 수 있듯이 또 다른 강력한 이점은 Redis 목록을 일정한 시간에 일정한 길이로 가져올 수 있다는 것입니다.. 큰 요소 컬렉션의 중간에 빠르게 액세스하는 것이 중요한 경우 정렬된 집합이라고 하는 다른 데이터 구조를 사용할 수 있습니다. 정렬된 집합은 이 자습서의 뒷부분에서 다룹니다.. First steps with Redis Lists LPUSH 명령은 왼쪽(머리)의 목록에 새 요소를 추가하는 반면, RPUSH 명령은 오른쪽(맨 끝)의 목록에 새 요소를 추가합니다. 마지막으로 LRANGE 명령은 목록에서 요소 범위를 추출합니다.: rpush mylist A (integer) 1 rpush mylist B (integer) 2 lpush mylist first (integer) 3 lrange mylist 0 -1 1) “first” 2) “A” 3) “B” LRANGE는 반환할 범위의 첫 번째 요소와 마지막 요소인 두 개의 인덱스를 사용합니다. 두 인덱스 모두 음수일 수 있으므로 Redis에게 끝에서 계산을 시작하도록 지시합니다. 따라서 -1은 마지막 요소이고 -2는 목록의 끝에서 두 번째 요소입니다.. 보시다시피 RPUSH는 목록의 오른쪽에 요소를 추가하고 최종 LPUSH는 왼쪽에 요소를 추가했습니다.. 두 명령 모두 가변 명령이므로 한 번의 호출로 여러 요소를 목록으로 자유롭게 푸시 할 수 있습니다.: ```bash rpush mylist 1 2 3 4 5 "foo bar" (integer) 9 lrange mylist 0 -1 1) "first" 2) "A" 3) "B" 4) "1" 5) "2" 6) "3" 7) "4" 8) "5" 9) "foo bar" Redis 목록에 정의된 중요한 작업은 요소를 팝하는 기능입니다. 요소를 팝핑하는 작업은 목록에서 요소를 검색하는 동시에 목록에서 제거하는 작업입니다. 목록의 양쪽에 요소를 푸시하는 방법과 유사하게 왼쪽과 오른쪽에서 요소를 팝 할 수 있습니다.: rpush mylist a b c (integer) 3 rpop mylist "c" rpop mylist "b" rpop mylist "a" 세 개의 요소를 추가하고 세 개의 요소를 팝했으므로 이 명령 시퀀스가 끝나면 목록이 비어 있고 더 이상 팝업할 요소가 없습니다. 또 다른 요소를 터뜨리려고 하면 이것이 우리가 얻는 결과입니다.: rpop mylist (nil) Redis는 목록에 요소가 없음을 알리기 위해 NULL 값을 반환했습니다.. Common use cases for lists 목록은 여러 작업에 유용하며 두 가지 매우 대표적인 사용 사례는 다음과 같습니다.: • 사용자가 소셜 네트워크에 게시 한 최신 업데이트 기억. • 생산자가 항목을 목록으로 푸시하고 소비자(일반적으로 작업자)가 해당 항목을 소비하고 작업을 실행하는 소비자-생산자 패턴을 사용하는 프로세스 간의 통신입니다. Redis에는 이 사용 사례를 보다 안정적이고 효율적으로 만드는 특수 목록 명령이 있습니다.. 예를 들어 인기있는 Ruby 라이브러리 resque와 sidekiq는 백그라운드 작업을 구현하기 위해 내부적으로 Redis 목록을 사용합니다.. 인기있는 트위터 소셜 네트워크는 사용자가 게시 한 최신 트윗을 Redis 목록으로 가져옵니다. 일반적인 사용 사례를 단계별로 설명하기 위해 홈페이지에 사진 공유 소셜 네트워크에 게시된 최신 사진이 표시되고 액세스 속도를 높이고 싶다고 가정해 보겠습니다.. • 사용자가 새 사진을 게시 할 때마다 LPUSH를 사용하여 ID를 목록에 추가합니다.. • 사용자가 홈페이지를 방문하면 LRANGE 0 9를 사용하여 최신 10 개의 게시 된 항목을 가져옵니다.. Capped lists 많은 사용 사례에서 우리는 목록을 사용하여 소셜 네트워크 업데이트, 로그 또는 기타 무엇이든 최신 항목을 저장하려고합니다.. Redis를 사용하면 목록을 제한 된 컬렉션으로 사용할 수 있으며 최신 N 항목 만 기억하고 LTRIM 명령을 사용하여 가장 오래된 항목을 모두 삭제할 수 있습니다.. LTRIM 명령은 LRANGE와 유사하지만 지정된 요소 범위를 표시하는 대신 이 범위를 새 목록 값으로 설정합니다. 주어진 범위를 벗어난 모든 요소가 제거됩니다.. An example will make it more clear: rpush mylist 1 2 3 4 5 (integer) 5 ltrim mylist 0 2 OK lrange mylist 0 -1 1) "1" 2) "2" 3) "3" 위의 LTRIM 명령은 Redis에게 인덱스 0에서 2까지의 목록 요소 만 가져 오도록 지시하고 다른 모든 것은 삭제됩니다. 이것은 매우 간단하지만 유용한 패턴을 허용합니다 : 목록 푸시 작업 + 목록 트리밍 작업을 함께 수행하여 새 요소를 추가하고 제한을 초과하는 요소를 삭제합니다.: LPUSH mylist &lt;some element&gt; LTRIM mylist 0 999 위의 조합은 새 요소를 추가하고 1000개의 최신 요소만 목록에 가져옵니다. LRANGE를 사용하면 아주 오래된 데이터를 기억할 필요없이 상위 항목에 액세스 할 수 있습니다.. Note: LRANGE는 기술적으로 O (N) 명령이지만 목록의 머리 또는 꼬리쪽으로 작은 범위에 액세스하는 것은 일정한 시간 작업입니다.. Blocking operations on lists 목록에는 대기열을 구현하는 데 적합한 특수 기능이 있으며 일반적으로 프로세스 간 통신 시스템의 빌딩 블록으로 사용됩니다. 차단 작업. 하나의 프로세스가있는 목록으로 항목을 푸시하고 실제로 해당 항목으로 어떤 종류의 작업을 수행하기 위해 다른 프로세스를 사용한다고 가정 해보십시오. 이것은 일반적인 생산자 / 소비자 설정이며 다음과 같은 간단한 방법으로 구현할 수 있습니다.: • 항목을 목록에 푸시하기 위해 생산자는 LPUSH를 호출합니다.. • 목록에서 항목을 추출/처리하기 위해 소비자는 RPOP를 호출합니다.. 그러나 때로는 목록이 비어 있고 처리 할 것이 없으므로 RPOP는 NULL을 반환합니다. 이 경우 소비자는 잠시 기다렸다가 RPOP를 사용하여 다시 시도해야 합니다. 이것을 폴링이라고하며 몇 가지 단점이 있기 때문에이 맥락에서 좋은 생각이 아닙니다.: Redis와 클라이언트가 쓸모없는 명령을 처리하도록합니다 (목록이 비어있을 때 모든 요청은 실제 작업을 수행하지 않고 NULL을 반환합니다). 작업자가 NULL을 받은 후 잠시 기다리므로 항목 처리에 지연을 추가합니다. 지연을 줄이기 위해 RPOP에 대한 호출 사이에 더 적은 대기 시간을 할애할 수 있으며, 문제 번호 1, 즉 Redis에 대한 더 쓸모없는 호출을 증폭시키는 효과가 있습니다.. 따라서 Redis는 목록이 비어 있는 경우 차단할 수 있는 RPOP 및 LPOP 버전인 BRPOP 및 BLPOP라는 명령을 구현합니다. 새 요소가 목록에 추가되거나 사용자 지정 시간 초과에 도달할 때만 호출자에게 반환됩니다. . 이것은 작업자에서 사용할 수 있는 BRPOP 호출의 예입니다.: brpop tasks 5 1) "tasks" 2) "do_something" 즉, “목록 작업의 요소를 기다리지 만 5 초 후에 사용할 수있는 요소가 없으면 반환합니다.”. 요소를 영원히 기다리는 시간 제한으로 0을 사용할 수 있으며, 동시에 여러 목록에서 대기하고 첫 번째 목록이 요소를 받을 때 알림을 받기 위해 하나가 아닌 여러 목록을 지정할 수도 있습니다.. BRPOP에 대해 주의해야 할 몇 가지 사항: 클라이언트는 정렬된 방식으로 제공됩니다: 목록 대기를 차단한 첫 번째 클라이언트는 다른 클라이언트에 의해 요소가 푸시될 때 먼저 제공됩니다.. 반환 값은 RPOP와 다릅니다 : BRPOP 및 BLPOP이 여러 목록의 요소를 기다리는 것을 차단할 수 있기 때문에 키 이름도 포함하므로 2 요소 배열입니다.. 시간 제한에 도달하면 NULL이 반환됩니다.. 목록 및 차단 작업에 대해 알아야 할 사항이 더 있습니다. 다음에 대해 자세히 읽어 보시기 바랍니다.: • LMOVE를 사용하여 더 안전한 대기열 또는 순환 대기열을 구축할 수 있습니다.. • BLMOVE라는 명령의 차단 변형도 있습니다.. Automatic creation and removal of keys 지금까지 예제에서는 요소를 푸시하기 전에 빈 목록을 만들거나 더 이상 내부에 요소가 없을 때 빈 목록을 제거 할 필요가 없었습니다. 목록이 비어있을 때 키를 삭제하거나 키가 존재하지 않고 요소를 추가하려는 경우 빈 목록을 만드는 것은 Redis의 책임입니다 (예 : LPUSH를 사용하여).. 이는 목록에만 국한된 것이 아니라 여러 요소(스트림, 집합, 정렬된 집합 및 해시)로 구성된 모든 Redis 데이터 형식에 적용됩니다. 기본적으로 세 가지 규칙으로 행동을 요약 할 수 있습니다.: 집계 데이터 형식에 요소를 추가할 때 대상 키가 없으면 요소를 추가하기 전에 빈 집계 데이터 형식이 만들어집니다.. 집계 데이터 유형에서 요소를 제거할 때 값이 비어 있으면 키가 자동으로 삭제됩니다. Stream 데이터 형식은 이 규칙의 유일한 예외입니다.. LLEN(목록의 길이를 반환함)과 같은 읽기 전용 명령 또는 빈 키를 사용하여 요소를 제거하는 쓰기 명령을 호출하면 키가 명령이 찾을 것으로 예상되는 유형의 빈 집계 유형을 보유하고 있는 경우와 항상 동일한 결과가 생성됩니다.. Examples of rule 1: del mylist (integer) 1 lpush mylist 1 2 3 (integer) 3 However we can’t perform operations against the wrong type if the key exists: set foo bar OK lpush foo 1 2 3 (error) WRONGTYPE Operation against a key holding the wrong kind of value type foo string Example of rule 2: lpush mylist 1 2 3 (integer) 3 exists mylist (integer) 1 lpop mylist "3" lpop mylist "2" lpop mylist "1" exists mylist (integer) 0 The key no longer exists after all the elements are popped. Example of rule 3: del mylist (integer) 0 llen mylist (integer) 0 lpop mylist (nil)]]></summary></entry><entry><title type="html">Getting Start Redis using Jupyter Notebook - 설치</title><link href="http://localhost:4000/cache/setup-jupyter/" rel="alternate" type="text/html" title="Getting Start Redis using Jupyter Notebook - 설치" /><published>2023-03-29T00:00:00+09:00</published><updated>2023-03-29T00:00:00+09:00</updated><id>http://localhost:4000/cache/setup-jupyter</id><content type="html" xml:base="http://localhost:4000/cache/setup-jupyter/"><![CDATA[<p>Jupyter Notebook을 이용하여 Redis를 실습할 수 있는 환경을 구성합니다.</p>
 
 <h2 id="setup-redis-on-docker">Setup Redis on Docker</h2>
 <p>설치형 redis를 하지않고 학습용으로 최적의 환경인 docker를 사용하여 간단히 Redis를 실행합니다.
