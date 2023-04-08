@@ -1,5 +1,5 @@
 ---
-title: Getting Start Redis using Jupyter Notebook - get/set
+title: Getting Start Redis - Jupyter Notebook
 categories:
   - cache
 tags: 
