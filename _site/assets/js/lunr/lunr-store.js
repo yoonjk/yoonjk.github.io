@@ -461,6 +461,12 @@ var store = [{
         "url": "/cache/set/",
         "teaser": null
       },{
+        "title": "Getting Start Redis - Sorted Sets",
+        "excerpt":"Sorted Sets 정렬된 집합은 Set과 해시 간의 혼합과 유사한 데이터 유형입니다. 집합과 마찬가지로 정렬된 집합은 반복되지 않는 고유한 문자열 요소로 구성되므로 어떤 의미에서는 정렬된 집합도 집합입니다. 그러나 집합 내의 요소는 정렬되지 않지만 정렬 된 집합의 모든 요소는 score라고하는 부동 소수점 값과 연결됩니다 (모든 요소가 값에 매핑되기 때문에 유형이 해시와 유사한...","categories": ["cache"],
+        "tags": ["redis","jupyter"],
+        "url": "/cache/sorted-sets/",
+        "teaser": null
+      },{
         "title": "Getting Start Redis - String",
         "excerpt":"Strings Redis 문자열 유형은 Redis 키와 연결할 수 있는 가장 간단한 값 유형입니다. Memcached의 유일한 데이터 유형이므로 신규 사용자가 Redis에서 사용하는 것도 매우 자연스러운 일입니다. Redis 키는 문자열이므로 문자열 유형도 값으로 사용할 때 문자열을 다른 문자열에 매핑합니다. 문자열 데이터 형식은 HTML 조각 또는 페이지 캐싱과 같은 다양한 사용 사례에 유용합니다....","categories": ["cache"],
         "tags": ["redis","jupyter"],
