@@ -1,5 +1,5 @@
 ---
-title: Redis 데이터 타입 - Redis Key 규칙 
+title: Getting Start Redis - Redis Key 규칙 
 categories:
   - cache
 tags: 

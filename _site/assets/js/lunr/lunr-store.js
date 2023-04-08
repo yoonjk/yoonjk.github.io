@@ -443,7 +443,7 @@ var store = [{
         "url": "/cache/list/",
         "teaser": null
       },{
-        "title": "Redis 데이터 타입 - Redis Key 규칙",
+        "title": "Getting Start Redis - Redis Key 규칙",
         "excerpt":"기본 Redis 데이터 형식 및 사용 방법 다음은 Redis CLI를 사용하여 핵심 Redis 데이터 유형을 학습하는 실습 자습서입니다. 데이터 형식에 대한 일반적인 개요는 데이터 형식 소개를 참조하세요. Keys Redis 키는 바이너리로부터 안전하므로 “foo”와 같은 문자열에서 JPEG 파일의 내용에 이르기까지 모든 바이너리 시퀀스를 키로 사용할 수 있습니다. 빈 문자열도 유효한 키입니다....","categories": ["cache"],
         "tags": ["redis","jupyter"],
         "url": "/cache/naming-rule/",
