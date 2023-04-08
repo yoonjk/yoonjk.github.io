@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-08T16:33:11+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Getting Start Redis - String</title><link href="http://localhost:4000/cache/string/" rel="alternate" type="text/html" title="Getting Start Redis - String" /><published>2023-04-07T00:00:00+09:00</published><updated>2023-04-07T00:00:00+09:00</updated><id>http://localhost:4000/cache/string</id><content type="html" xml:base="http://localhost:4000/cache/string/"><![CDATA[<h2 id="strings">Strings</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-08T16:36:37+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Getting Start Redis - String</title><link href="http://localhost:4000/cache/string/" rel="alternate" type="text/html" title="Getting Start Redis - String" /><published>2023-04-07T00:00:00+09:00</published><updated>2023-04-07T00:00:00+09:00</updated><id>http://localhost:4000/cache/string</id><content type="html" xml:base="http://localhost:4000/cache/string/"><![CDATA[<h2 id="strings">Strings</h2>
 <p>Redis 문자열 유형은 Redis 키와 연결할 수 있는 가장 간단한 값 유형입니다. Memcached의 유일한 데이터 유형이므로 신규 사용자가 Redis에서 사용하는 것도 매우 자연스러운 일입니다.
 Redis 키는 문자열이므로 문자열 유형도 값으로 사용할 때 문자열을 다른 문자열에 매핑합니다. 문자열 데이터 형식은 HTML 조각 또는 페이지 캐싱과 같은 다양한 사용 사례에 유용합니다.
 redis-cli를 사용하여 문자열 유형을 약간 사용해 보겠습니다<br />
@@ -112,7 +112,38 @@ OK
 밀리초 단위로 만료를 설정하고 확인하려면 <a href="https://redis.io/commands/pexpire">PEXPIRE</a> 및 <a href="https://redis.io/commands/pttl">PTTL</a> 명령과 SET 옵션의 전체 목록을 확인하십시오. .</p>
 
 <h2 id="redis-정보">Redis 정보</h2>
-<p><a href="https://sungwookkang.com/category/Redis">Data Science Lab</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[Strings Redis 문자열 유형은 Redis 키와 연결할 수 있는 가장 간단한 값 유형입니다. Memcached의 유일한 데이터 유형이므로 신규 사용자가 Redis에서 사용하는 것도 매우 자연스러운 일입니다. Redis 키는 문자열이므로 문자열 유형도 값으로 사용할 때 문자열을 다른 문자열에 매핑합니다. 문자열 데이터 형식은 HTML 조각 또는 페이지 캐싱과 같은 다양한 사용 사례에 유용합니다. redis-cli를 사용하여 문자열 유형을 약간 사용해 보겠습니다 (모든 예제는 이 자습서에서 redis-cli를 통해 수행됨).]]></summary></entry><entry><title type="html">Getting Start Redis - List</title><link href="http://localhost:4000/cache/list/" rel="alternate" type="text/html" title="Getting Start Redis - List" /><published>2023-04-07T00:00:00+09:00</published><updated>2023-04-07T00:00:00+09:00</updated><id>http://localhost:4000/cache/list</id><content type="html" xml:base="http://localhost:4000/cache/list/"><![CDATA[<h2 id="list">List</h2>
+<p><a href="https://sungwookkang.com/category/Redis">Data Science Lab</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[Strings Redis 문자열 유형은 Redis 키와 연결할 수 있는 가장 간단한 값 유형입니다. Memcached의 유일한 데이터 유형이므로 신규 사용자가 Redis에서 사용하는 것도 매우 자연스러운 일입니다. Redis 키는 문자열이므로 문자열 유형도 값으로 사용할 때 문자열을 다른 문자열에 매핑합니다. 문자열 데이터 형식은 HTML 조각 또는 페이지 캐싱과 같은 다양한 사용 사례에 유용합니다. redis-cli를 사용하여 문자열 유형을 약간 사용해 보겠습니다 (모든 예제는 이 자습서에서 redis-cli를 통해 수행됨).]]></summary></entry><entry><title type="html">Getting Start Redis - Hashes</title><link href="http://localhost:4000/cache/hashes/" rel="alternate" type="text/html" title="Getting Start Redis - Hashes" /><published>2023-04-07T00:00:00+09:00</published><updated>2023-04-07T00:00:00+09:00</updated><id>http://localhost:4000/cache/hashes</id><content type="html" xml:base="http://localhost:4000/cache/hashes/"><![CDATA[<h2 id="hashes">Hashes</h2>
+<p>Redis 해시는 필드-값 쌍을 사용하여 “해시”가 어떻게 보이는지 정확히 보여줍니다.:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> hset user:1000 username antirez birthyear 1977 verified 1
+<span class="o">(</span>integer<span class="o">)</span> 3
+<span class="o">&gt;</span> hget user:1000 username
+<span class="s2">"antirez"</span>
+<span class="o">&gt;</span> hget user:1000 birthyear
+<span class="s2">"1977"</span>
+<span class="o">&gt;</span> hgetall user:1000
+1<span class="o">)</span> <span class="s2">"username"</span>
+2<span class="o">)</span> <span class="s2">"antirez"</span>
+3<span class="o">)</span> <span class="s2">"birthyear"</span>
+4<span class="o">)</span> <span class="s2">"1977"</span>
+5<span class="o">)</span> <span class="s2">"verified"</span>
+6<span class="o">)</span> <span class="s2">"1"</span>
+</code></pre></div></div>
+<p>해시는 객체를 나타내는 데 편리하지만 실제로 해시 안에 넣을 수있는 필드 수에는 사용 가능한 메모리 이외의 실질적인 제한이 없으므로 응용 프로그램 내에서 다양한 방법으로 해시를 사용할 수 있습니다.<br />
+HSET 명령은  해시의 여러 필드를 설정하는 반면 HGET는 단일 필드를 검색합니다.  HMGET은 HGET와 유사  하지만 값 배열을 반환합니다.:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> hmget user:1000 username birthyear no-such-field
+1<span class="o">)</span> <span class="s2">"antirez"</span>
+2<span class="o">)</span> <span class="s2">"1977"</span>
+3<span class="o">)</span> <span class="o">(</span>nil<span class="o">)</span>
+</code></pre></div></div>
+
+<p>HINCRUBY와 같이 개별 필드에 대한 작업을 수행 할 수있는 명령도 있습니다.:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> hincrby user:1000 birthyear 10
+<span class="o">(</span>integer<span class="o">)</span> 1987
+<span class="o">&gt;</span> hincrby user:1000 birthyear 10
+<span class="o">(</span>integer<span class="o">)</span> 1997
+</code></pre></div></div>
+<p>설명서에서 해시 명령의 전체 목록을 찾을 수 있습니다.
+작은 해시 (즉, 작은 값을 가진 몇 가지 요소)가 메모리에서 특별한 방식으로 인코딩되어 메모리 효율이 매우 높다는 점은 주목할 가치가 있습니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[Hashes Redis 해시는 필드-값 쌍을 사용하여 “해시”가 어떻게 보이는지 정확히 보여줍니다.: &gt; hset user:1000 username antirez birthyear 1977 verified 1 (integer) 3 &gt; hget user:1000 username "antirez" &gt; hget user:1000 birthyear "1977" &gt; hgetall user:1000 1) "username" 2) "antirez" 3) "birthyear" 4) "1977" 5) "verified" 6) "1" 해시는 객체를 나타내는 데 편리하지만 실제로 해시 안에 넣을 수있는 필드 수에는 사용 가능한 메모리 이외의 실질적인 제한이 없으므로 응용 프로그램 내에서 다양한 방법으로 해시를 사용할 수 있습니다. HSET 명령은 해시의 여러 필드를 설정하는 반면 HGET는 단일 필드를 검색합니다. HMGET은 HGET와 유사 하지만 값 배열을 반환합니다.: &gt; hmget user:1000 username birthyear no-such-field 1) "antirez" 2) "1977" 3) (nil)]]></summary></entry><entry><title type="html">Getting Start Redis - List</title><link href="http://localhost:4000/cache/list/" rel="alternate" type="text/html" title="Getting Start Redis - List" /><published>2023-04-07T00:00:00+09:00</published><updated>2023-04-07T00:00:00+09:00</updated><id>http://localhost:4000/cache/list</id><content type="html" xml:base="http://localhost:4000/cache/list/"><![CDATA[<h2 id="list">List</h2>
 <p>List 데이터 유형을 설명하려면 List라는 용어가  정보 기술 담당자에 의해 부적절한 방식으로 자주 사용되기 때문에 약간의 이론으로 시작하는 것이 좋습니다. 예를 들어 “파이썬 목록”은 이름이 암시하는 것 (연결 목록)이 아니라 배열 (실제로 Ruby에서는 동일한 데이터 유형을 배열이라고 함)입니다.<br />
 매우 일반적인 관점에서 List는 정렬된 요소의 시퀀스일 뿐입니다:<br />
 10,20,1,2,3은 목록입니다.<br />
@@ -617,86 +648,4 @@ afterBodyRead는  Controller의 Input Type을 body로 넘어오며 그것을 가
 		<span class="k">return</span> <span class="n">body</span><span class="o">;</span>
 	<span class="o">}</span>
 <span class="o">}</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="Advice" /><summary type="html"><![CDATA[화 RequestBodyAdvice Http Request를 제어 또는 가공(Decrpt)할 수 있는 또 하나의 영역중 하나가 바로 RequestBodyAdvice 입니다. ArgumentRoslver는 RestController에는 약간의 제약사항이 있으나 RequestBodyAdvice는 그러한 제약사항이 없습니다. 적용하는 방법은 ArgumentResolver와 유사하고 점도 섬세한 제어가 가능합니다.]]></summary></entry><entry><title type="html">ArgumentResolver</title><link href="http://localhost:4000/springboot/argumentResolver/" rel="alternate" type="text/html" title="ArgumentResolver" /><published>2023-03-13T00:00:00+09:00</published><updated>2023-03-13T00:00:00+09:00</updated><id>http://localhost:4000/springboot/argumentResolver</id><content type="html" xml:base="http://localhost:4000/springboot/argumentResolver/"><![CDATA[<h2 id="argumentresolver">ArgumentResolver</h2>
-<p>Http Request를 제어 또는 가공(Decrpt)할 수 있는 또 하나의 영역중 하나가 바로 ArgumentResolver 입니다.
-  ArgumentRoslver는 Request 데이터를 가공하여 Constroller에 전달하고 싶을 때 사용합니다.
-  제어할 때상으로는 아래와 같은 유형을 대상으로 ArgumentResolver를 적용할 수 있습니다.</p>
-
-<ul>
-  <li>적용대상 Controller</li>
-  <li>Annotation 이용</li>
-  <li>Argument Type 등</li>
-</ul>
-
-<p><img src="/assets/images/springboot/04-spring-filter-interceptor-aop-resolver-advice.png" alt="filter interceptor aop" /></p>
-
-<h2 id="handlermethodargumentresolver-상속하여-구현">HandlerMethodArgumentResolver 상속하여 구현</h2>
-<p>ArgumentResolver를 이용하여 Http 요청의 데이터를 가공하고 싶을 때는 HandlerMethodArgumentResolver 상속받아 구현하면 됩니다. HandlerMethodArgumentResolver는 아래의 2개의 Method를 구현해야 합니다.</p>
-
-<ul>
-  <li>public boolean supportsParameter(MethodParameter parameter)</li>
-  <li>public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
-        NativeWebRequest webReq터est, WebDataBinderFactory binderFactory) throws Exception</li>
-</ul>
-
-<p>첫번째는 ArgumentResolver를 적용할 대상을 선정하는 부분입니다. 여기에서 대상 Controller나 Annotation인 경우 return 을 true로 반환하면 resolveArgument 가 실행되어 webRequest에서 데이터를 읽어서 원하는 형식의 데이터를 만들어 반환하면 됩니다.</p>
-
-<p>## 예시</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.io.InputStream</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.nio.charset.StandardCharsets</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.Map</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletRequest</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">org.springframework.core.MethodParameter</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Component</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.web.bind.support.WebDataBinderFactory</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.web.context.request.NativeWebRequest</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.web.method.support.HandlerMethodArgumentResolver</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.web.method.support.ModelAndViewContainer</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">com.demo.microservices.annotation.Decrypted</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.demo.microservices.util.AESUtil</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.demo.microservices.util.IOUtils</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.fasterxml.jackson.databind.ObjectMapper</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">lombok.extern.slf4j.Slf4j</span><span class="o">;</span>
-
-<span class="nd">@Slf4j</span>
-<span class="nd">@Component</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DecryptArgumentResolver</span> <span class="kd">implements</span> <span class="nc">HandlerMethodArgumentResolver</span> <span class="o">{</span>
-	
-
-	<span class="nd">@Override</span>
-	<span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">supportsParameter</span><span class="o">(</span><span class="nc">MethodParameter</span> <span class="n">parameter</span><span class="o">)</span> <span class="o">{</span>
-		<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"supportsParameter:{}"</span><span class="o">,</span> <span class="n">parameter</span><span class="o">.</span><span class="na">getContainingClass</span><span class="o">());</span>
-        <span class="k">return</span> <span class="n">parameter</span><span class="o">.</span><span class="na">hasParameterAnnotation</span><span class="o">(</span><span class="nc">Decrypted</span><span class="o">.</span><span class="na">class</span><span class="o">)</span> <span class="o">&amp;&amp;</span>
-        		<span class="n">parameter</span><span class="o">.</span><span class="na">getParameterType</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="nc">Map</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-	<span class="o">}</span>
-
-	<span class="nd">@Override</span>
-	<span class="kd">public</span> <span class="nc">Map</span> <span class="nf">resolveArgument</span><span class="o">(</span><span class="nc">MethodParameter</span> <span class="n">parameter</span><span class="o">,</span> <span class="nc">ModelAndViewContainer</span> <span class="n">mavContainer</span><span class="o">,</span>
-			<span class="nc">NativeWebRequest</span> <span class="n">webRequest</span><span class="o">,</span> <span class="nc">WebDataBinderFactory</span> <span class="n">binderFactory</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
-		<span class="nc">ObjectMapper</span> <span class="n">objectMapper</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ObjectMapper</span><span class="o">();</span>
-		<span class="nc">HttpServletRequest</span> <span class="n">request</span> <span class="o">=</span> <span class="o">(</span><span class="nc">HttpServletRequest</span><span class="o">)</span> <span class="n">webRequest</span><span class="o">.</span><span class="na">getNativeRequest</span><span class="o">();</span>
-		<span class="kt">byte</span><span class="o">[]</span> <span class="n">rawData</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-		<span class="nc">String</span> <span class="n">decodingBody</span><span class="o">;</span>
-		<span class="nc">Map</span> <span class="n">reqMap</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-		
-        <span class="k">try</span> <span class="o">{</span>
-        	<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"decodingBody:"</span><span class="o">);</span>
-            <span class="nc">InputStream</span> <span class="n">inputStream</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">();</span>
-            <span class="n">rawData</span> <span class="o">=</span> <span class="nc">IOUtils</span><span class="o">.</span><span class="na">toByteArray</span><span class="o">(</span><span class="n">inputStream</span><span class="o">);</span>
-            <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"rawData:{}"</span><span class="o">,</span> <span class="n">rawData</span><span class="o">);</span>
-            <span class="nc">AESUtil</span> <span class="n">aesUtil</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">AESUtil</span><span class="o">();</span>
-            <span class="n">decodingBody</span> <span class="o">=</span> <span class="n">aesUtil</span><span class="o">.</span><span class="na">decrypt</span><span class="o">(</span><span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="n">rawData</span><span class="o">,</span> <span class="nc">StandardCharsets</span><span class="o">.</span><span class="na">UTF_8</span><span class="o">));</span>
-            <span class="n">reqMap</span> <span class="o">=</span> <span class="n">objectMapper</span><span class="o">.</span><span class="na">readValue</span><span class="o">(</span><span class="n">decodingBody</span><span class="o">,</span> <span class="nc">Map</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-            <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"decodingBody:{}"</span><span class="o">,</span> <span class="n">decodingBody</span><span class="o">);</span>
-        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-        <span class="o">}</span>
-		<span class="k">return</span> <span class="n">reqMap</span><span class="o">;</span>
-	<span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="Resolver" /><summary type="html"><![CDATA[ArgumentResolver Http Request를 제어 또는 가공(Decrpt)할 수 있는 또 하나의 영역중 하나가 바로 ArgumentResolver 입니다. ArgumentRoslver는 Request 데이터를 가공하여 Constroller에 전달하고 싶을 때 사용합니다. 제어할 때상으로는 아래와 같은 유형을 대상으로 ArgumentResolver를 적용할 수 있습니다.]]></summary></entry></feed>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="Advice" /><summary type="html"><![CDATA[화 RequestBodyAdvice Http Request를 제어 또는 가공(Decrpt)할 수 있는 또 하나의 영역중 하나가 바로 RequestBodyAdvice 입니다. ArgumentRoslver는 RestController에는 약간의 제약사항이 있으나 RequestBodyAdvice는 그러한 제약사항이 없습니다. 적용하는 방법은 ArgumentResolver와 유사하고 점도 섬세한 제어가 가능합니다.]]></summary></entry></feed>

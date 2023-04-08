@@ -443,6 +443,12 @@ var store = [{
         "url": "/cache/naming-rule/",
         "teaser": null
       },{
+        "title": "Getting Start Redis - Hashes",
+        "excerpt":"Hashes Redis 해시는 필드-값 쌍을 사용하여 “해시”가 어떻게 보이는지 정확히 보여줍니다.: &gt; hset user:1000 username antirez birthyear 1977 verified 1 (integer) 3 &gt; hget user:1000 username \"antirez\" &gt; hget user:1000 birthyear \"1977\" &gt; hgetall user:1000 1) \"username\" 2) \"antirez\" 3) \"birthyear\" 4) \"1977\" 5) \"verified\" 6) \"1\" 해시는 객체를 나타내는...","categories": ["cache"],
+        "tags": ["redis","jupyter"],
+        "url": "/cache/hashes/",
+        "teaser": null
+      },{
         "title": "Getting Start Redis - List",
         "excerpt":"List List 데이터 유형을 설명하려면 List라는 용어가 정보 기술 담당자에 의해 부적절한 방식으로 자주 사용되기 때문에 약간의 이론으로 시작하는 것이 좋습니다. 예를 들어 “파이썬 목록”은 이름이 암시하는 것 (연결 목록)이 아니라 배열 (실제로 Ruby에서는 동일한 데이터 유형을 배열이라고 함)입니다. 매우 일반적인 관점에서 List는 정렬된 요소의 시퀀스일 뿐입니다: 10,20,1,2,3은 목록입니다. 그러나...","categories": ["cache"],
         "tags": ["redis"],
