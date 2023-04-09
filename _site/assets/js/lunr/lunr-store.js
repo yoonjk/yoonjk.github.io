@@ -496,4 +496,16 @@ var store = [{
         "tags": ["redis","haproxy"],
         "url": "/cache/haproxy/",
         "teaser": null
+      },{
+        "title": "Getting Start Redis- 레디스 모니터링 Redis Stat",
+        "excerpt":"Redis 서버의 메모리 사용량을 모니터링하고자 하는 경우 오픈소스 Redis Stat를 사용할 수 있습니다. Redis Stat 설치 Redis Stat는 ruby로 개발되어 있어서 Ruby가 설치되어 있어야 합니다. Ruby를 설치하기전에 의존성 패키지를 먼저 설치합니다. yum install -y ruby-devel gcc make rpm-build rubygems # Ruby install git clone https://github.com/rbenv/rbenv-installer cd rbenv-installer cd bin ./rbenv-installer...","categories": ["cache"],
+        "tags": ["redis","redis-stat"],
+        "url": "/cache/monitoring-redis-stat/",
+        "teaser": null
+      },{
+        "title": "Getting Start Redis - Redis Cluster",
+        "excerpt":"Redis Cluster 환경구성 port [각자포트] # 백그라운드에서 시작하도록 설정 daemonize yes # 클러스터를 사용하겠다. cluster-enabled yes # 클러스터 구성 내용을 저장한는 파일명 지정 (자동 생성됨) cluster-config-file nodes-[각자포트].conf # 클러스터 노드가 다운되었는지 판단하는 시간 (3s) cluster-node-timeout 3000 # Appendonly를 yes로 설정하면 rdb에 저장 안되고 aof에 저장됨 (각각 장단점이 있으니 해당 부분은...","categories": ["cache"],
+        "tags": ["redis","haproxy"],
+        "url": "/cache/redis-cluster/",
+        "teaser": null
       }]
