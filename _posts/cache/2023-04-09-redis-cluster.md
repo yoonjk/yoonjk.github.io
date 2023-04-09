@@ -98,14 +98,26 @@ redis-cli --cluster add-node 127.0.0.1:6400 127.0.0.1:6300 --cluster-slave
 #### Master 로그
 ![Jupyter log]({{ "/assets/images/cache/11-cache-log-redis-master.png" }})
 
-## Slave2 등록
+#### Slave2 등록
 Master2(6301)에 Slave1(6401) node를 추가합니다
 ```bash
 redis-cli --cluster add-node 127.0.0.1:6401 127.0.0.1:6301 --cluster-slave
 ```
 
-## Slave3 등록
+#### Slave3 등록
 Master3(6302)에 Slave1(6402) node를 추가합니다
 ```bash
 redis-cli --cluster add-node 127.0.0.1:6402 127.0.0.1:6302 --cluster-slave
+```
+
+## 클러스터 정보확인
+redis 클러스터 정보를 다음과 같이 확인합니다.
+```bash
+redis-cli --cluster info 127.0.0.1:6300
+```
+#### Redis Cluster Failover
+Redis Master를 강제로 종료했을 떄 어떻게 failover되는지 확인하기 위해 master1(6300)을 강제로 종료하여 redis stat로 확인합니다.
+```bash
+ps -ef|grep redis
+kill -9 pid
 ```
