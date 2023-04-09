@@ -1,5 +1,5 @@
 ---
-title: Redis Sentinel 구성
+title: Getting Start Redis - Redis Sentinel 구성
 categories: 
   - cache
 tags:

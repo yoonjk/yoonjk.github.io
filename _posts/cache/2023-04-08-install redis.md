@@ -1,5 +1,5 @@
 ---
-title: Redis 설치 - Centos
+title: Getting Start Redis - Redis 설치(Centos)
 categories:
   - cache 
 tags: 

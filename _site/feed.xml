@@ -1,4 +1,225 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-09T00:58:08+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Redis Sentinel 구성</title><link href="http://localhost:4000/cache/setup-sentinel-redis/" rel="alternate" type="text/html" title="Redis Sentinel 구성" /><published>2023-04-08T00:00:00+09:00</published><updated>2023-04-08T00:00:00+09:00</updated><id>http://localhost:4000/cache/setup-sentinel-redis</id><content type="html" xml:base="http://localhost:4000/cache/setup-sentinel-redis/"><![CDATA[<h2 id="redis-sentinel-구성">Redis Sentinel 구성</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-09T10:45:37+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Getting Start Redis - Redis Sentinel &amp;amp; HAProxy</title><link href="http://localhost:4000/cache/haproxy/" rel="alternate" type="text/html" title="Getting Start Redis - Redis Sentinel &amp;amp; HAProxy" /><published>2023-04-09T00:00:00+09:00</published><updated>2023-04-09T00:00:00+09:00</updated><id>http://localhost:4000/cache/haproxy</id><content type="html" xml:base="http://localhost:4000/cache/haproxy/"><![CDATA[<p>Redis Sentinel을 구성하고, slave의 loadbalance를 위해 haproxy를 구성합니다. haproxy의 UI화면에서 redis의 master/slave의 active/deactive를 상태를 한눈에 파악하기 쉽습니다.</p>
+
+<h2 id="haproxy-환경-구성">Haproxy 환경 구성</h2>
+
+<h4 id="haproxy-설치를-위한-의존성-패키지-설치">HAProxy 설치를 위한 의존성 패키지 설치</h4>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># HAProxy 설치를 위한 의존성 패키지 설치</span>
+yum <span class="nb">install</span> <span class="nt">-y</span> gcc openssl openssl-devel pcre-static pcre-devel systemd-devel
+</code></pre></div></div>
+
+<h4 id="haproxy-설치">Haproxy 설치</h4>
+<p>haproxy를 구성하기 위해 haproxy 최근 버전을 <a href="http://www.haproxy.org/download/2.8/src/devel/">download</a>하여 build 및 install합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+wget http://www.haproxy.org/download/2.8/src/devel/haproxy-2.8-dev7.tar.gz
+
+<span class="nb">tar </span>xvzf haproxy-2.8-dev7.tar.gz
+
+
+<span class="nb">cd </span>haproxy-2.8-dev7 
+make <span class="nv">TARGET</span><span class="o">=</span>linux-glibc <span class="nv">USE_OPENSSL</span><span class="o">=</span>1 <span class="nv">USE_PCRE</span><span class="o">=</span>1 <span class="nv">USE_ZLIB</span><span class="o">=</span>1 <span class="nv">USE_SYSTEMD</span><span class="o">=</span>1
+
+<span class="c">## Install haproxy</span>
+make <span class="nb">install</span>
+</code></pre></div></div>
+
+<p>아래의 명령어를 입력하여 설치된 HAProxy 버전을 확인합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/local/sbin/haproxy <span class="nt">-v</span>
+</code></pre></div></div>
+<p>OS가 reboot되어도 재시작하도록 service 파일을 작서합니다. 아래의 명령어를 입력하여 HAProxy 서비스 예제 파일을 다운로드합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="s2">"http://git.haproxy.org/?p=haproxy-2.3.git;a=blob_plain;f=contrib/systemd/haproxy.service.in"</span> <span class="nt">-o</span> /etc/systemd/system/haproxy.service
+
+<span class="c"># 서비스파일 편집</span>
+vi /etc/systemd/system/haproxy.service
+</code></pre></div></div>
+<p>아래와 같이 서비스 파일에서 아래의 3개의 내용을 편집합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">ExecStartPre</span><span class="o">=</span>/usr/local/sbin/haproxy  <span class="nt">-f</span> /etc/haproxy/haproxy.cfg <span class="nt">-c</span> <span class="nt">-q</span> <span class="nt">-S</span> /run/haproxy-master.sock
+<span class="nv">ExecStart</span><span class="o">=</span>/usr/local/sbin/haproxy <span class="nt">-Ws</span> <span class="nt">-f</span> /etc/haproxy/haproxy.cfg <span class="nt">-p</span> /run/haproxy.pid <span class="nt">-S</span> /run/haproxy-master.sock
+<span class="nv">ExecReload</span><span class="o">=</span>/usr/local/sbin/haproxy <span class="nt">-f</span> /etc/haproxy/haproxy.cfg <span class="nt">-c</span> <span class="nt">-q</span> <span class="nt">-S</span> /run/haproxy-master.soc용
+</code></pre></div></div>
+
+<p>서비프파일 전체 내용</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>Unit]
+<span class="nv">Description</span><span class="o">=</span>HAProxy Load Balancer
+<span class="nv">After</span><span class="o">=</span>network-online.target
+<span class="nv">Wants</span><span class="o">=</span>network-online.target
+
+<span class="o">[</span>Service]
+<span class="nv">EnvironmentFile</span><span class="o">=</span>-/etc/default/haproxy
+<span class="nv">EnvironmentFile</span><span class="o">=</span>-/etc/sysconfig/haproxy
+<span class="nv">Environment</span><span class="o">=</span><span class="s2">"CONFIG=/etc/haproxy/haproxy.cfg"</span> <span class="s2">"PIDFILE=/run/haproxy.pid"</span> <span class="s2">"EXTRAOPTS=-S /run/haproxy-master.sock"</span>
+<span class="nv">ExecStartPre</span><span class="o">=</span>/usr/local/sbin/haproxy  <span class="nt">-f</span> /etc/haproxy/haproxy.cfg <span class="nt">-c</span> <span class="nt">-q</span> <span class="nt">-S</span> /run/haproxy-master.sock
+<span class="nv">ExecStart</span><span class="o">=</span>/usr/local/sbin/haproxy <span class="nt">-Ws</span> <span class="nt">-f</span> /etc/haproxy/haproxy.cfg <span class="nt">-p</span> /run/haproxy.pid <span class="nt">-S</span> /run/haproxy-master.sock
+<span class="nv">ExecReload</span><span class="o">=</span>/usr/local/sbin/haproxy <span class="nt">-f</span> /etc/haproxy/haproxy.cfg <span class="nt">-c</span> <span class="nt">-q</span> <span class="nt">-S</span> /run/haproxy-master.soc용
+<span class="nv">ExecReload</span><span class="o">=</span>/bin/kill <span class="nt">-USR2</span> <span class="nv">$MAINPID</span>
+<span class="nv">KillMode</span><span class="o">=</span>mixed
+<span class="nv">Restart</span><span class="o">=</span>always
+<span class="nv">SuccessExitStatus</span><span class="o">=</span>143
+<span class="nv">Type</span><span class="o">=</span>notify
+
+<span class="c"># The following lines leverage SystemD's sandboxing options to provide</span>
+<span class="c"># defense in depth protection at the expense of restricting some flexibility</span>
+<span class="c"># in your setup (e.g. placement of your configuration files) or possibly</span>
+<span class="c"># reduced performance. See systemd.service(5) and systemd.exec(5) for further</span>
+<span class="c"># information.</span>
+
+<span class="c"># NoNewPrivileges=true</span>
+<span class="c"># ProtectHome=true</span>
+<span class="c"># If you want to use 'ProtectSystem=strict' you should whitelist the PIDFILE,</span>
+<span class="c"># any state files and any other files written using 'ReadWritePaths' or</span>
+<span class="c"># 'RuntimeDirectory'.</span>
+<span class="c"># ProtectSystem=true</span>
+<span class="c"># ProtectKernelTunables=true</span>
+<span class="c"># ProtectKernelModules=true</span>
+<span class="c"># ProtectControlGroups=true</span>
+<span class="c"># If your SystemD version supports them, you can add: @reboot, @swap, @sync</span>
+<span class="c"># SystemCallFilter=~@cpu-emulation @keyring @module @obsolete @raw-io</span>
+
+<span class="o">[</span>Install]
+<span class="nv">WantedBy</span><span class="o">=</span>multi-user.target
+</code></pre></div></div>
+<h2 id="haproxy-설정파일-수정">haproxy 설정파일 수정</h2>
+<p>아래의 명령어를 입력하여 HAProxy 폴더를 생성합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo mkdir</span> <span class="nt">-p</span> /etc/haproxy
+<span class="nb">sudo mkdir</span> <span class="nt">-p</span> /var/log/haproxy
+<span class="nb">sudo mkdir</span> <span class="nt">-p</span> /etc/haproxy/certs
+<span class="nb">sudo mkdir</span> <span class="nt">-p</span> /etc/haproxy/errors/
+</code></pre></div></div>
+<p>HAProxy 설정 파일에 아래와 같이 편집합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#---------------------------------------------------------------------</span>
+<span class="c"># common defaults that all the 'listen' and 'backend' sections will</span>
+<span class="c"># use if not designated in their block</span>
+<span class="c">#---------------------------------------------------------------------</span>
+defaults
+    mode                    tcp
+    log                     127.0.0.1 local0
+    retries                 3
+    <span class="nb">timeout </span>http-request    10s
+    <span class="nb">timeout </span>queue           1m
+    <span class="nb">timeout </span>connect         5s
+    <span class="nb">timeout </span>client          5s
+    <span class="nb">timeout </span>server          5s
+    <span class="nb">timeout </span>http-keep-alive 10s
+    <span class="nb">timeout </span>check           1s
+    maxconn                 10000
+<span class="c">#---------------------------------------------------------------------</span>
+<span class="c"># main frontend which proxys to the backends</span>
+<span class="c">#---------------------------------------------------------------------</span>
+frontend ft_redis_master
+    <span class="nb">bind</span> <span class="k">*</span>:8000
+    default_backend bk_redis_master
+<span class="c">#---------------------------------------------------------------------</span>
+<span class="c"># round robin balancing between the various backends</span>
+<span class="c">#---------------------------------------------------------------------</span>
+backend bk_redis_master
+    balance roundrobin
+    log global
+    option tcp-check
+    tcp-check send info<span class="se">\ </span>replication<span class="se">\r\n</span>
+    tcp-check expect string role:master
+    server tcpapp1 localhost:6382 check
+    server tcpapp2 localhost:6383 check
+    server tcpapp3 localhost:6384 check
+
+<span class="c">#---------------------------------------------------------------------</span>
+<span class="c"># main frontend which proxys to the backends</span>
+<span class="c">#---------------------------------------------------------------------</span>
+frontend ft_redis_slave
+    <span class="nb">bind</span> <span class="k">*</span>:8001
+    default_backend bk_redis_slave
+<span class="c">#---------------------------------------------------------------------</span>
+<span class="c"># round robin balancing between the various backends</span>
+<span class="c">#---------------------------------------------------------------------</span>
+backend bk_redis_slave
+    balance roundrobin
+    log global
+    option tcp-check
+    tcp-check send info<span class="se">\ </span>replication<span class="se">\r\n</span>
+    tcp-check expect string role:slave
+    server tcpapp1 localhost:6382 check
+    server tcpapp2 localhost:6383 check
+    server tcpapp3 localhost:6384 check
+<span class="c">#---------------------------------------------------------------------</span>
+<span class="c"># admin uI</span>
+<span class="c">#---------------------------------------------------------------------</span>
+listen stats
+ <span class="nb">bind</span> :80
+ mode http
+ balance roundrobin
+ maxconn 10
+ <span class="nb">timeout </span>client 5000
+ <span class="nb">timeout </span>connect 4000
+ <span class="nb">timeout </span>server 30000
+
+ <span class="c"># Enable stats page</span>
+ stats <span class="nb">enable</span>
+
+ <span class="c"># Hide HAProxy version</span>
+ stats hide-version
+
+  <span class="c">#This is the virtual URL to access the stats page</span>
+ stats uri /haproxy_stats
+
+ <span class="c">#Authentication realm. This can be set to anything.</span>
+ <span class="c">#Escape space characters with a backslash.</span>
+ stats realm HAProxy<span class="se">\ </span>Statistics
+
+ <span class="c">#The user/pass you want to use. Change this password!</span>
+ stats auth admin:admin
+
+ <span class="c">#This allows you to take down and bring up back end servers.</span>
+ <span class="c">#This will produce an error on older versions of HAProxy.</span>
+ stats admin <span class="k">if </span>TRUE
+</code></pre></div></div>
+
+<p>## HAProxy 실행
+HAProxy를 서비스를 실행합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> systemctl daemon-reload
+ systemctl <span class="nb">enable </span>haproxy
+ systemctl start haproxy
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="haproxy" /><summary type="html"><![CDATA[Redis Sentinel을 구성하고, slave의 loadbalance를 위해 haproxy를 구성합니다. haproxy의 UI화면에서 redis의 master/slave의 active/deactive를 상태를 한눈에 파악하기 쉽습니다.]]></summary></entry><entry><title type="html">Getting Start Redis - Redis 설치(Centos)</title><link href="http://localhost:4000/cache/install-redis/" rel="alternate" type="text/html" title="Getting Start Redis - Redis 설치(Centos)" /><published>2023-04-08T00:00:00+09:00</published><updated>2023-04-08T00:00:00+09:00</updated><id>http://localhost:4000/cache/install%20redis</id><content type="html" xml:base="http://localhost:4000/cache/install-redis/"><![CDATA[<h2 id="redis-설치-준비">Redis 설치 준비</h2>
+<p>Redis를 다음의 절차로 설치합니다.</p>
+<ul>
+  <li>OS 업데이트</li>
+  <li>Development Tools 설치</li>
+  <li>redis download</li>
+  <li>redis build</li>
+  <li>redis install</li>
+</ul>
+
+<p>Centos7 OS 버전을 최신으로 업그레이드 하고, Development Tools를 설치합니다. Redis <a href="http://download.redis.io/releases/">download</a> site 에 가서 원하는 redis 를 확인하고 address link를 복사합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum update <span class="nt">-y</span>
+yum groupinstall <span class="s1">'Development Tools'</span>
+<span class="nb">sudo </span>wget http://download.redis.io/releases/redis-7.0.10.tar.gz
+<span class="nb">tar </span>xvzf redis-7.0.10.tar.gz
+<span class="nb">cd </span>redis-7.0.10
+</code></pre></div></div>
+<p>Redis 압축파일을 해제한 후 make 명령어를 수행하면 아래처럼 jemalloc No such file or directory 오류가 발생합니다.
+이를 해결하기 위해서는 deps 폴더에서 compile을 해야합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make clean
+<span class="nb">cd </span>deps
+make hiredis jemalloc linenoise lua
+<span class="nb">cd</span> ..
+</code></pre></div></div>
+<p>Redis 압축 해제했던 폴더로 되돌아와서 다시 build합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># redis-7.0.10</span>
+make
+make <span class="nb">install</span>
+</code></pre></div></div>
+
+<h2 id="redis-서버-실행">Redis 서버 실행</h2>
+<p>redis 를 install 후 redis 서버를 실행합니다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>src/redis-server redis.conf
+</code></pre></div></div>
+
+<p>redis를 접속하기 위해 terminal을 1개 열어 redis가 설치된 서버에 접속합니다.
+src 폴더에 있는 redis-cli를 이용하여 redis 서버에 접속합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>redis-cli
+<span class="nb">set </span>k1 v1
+get k1
+</code></pre></div></div>
+
+<h2 id="참고">참고</h2>
+<p><a href="https://mozi.tistory.com/536">꽁담</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><summary type="html"><![CDATA[Redis 설치 준비 Redis를 다음의 절차로 설치합니다. OS 업데이트 Development Tools 설치 redis download redis build redis install]]></summary></entry><entry><title type="html">Getting Start Redis - Redis Sentinel 구성</title><link href="http://localhost:4000/cache/setup-sentinel-redis/" rel="alternate" type="text/html" title="Getting Start Redis - Redis Sentinel 구성" /><published>2023-04-08T00:00:00+09:00</published><updated>2023-04-08T00:00:00+09:00</updated><id>http://localhost:4000/cache/setup-sentinel-redis</id><content type="html" xml:base="http://localhost:4000/cache/setup-sentinel-redis/"><![CDATA[<h2 id="redis-sentinel-구성">Redis Sentinel 구성</h2>
 <p>Redis를 다음의 <a href="https://yoonjk.github.io/cache/install-redis/">링크</a>를 참조하여 설치합니다.</p>
 
 <p>Redis 를 HA 구성하는 방법은 몇가지 방법은 아래와 같이 구성할 수 있습니다. 첫번째 방법은 Master가 장애가 발생하면 서비스 장애가 발생하는 구성이지만 구성은 간단합니다. 두번째 방법 Sentinel 방법은 Redis Master가 장애가 발생하여도 slave가 master로 승격되어 지속적인 서비스가 가능합니다. 장애가 발생했던 master가 복귀되면 이전의 master는 slave 역할로 서비스를 합니다.
@@ -99,50 +320,7 @@ src/sentinel-server redis_5002.conf
 </code></pre></div></div>
 
 <h2 id="참고">참고</h2>
-<p><a href="https://co-de.tistory.com/15">5분 안에 구축하는 Redis-Sentinel</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="sentinel" /><summary type="html"><![CDATA[Redis Sentinel 구성 Redis를 다음의 링크를 참조하여 설치합니다.]]></summary></entry><entry><title type="html">Redis 설치 - Centos</title><link href="http://localhost:4000/cache/install-redis/" rel="alternate" type="text/html" title="Redis 설치 - Centos" /><published>2023-04-08T00:00:00+09:00</published><updated>2023-04-08T00:00:00+09:00</updated><id>http://localhost:4000/cache/install%20redis</id><content type="html" xml:base="http://localhost:4000/cache/install-redis/"><![CDATA[<h2 id="redis-설치-준비">Redis 설치 준비</h2>
-<p>Redis를 다음의 절차로 설치합니다.</p>
-<ul>
-  <li>OS 업데이트</li>
-  <li>Development Tools 설치</li>
-  <li>redis download</li>
-  <li>redis build</li>
-  <li>redis install</li>
-</ul>
-
-<p>Centos7 OS 버전을 최신으로 업그레이드 하고, Development Tools를 설치합니다. Redis <a href="http://download.redis.io/releases/">download</a> site 에 가서 원하는 redis 를 확인하고 address link를 복사합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum update <span class="nt">-y</span>
-yum groupinstall <span class="s1">'Development Tools'</span>
-<span class="nb">sudo </span>wget http://download.redis.io/releases/redis-7.0.10.tar.gz
-<span class="nb">tar </span>xvzf redis-7.0.10.tar.gz
-<span class="nb">cd </span>redis-7.0.10
-</code></pre></div></div>
-<p>Redis 압축파일을 해제한 후 make 명령어를 수행하면 아래처럼 jemalloc No such file or directory 오류가 발생합니다.
-이를 해결하기 위해서는 deps 폴더에서 compile을 해야합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make clean
-<span class="nb">cd </span>deps
-make hiredis jemalloc linenoise lua
-<span class="nb">cd</span> ..
-</code></pre></div></div>
-<p>Redis 압축 해제했던 폴더로 되돌아와서 다시 build합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># redis-7.0.10</span>
-make
-make <span class="nb">install</span>
-</code></pre></div></div>
-
-<h2 id="redis-서버-실행">Redis 서버 실행</h2>
-<p>redis 를 install 후 redis 서버를 실행합니다.</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>src/redis-server redis.conf
-</code></pre></div></div>
-
-<p>redis를 접속하기 위해 terminal을 1개 열어 redis가 설치된 서버에 접속합니다.
-src 폴더에 있는 redis-cli를 이용하여 redis 서버에 접속합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>redis-cli
-<span class="nb">set </span>k1 v1
-get k1
-</code></pre></div></div>
-
-<h2 id="참고">참고</h2>
-<p><a href="https://mozi.tistory.com/536">꽁담</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><summary type="html"><![CDATA[Redis 설치 준비 Redis를 다음의 절차로 설치합니다. OS 업데이트 Development Tools 설치 redis download redis build redis install]]></summary></entry><entry><title type="html">Getting Start Redis - String</title><link href="http://localhost:4000/cache/string/" rel="alternate" type="text/html" title="Getting Start Redis - String" /><published>2023-04-07T00:00:00+09:00</published><updated>2023-04-07T00:00:00+09:00</updated><id>http://localhost:4000/cache/string</id><content type="html" xml:base="http://localhost:4000/cache/string/"><![CDATA[<h2 id="strings">Strings</h2>
+<p><a href="https://co-de.tistory.com/15">5분 안에 구축하는 Redis-Sentinel</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="sentinel" /><summary type="html"><![CDATA[Redis Sentinel 구성 Redis를 다음의 링크를 참조하여 설치합니다.]]></summary></entry><entry><title type="html">Getting Start Redis - String</title><link href="http://localhost:4000/cache/string/" rel="alternate" type="text/html" title="Getting Start Redis - String" /><published>2023-04-07T00:00:00+09:00</published><updated>2023-04-07T00:00:00+09:00</updated><id>http://localhost:4000/cache/string</id><content type="html" xml:base="http://localhost:4000/cache/string/"><![CDATA[<h2 id="strings">Strings</h2>
 <p>Redis 문자열 유형은 Redis 키와 연결할 수 있는 가장 간단한 값 유형입니다. Memcached의 유일한 데이터 유형이므로 신규 사용자가 Redis에서 사용하는 것도 매우 자연스러운 일입니다.
 Redis 키는 문자열이므로 문자열 유형도 값으로 사용할 때 문자열을 다른 문자열에 매핑합니다. 문자열 데이터 형식은 HTML 조각 또는 페이지 캐싱과 같은 다양한 사용 사례에 유용합니다.
 redis-cli를 사용하여 문자열 유형을 약간 사용해 보겠습니다<br />
@@ -735,14 +913,4 @@ Sorted Set는 이보다 더 강력합니다. 범위에서 작동 할 수 있습�
 <p>•	<em>키를 구분자를 이용하여 그룹으로 분류</em><br />
 예를 들어 “object-type:id”는 “user:1000”에서와 같이 <strong>콜론(:)</strong> 을 구분자하여 그룹을 만드는 것은 좋은 생각입니다. 점 또는 대시는 “comment:4321:reply.to” 또는 “comment:4321:reply-to”와 같이 여러 단어로 된 필드에 자주 사용됩니다.</p>
 
-<p>•	<em>허용 된 최대 키 크기는 512MB입니다.</em></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[기본 Redis 데이터 형식 및 사용 방법 다음은 Redis CLI를 사용하여 핵심 Redis 데이터 유형을 학습하는 실습 자습서입니다. 데이터 형식에 대한 일반적인 개요는 데이터 형식 소개를 참조하세요. Keys Redis 키는 바이너리로부터 안전하므로 “foo”와 같은 문자열에서 JPEG 파일의 내용에 이르기까지 모든 바이너리 시퀀스를 키로 사용할 수 있습니다. 빈 문자열도 유효한 키입니다.]]></summary></entry><entry><title type="html">Getting Start Redis - Jupyter Notebook</title><link href="http://localhost:4000/cache/getting-starting-jupyter/" rel="alternate" type="text/html" title="Getting Start Redis - Jupyter Notebook" /><published>2023-03-29T00:00:00+09:00</published><updated>2023-03-29T00:00:00+09:00</updated><id>http://localhost:4000/cache/getting-starting-jupyter</id><content type="html" xml:base="http://localhost:4000/cache/getting-starting-jupyter/"><![CDATA[<p>Jupyter Notebook을 환경에서 Python을 이용하여 Redis를 알아봅니다. redis-py를 이용하여 redis를 연결하고, 다음과 같이 데이터를 set/get을 수행하여 결과를 확인합니다.</p>
-<h2 id="connect">Connect</h2>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">redis</span>
-
-<span class="n">redisClient</span> <span class="o">=</span> <span class="n">redis</span><span class="p">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s">'localhost'</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span> <span class="n">decode_responses</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-
-<span class="n">redisClient</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="s">'foo'</span><span class="p">,</span> <span class="s">'bar'</span><span class="p">)</span>
-<span class="n">redisClient</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'foo'</span><span class="p">)</span>
-</code></pre></div></div>
-
-<p><img src="/assets/images/cache/06-cache-get-set.png" alt="Jupyter log" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[Jupyter Notebook을 환경에서 Python을 이용하여 Redis를 알아봅니다. redis-py를 이용하여 redis를 연결하고, 다음과 같이 데이터를 set/get을 수행하여 결과를 확인합니다. Connect ```python import redis]]></summary></entry></feed>
+<p>•	<em>허용 된 최대 키 크기는 512MB입니다.</em></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[기본 Redis 데이터 형식 및 사용 방법 다음은 Redis CLI를 사용하여 핵심 Redis 데이터 유형을 학습하는 실습 자습서입니다. 데이터 형식에 대한 일반적인 개요는 데이터 형식 소개를 참조하세요. Keys Redis 키는 바이너리로부터 안전하므로 “foo”와 같은 문자열에서 JPEG 파일의 내용에 이르기까지 모든 바이너리 시퀀스를 키로 사용할 수 있습니다. 빈 문자열도 유효한 키입니다.]]></summary></entry></feed>
