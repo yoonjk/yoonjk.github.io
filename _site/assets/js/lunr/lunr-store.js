@@ -77,6 +77,12 @@ var store = [{
         "url": "/workflow/airflow-best-practices-1/",
         "teaser": null
       },{
+        "title": "Airflow Best Practices - II",
+        "excerpt":"DAG에서 default_args 설정 모든 작업에 설정, 인수 또는 정보를 적용해야 하는 경우 DAG의 일부가 아닌 최상위 코드를 사용하지 않고 default_args 설정하는 것이 가장 좋습니다. 다음과 같이 모든 인수가 있는 default_args dictionary 만들 수 있습니다. default_args ={ 'owner': 'ITGix Data Engineers', 'email_on_failure': False, 'retries': 2 } DAG 이름의 DAG 버전 관리...","categories": ["workflow"],
+        "tags": ["airflow"],
+        "url": "/workflow/airflow-best-practices-2/",
+        "teaser": null
+      },{
         "title": "Create your first Airflow DAG",
         "excerpt":"My First DAG 개발 Apache Airflow Dag 개발 절차는 다음의 7단계 절차로 구현합니다. Airflow 관련 Module import DAG Arguments 정의 Python Function 또는 task 에서 사용하는 Variable 정의 (Optional) Instatiate DAG 정의 Task 정의 Task간 의존성 정의 Verify DAG 개발절차를 예제로 살펴보면 다음과 같습니다. 1. Airflow 관련 Module import from...","categories": ["workflow"],
         "tags": ["airflow"],
@@ -507,5 +513,11 @@ var store = [{
         "excerpt":"Redis Cluster 환경구성 port [각자포트] # 백그라운드에서 시작하도록 설정 daemonize yes # 클러스터를 사용하겠다. cluster-enabled yes # 클러스터 구성 내용을 저장한는 파일명 지정 (자동 생성됨) cluster-config-file nodes-[각자포트].conf # 클러스터 노드가 다운되었는지 판단하는 시간 (3s) cluster-node-timeout 3000 # Appendonly를 yes로 설정하면 rdb에 저장 안되고 aof에 저장됨 (각각 장단점이 있으니 해당 부분은...","categories": ["cache"],
         "tags": ["redis","haproxy"],
         "url": "/cache/redis-cluster/",
+        "teaser": null
+      },{
+        "title": "@Inject과 @Autowired의 차이점",
+        "excerpt":"@Inject vs @Autowired @Inject 및 @Autowired 두 주석은 응용 프로그램에서 자동 의존성주입에 사용됩니다. @Inject 어노테이션은 Java 6에 도입 된 Java CDI의 일부인 반면 @Autowire 어노테이션은 스프링프레임워크의 일부. 두 어노테이션 모두 동일한 목적을 수행하므로 응용프로그램에서 사용할 수 있는 어노테이션. Sr. No. Key @Inject @Autowired 1 Basic 그것은 자바 CDI의 일부입니다 스프링...","categories": ["springboot"],
+        "tags": ["springboot"],
+        "url": "/springboot/difference-autowired-inject/",
         "teaser": null
       }]
