@@ -27,7 +27,9 @@ public class InjectionExample {
    @Inject
    private CarBean carbean;
 }
-Example of @Autowired annotation
+```
+@Autowired 어노테이션 예시
+```java
 public class AutowiredExample {
    @Autowired
    private CarBean carbean;
