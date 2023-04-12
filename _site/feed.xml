@@ -1,73 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-13T07:16:06+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Getting Start Redis - Redids Cluster Failover 설정</title><link href="http://localhost:4000/cache/failover-redis-cluster/" rel="alternate" type="text/html" title="Getting Start Redis - Redids Cluster Failover 설정" /><published>2023-04-13T00:00:00+09:00</published><updated>2023-04-13T00:00:00+09:00</updated><id>http://localhost:4000/cache/failover-redis-cluster</id><content type="html" xml:base="http://localhost:4000/cache/failover-redis-cluster/"><![CDATA[<p>Redis Cluster를 구성하고 failover 하기 위해서는 application config 이외에 추가적으로  Redis cluster Confugration이 필요합니다.</p>
-
-<h2 id="redis-cluster-configuration-설정">Redis Cluster Configuration 설정</h2>
-<p>Redis Cluster를 구성하고 Master를 강제로 종료시키면 Replica중 1개가 Master로 승격되어 지속적인 서비스를 이어갈 수 있습니다.<br />
-그리고 Lettuce를 사용하면 이를 자동으로 감지하여 서비스를 지속할 수 있습니다. 
-그러나 쓰기작업이 필요한 서비스는 약간의 delay를 요구하며, Redis Cluster 상태가 refresh되면 정상적인 쓰기 작업이 가능해집니다.
-물론 일기작업은 다음의 설정으로 변함없이 지속적으로 서비스가 가능합니다.</p>
-<h4 id="지속적인-읽기-작업">지속적인 읽기 작업</h4>
-<p>Replica중 1개 또는 모두 종료되더라도 지속적으로 일기 서비스가 가능하도록 하기 위해서는 다음의 설정이 필요합니다.</p>
-
-<p><strong>REPLICA_PREFERRED</strong></p>
-
-<h4 id="지속적인-쓰기-작업">지속적인 쓰기 작업</h4>
-<p>Redis Cluster Master중 1개가 종료되더라도 지속적으로 쓰기 서비스가 가능하도록 하기 위해서는 다음의 설정이 필요합니다.
-아래의 설정값이 default 값이 false로 되어 있기 때문에 true로 설정을 변경해야 master가 종료되고 replica중 1개가 master로 승격되어 서비스를 계속할 수 있게되고, 이를 Lettuce가 감지하여 애플리케이션에서도 서비스를 지속하기 위해 아래의 설정을 하여야 합니다.</p>
-
-<p><strong>enablePeriodicRefresh</strong></p>
-
-<p>그리고 Refresh time을 설정하여 Lettuce가 이를 빠르게 감지하도록 설정합니다.
-<strong>refreshPeriod</strong></p>
-
-<p>다음의 코드는 Redis Cluster를 구성하고 replica가 종료되거나 cluster의 master가 종료되더라도 읽기 작업과 쓰기 작업을 지속할 수 있도록 하기 위한 설정정보입니다.</p>
-
-<p>전체 소스는 아래의 <a href="https://github.com/yoonjk/redis-cluster.git">github 링크</a>에 있습니다.
-<a href="https://github.com/yoonjk/redis-cluster.git">https://github.com/yoonjk/redis-cluster.git</a></p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.time.Duration</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Value</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Bean</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Configuration</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.data.redis.connection.RedisClusterConfiguration</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.data.redis.connection.RedisConnectionFactory</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">io.lettuce.core.ReadFrom</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">io.lettuce.core.cluster.ClusterClientOptions</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">io.lettuce.core.cluster.ClusterTopologyRefreshOptions</span><span class="o">;</span>
-
-<span class="nd">@Configuration</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RedisConfig</span> <span class="o">{</span>
-	<span class="nd">@Value</span><span class="o">(</span><span class="s">"${spring.redis.cluster.nodes}"</span><span class="o">)</span>
-	<span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">clusterNodes</span><span class="o">;</span>
-    <span class="c1">// lettuce 사용시</span>
-    <span class="nd">@Bean</span>
-    <span class="kd">public</span> <span class="nc">RedisConnectionFactory</span> <span class="nf">redisConnectionFactory</span><span class="o">(){</span>
-        <span class="nc">LettuceClientConfiguration</span> <span class="n">clientConfiguration</span> <span class="o">=</span> <span class="nc">LettuceClientConfiguration</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
-        		<span class="o">.</span><span class="na">clientOptions</span><span class="o">(</span><span class="nc">ClusterClientOptions</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
-        				<span class="o">.</span><span class="na">topologyRefreshOptions</span><span class="o">(</span><span class="nc">ClusterTopologyRefreshOptions</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
-        						<span class="o">.</span><span class="na">refreshPeriod</span><span class="o">(</span><span class="nc">Duration</span><span class="o">.</span><span class="na">ofMinutes</span><span class="o">(</span><span class="mi">1</span><span class="o">))</span>
-        						<span class="o">.</span><span class="na">enableAdaptiveRefreshTrigger</span><span class="o">()</span>
-        						<span class="o">.</span><span class="na">enablePeriodicRefresh</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span>    <span class="c1">// Default 가 False</span>
-        						<span class="o">.</span><span class="na">build</span><span class="o">())</span>
-        				<span class="o">.</span><span class="na">build</span><span class="o">())</span>
-        		
-                <span class="o">.</span><span class="na">readFrom</span><span class="o">(</span><span class="nc">ReadFrom</span><span class="o">.</span><span class="na">REPLICA_PREFERRED</span><span class="o">)</span> <span class="c1">// 복제본 노드에서 읽지 만 사용할 수없는 경우 마스터에서 읽습니다.</span>
-                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
-        
-
-        <span class="c1">// 모든 클러스터(master, slave) 정보를 적는다. (해당 서버중 접속되는 서버에서 cluster nodes 명령어를 통해 모든 클러스터 정보를 읽어오기에 다운 됐을 경우를 대비하여 모든 노드 정보를 적어두는편이 좋다.)</span>
-        <span class="nc">RedisClusterConfiguration</span> <span class="n">redisClusterConfiguration</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RedisClusterConfiguration</span><span class="o">(</span><span class="n">clusterNodes</span><span class="o">);</span>
-        
-        <span class="nc">LettuceConnectionFactory</span> <span class="n">lettuceConnectionFactory</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">LettuceConnectionFactory</span><span class="o">(</span><span class="n">redisClusterConfiguration</span><span class="o">,</span> <span class="n">clientConfiguration</span><span class="o">);</span>
-
-        <span class="k">return</span> <span class="n">lettuceConnectionFactory</span><span class="o">;</span>
-    <span class="o">}</span>
-        
-<span class="o">}</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><summary type="html"><![CDATA[Redis Cluster를 구성하고 failover 하기 위해서는 application config 이외에 추가적으로 Redis cluster Confugration이 필요합니다.]]></summary></entry><entry><title type="html">Getting Start Redis - Docker를 이용한 Redis 클러스터링 구성</title><link href="http://localhost:4000/cache/redis-cluster-using-docker/" rel="alternate" type="text/html" title="Getting Start Redis - Docker를 이용한 Redis 클러스터링 구성" /><published>2023-04-13T00:00:00+09:00</published><updated>2023-04-13T00:00:00+09:00</updated><id>http://localhost:4000/cache/redis-cluster-using-docker</id><content type="html" xml:base="http://localhost:4000/cache/redis-cluster-using-docker/"><![CDATA[<h2 id="redisconf-편집">redis.conf 편집</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-13T07:19:23+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Getting Start Redis - Docker를 이용한 Redis 클러스터링 구성</title><link href="http://localhost:4000/cache/redis-cluster-using-docker/" rel="alternate" type="text/html" title="Getting Start Redis - Docker를 이용한 Redis 클러스터링 구성" /><published>2023-04-13T00:00:00+09:00</published><updated>2023-04-13T00:00:00+09:00</updated><id>http://localhost:4000/cache/redis-cluster-using-docker</id><content type="html" xml:base="http://localhost:4000/cache/redis-cluster-using-docker/"><![CDATA[<h2 id="redisconf-편집">redis.conf 편집</h2>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> 6300 6301 6302 6400 6401 6402
 </code></pre></div></div>
@@ -182,7 +113,75 @@ appendonly <span class="nb">yes</span>
 
 <h2 id="참고">참고</h2>
 <p><a href="https://uchupura.tistory.com/56">우쭈뿌라 개발노트</a><br />
-<a href="https://pinggoopark.tistory.com/268">과거의 나를 위해</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="docker" /><summary type="html"><![CDATA[redis.conf 편집]]></summary></entry><entry><title type="html">@Inject과 @Autowired의 차이점</title><link href="http://localhost:4000/springboot/difference-autowired-inject/" rel="alternate" type="text/html" title="@Inject과 @Autowired의 차이점" /><published>2023-04-11T00:00:00+09:00</published><updated>2023-04-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/difference-autowired-inject</id><content type="html" xml:base="http://localhost:4000/springboot/difference-autowired-inject/"><![CDATA[<h2 id="inject-vs-autowired">@Inject vs @Autowired</h2>
+<a href="https://pinggoopark.tistory.com/268">과거의 나를 위해</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="docker" /><summary type="html"><![CDATA[redis.conf 편집]]></summary></entry><entry><title type="html">Getting Start Redis - Redids Cluster Failover 설정</title><link href="http://localhost:4000/cache/failover-redis-cluster/" rel="alternate" type="text/html" title="Getting Start Redis - Redids Cluster Failover 설정" /><published>2023-04-12T00:00:00+09:00</published><updated>2023-04-12T00:00:00+09:00</updated><id>http://localhost:4000/cache/failover-redis-cluster</id><content type="html" xml:base="http://localhost:4000/cache/failover-redis-cluster/"><![CDATA[<h2 id="redis-cluster-configuration-설정">Redis Cluster Configuration 설정</h2>
+<p>Redis Cluster를 구성하고 failover 하기 위해서는 application config 이외에 추가적으로  Redis cluster Confugration이 필요합니다.
+Redis Cluster를 구성하고 Master를 강제로 종료시키면 Replica중 1개가 Master로 승격되어 지속적인 서비스를 이어갈 수 있습니다.<br />
+그리고 Lettuce를 사용하면 이를 자동으로 감지하여 서비스를 지속할 수 있습니다. 
+그러나 쓰기작업이 필요한 서비스는 약간의 delay를 요구하며, Redis Cluster 상태가 refresh되면 정상적인 쓰기 작업이 가능해집니다.
+물론 일기작업은 다음의 설정으로 변함없이 지속적으로 서비스가 가능합니다.</p>
+<h4 id="지속적인-읽기-작업">지속적인 읽기 작업</h4>
+<p>Replica중 1개 또는 모두 종료되더라도 지속적으로 일기 서비스가 가능하도록 하기 위해서는 다음의 설정이 필요합니다.</p>
+
+<p><strong>REPLICA_PREFERRED</strong></p>
+
+<h4 id="지속적인-쓰기-작업">지속적인 쓰기 작업</h4>
+<p>Redis Cluster Master중 1개가 종료되더라도 지속적으로 쓰기 서비스가 가능하도록 하기 위해서는 다음의 설정이 필요합니다.
+아래의 설정값이 default 값이 false로 되어 있기 때문에 true로 설정을 변경해야 master가 종료되고 replica중 1개가 master로 승격되어 서비스를 계속할 수 있게되고, 이를 Lettuce가 감지하여 애플리케이션에서도 서비스를 지속하기 위해 아래의 설정을 하여야 합니다.</p>
+
+<p><strong>enablePeriodicRefresh</strong></p>
+
+<p>그리고 Refresh time을 설정하여 Lettuce가 이를 빠르게 감지하도록 설정합니다.
+<strong>refreshPeriod</strong></p>
+
+<p>다음의 코드는 Redis Cluster를 구성하고 replica가 종료되거나 cluster의 master가 종료되더라도 읽기 작업과 쓰기 작업을 지속할 수 있도록 하기 위한 설정정보입니다.</p>
+
+<p>전체 소스는 아래의 <a href="https://github.com/yoonjk/redis-cluster.git">github 링크</a>에 있습니다.
+<a href="https://github.com/yoonjk/redis-cluster.git">https://github.com/yoonjk/redis-cluster.git</a></p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.time.Duration</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Value</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Bean</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Configuration</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.redis.connection.RedisClusterConfiguration</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.redis.connection.RedisConnectionFactory</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">io.lettuce.core.ReadFrom</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.lettuce.core.cluster.ClusterClientOptions</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.lettuce.core.cluster.ClusterTopologyRefreshOptions</span><span class="o">;</span>
+
+<span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RedisConfig</span> <span class="o">{</span>
+	<span class="nd">@Value</span><span class="o">(</span><span class="s">"${spring.redis.cluster.nodes}"</span><span class="o">)</span>
+	<span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">clusterNodes</span><span class="o">;</span>
+    <span class="c1">// lettuce 사용시</span>
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="nc">RedisConnectionFactory</span> <span class="nf">redisConnectionFactory</span><span class="o">(){</span>
+        <span class="nc">LettuceClientConfiguration</span> <span class="n">clientConfiguration</span> <span class="o">=</span> <span class="nc">LettuceClientConfiguration</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+        		<span class="o">.</span><span class="na">clientOptions</span><span class="o">(</span><span class="nc">ClusterClientOptions</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+        				<span class="o">.</span><span class="na">topologyRefreshOptions</span><span class="o">(</span><span class="nc">ClusterTopologyRefreshOptions</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+        						<span class="o">.</span><span class="na">refreshPeriod</span><span class="o">(</span><span class="nc">Duration</span><span class="o">.</span><span class="na">ofMinutes</span><span class="o">(</span><span class="mi">1</span><span class="o">))</span>
+        						<span class="o">.</span><span class="na">enableAdaptiveRefreshTrigger</span><span class="o">()</span>
+        						<span class="o">.</span><span class="na">enablePeriodicRefresh</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span>    <span class="c1">// Default 가 False</span>
+        						<span class="o">.</span><span class="na">build</span><span class="o">())</span>
+        				<span class="o">.</span><span class="na">build</span><span class="o">())</span>
+        		
+                <span class="o">.</span><span class="na">readFrom</span><span class="o">(</span><span class="nc">ReadFrom</span><span class="o">.</span><span class="na">REPLICA_PREFERRED</span><span class="o">)</span> <span class="c1">// 복제본 노드에서 읽지 만 사용할 수없는 경우 마스터에서 읽습니다.</span>
+                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+        
+
+        <span class="c1">// 모든 클러스터(master, slave) 정보를 적는다. (해당 서버중 접속되는 서버에서 cluster nodes 명령어를 통해 모든 클러스터 정보를 읽어오기에 다운 됐을 경우를 대비하여 모든 노드 정보를 적어두는편이 좋다.)</span>
+        <span class="nc">RedisClusterConfiguration</span> <span class="n">redisClusterConfiguration</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RedisClusterConfiguration</span><span class="o">(</span><span class="n">clusterNodes</span><span class="o">);</span>
+        
+        <span class="nc">LettuceConnectionFactory</span> <span class="n">lettuceConnectionFactory</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">LettuceConnectionFactory</span><span class="o">(</span><span class="n">redisClusterConfiguration</span><span class="o">,</span> <span class="n">clientConfiguration</span><span class="o">);</span>
+
+        <span class="k">return</span> <span class="n">lettuceConnectionFactory</span><span class="o">;</span>
+    <span class="o">}</span>
+        
+<span class="o">}</span>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><summary type="html"><![CDATA[Redis Cluster Configuration 설정 Redis Cluster를 구성하고 failover 하기 위해서는 application config 이외에 추가적으로 Redis cluster Confugration이 필요합니다. Redis Cluster를 구성하고 Master를 강제로 종료시키면 Replica중 1개가 Master로 승격되어 지속적인 서비스를 이어갈 수 있습니다. 그리고 Lettuce를 사용하면 이를 자동으로 감지하여 서비스를 지속할 수 있습니다. 그러나 쓰기작업이 필요한 서비스는 약간의 delay를 요구하며, Redis Cluster 상태가 refresh되면 정상적인 쓰기 작업이 가능해집니다. 물론 일기작업은 다음의 설정으로 변함없이 지속적으로 서비스가 가능합니다. 지속적인 읽기 작업 Replica중 1개 또는 모두 종료되더라도 지속적으로 일기 서비스가 가능하도록 하기 위해서는 다음의 설정이 필요합니다.]]></summary></entry><entry><title type="html">@Inject과 @Autowired의 차이점</title><link href="http://localhost:4000/springboot/difference-autowired-inject/" rel="alternate" type="text/html" title="@Inject과 @Autowired의 차이점" /><published>2023-04-11T00:00:00+09:00</published><updated>2023-04-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/difference-autowired-inject</id><content type="html" xml:base="http://localhost:4000/springboot/difference-autowired-inject/"><![CDATA[<h2 id="inject-vs-autowired">@Inject vs @Autowired</h2>
 <p>@Inject 및 @Autowired 두 주석은 응용 프로그램에서 자동 의존성주입에 사용됩니다.
 @Inject 어노테이션은 Java 6에 도입 된 Java CDI의 일부인 반면 @Autowire 어노테이션은 스프링프레임워크의 일부. 두 어노테이션 모두 동일한 목적을 수행하므로 응용프로그램에서 사용할 수 있는 어노테이션.</p>
 
