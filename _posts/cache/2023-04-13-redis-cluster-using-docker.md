@@ -2,6 +2,7 @@
 title: Getting Start Redis - Docker를 이용한 Redis 클러스터링 구성
 categories:
   - cache 
+tags:
 tags: 
   - redis 
   - docker
@@ -120,10 +121,10 @@ services:
       - 16402:16402
 ```
 ## Redis cluster 시작
-## Slave Redis 구동
-docker run -d --name redis-6380-16 --network host -v /redis/redis-6380-16:/data redis:5.0.5-buster redis-server --port 6380 --cluster-enabled yes --cluster-config-file node.conf --cluster-node-timeout 5000 --bind 0.0.0.0
-
-
+docker-compose 이용하여 Redis Cluster를 시작합니다.
+```bash
+docker-compose up -d
+```
 
 ## 참고
 [우쭈뿌라 개발노트](https://uchupura.tistory.com/56)  

@@ -1,8 +1,8 @@
 ---
-title: Getting Start Redis - Redids Cluster Failover 설정 -Lettuce
+title: Getting Start Redis - Redids Cluster Failover 설정å
 categories:
   - cache 
-tags: 
+tags:
   - redis
 ---
 Redis Cluster를 구성하고 failover 하기 위해서는 application config 이외에 추가적으로  Redis cluster Confugration이 필요합니다.
