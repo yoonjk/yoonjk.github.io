@@ -1,5 +1,5 @@
 ---
-title: nginx as Reverse Proxy for Jenkins
+title: Nginx as Reverse Proxy for Jenkins
 categories:
   - devops 
 tags:

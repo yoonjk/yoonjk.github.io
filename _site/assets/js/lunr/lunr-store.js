@@ -275,7 +275,7 @@ var store = [{
         "url": "/devops/jenkins-with-grafana/",
         "teaser": null
       },{
-        "title": "nginx as Reverse Proxy for Jenkins",
+        "title": "Nginx as Reverse Proxy for Jenkins",
         "excerpt":"Jenkins를 Nginx Reverse Proxy를 설정하여 접근하는 것을 설명합니다. Nginx 설치 nginx를 설치하기 위해 사전에 필요한 package를 아래와 같이 설치합니다. yum install -y yum-utils yum install -y epel-release nginx를 설치합니다. yum install -y nginx nginx의 status를 확인합니다. ● nginx.service - The nginx HTTP and reverse proxy server Loaded: loaded (/usr/lib/systemd/system/nginx.service; disabled;...","categories": ["devops"],
         "tags": ["jenkins","nginx"],
         "url": "/devops/nginx-as-a-reverse-proxy-for-jenkins/",
