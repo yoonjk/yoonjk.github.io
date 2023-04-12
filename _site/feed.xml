@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-13T04:27:21+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Getting Start Redis - Redids Cluster Failover 설정 (Lettuce))</title><link href="http://localhost:4000/cache/failover-redis-cluster/" rel="alternate" type="text/html" title="Getting Start Redis - Redids Cluster Failover 설정 (Lettuce))" /><published>2023-04-13T00:00:00+09:00</published><updated>2023-04-13T00:00:00+09:00</updated><id>http://localhost:4000/cache/failover-redis-cluster</id><content type="html" xml:base="http://localhost:4000/cache/failover-redis-cluster/"><![CDATA[<p>Redis Cluster를 구성하고 failover 하기 위해서는 application config 이외에 추가적으로  Redis cluster Confugration이 필요합니다.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-13T05:19:37+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Getting Start Redis - Redids Cluster Failover 설정 (Lettuce))</title><link href="http://localhost:4000/cache/failover-redis-cluster/" rel="alternate" type="text/html" title="Getting Start Redis - Redids Cluster Failover 설정 (Lettuce))" /><published>2023-04-13T00:00:00+09:00</published><updated>2023-04-13T00:00:00+09:00</updated><id>http://localhost:4000/cache/failover-redis-cluster</id><content type="html" xml:base="http://localhost:4000/cache/failover-redis-cluster/"><![CDATA[<p>Redis Cluster를 구성하고 failover 하기 위해서는 application config 이외에 추가적으로  Redis cluster Confugration이 필요합니다.</p>
 
 <h2 id="redis-cluster-configuration-설정">Redis Cluster Configuration 설정</h2>
 <p>Redis Cluster를 구성하고 Master를 강제로 종료시키면 Replica중 1개가 Master로 승격되어 지속적인 서비스를 이어갈 수 있습니다.<br />
@@ -67,18 +67,121 @@
     <span class="o">}</span>
         
 <span class="o">}</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><summary type="html"><![CDATA[Redis Cluster를 구성하고 failover 하기 위해서는 application config 이외에 추가적으로 Redis cluster Confugration이 필요합니다.]]></summary></entry><entry><title type="html">Getting Start Redis - Docker를 이용한 Redis 클러스터링 구성</title><link href="http://localhost:4000/cache/redis-cluster-using-docker/" rel="alternate" type="text/html" title="Getting Start Redis - Docker를 이용한 Redis 클러스터링 구성" /><published>2023-04-13T00:00:00+09:00</published><updated>2023-04-13T00:00:00+09:00</updated><id>http://localhost:4000/cache/redis-cluster-using-docker</id><content type="html" xml:base="http://localhost:4000/cache/redis-cluster-using-docker/"><![CDATA[<p>작성중…</p>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><summary type="html"><![CDATA[Redis Cluster를 구성하고 failover 하기 위해서는 application config 이외에 추가적으로 Redis cluster Confugration이 필요합니다.]]></summary></entry><entry><title type="html">Getting Start Redis - Docker를 이용한 Redis 클러스터링 구성</title><link href="http://localhost:4000/cache/redis-cluster-using-docker/" rel="alternate" type="text/html" title="Getting Start Redis - Docker를 이용한 Redis 클러스터링 구성" /><published>2023-04-13T00:00:00+09:00</published><updated>2023-04-13T00:00:00+09:00</updated><id>http://localhost:4000/cache/redis-cluster-using-docker</id><content type="html" xml:base="http://localhost:4000/cache/redis-cluster-using-docker/"><![CDATA[<h2 id="redisconf-편집">redis.conf 편집</h2>
 
-<p>```bash</p>
-<h1 id="master-redis-구동">Master Redis 구동</h1>
-<p>docker run -d –name redis-6379-16 –network host -v /redis/redis-6379-16:/data redis:5.0.5-buster redis-server –port 6379 –cluster-enabled yes –cluster-config-file node.conf –cluster-node-timeout 5000 –bind 0.0.0.0</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> 6300 6301 6302 6400 6401 6402
+</code></pre></div></div>
+<p>redis config 파일을 다음과 같이 수정합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">## redis.conf 편집</span>
+vi redis.conf
+port 6379
+cluster-enabled <span class="nb">yes
+</span>cluster-config-file nodes.conf
+cluster-node-timeout 3000
+appendonly <span class="nb">yes</span>
+</code></pre></div></div>
+<p>redis.conf를 각 폴더에 복사합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp </span>redis.conf 6300/
+<span class="nb">cp </span>redis.conf 6301/
+<span class="nb">cp </span>redis.conf 6302/
+<span class="nb">cp </span>redis.conf 6400/
+<span class="nb">cp </span>redis.conf 6401/
+<span class="nb">cp </span>redis.conf 6402/
+</code></pre></div></div>
 
-<h1 id="slave-redis-구동">Slave Redis 구동</h1>
+<p>redis.conf를 편집합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sed</span> <span class="nt">-i</span> <span class="s1">'s/6379/6300/g'</span> 6300/redis.conf
+<span class="nb">sed</span> <span class="nt">-i</span> <span class="s1">'s/6379/6301/g'</span> 6300/redis.conf
+<span class="nb">sed</span> <span class="nt">-i</span> <span class="s1">'s/6379/6302/g'</span> 6300/redis.conf
+<span class="nb">sed</span> <span class="nt">-i</span> <span class="s1">'s/6379/6400/g'</span> 6300/redis.conf
+<span class="nb">sed</span> <span class="nt">-i</span> <span class="s1">'s/6379/6401/g'</span> 6300/redis.conf
+<span class="nb">sed</span> <span class="nt">-i</span> <span class="s1">'s/6379/6402/g'</span> 6300/redis.conf
+</code></pre></div></div>
+
+<h2 id="master-redis-작성">Master Redis 작성</h2>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="s1">'</span><span class="s">3'</span>
+
+<span class="na">services</span><span class="pi">:</span>
+  <span class="na">redis1</span><span class="pi">:</span>
+    <span class="na">hostname</span><span class="pi">:</span> <span class="s">redis1</span>
+    <span class="na">container_name</span><span class="pi">:</span> <span class="s">redis1</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">redis</span>
+    <span class="na">network_mode</span><span class="pi">:</span> <span class="s2">"</span><span class="s">host"</span>
+    <span class="na">command</span><span class="pi">:</span> <span class="s">redis-server /etc/redis.conf</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">./6300/redis.conf:/etc/redis.conf</span>
+    <span class="na">ports</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">6300:6300</span>
+    <span class="pi">-</span> <span class="s">16300:16300</span>
+
+  <span class="na">redis2</span><span class="pi">:</span>
+    <span class="na">hostname</span><span class="pi">:</span> <span class="s">redis2</span>
+    <span class="na">container_name</span><span class="pi">:</span> <span class="s">redis2</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">redis</span>
+    <span class="na">network_mode</span><span class="pi">:</span> <span class="s2">"</span><span class="s">host"</span>
+    <span class="na">command</span><span class="pi">:</span> <span class="s">redis-server /etc/redis.conf</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">./6301/redis.conf:/etc/redis.conf</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">6301:6301</span>
+      <span class="pi">-</span> <span class="s">16301:16301</span>
+
+  <span class="na">redis3</span><span class="pi">:</span>
+    <span class="na">hostname</span><span class="pi">:</span> <span class="s">redis3</span>
+    <span class="na">container_name</span><span class="pi">:</span> <span class="s">redis3</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">redis</span>
+    <span class="na">network_mode</span><span class="pi">:</span> <span class="s2">"</span><span class="s">host"</span>
+    <span class="na">command</span><span class="pi">:</span> <span class="s">redis-server /etc/redis.conf</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">./6302/redis.conf:/etc/redis.conf</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">6302:6302</span>
+      <span class="pi">-</span> <span class="s">16302:16302</span>
+
+  <span class="na">redis4</span><span class="pi">:</span>
+    <span class="na">hostname</span><span class="pi">:</span> <span class="s">redis4</span>
+    <span class="na">container_name</span><span class="pi">:</span> <span class="s">redis4</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">redis</span>
+    <span class="na">network_mode</span><span class="pi">:</span> <span class="s2">"</span><span class="s">host"</span>
+    <span class="na">command</span><span class="pi">:</span> <span class="s">redis-server /etc/redis.conf</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">./6400/redis.conf:/etc/redis.conf</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">6400:6400</span>
+      <span class="pi">-</span> <span class="s">16400:16400</span>
+
+  <span class="na">redis5</span><span class="pi">:</span>
+    <span class="na">hostname</span><span class="pi">:</span> <span class="s">redis5</span>
+    <span class="na">container_name</span><span class="pi">:</span> <span class="s">redis5</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">redis</span>
+    <span class="na">network_mode</span><span class="pi">:</span> <span class="s2">"</span><span class="s">host"</span>
+    <span class="na">command</span><span class="pi">:</span> <span class="s">redis-server /etc/redis.conf</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">./6401/redis.conf:/etc/redis.conf</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">6401:6401</span>
+      <span class="pi">-</span> <span class="s">16401:16401</span>
+
+  <span class="na">redis6</span><span class="pi">:</span>
+    <span class="na">hostname</span><span class="pi">:</span> <span class="s">redis6</span>
+    <span class="na">container_name</span><span class="pi">:</span> <span class="s">redis6</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">redis</span>
+    <span class="na">network_mode</span><span class="pi">:</span> <span class="s2">"</span><span class="s">host"</span>
+    <span class="na">command</span><span class="pi">:</span> <span class="s">redis-server /etc/redis.conf</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">./6402/redis.conf:/etc/redis.conf</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">6402:6402</span>
+      <span class="pi">-</span> <span class="s">16402:16402</span>
+</code></pre></div></div>
+<h2 id="redis-cluster-시작">Redis cluster 시작</h2>
+<h2 id="slave-redis-구동">Slave Redis 구동</h2>
 <p>docker run -d –name redis-6380-16 –network host -v /redis/redis-6380-16:/data redis:5.0.5-buster redis-server –port 6380 –cluster-enabled yes –cluster-config-file node.conf –cluster-node-timeout 5000 –bind 0.0.0.0</p>
 
 <h2 id="참고">참고</h2>
 <p><a href="https://uchupura.tistory.com/56">우쭈뿌라 개발노트</a><br />
-<a href="https://pinggoopark.tistory.com/268">과거의 나를 위해</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="docker" /><summary type="html"><![CDATA[작성중…]]></summary></entry><entry><title type="html">@Inject과 @Autowired의 차이점</title><link href="http://localhost:4000/springboot/difference-autowired-inject/" rel="alternate" type="text/html" title="@Inject과 @Autowired의 차이점" /><published>2023-04-11T00:00:00+09:00</published><updated>2023-04-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/difference-autowired-inject</id><content type="html" xml:base="http://localhost:4000/springboot/difference-autowired-inject/"><![CDATA[<h2 id="inject-vs-autowired">@Inject vs @Autowired</h2>
+<a href="https://pinggoopark.tistory.com/268">과거의 나를 위해</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="docker" /><summary type="html"><![CDATA[redis.conf 편집]]></summary></entry><entry><title type="html">@Inject과 @Autowired의 차이점</title><link href="http://localhost:4000/springboot/difference-autowired-inject/" rel="alternate" type="text/html" title="@Inject과 @Autowired의 차이점" /><published>2023-04-11T00:00:00+09:00</published><updated>2023-04-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/difference-autowired-inject</id><content type="html" xml:base="http://localhost:4000/springboot/difference-autowired-inject/"><![CDATA[<h2 id="inject-vs-autowired">@Inject vs @Autowired</h2>
 <p>@Inject 및 @Autowired 두 주석은 응용 프로그램에서 자동 의존성주입에 사용됩니다.
 @Inject 어노테이션은 Java 6에 도입 된 Java CDI의 일부인 반면 @Autowire 어노테이션은 스프링프레임워크의 일부. 두 어노테이션 모두 동일한 목적을 수행하므로 응용프로그램에서 사용할 수 있는 어노테이션.</p>
 
