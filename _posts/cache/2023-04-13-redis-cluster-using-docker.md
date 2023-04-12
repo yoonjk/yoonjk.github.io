@@ -18,5 +18,5 @@ docker run -d --name redis-6380-16 --network host -v /redis/redis-6380-16:/data 
 
 
 ## 참고
-[우쭈뿌라 개발노트](https://uchupura.tistory.com/56
+[우쭈뿌라 개발노트](https://uchupura.tistory.com/56)  
 [과거의 나를 위해](https://pinggoopark.tistory.com/268)
