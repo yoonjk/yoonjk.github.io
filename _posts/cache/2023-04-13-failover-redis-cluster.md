@@ -1,5 +1,5 @@
 ---
-title: Getting Start Redis - Redids Cluster Failover 설정å
+title: Getting Start Redis - Redids Cluster Failover 설정
 categories:
   - cache 
 tags:
