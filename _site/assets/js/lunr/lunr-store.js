@@ -131,24 +131,6 @@ var store = [{
         "url": "/workflow/setup-apache-airflow-on-docker/",
         "teaser": null
       },{
-        "title": "Jenkins Kubernetes Plugin 설치 및 환경구성",
-        "excerpt":"Jenkins Kubernetes Plugin 설치 Jenkins Agent로 Kubernetes에 실행하기 위해 Kubernetes Plugin을 Jenkins에 설치하여 환경을 구성합니다. Jenkins UI에서 Manage Jenkins &gt; System Configuration &gt; Manage Plugins &gt;Available plugins 메뉴를 클릭합니다 Plugins 검색 입력 필드에서 Kubernetes 입력하고 다음과 같은 첫번째 Kubernetes [V] 선택, 왼쪽 하단에 Install without restart 버튼을 클릭합니다 아래의 [v]...","categories": ["devops"],
-        "tags": ["jenkins"],
-        "url": "/devops/install-kubernetes-plugin/",
-        "teaser": null
-      },{
-        "title": "Jenkins 설치 따라하기",
-        "excerpt":"Jenkins Pipeline 이란? Jenkins Pipeline은 지속적인 업데이트 파이프라인을 구현하고 Jenkins에 통합하는 것을 지원하는 플러그인의 집합이다. 이 과정에서 소프트웨어를 빌드하고 여러 단계의 테스트, 배포를 진행한다. Pipeline은 Pipeline Domain Specific Language라는 문법을 통해 마치 코드를 작성하는 것과 같이 Pipeline을 통해 간단한 배포 파이프라인부터 복잡한 배포 파이프라인을 코드로 모델링하기 위한 확장 가능한 도구...","categories": ["devops"],
-        "tags": ["jenkins"],
-        "url": "/devops/setup-jenkins/",
-        "teaser": null
-      },{
-        "title": "Jenkins 시작",
-        "excerpt":"Start-up Jenkins Jenkins server에 접속하기 brower에서 해당 서버의 http://localhost:8080 포트 접속합니다. Jenkins에 접속하면 Jenkins admin 초기 패스워드를 입력하는 화면이 출력됩니다 터미널에서 다음과 같이 명령을 수행하여 Jenkins admin 초기 로그인 비밀번호를 확인하고, 초기 패스워드를 입력합니다. cat /var/lib/jenkins/secrets/initialAdminPassword [수행결과] a0f289xxxxxxxxxcd8fbb7 Jenkins 패스워드 입력화면에 복사한 패스워드를 입력하고 Continue 버튼을 클릭하고, Install suggested plugins를...","categories": ["devops"],
-        "tags": ["jenkins"],
-        "url": "/devops/start-up-jenkins/",
-        "teaser": null
-      },{
         "title": "Docker 기반 Bitbucket 설치",
         "excerpt":"Bitbucket on Docker Docker 기반 Bitbucket 입니다. version: '3' networks: jenkins-net: driver: bridge services: bitbucket: container_name: bitbucket image: atlassian/bitbucket-server:latest environment: - 'BITBUCKET_PROXY_PORT=' - 'BITBUCKET_PROXY_SCHEME=' - 'BITBUCKET_DELAYED_START=' - 'DOCKER_WAIT_HOST=postgres' - 'DOCKER_WAIT_PORT=5432' networks: - jenkins-net ports: - \"8990:7990\" postgres: container_name: postgres image: postgres:latest volumes: - ./data:/var/lib/postgresql/data environment: - 'POSTGRES_USER=postgres' # CHANGE THE...","categories": ["docker"],
         "tags": ["bitbucket"],
@@ -203,12 +185,6 @@ var store = [{
         "url": "/devops/gitlab-ce/",
         "teaser": null
       },{
-        "title": "Jenkins Pipeline 이란",
-        "excerpt":"Jenkins Pipeline 이란 Jenkins Pipeline이란 Jenkins를 사용하여 CD 파이프라인울 구현하고 통합하는 것을 지원하는 플러그인의 집합입니다. Jenkins에 의해 정의된 모든 표준 Job을 하나의 script 작성되며 git 과 같은 repository 저장할 수 있습니다. 각 단계에 대해 여러 작업을 작성하는 대신 이제 전체 워크플로를 코딩하여 하나의 Jenkinsfile에 넣을 수 있습니다. 이러한 Pipeline을 작성하는...","categories": ["devops"],
-        "tags": ["jenkins"],
-        "url": "/devops/jenkins-pipeline/",
-        "teaser": null
-      },{
         "title": "Nexus를 docker container repository로 사용하기",
         "excerpt":"Nexus를 docker container repository로 사용하기 Nexus를 docker container image의 repository로 사용하는 위한 설정입니다. Harbor 같은 전용 Docker container Registry로 사용하는 Open Source 솔루션도 있으나 애플리케이션 수가 몇개 되지 않는 것은 Nexus를 Container Image Repository로 사용할 수 있습니다. Nexus 설치는 블로그 목록을 참고해 주시고, 설정이 끝나고 추가적으로 container Image Repository를 추가하는...","categories": ["devops"],
         "tags": ["nexus","podman"],
@@ -245,34 +221,16 @@ var store = [{
         "url": "/kubernetes/install-dashboard-for-kind/",
         "teaser": null
       },{
-        "title": "Jenkins master/slave 구성",
-        "excerpt":"Jenkins 설치 Jenkins Master/Slave는 Controller/Agent로 명칭을 수정해서 글을 post합니다. Jenkins 설치 따라하기를 참조해서 Jenkins를 설치합니다. Jenkins Agent 개요 Jenkins Pipeline을 remote Node에서 실행할 Agent를 추가합니다. Jenkins Agent는 다음과 같이 유형의 Agent가 있습니다. Server 기반의 Agent Docker Container Kubernetes Dynamic Pod Agent Server 기반 Agent도 JNLP 기반 Agent와 ssh 기반 Agent가...","categories": ["devops"],
-        "tags": ["jenkins","master","slave"],
-        "url": "/devops/jenkins-controller-and-agent/",
+        "title": "Jenkins 설치 따라하기",
+        "excerpt":"Jenkins Pipeline 이란? Jenkins Pipeline은 지속적인 업데이트 파이프라인을 구현하고 Jenkins에 통합하는 것을 지원하는 플러그인의 집합이다. 이 과정에서 소프트웨어를 빌드하고 여러 단계의 테스트, 배포를 진행한다. Pipeline은 Pipeline Domain Specific Language라는 문법을 통해 마치 코드를 작성하는 것과 같이 Pipeline을 통해 간단한 배포 파이프라인부터 복잡한 배포 파이프라인을 코드로 모델링하기 위한 확장 가능한 도구...","categories": ["devops"],
+        "tags": ["jenkins"],
+        "url": "/devops/setup-jenkins/",
         "teaser": null
       },{
-        "title": "podman에서 max_user_namespaces 에러",
-        "excerpt":"podman 실행시 다음의 에러 해결   Podman run error in non-root mode: “user namespaces are not enabled in /proc/sys/user/max_user_namespaces”   Jenkins Pipeline에서 podman 실행시 다음의 에러가 발생할 떄  user namespaces are not enabled in /proc/sys/user/max_user_namespaces Error: could not get runtime: cannot re-exec process  다음의 링크를 참조합니다.   https://github.com/containers/podman/issues/7704  ","categories": ["devops"],
-        "tags": ["jenkins","podman"],
-        "url": "/devops/podman-max_user_namespaces/",
-        "teaser": null
-      },{
-        "title": "Helm 설치",
-        "excerpt":"Helm CLI를  설치  Helm Chart를 설치하기 위해 Helm CLI를 설치합니다.   curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 chmod 700 get_helm.sh ./get_helm.sh  ","categories": ["kubernetes"],
-        "tags": ["helm","헬치"],
-        "url": "/kubernetes/install-helm/",
-        "teaser": null
-      },{
-        "title": "Jenkins-Grafana 설정",
-        "excerpt":"Grafana 로그인 Grafana에 로그인하고, 비밀번호를 변경합니다. Prometheus 설정 Grafana에 로그인하면 다음과 같이 화면이 출력됩니다. 설정을 선택하고, Grafana에 datasource를 추가하기 위해 Add data source를 클릭합니다. Prometheus datasource를 선택합니다. Prometheus datasource를 설정합니다. Prometheus save-test 버튼을 클릭하면 Data source is working 메시지를 출력됩니다. ![gitlab-ce](/assets/images/jenkins/07-grafana-prometheus-save-test.png Jenkins dashboard 선택 https://grafana.com/grafana/dashboards/ 에서 download jenkins dashboard를 선택합니다....","categories": ["devops"],
-        "tags": ["jenkins","prometheus","grafana"],
-        "url": "/devops/grafana-setup/",
-        "teaser": null
-      },{
-        "title": "Jenkins-Prometheus/Grafana 설치",
-        "excerpt":"Jenkins 와 Prometheus/Grafana 여녜 Jenkins Controller와 Agent를 를 모너터링하기 위해 Prometheus Plugin을 설치하고 Jenkins에서 수집한 Metrics정보를 기반으로 Prometheus를 통해 Metrics 정보를 주시적으로 수집하고, 수집된 정보를 기반으로 Grafana에 Visual하게 모니터링합니다. Prometheus metrics plugin 설치 Manage Jenkins &gt; Manage Plugins &gt; Available Plugins에서 Prometheus metrics Plugins을 선택, Install without restart를 클릭해서 Plugin을...","categories": ["devops"],
-        "tags": ["jenkins","prometheus","grafana"],
-        "url": "/devops/jenkins-with-grafana/",
+        "title": "Jenkins 시작",
+        "excerpt":"Start-up Jenkins Jenkins server에 접속하기 brower에서 해당 서버의 http://localhost:8080 포트 접속합니다. Jenkins에 접속하면 Jenkins admin 초기 패스워드를 입력하는 화면이 출력됩니다 터미널에서 다음과 같이 명령을 수행하여 Jenkins admin 초기 로그인 비밀번호를 확인하고, 초기 패스워드를 입력합니다. cat /var/lib/jenkins/secrets/initialAdminPassword [수행결과] a0f289xxxxxxxxxcd8fbb7 Jenkins 패스워드 입력화면에 복사한 패스워드를 입력하고 Continue 버튼을 클릭하고, Install suggested plugins를...","categories": ["devops"],
+        "tags": ["jenkins"],
+        "url": "/devops/start-up-jenkins/",
         "teaser": null
       },{
         "title": "Jenkins Port 변경",
@@ -281,16 +239,58 @@ var store = [{
         "url": "/devops/change-jenkins-port/",
         "teaser": null
       },{
+        "title": "Jenkins-Grafana 설정",
+        "excerpt":"Grafana 로그인 Grafana에 로그인하고, 비밀번호를 변경합니다. Prometheus 설정 Grafana에 로그인하면 다음과 같이 화면이 출력됩니다. 설정을 선택하고, Grafana에 datasource를 추가하기 위해 Add data source를 클릭합니다. Prometheus datasource를 선택합니다. Prometheus datasource를 설정합니다. Prometheus save-test 버튼을 클릭하면 Data source is working 메시지를 출력됩니다. ![gitlab-ce](/assets/images/jenkins/07-grafana-prometheus-save-test.png Jenkins dashboard 선택 https://grafana.com/grafana/dashboards/ 에서 download jenkins dashboard를 선택합니다....","categories": ["devops"],
+        "tags": ["jenkins","prometheus","grafana"],
+        "url": "/devops/grafana-setup/",
+        "teaser": null
+      },{
         "title": "Jenkins 서버 재시작 방법",
         "excerpt":"Jenkins Port 확인 및 복사 Jenkins 를 재시작하는 방법은 3가지 있습니다. systemctl 사용 browser에서 restart browser에서 safeRestart Systemctl 사용 systemctl 명령어로 사용하는 경우 Jenkins Job이 실행중인 것이 있더라도 jenkins를 즉시 재시작합니다. Jenkins 가 재시작 이후 그존 실행중인 job은 다시 재개합니다. systemctl restart jenkins browser에서 restart Jenkins를 로그인 해서 browser url에서...","categories": ["devops"],
         "tags": ["jenkins"],
         "url": "/devops/how-to-restart-jenkins/",
         "teaser": null
       },{
+        "title": "Jenkins Kubernetes Plugin 설치 및 환경구성",
+        "excerpt":"Jenkins Kubernetes Plugin 설치 Jenkins Agent로 Kubernetes에 실행하기 위해 Kubernetes Plugin을 Jenkins에 설치하여 환경을 구성합니다. Jenkins UI에서 Manage Jenkins &gt; System Configuration &gt; Manage Plugins &gt;Available plugins 메뉴를 클릭합니다 Plugins 검색 입력 필드에서 Kubernetes 입력하고 다음과 같은 첫번째 Kubernetes [V] 선택, 왼쪽 하단에 Install without restart 버튼을 클릭합니다 아래의 [v]...","categories": ["devops"],
+        "tags": ["jenkins"],
+        "url": "/devops/install-kubernetes-plugin/",
+        "teaser": null
+      },{
+        "title": "Jenkins master/slave 구성",
+        "excerpt":"Jenkins 설치 Jenkins Master/Slave는 Controller/Agent로 명칭을 수정해서 글을 post합니다. Jenkins 설치 따라하기를 참조해서 Jenkins를 설치합니다. Jenkins Agent 개요 Jenkins Pipeline을 remote Node에서 실행할 Agent를 추가합니다. Jenkins Agent는 다음과 같이 유형의 Agent가 있습니다. Server 기반의 Agent Docker Container Kubernetes Dynamic Pod Agent Server 기반 Agent도 JNLP 기반 Agent와 ssh 기반 Agent가...","categories": ["devops"],
+        "tags": ["jenkins","master","slave"],
+        "url": "/devops/jenkins-controller-and-agent/",
+        "teaser": null
+      },{
+        "title": "Jenkins Pipeline 이란",
+        "excerpt":"Jenkins Pipeline 이란 Jenkins Pipeline이란 Jenkins를 사용하여 CD 파이프라인울 구현하고 통합하는 것을 지원하는 플러그인의 집합입니다. Jenkins에 의해 정의된 모든 표준 Job을 하나의 script 작성되며 git 과 같은 repository 저장할 수 있습니다. 각 단계에 대해 여러 작업을 작성하는 대신 이제 전체 워크플로를 코딩하여 하나의 Jenkinsfile에 넣을 수 있습니다. 이러한 Pipeline을 작성하는...","categories": ["devops"],
+        "tags": ["jenkins"],
+        "url": "/devops/jenkins-pipeline/",
+        "teaser": null
+      },{
+        "title": "Jenkins-Prometheus/Grafana 설치",
+        "excerpt":"Jenkins 와 Prometheus/Grafana 여녜 Jenkins Controller와 Agent를 를 모너터링하기 위해 Prometheus Plugin을 설치하고 Jenkins에서 수집한 Metrics정보를 기반으로 Prometheus를 통해 Metrics 정보를 주시적으로 수집하고, 수집된 정보를 기반으로 Grafana에 Visual하게 모니터링합니다. Prometheus metrics plugin 설치 Manage Jenkins &gt; Manage Plugins &gt; Available Plugins에서 Prometheus metrics Plugins을 선택, Install without restart를 클릭해서 Plugin을...","categories": ["devops"],
+        "tags": ["jenkins","prometheus","grafana"],
+        "url": "/devops/jenkins-with-grafana/",
+        "teaser": null
+      },{
         "title": "nginx as Reverse Proxy for Jenkins",
         "excerpt":"Jenkins를 Nginx Reverse Proxy를 설정하여 접근하는 것을 설명합니다. Nginx 설치 nginx를 설치하기 위해 사전에 필요한 package를 아래와 같이 설치합니다. yum install -y yum-utils yum install -y epel-release nginx를 설치합니다. yum install -y nginx nginx의 status를 확인합니다. ● nginx.service - The nginx HTTP and reverse proxy server Loaded: loaded (/usr/lib/systemd/system/nginx.service; disabled;...","categories": ["devops"],
         "tags": ["jenkins","nginx"],
         "url": "/devops/nginx-as-a-reverse-proxy-for-jenkins/",
+        "teaser": null
+      },{
+        "title": "Helm 설치",
+        "excerpt":"Helm CLI를  설치  Helm Chart를 설치하기 위해 Helm CLI를 설치합니다.   curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 chmod 700 get_helm.sh ./get_helm.sh  ","categories": ["kubernetes"],
+        "tags": ["helm","헬치"],
+        "url": "/kubernetes/install-helm/",
+        "teaser": null
+      },{
+        "title": "podman에서 max_user_namespaces 에러",
+        "excerpt":"podman 실행시 다음의 에러 해결   Podman run error in non-root mode: “user namespaces are not enabled in /proc/sys/user/max_user_namespaces”   Jenkins Pipeline에서 podman 실행시 다음의 에러가 발생할 떄  user namespaces are not enabled in /proc/sys/user/max_user_namespaces Error: could not get runtime: cannot re-exec process  다음의 링크를 참조합니다.   https://github.com/containers/podman/issues/7704  ","categories": ["devops"],
+        "tags": ["jenkins","podman"],
+        "url": "/devops/podman-max_user_namespaces/",
         "teaser": null
       },{
         "title": "mysql docker-compose 로 실행하기",
