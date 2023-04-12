@@ -527,7 +527,7 @@ var store = [{
         "url": "/cache/failover-redis-cluster/",
         "teaser": null
       },{
-        "title": "Getting Start Redis - Docker를 이용한 Redis 클러스터링 구성",
+        "title": "Getting Start Redis - Docker를 이용한 클러스터링 구성",
         "excerpt":"redis.conf 편집 mkdir -p 6300 6301 6302 6400 6401 6402 redis config 파일을 다음과 같이 수정합니다. ## redis.conf 편집 vi redis.conf port 6379 cluster-enabled yes cluster-config-file nodes.conf cluster-node-timeout 3000 appendonly yes redis.conf를 각 폴더에 복사합니다. cp redis.conf 6300/ cp redis.conf 6301/ cp redis.conf 6302/ cp redis.conf 6400/ cp redis.conf 6401/...","categories": ["cache"],
         "tags": ["redis","docker"],
         "url": "/cache/redis-cluster-using-docker/",
