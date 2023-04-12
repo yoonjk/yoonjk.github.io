@@ -521,7 +521,7 @@ var store = [{
         "url": "/springboot/difference-autowired-inject/",
         "teaser": null
       },{
-        "title": "Getting Start Redis - Redids Cluster Failover 설정",
+        "title": "Getting Start Redis - Redis Cluster Failover 설정",
         "excerpt":"Redis Cluster Configuration 설정 Redis Cluster를 구성하고 failover 하기 위해서는 application config 이외에 추가적으로 Redis cluster Confugration이 필요합니다. Redis Cluster를 구성하고 Master를 강제로 종료시키면 Replica중 1개가 Master로 승격되어 지속적인 서비스를 이어갈 수 있습니다. 그리고 Lettuce를 사용하면 이를 자동으로 감지하여 서비스를 지속할 수 있습니다. 그러나 쓰기작업이 필요한 서비스는 약간의 delay를 요구하며,...","categories": ["cache"],
         "tags": ["redis"],
         "url": "/cache/failover-redis-cluster/",

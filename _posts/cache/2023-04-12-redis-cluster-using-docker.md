@@ -3,10 +3,10 @@ title: Getting Start Redis - Docker를 이용한 Redis 클러스터링 구성
 categories:
   - cache 
 tags:
-tags: 
-  - redis 
+  - redis
   - docker
 ---
+
 ## redis.conf 편집
 
 ```bash
@@ -129,3 +129,4 @@ docker-compose up -d
 ## 참고
 [우쭈뿌라 개발노트](https://uchupura.tistory.com/56)  
 [과거의 나를 위해](https://pinggoopark.tistory.com/268)
+
