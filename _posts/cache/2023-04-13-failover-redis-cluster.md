@@ -1,5 +1,5 @@
 ---
-title: Getting Start Redis - Redids Cluster Failover 설정 (Lettuce))
+title: Getting Start Redis - Redids Cluster Failover 설정 -Lettuce
 categories:
   - cache 
 tags: 
