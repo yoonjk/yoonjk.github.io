@@ -71,6 +71,7 @@ sentinel monitor mymaster 127.0.0.1 6382 2
 # 다운 되었다고 인지하는 시간 (3초)
 - 마스터 서버에 정기적으로 PING을 보내는데, 이 시간 동안 응답이 없으면 다운된 것으로 판단하고 장애조치(failover) 작업을 시작합니다
 sentinel down-after-milliseconds mymaster 3000
+sentinel failover-timeout mymaster 3000
 ```
 
 ```bash
@@ -91,9 +92,9 @@ src/redis-server redis_6384.conf
 
 Redis Sentinel 3개 실행
 ```bash
-src/sentinel-server redis_5000.conf
-src/sentinel-server redis_5001.conf
-src/sentinel-server redis_5002.conf
+src/redis-sentinel redis_5000.conf
+src/redis-sentinel redis_5001.conf
+src/redis-sentinel redis_5002.conf
 ```
 
 ## redis failover 테스트
