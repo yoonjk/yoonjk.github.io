@@ -124,8 +124,36 @@ services:
 docker-compose 이용하여 Redis Cluster를 시작합니다.
 ```bash
 docker-compose up -d
+docker ps
 ```
 
+#### 클러스터 구성
+6개의 docker container redis가 실행중인 것을 확인하고 redis1에 접속하여 다음과 같이 클러스터를 구성합니다.
+```bash
+docker exec -it redis1 bash
+redis-cli --cluster create 127.0.0.1:6300 127.0.0.1:6301 127.0.0.1:6302
+exit
+```
+redis1 container의 로그를 다음과 같이 확인합니다.
+```
+docker logs -f redis1
+```
+#### Replicas 구성
+Redis Master에 각각 1개의 Replica를 추가합니다.
+
+```bash
+# master1에 replica 1 추가
+docker exec -it redis1 bash
+redis-cli --cluster add-node 127.0.0.1:6400 127.0.0.1:6300 --cluster-slave
+
+# master2에 replica 2 추가
+redis-cli --cluster add-node 127.0.0.1:6401 127.0.0.1:6301 --cluster-slave
+
+# master3에 replica 3 추가
+redis-cli --cluster add-node 127.0.0.1:6402 127.0.0.1:6302 --cluster-slave
+```
+
+![Create Admin]({{ "/assets/images/cache/13-cache-add-slave-docker.png" }})
 ## 참고
 [우쭈뿌라 개발노트](https://uchupura.tistory.com/56)  
 [과거의 나를 위해](https://pinggoopark.tistory.com/268)

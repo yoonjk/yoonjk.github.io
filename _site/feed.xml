@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-13T07:36:29+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Getting Start Redis - Docker를 이용한 클러스터링 구성</title><link href="http://localhost:4000/cache/redis-cluster-using-docker/" rel="alternate" type="text/html" title="Getting Start Redis - Docker를 이용한 클러스터링 구성" /><published>2023-04-12T00:00:00+09:00</published><updated>2023-04-12T00:00:00+09:00</updated><id>http://localhost:4000/cache/redis-cluster-using-docker</id><content type="html" xml:base="http://localhost:4000/cache/redis-cluster-using-docker/"><![CDATA[<h2 id="redisconf-편집">redis.conf 편집</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-13T21:32:41+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Getting Start Redis - Docker를 이용한 클러스터링 구성</title><link href="http://localhost:4000/cache/redis-cluster-using-docker/" rel="alternate" type="text/html" title="Getting Start Redis - Docker를 이용한 클러스터링 구성" /><published>2023-04-12T00:00:00+09:00</published><updated>2023-04-12T00:00:00+09:00</updated><id>http://localhost:4000/cache/redis-cluster-using-docker</id><content type="html" xml:base="http://localhost:4000/cache/redis-cluster-using-docker/"><![CDATA[<h2 id="redisconf-편집">redis.conf 편집</h2>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> 6300 6301 6302 6400 6401 6402
 </code></pre></div></div>
@@ -109,8 +109,33 @@ appendonly <span class="nb">yes</span>
 <h2 id="redis-cluster-시작">Redis cluster 시작</h2>
 <p>docker-compose 이용하여 Redis Cluster를 시작합니다.</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose up <span class="nt">-d</span>
+docker ps
 </code></pre></div></div>
 
+<h4 id="클러스터-구성">클러스터 구성</h4>
+<p>6개의 docker container redis가 실행중인 것을 확인하고 redis1에 접속하여 다음과 같이 클러스터를 구성합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker <span class="nb">exec</span> <span class="nt">-it</span> redis1 bash
+redis-cli <span class="nt">--cluster</span> create 127.0.0.1:6300 127.0.0.1:6301 127.0.0.1:6302
+<span class="nb">exit</span>
+</code></pre></div></div>
+<p>redis1 container의 로그를 다음과 같이 확인합니다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker logs -f redis1
+</code></pre></div></div>
+<h4 id="replicas-구성">Replicas 구성</h4>
+<p>Redis Master에 각각 1개의 Replica를 추가합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># master1에 replica 1 추가</span>
+docker <span class="nb">exec</span> <span class="nt">-it</span> redis1 bash
+redis-cli <span class="nt">--cluster</span> add-node 127.0.0.1:6400 127.0.0.1:6300 <span class="nt">--cluster-slave</span>
+
+<span class="c"># master2에 replica 2 추가</span>
+redis-cli <span class="nt">--cluster</span> add-node 127.0.0.1:6401 127.0.0.1:6301 <span class="nt">--cluster-slave</span>
+
+<span class="c"># master3에 replica 3 추가</span>
+redis-cli <span class="nt">--cluster</span> add-node 127.0.0.1:6402 127.0.0.1:6302 <span class="nt">--cluster-slave</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/cache/13-cache-add-slave-docker.png" alt="Create Admin" /></p>
 <h2 id="참고">참고</h2>
 <p><a href="https://uchupura.tistory.com/56">우쭈뿌라 개발노트</a><br />
 <a href="https://pinggoopark.tistory.com/268">과거의 나를 위해</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="docker" /><summary type="html"><![CDATA[redis.conf 편집]]></summary></entry><entry><title type="html">Getting Start Redis - Redis Cluster Failover 설정</title><link href="http://localhost:4000/cache/failover-redis-cluster/" rel="alternate" type="text/html" title="Getting Start Redis - Redis Cluster Failover 설정" /><published>2023-04-12T00:00:00+09:00</published><updated>2023-04-12T00:00:00+09:00</updated><id>http://localhost:4000/cache/failover-redis-cluster</id><content type="html" xml:base="http://localhost:4000/cache/failover-redis-cluster/"><![CDATA[<h2 id="redis-cluster-configuration-설정">Redis Cluster Configuration 설정</h2>
