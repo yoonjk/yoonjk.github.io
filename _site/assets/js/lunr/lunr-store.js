@@ -492,7 +492,7 @@ var store = [{
         "teaser": null
       },{
         "title": "Getting Start Redis - Redis Sentinel 구성",
-        "excerpt":"Redis Sentinel 구성 Redis를 다음의 링크를 참조하여 설치합니다. Redis 를 HA 구성하는 방법은 몇가지 방법은 아래와 같이 구성할 수 있습니다. 첫번째 방법은 Master가 장애가 발생하면 서비스 장애가 발생하는 구성이지만 구성은 간단합니다. 두번째 방법 Sentinel 방법은 Redis Master가 장애가 발생하여도 slave가 master로 승격되어 지속적인 서비스가 가능합니다. 장애가 발생했던 master가 복귀되면 이전의...","categories": ["cache"],
+        "excerpt":"Redis Sentinel 소개 Redis Sentinel은 Redis의 고가용성 구성을 위한 아키텍처입니다. Sentinel은 Redis를 모니터링하고 master node가 장애가 발생시 알리고 자동으로 장애 조치할 수 있는 여러 Redis 인스턴스를 관리하기 위한 redis 컴포넌트입니다. Redis Sentinel 역할 Redis Sentinel은 Redis의 여러 인스턴스를 모니터링 및 관리하며 아래 3가지 역할을 수행하니다. redis 인스턴스 모니터링 : Sentinel은...","categories": ["cache"],
         "tags": ["redis","sentinel"],
         "url": "/cache/setup-sentinel-redis/",
         "teaser": null
