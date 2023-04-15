@@ -15,7 +15,8 @@ Redis가 디스크에 데이터를 쓰는 방법
 •	No persistence: 지속성을 완전히 비활성화할 수 있습니다. 캐싱할 때 사용되기도 합니다.  
 •	RDB + AOF: 동일한 인스턴스에서 AOF와 RDB를 모두 결합할 수도 있습니다.  
 이러한 다양한 지속성 전략 간의 절충에 대해 생각하지 않으려면 UI를 사용하여 미리 구성할 수 있는 Redis Enterprise의 지속성 옵션을 고려할 수 있습니다.  
-To learn more about how to evaluate your Redis persistence strategy, read on.  
+
+Redis 지속성 전략을 평가하는 방법에 대해 자세히 알아보려면 다음을 읽어보세요 
 
 ## RDB의 장점
 •	RDB는 Redis 데이터의 매우 간결한 특정 시점 의 단일 파일입니다. RDB 파일은 백업에 적합합니다. 예를 들어 최근 24시간 동안 매시간 RDB 파일을 보관하고 30일 동안 매일 RDB 스냅샷을 저장할 수 있습니다. 이를 통해 재해 발생 시 다양한 버전의 데이터 세트를 쉽게 복원할 수 있습니다.  
