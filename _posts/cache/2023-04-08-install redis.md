@@ -25,7 +25,6 @@ cd redis-7.0.10
 Redis 압축파일을 해제한 후 make 명령어를 수행하면 아래처럼 jemalloc No such file or directory 오류가 발생합니다.
 이를 해결하기 위해서는 deps 폴더에서 compile을 해야합니다.
 ```bash
-make clean
 cd deps
 make hiredis jemalloc linenoise lua
 cd ..

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-15T10:05:19+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Getting Start Redis - Docker를 이용한 클러스터링 구성</title><link href="http://localhost:4000/cache/redis-cluster-using-docker/" rel="alternate" type="text/html" title="Getting Start Redis - Docker를 이용한 클러스터링 구성" /><published>2023-04-12T00:00:00+09:00</published><updated>2023-04-12T00:00:00+09:00</updated><id>http://localhost:4000/cache/redis-cluster-using-docker</id><content type="html" xml:base="http://localhost:4000/cache/redis-cluster-using-docker/"><![CDATA[<h2 id="redisconf-편집">redis.conf 편집</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-15T14:20:44+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Getting Start Redis - Docker를 이용한 클러스터링 구성</title><link href="http://localhost:4000/cache/redis-cluster-using-docker/" rel="alternate" type="text/html" title="Getting Start Redis - Docker를 이용한 클러스터링 구성" /><published>2023-04-12T00:00:00+09:00</published><updated>2023-04-12T00:00:00+09:00</updated><id>http://localhost:4000/cache/redis-cluster-using-docker</id><content type="html" xml:base="http://localhost:4000/cache/redis-cluster-using-docker/"><![CDATA[<h2 id="redisconf-편집">redis.conf 편집</h2>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> 6300 6301 6302 6400 6401 6402
 </code></pre></div></div>
@@ -604,8 +604,7 @@ yum groupinstall <span class="s1">'Development Tools'</span>
 </code></pre></div></div>
 <p>Redis 압축파일을 해제한 후 make 명령어를 수행하면 아래처럼 jemalloc No such file or directory 오류가 발생합니다.
 이를 해결하기 위해서는 deps 폴더에서 compile을 해야합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make clean
-<span class="nb">cd </span>deps
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>deps
 make hiredis jemalloc linenoise lua
 <span class="nb">cd</span> ..
 </code></pre></div></div>
