@@ -449,6 +449,12 @@ var store = [{
         "url": "/cache/naming-rule/",
         "teaser": null
       },{
+        "title": "Getting Start Redis - Reids Persistence",
+        "excerpt":"Redis persistence Redis가 디스크에 데이터를 쓰는 방법 지속성은 SSD(반도체 디스크)와 같은 내구성 있는 스토리지에 데이터를 쓰는 것을 말합니다. Redis는 다양한 지속성 옵션을 제공합니다. 여기에는 다음이 포함됩니다. • RDB (Redis Database): RDB 지속성은 지정된 간격으로 데이터 세트의 특정 시점 스냅샷을 수행합니다. • AOF (Append Only File): AOF 지속성은 서버에서 받은 모든...","categories": ["cache"],
+        "tags": ["redis"],
+        "url": "/cache/redis-persistence/",
+        "teaser": null
+      },{
         "title": "Getting Start Redis - Bitmap",
         "excerpt":"Bitmaps 비트맵은 실제 데이터 형식이 아니라 String 형식에 정의된 비트 지향 작업 집합입니다. 문자열은 이진 안전 Blob이고 최대 길이는 512MB이므로 최대 2^32비트를 설정하는 데 적합합니다. 비트 연산은 두 그룹으로 나뉩니다: 비트를 1 또는 0으로 설정하거나 값을 가져오는 것과 같은 상수 시간 단일 비트 연산과 비트 그룹에 대한 연산(예: 지정된 비트...","categories": ["cache"],
         "tags": ["redis"],
