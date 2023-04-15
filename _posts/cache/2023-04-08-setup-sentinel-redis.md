@@ -125,4 +125,5 @@ kill -9 redis_master_pid
 
 ## 참고
 [5분 안에 구축하는 Redis-Sentinel](https://co-de.tistory.com/15)
+[해피쿠](https://www.happykoo.net/@happykoo/posts/53)
  
