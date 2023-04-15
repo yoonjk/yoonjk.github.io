@@ -1,4 +1,33 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-15T23:03:01+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Getting Start Redis - Docker를 이용하여 Redis Sentinel 구성</title><link href="http://localhost:4000/cache/setup-sentinel-docker/" rel="alternate" type="text/html" title="Getting Start Redis - Docker를 이용하여 Redis Sentinel 구성" /><published>2023-04-14T00:00:00+09:00</published><updated>2023-04-14T00:00:00+09:00</updated><id>http://localhost:4000/cache/setup-sentinel-docker</id><content type="html" xml:base="http://localhost:4000/cache/setup-sentinel-docker/"><![CDATA[<h2 id="redis-sentinel-을-docker-를-사용하여-구성---사전준비">Redis Sentinel 을 docker 를 사용하여 구성 - 사전준비</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-15T23:34:59+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Getting Start Redis - Docker를 이용하여 모니터링</title><link href="http://localhost:4000/cache/redis-stat-docker/" rel="alternate" type="text/html" title="Getting Start Redis - Docker를 이용하여 모니터링" /><published>2023-04-15T00:00:00+09:00</published><updated>2023-04-15T00:00:00+09:00</updated><id>http://localhost:4000/cache/redis-stat-docker</id><content type="html" xml:base="http://localhost:4000/cache/redis-stat-docker/"><![CDATA[<h2 id="redis-sentinel-을-docker-를-사용하여-구성---사전준비">Redis Sentinel 을 docker 를 사용하여 구성 - 사전준비</h2>
+<p>Redis Sentinel과 Cluster를 redis-stat로 모니터링하는 것을 docker 기반으로 구성합니다.
+myIP는 자신의 환경에 맞는 VM Server의 IP를 설정합니다.</p>
+
+<h2 id="redis-모니터링---docker-compose">Redis 모니터링 - docker-compose</h2>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="s2">"</span><span class="s">3"</span>
+
+<span class="na">services</span><span class="pi">:</span>
+  <span class="na">redis-stat</span><span class="pi">:</span>
+    <span class="na">container_name</span><span class="pi">:</span> <span class="s">redis-stat</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">insready/redis-stat</span>
+    <span class="na">command</span><span class="pi">:</span> <span class="pi">[</span>
+        <span class="s1">'</span><span class="s">--verbose'</span><span class="pi">,</span>
+        <span class="s1">'</span><span class="s">--server'</span><span class="pi">,</span>
+        <span class="s1">'</span><span class="s">redis-master:6379'</span><span class="pi">,</span>
+        <span class="s1">'</span><span class="s">redis-replica1:6383'</span><span class="pi">,</span>
+        <span class="s1">'</span><span class="s">redis-replica2:6384'</span>
+        <span class="pi">]</span>
+    <span class="na">extra_hosts</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-master:myIP"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-replica1:myIP</span>
+      <span class="s">-</span><span class="nv"> </span><span class="s">"redis-replica2:myIP"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-sentinel1:myIP"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-sentinel2:myIP"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-sentinel3:myIP"</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">9999:63790"</span>
+</code></pre></div></div>
+<h2 id="참조-">참조 :</h2>
+<p><a href="https://hyos-dev-log.tistory.com/m/22">Hyo’s Dev Log</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="sentinel" /><summary type="html"><![CDATA[Redis Sentinel 을 docker 를 사용하여 구성 - 사전준비 Redis Sentinel과 Cluster를 redis-stat로 모니터링하는 것을 docker 기반으로 구성합니다. myIP는 자신의 환경에 맞는 VM Server의 IP를 설정합니다.]]></summary></entry><entry><title type="html">Getting Start Redis - Docker를 이용하여 Redis Sentinel 구성</title><link href="http://localhost:4000/cache/setup-sentinel-docker/" rel="alternate" type="text/html" title="Getting Start Redis - Docker를 이용하여 Redis Sentinel 구성" /><published>2023-04-14T00:00:00+09:00</published><updated>2023-04-14T00:00:00+09:00</updated><id>http://localhost:4000/cache/setup-sentinel-docker</id><content type="html" xml:base="http://localhost:4000/cache/setup-sentinel-docker/"><![CDATA[<h2 id="redis-sentinel-을-docker-를-사용하여-구성---사전준비">Redis Sentinel 을 docker 를 사용하여 구성 - 사전준비</h2>
 <p>Redis Sentinel 을 docker기반으로 구성하기 위해서는 docker, docker-compose를 설치하여야 합니다.</p>
 
 <p>docker engine 설치방법은 아래의 <a href="https://yoonjk.github.io/docker/docker/">링크</a>를 참조하세요.</p>
@@ -164,7 +193,75 @@ redis-server /redis/sentinel.conf <span class="nt">--sentinel</span>
 </code></pre></div></div>
 
 <h2 id="참조-">참조 :</h2>
-<p><a href="https://github.com/Developers-Notebook/Redis-Sentinel-Docker-Compose">Redis-Sentinel-Docker-Compose</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="sentinel" /><summary type="html"><![CDATA[Redis Sentinel 을 docker 를 사용하여 구성 - 사전준비 Redis Sentinel 을 docker기반으로 구성하기 위해서는 docker, docker-compose를 설치하여야 합니다.]]></summary></entry><entry><title type="html">Getting Start Redis - Docker를 이용한 클러스터링 구성</title><link href="http://localhost:4000/cache/redis-cluster-using-docker/" rel="alternate" type="text/html" title="Getting Start Redis - Docker를 이용한 클러스터링 구성" /><published>2023-04-12T00:00:00+09:00</published><updated>2023-04-12T00:00:00+09:00</updated><id>http://localhost:4000/cache/redis-cluster-using-docker</id><content type="html" xml:base="http://localhost:4000/cache/redis-cluster-using-docker/"><![CDATA[<h2 id="redisconf-편집">redis.conf 편집</h2>
+<p><a href="https://github.com/Developers-Notebook/Redis-Sentinel-Docker-Compose">Redis-Sentinel-Docker-Compose</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="sentinel" /><summary type="html"><![CDATA[Redis Sentinel 을 docker 를 사용하여 구성 - 사전준비 Redis Sentinel 을 docker기반으로 구성하기 위해서는 docker, docker-compose를 설치하여야 합니다.]]></summary></entry><entry><title type="html">Getting Start Redis - Redis Cluster Failover 설정</title><link href="http://localhost:4000/cache/failover-redis-cluster/" rel="alternate" type="text/html" title="Getting Start Redis - Redis Cluster Failover 설정" /><published>2023-04-12T00:00:00+09:00</published><updated>2023-04-12T00:00:00+09:00</updated><id>http://localhost:4000/cache/failover-redis-cluster</id><content type="html" xml:base="http://localhost:4000/cache/failover-redis-cluster/"><![CDATA[<h2 id="redis-cluster-configuration-설정">Redis Cluster Configuration 설정</h2>
+<p>Redis Cluster를 구성하고 failover 하기 위해서는 application config 이외에 추가적으로  Redis cluster Confugration이 필요합니다.
+Redis Cluster를 구성하고 Master를 강제로 종료시키면 Replica중 1개가 Master로 승격되어 지속적인 서비스를 이어갈 수 있습니다.<br />
+그리고 Lettuce를 사용하면 이를 자동으로 감지하여 서비스를 지속할 수 있습니다. 
+그러나 쓰기작업이 필요한 서비스는 약간의 delay를 요구하며, Redis Cluster 상태가 refresh되면 정상적인 쓰기 작업이 가능해집니다.
+물론 일기작업은 다음의 설정으로 변함없이 지속적으로 서비스가 가능합니다.</p>
+<h4 id="지속적인-읽기-작업">지속적인 읽기 작업</h4>
+<p>Replica중 1개 또는 모두 종료되더라도 지속적으로 일기 서비스가 가능하도록 하기 위해서는 다음의 설정이 필요합니다.</p>
+
+<p><strong>REPLICA_PREFERRED</strong></p>
+
+<h4 id="지속적인-쓰기-작업">지속적인 쓰기 작업</h4>
+<p>Redis Cluster Master중 1개가 종료되더라도 지속적으로 쓰기 서비스가 가능하도록 하기 위해서는 다음의 설정이 필요합니다.
+아래의 설정값이 default 값이 false로 되어 있기 때문에 true로 설정을 변경해야 master가 종료되고 replica중 1개가 master로 승격되어 서비스를 계속할 수 있게되고, 이를 Lettuce가 감지하여 애플리케이션에서도 서비스를 지속하기 위해 아래의 설정을 하여야 합니다.</p>
+
+<p><strong>enablePeriodicRefresh</strong></p>
+
+<p>그리고 Refresh time을 설정하여 Lettuce가 이를 빠르게 감지하도록 설정합니다.
+<strong>refreshPeriod</strong></p>
+
+<p>다음의 코드는 Redis Cluster를 구성하고 replica가 종료되거나 cluster의 master가 종료되더라도 읽기 작업과 쓰기 작업을 지속할 수 있도록 하기 위한 설정정보입니다.</p>
+
+<p>전체 소스는 아래의 <a href="https://github.com/yoonjk/redis-cluster.git">github 링크</a>에 있습니다.
+<a href="https://github.com/yoonjk/redis-cluster.git">https://github.com/yoonjk/redis-cluster.git</a></p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.time.Duration</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Value</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Bean</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Configuration</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.redis.connection.RedisClusterConfiguration</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.redis.connection.RedisConnectionFactory</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">io.lettuce.core.ReadFrom</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.lettuce.core.cluster.ClusterClientOptions</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.lettuce.core.cluster.ClusterTopologyRefreshOptions</span><span class="o">;</span>
+
+<span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RedisConfig</span> <span class="o">{</span>
+	<span class="nd">@Value</span><span class="o">(</span><span class="s">"${spring.redis.cluster.nodes}"</span><span class="o">)</span>
+	<span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">clusterNodes</span><span class="o">;</span>
+    <span class="c1">// lettuce 사용시</span>
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="nc">RedisConnectionFactory</span> <span class="nf">redisConnectionFactory</span><span class="o">(){</span>
+        <span class="nc">LettuceClientConfiguration</span> <span class="n">clientConfiguration</span> <span class="o">=</span> <span class="nc">LettuceClientConfiguration</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+        		<span class="o">.</span><span class="na">clientOptions</span><span class="o">(</span><span class="nc">ClusterClientOptions</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+        				<span class="o">.</span><span class="na">topologyRefreshOptions</span><span class="o">(</span><span class="nc">ClusterTopologyRefreshOptions</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+        						<span class="o">.</span><span class="na">refreshPeriod</span><span class="o">(</span><span class="nc">Duration</span><span class="o">.</span><span class="na">ofMinutes</span><span class="o">(</span><span class="mi">1</span><span class="o">))</span>
+        						<span class="o">.</span><span class="na">enableAdaptiveRefreshTrigger</span><span class="o">()</span>
+        						<span class="o">.</span><span class="na">enablePeriodicRefresh</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span>    <span class="c1">// Default 가 False</span>
+        						<span class="o">.</span><span class="na">build</span><span class="o">())</span>
+        				<span class="o">.</span><span class="na">build</span><span class="o">())</span>
+        		
+                <span class="o">.</span><span class="na">readFrom</span><span class="o">(</span><span class="nc">ReadFrom</span><span class="o">.</span><span class="na">REPLICA_PREFERRED</span><span class="o">)</span> <span class="c1">// 복제본 노드에서 읽지 만 사용할 수없는 경우 마스터에서 읽습니다.</span>
+                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+        
+
+        <span class="c1">// 모든 클러스터(master, slave) 정보를 적는다. (해당 서버중 접속되는 서버에서 cluster nodes 명령어를 통해 모든 클러스터 정보를 읽어오기에 다운 됐을 경우를 대비하여 모든 노드 정보를 적어두는편이 좋다.)</span>
+        <span class="nc">RedisClusterConfiguration</span> <span class="n">redisClusterConfiguration</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RedisClusterConfiguration</span><span class="o">(</span><span class="n">clusterNodes</span><span class="o">);</span>
+        
+        <span class="nc">LettuceConnectionFactory</span> <span class="n">lettuceConnectionFactory</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">LettuceConnectionFactory</span><span class="o">(</span><span class="n">redisClusterConfiguration</span><span class="o">,</span> <span class="n">clientConfiguration</span><span class="o">);</span>
+
+        <span class="k">return</span> <span class="n">lettuceConnectionFactory</span><span class="o">;</span>
+    <span class="o">}</span>
+        
+<span class="o">}</span>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><summary type="html"><![CDATA[Redis Cluster Configuration 설정 Redis Cluster를 구성하고 failover 하기 위해서는 application config 이외에 추가적으로 Redis cluster Confugration이 필요합니다. Redis Cluster를 구성하고 Master를 강제로 종료시키면 Replica중 1개가 Master로 승격되어 지속적인 서비스를 이어갈 수 있습니다. 그리고 Lettuce를 사용하면 이를 자동으로 감지하여 서비스를 지속할 수 있습니다. 그러나 쓰기작업이 필요한 서비스는 약간의 delay를 요구하며, Redis Cluster 상태가 refresh되면 정상적인 쓰기 작업이 가능해집니다. 물론 일기작업은 다음의 설정으로 변함없이 지속적으로 서비스가 가능합니다. 지속적인 읽기 작업 Replica중 1개 또는 모두 종료되더라도 지속적으로 일기 서비스가 가능하도록 하기 위해서는 다음의 설정이 필요합니다.]]></summary></entry><entry><title type="html">Getting Start Redis - Docker를 이용한 클러스터링 구성</title><link href="http://localhost:4000/cache/redis-cluster-using-docker/" rel="alternate" type="text/html" title="Getting Start Redis - Docker를 이용한 클러스터링 구성" /><published>2023-04-12T00:00:00+09:00</published><updated>2023-04-12T00:00:00+09:00</updated><id>http://localhost:4000/cache/redis-cluster-using-docker</id><content type="html" xml:base="http://localhost:4000/cache/redis-cluster-using-docker/"><![CDATA[<h2 id="redisconf-편집">redis.conf 편집</h2>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> 6300 6301 6302 6400 6401 6402
 </code></pre></div></div>
@@ -304,75 +401,7 @@ redis-cli <span class="nt">--cluster</span> add-node 127.0.0.1:6402 127.0.0.1:63
 <p><img src="/assets/images/cache/13-cache-add-slave-docker.png" alt="Create Admin" /></p>
 <h2 id="참고">참고</h2>
 <p><a href="https://uchupura.tistory.com/56">우쭈뿌라 개발노트</a><br />
-<a href="https://pinggoopark.tistory.com/268">과거의 나를 위해</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="docker" /><summary type="html"><![CDATA[redis.conf 편집]]></summary></entry><entry><title type="html">Getting Start Redis - Redis Cluster Failover 설정</title><link href="http://localhost:4000/cache/failover-redis-cluster/" rel="alternate" type="text/html" title="Getting Start Redis - Redis Cluster Failover 설정" /><published>2023-04-12T00:00:00+09:00</published><updated>2023-04-12T00:00:00+09:00</updated><id>http://localhost:4000/cache/failover-redis-cluster</id><content type="html" xml:base="http://localhost:4000/cache/failover-redis-cluster/"><![CDATA[<h2 id="redis-cluster-configuration-설정">Redis Cluster Configuration 설정</h2>
-<p>Redis Cluster를 구성하고 failover 하기 위해서는 application config 이외에 추가적으로  Redis cluster Confugration이 필요합니다.
-Redis Cluster를 구성하고 Master를 강제로 종료시키면 Replica중 1개가 Master로 승격되어 지속적인 서비스를 이어갈 수 있습니다.<br />
-그리고 Lettuce를 사용하면 이를 자동으로 감지하여 서비스를 지속할 수 있습니다. 
-그러나 쓰기작업이 필요한 서비스는 약간의 delay를 요구하며, Redis Cluster 상태가 refresh되면 정상적인 쓰기 작업이 가능해집니다.
-물론 일기작업은 다음의 설정으로 변함없이 지속적으로 서비스가 가능합니다.</p>
-<h4 id="지속적인-읽기-작업">지속적인 읽기 작업</h4>
-<p>Replica중 1개 또는 모두 종료되더라도 지속적으로 일기 서비스가 가능하도록 하기 위해서는 다음의 설정이 필요합니다.</p>
-
-<p><strong>REPLICA_PREFERRED</strong></p>
-
-<h4 id="지속적인-쓰기-작업">지속적인 쓰기 작업</h4>
-<p>Redis Cluster Master중 1개가 종료되더라도 지속적으로 쓰기 서비스가 가능하도록 하기 위해서는 다음의 설정이 필요합니다.
-아래의 설정값이 default 값이 false로 되어 있기 때문에 true로 설정을 변경해야 master가 종료되고 replica중 1개가 master로 승격되어 서비스를 계속할 수 있게되고, 이를 Lettuce가 감지하여 애플리케이션에서도 서비스를 지속하기 위해 아래의 설정을 하여야 합니다.</p>
-
-<p><strong>enablePeriodicRefresh</strong></p>
-
-<p>그리고 Refresh time을 설정하여 Lettuce가 이를 빠르게 감지하도록 설정합니다.
-<strong>refreshPeriod</strong></p>
-
-<p>다음의 코드는 Redis Cluster를 구성하고 replica가 종료되거나 cluster의 master가 종료되더라도 읽기 작업과 쓰기 작업을 지속할 수 있도록 하기 위한 설정정보입니다.</p>
-
-<p>전체 소스는 아래의 <a href="https://github.com/yoonjk/redis-cluster.git">github 링크</a>에 있습니다.
-<a href="https://github.com/yoonjk/redis-cluster.git">https://github.com/yoonjk/redis-cluster.git</a></p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.time.Duration</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Value</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Bean</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Configuration</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.data.redis.connection.RedisClusterConfiguration</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.data.redis.connection.RedisConnectionFactory</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">io.lettuce.core.ReadFrom</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">io.lettuce.core.cluster.ClusterClientOptions</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">io.lettuce.core.cluster.ClusterTopologyRefreshOptions</span><span class="o">;</span>
-
-<span class="nd">@Configuration</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RedisConfig</span> <span class="o">{</span>
-	<span class="nd">@Value</span><span class="o">(</span><span class="s">"${spring.redis.cluster.nodes}"</span><span class="o">)</span>
-	<span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">clusterNodes</span><span class="o">;</span>
-    <span class="c1">// lettuce 사용시</span>
-    <span class="nd">@Bean</span>
-    <span class="kd">public</span> <span class="nc">RedisConnectionFactory</span> <span class="nf">redisConnectionFactory</span><span class="o">(){</span>
-        <span class="nc">LettuceClientConfiguration</span> <span class="n">clientConfiguration</span> <span class="o">=</span> <span class="nc">LettuceClientConfiguration</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
-        		<span class="o">.</span><span class="na">clientOptions</span><span class="o">(</span><span class="nc">ClusterClientOptions</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
-        				<span class="o">.</span><span class="na">topologyRefreshOptions</span><span class="o">(</span><span class="nc">ClusterTopologyRefreshOptions</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
-        						<span class="o">.</span><span class="na">refreshPeriod</span><span class="o">(</span><span class="nc">Duration</span><span class="o">.</span><span class="na">ofMinutes</span><span class="o">(</span><span class="mi">1</span><span class="o">))</span>
-        						<span class="o">.</span><span class="na">enableAdaptiveRefreshTrigger</span><span class="o">()</span>
-        						<span class="o">.</span><span class="na">enablePeriodicRefresh</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span>    <span class="c1">// Default 가 False</span>
-        						<span class="o">.</span><span class="na">build</span><span class="o">())</span>
-        				<span class="o">.</span><span class="na">build</span><span class="o">())</span>
-        		
-                <span class="o">.</span><span class="na">readFrom</span><span class="o">(</span><span class="nc">ReadFrom</span><span class="o">.</span><span class="na">REPLICA_PREFERRED</span><span class="o">)</span> <span class="c1">// 복제본 노드에서 읽지 만 사용할 수없는 경우 마스터에서 읽습니다.</span>
-                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
-        
-
-        <span class="c1">// 모든 클러스터(master, slave) 정보를 적는다. (해당 서버중 접속되는 서버에서 cluster nodes 명령어를 통해 모든 클러스터 정보를 읽어오기에 다운 됐을 경우를 대비하여 모든 노드 정보를 적어두는편이 좋다.)</span>
-        <span class="nc">RedisClusterConfiguration</span> <span class="n">redisClusterConfiguration</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RedisClusterConfiguration</span><span class="o">(</span><span class="n">clusterNodes</span><span class="o">);</span>
-        
-        <span class="nc">LettuceConnectionFactory</span> <span class="n">lettuceConnectionFactory</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">LettuceConnectionFactory</span><span class="o">(</span><span class="n">redisClusterConfiguration</span><span class="o">,</span> <span class="n">clientConfiguration</span><span class="o">);</span>
-
-        <span class="k">return</span> <span class="n">lettuceConnectionFactory</span><span class="o">;</span>
-    <span class="o">}</span>
-        
-<span class="o">}</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><summary type="html"><![CDATA[Redis Cluster Configuration 설정 Redis Cluster를 구성하고 failover 하기 위해서는 application config 이외에 추가적으로 Redis cluster Confugration이 필요합니다. Redis Cluster를 구성하고 Master를 강제로 종료시키면 Replica중 1개가 Master로 승격되어 지속적인 서비스를 이어갈 수 있습니다. 그리고 Lettuce를 사용하면 이를 자동으로 감지하여 서비스를 지속할 수 있습니다. 그러나 쓰기작업이 필요한 서비스는 약간의 delay를 요구하며, Redis Cluster 상태가 refresh되면 정상적인 쓰기 작업이 가능해집니다. 물론 일기작업은 다음의 설정으로 변함없이 지속적으로 서비스가 가능합니다. 지속적인 읽기 작업 Replica중 1개 또는 모두 종료되더라도 지속적으로 일기 서비스가 가능하도록 하기 위해서는 다음의 설정이 필요합니다.]]></summary></entry><entry><title type="html">@Inject과 @Autowired의 차이점</title><link href="http://localhost:4000/springboot/difference-autowired-inject/" rel="alternate" type="text/html" title="@Inject과 @Autowired의 차이점" /><published>2023-04-11T00:00:00+09:00</published><updated>2023-04-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/difference-autowired-inject</id><content type="html" xml:base="http://localhost:4000/springboot/difference-autowired-inject/"><![CDATA[<h2 id="inject-vs-autowired">@Inject vs @Autowired</h2>
+<a href="https://pinggoopark.tistory.com/268">과거의 나를 위해</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="docker" /><summary type="html"><![CDATA[redis.conf 편집]]></summary></entry><entry><title type="html">@Inject과 @Autowired의 차이점</title><link href="http://localhost:4000/springboot/difference-autowired-inject/" rel="alternate" type="text/html" title="@Inject과 @Autowired의 차이점" /><published>2023-04-11T00:00:00+09:00</published><updated>2023-04-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/difference-autowired-inject</id><content type="html" xml:base="http://localhost:4000/springboot/difference-autowired-inject/"><![CDATA[<h2 id="inject-vs-autowired">@Inject vs @Autowired</h2>
 <p>@Inject 및 @Autowired 두 주석은 응용 프로그램에서 자동 의존성주입에 사용됩니다.
 @Inject 어노테이션은 Java 6에 도입 된 Java CDI의 일부인 반면 @Autowire 어노테이션은 스프링프레임워크의 일부. 두 어노테이션 모두 동일한 목적을 수행하므로 응용프로그램에서 사용할 수 있는 어노테이션.</p>
 
@@ -751,49 +780,7 @@ redis-cli <span class="nt">--cluster</span> create 127.0.0.1:6300 127.0.0.1:6301
 <p>Redis Master를 강제로 종료했을 떄 어떻게 failover되는지 확인하기 위해 master1(6300)을 강제로 종료하여 redis stat로 확인합니다.</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ps <span class="nt">-ef</span>|grep redis
 <span class="nb">kill</span> <span class="nt">-9</span> pid
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="haproxy" /><summary type="html"><![CDATA[Redis Cluster 환경구성 port [각자포트] # 백그라운드에서 시작하도록 설정 daemonize yes # 클러스터를 사용하겠다. cluster-enabled yes # 클러스터 구성 내용을 저장한는 파일명 지정 (자동 생성됨) cluster-config-file nodes-[각자포트].conf # 클러스터 노드가 다운되었는지 판단하는 시간 (3s) cluster-node-timeout 3000 # Appendonly를 yes로 설정하면 rdb에 저장 안되고 aof에 저장됨 (각각 장단점이 있으니 해당 부분은 선택 사항) appendonly yes # append only yes 시 해당 부분도 수정 appendfilename appendonly_[각자포트].aof # 프로세스 아이디 저장 경로 설정 pidfile /var/run/redis_[각자포트].pid # 로그 파일 저장 경로 지정 logfile logs/redis_[각자포트].log redis.conf 파일을 각 서버의 포트별로 파일을 작성합니다. # redis-server 6300 cp redis.conf redis_6300.conf vi redis_6300.conf redis_6300.conf 파일을 다음과 같이 수정합니다. port 6300 # 백그라운드에서 시작하도록 설정 daemonize yes # 클러스터를 사용하겠다. cluster-enabled yes # 클러스터 구성 내용을 저장한는 파일명 지정 (자동 생성됨) cluster-config-file nodes-6300.conf # 클러스터 노드가 다운되었는지 판단하는 시간 (3s) cluster-node-timeout 3000 # Appendonly를 yes로 설정하면 rdb에 저장 안되고 aof에 저장됨 (각각 장단점이 있으니 해당 부분은 선택 사항) appendonly yes # append only yes 시 해당 부분도 수정 appendfilename appendonly_6300.aof # 프로세스 아이디 저장 경로 설정 pidfile /var/run/redis_6300.pid # 로그 파일 저장 경로 지정 logfile logs/redis_6300.log 나머지 redis server의 환경파일을 복사하고 수정합니다. ```bash cp redis_6300.conf redis_6301.conf cp redis_6300.conf redis_6302.conf cp redis_6300.conf redis_6400.conf cp redis_6300.conf redis_6401.conf cp redis_6300.conf redis_6402.conf]]></summary></entry><entry><title type="html">Getting Start Redis - Redis 설치(Centos)</title><link href="http://localhost:4000/cache/install-redis/" rel="alternate" type="text/html" title="Getting Start Redis - Redis 설치(Centos)" /><published>2023-04-08T00:00:00+09:00</published><updated>2023-04-08T00:00:00+09:00</updated><id>http://localhost:4000/cache/install%20redis</id><content type="html" xml:base="http://localhost:4000/cache/install-redis/"><![CDATA[<h2 id="redis-설치-준비">Redis 설치 준비</h2>
-<p>Redis를 다음의 절차로 설치합니다.</p>
-<ul>
-  <li>OS 업데이트</li>
-  <li>Development Tools 설치</li>
-  <li>redis download</li>
-  <li>redis build</li>
-  <li>redis install</li>
-</ul>
-
-<p>Centos7 OS 버전을 최신으로 업그레이드 하고, Development Tools를 설치합니다. Redis <a href="http://download.redis.io/releases/">download</a> site 에 가서 원하는 redis 를 확인하고 address link를 복사합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum update <span class="nt">-y</span>
-yum groupinstall <span class="s1">'Development Tools'</span>
-<span class="nb">sudo </span>wget http://download.redis.io/releases/redis-7.0.10.tar.gz
-<span class="nb">tar </span>xvzf redis-7.0.10.tar.gz
-<span class="nb">cd </span>redis-7.0.10
-</code></pre></div></div>
-<p>Redis 압축파일을 해제한 후 make 명령어를 수행하면 아래처럼 jemalloc No such file or directory 오류가 발생합니다.
-이를 해결하기 위해서는 deps 폴더에서 compile을 해야합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>deps
-make hiredis jemalloc linenoise lua
-<span class="nb">cd</span> ..
-</code></pre></div></div>
-<p>Redis 압축 해제했던 폴더로 되돌아와서 다시 build합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># redis-7.0.10</span>
-make
-make <span class="nb">install</span>
-</code></pre></div></div>
-
-<h2 id="redis-서버-실행">Redis 서버 실행</h2>
-<p>redis 를 install 후 redis 서버를 실행합니다.</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>src/redis-server redis.conf
-</code></pre></div></div>
-
-<p>redis를 접속하기 위해 terminal을 1개 열어 redis가 설치된 서버에 접속합니다.
-src 폴더에 있는 redis-cli를 이용하여 redis 서버에 접속합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>redis-cli
-<span class="nb">set </span>k1 v1
-get k1
-</code></pre></div></div>
-
-<h2 id="참고">참고</h2>
-<p><a href="https://mozi.tistory.com/536">꽁담</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><summary type="html"><![CDATA[Redis 설치 준비 Redis를 다음의 절차로 설치합니다. OS 업데이트 Development Tools 설치 redis download redis build redis install]]></summary></entry><entry><title type="html">Getting Start Redis - Redis Sentinel 구성</title><link href="http://localhost:4000/cache/setup-sentinel-redis/" rel="alternate" type="text/html" title="Getting Start Redis - Redis Sentinel 구성" /><published>2023-04-08T00:00:00+09:00</published><updated>2023-04-08T00:00:00+09:00</updated><id>http://localhost:4000/cache/setup-sentinel-redis</id><content type="html" xml:base="http://localhost:4000/cache/setup-sentinel-redis/"><![CDATA[<h2 id="redis-sentinel-소개">Redis Sentinel 소개</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="haproxy" /><summary type="html"><![CDATA[Redis Cluster 환경구성 port [각자포트] # 백그라운드에서 시작하도록 설정 daemonize yes # 클러스터를 사용하겠다. cluster-enabled yes # 클러스터 구성 내용을 저장한는 파일명 지정 (자동 생성됨) cluster-config-file nodes-[각자포트].conf # 클러스터 노드가 다운되었는지 판단하는 시간 (3s) cluster-node-timeout 3000 # Appendonly를 yes로 설정하면 rdb에 저장 안되고 aof에 저장됨 (각각 장단점이 있으니 해당 부분은 선택 사항) appendonly yes # append only yes 시 해당 부분도 수정 appendfilename appendonly_[각자포트].aof # 프로세스 아이디 저장 경로 설정 pidfile /var/run/redis_[각자포트].pid # 로그 파일 저장 경로 지정 logfile logs/redis_[각자포트].log redis.conf 파일을 각 서버의 포트별로 파일을 작성합니다. # redis-server 6300 cp redis.conf redis_6300.conf vi redis_6300.conf redis_6300.conf 파일을 다음과 같이 수정합니다. port 6300 # 백그라운드에서 시작하도록 설정 daemonize yes # 클러스터를 사용하겠다. cluster-enabled yes # 클러스터 구성 내용을 저장한는 파일명 지정 (자동 생성됨) cluster-config-file nodes-6300.conf # 클러스터 노드가 다운되었는지 판단하는 시간 (3s) cluster-node-timeout 3000 # Appendonly를 yes로 설정하면 rdb에 저장 안되고 aof에 저장됨 (각각 장단점이 있으니 해당 부분은 선택 사항) appendonly yes # append only yes 시 해당 부분도 수정 appendfilename appendonly_6300.aof # 프로세스 아이디 저장 경로 설정 pidfile /var/run/redis_6300.pid # 로그 파일 저장 경로 지정 logfile logs/redis_6300.log 나머지 redis server의 환경파일을 복사하고 수정합니다. ```bash cp redis_6300.conf redis_6301.conf cp redis_6300.conf redis_6302.conf cp redis_6300.conf redis_6400.conf cp redis_6300.conf redis_6401.conf cp redis_6300.conf redis_6402.conf]]></summary></entry><entry><title type="html">Getting Start Redis - Redis Sentinel 구성</title><link href="http://localhost:4000/cache/setup-sentinel-redis/" rel="alternate" type="text/html" title="Getting Start Redis - Redis Sentinel 구성" /><published>2023-04-08T00:00:00+09:00</published><updated>2023-04-08T00:00:00+09:00</updated><id>http://localhost:4000/cache/setup-sentinel-redis</id><content type="html" xml:base="http://localhost:4000/cache/setup-sentinel-redis/"><![CDATA[<h2 id="redis-sentinel-소개">Redis Sentinel 소개</h2>
 <p>Redis Sentinel은 Redis의 고가용성 구성을 위한 아키텍처입니다. Sentinel은 Redis를 모니터링하고 master node가 장애가 발생시 알리고 자동으로 장애 조치할 수 있는 여러 Redis 인스턴스를 관리하기 위한 redis 컴포넌트입니다.</p>
 
 <h2 id="redis-sentinel-역할">Redis Sentinel 역할</h2>
@@ -909,118 +896,46 @@ src/redis-sentinel redis_5002.conf
 
 <h2 id="참고">참고</h2>
 <p><a href="https://co-de.tistory.com/15">5분 안에 구축하는 Redis-Sentinel</a>
-<a href="https://www.happykoo.net/@happykoo/posts/53">해피쿠</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="sentinel" /><summary type="html"><![CDATA[Redis Sentinel 소개 Redis Sentinel은 Redis의 고가용성 구성을 위한 아키텍처입니다. Sentinel은 Redis를 모니터링하고 master node가 장애가 발생시 알리고 자동으로 장애 조치할 수 있는 여러 Redis 인스턴스를 관리하기 위한 redis 컴포넌트입니다.]]></summary></entry><entry><title type="html">Getting Start Redis - String</title><link href="http://localhost:4000/cache/string/" rel="alternate" type="text/html" title="Getting Start Redis - String" /><published>2023-04-07T00:00:00+09:00</published><updated>2023-04-07T00:00:00+09:00</updated><id>http://localhost:4000/cache/string</id><content type="html" xml:base="http://localhost:4000/cache/string/"><![CDATA[<h2 id="strings">Strings</h2>
-<p>Redis 문자열 유형은 Redis 키와 연결할 수 있는 가장 간단한 값 유형입니다. Memcached의 유일한 데이터 유형이므로 신규 사용자가 Redis에서 사용하는 것도 매우 자연스러운 일입니다.
-Redis 키는 문자열이므로 문자열 유형도 값으로 사용할 때 문자열을 다른 문자열에 매핑합니다. 문자열 데이터 형식은 HTML 조각 또는 페이지 캐싱과 같은 다양한 사용 사례에 유용합니다.
-redis-cli를 사용하여 문자열 유형을 약간 사용해 보겠습니다<br />
-(모든 예제는  이 자습서에서 redis-cli를 통해 수행됨).</p>
+<a href="https://www.happykoo.net/@happykoo/posts/53">해피쿠</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="sentinel" /><summary type="html"><![CDATA[Redis Sentinel 소개 Redis Sentinel은 Redis의 고가용성 구성을 위한 아키텍처입니다. Sentinel은 Redis를 모니터링하고 master node가 장애가 발생시 알리고 자동으로 장애 조치할 수 있는 여러 Redis 인스턴스를 관리하기 위한 redis 컴포넌트입니다.]]></summary></entry><entry><title type="html">Getting Start Redis - Redis 설치(Centos)</title><link href="http://localhost:4000/cache/install-redis/" rel="alternate" type="text/html" title="Getting Start Redis - Redis 설치(Centos)" /><published>2023-04-08T00:00:00+09:00</published><updated>2023-04-08T00:00:00+09:00</updated><id>http://localhost:4000/cache/install%20redis</id><content type="html" xml:base="http://localhost:4000/cache/install-redis/"><![CDATA[<h2 id="redis-설치-준비">Redis 설치 준비</h2>
+<p>Redis를 다음의 절차로 설치합니다.</p>
+<ul>
+  <li>OS 업데이트</li>
+  <li>Development Tools 설치</li>
+  <li>redis download</li>
+  <li>redis build</li>
+  <li>redis install</li>
+</ul>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="nb">set </span>mykey somevalue
-OK
-<span class="o">&gt;</span> get mykey
-<span class="s2">"somevalue"</span>
+<p>Centos7 OS 버전을 최신으로 업그레이드 하고, Development Tools를 설치합니다. Redis <a href="http://download.redis.io/releases/">download</a> site 에 가서 원하는 redis 를 확인하고 address link를 복사합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum update <span class="nt">-y</span>
+yum groupinstall <span class="s1">'Development Tools'</span>
+<span class="nb">sudo </span>wget http://download.redis.io/releases/redis-7.0.10.tar.gz
+<span class="nb">tar </span>xvzf redis-7.0.10.tar.gz
+<span class="nb">cd </span>redis-7.0.10
+</code></pre></div></div>
+<p>Redis 압축파일을 해제한 후 make 명령어를 수행하면 아래처럼 jemalloc No such file or directory 오류가 발생합니다.
+이를 해결하기 위해서는 deps 폴더에서 compile을 해야합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>deps
+make hiredis jemalloc linenoise lua
+<span class="nb">cd</span> ..
+</code></pre></div></div>
+<p>Redis 압축 해제했던 폴더로 되돌아와서 다시 build합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># redis-7.0.10</span>
+make
+make <span class="nb">install</span>
 </code></pre></div></div>
 
-<p><a href="https://redis.io/commands/set">SET</a>과 <a href="https://redis.io/commands/get">GET</a> 명령을 사용하여 볼 수 있듯이  문자열 값을 설정하고 검색하는 방법입니다. <a href="https://redis.io/commands/set">SET</a>은 키가  문자열이 아닌 값과 연결된 경우에도 키가 이미 존재하는 경우 키에 이미 저장된 기존 값을 대체합니다. 따라서 <a href="https://redis.io/commands/set">SET</a>은 할당을 수행합니다.<br />
-값은 모든 종류의 문자열 (바이너리 데이터 포함) 일 수 있습니다.</p>
-
-<p>(예 : 값 안에 jpeg 이미지를 저장할 수 있음)<br />
-값은 <strong>512MB</strong> 보다 클 수 없습니다.</p>
-
-<p><a href="https://redis.io/commands/set">SET</a> 명령에는 추가 인수로 제공되는 흥미로운 옵션이 있습니다. 예를 들어  키가 이미 존재하는 경우 <a href="https://redis.io/commands/set">SET</a>에 실패하도록 요청하거나 그 반대로 키가 이미 존재하는 경우에만 성공하도록 요청할 수 있습니다.:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="nb">set </span>mykey newval nx
-<span class="o">(</span>nil<span class="o">)</span>
-<span class="o">&gt;</span> <span class="nb">set </span>mykey newval xx
-OK
+<h2 id="redis-서버-실행">Redis 서버 실행</h2>
+<p>redis 를 install 후 redis 서버를 실행합니다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>src/redis-server redis.conf
 </code></pre></div></div>
 
-<p>문자열이 Redis의 기본 값이더라도 문자열로 수행할 수 있는 흥미로운 작업이 있습니다. 예를 들어, 하나는 <a href="https://ko.wikipedia.org/wiki/%EC%9B%90%EC%9E%90%EC%84%B1_(%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4_%EC%8B%9C%EC%8A%A4%ED%85%9C)">원자성</a> 증분입니다.
-원자성(atomicity)은 데이터베이스 시스템에서 ACID 트랜잭션 특성 중의 하나입니다. 하나의 원자 트랜잭션은 모두 성공하거나 또는 실패하는 데이터베이스 운용의 집합이다. 원자성의 보증은 데이터베이스의 부분적인 갱신으로 더 큰 문제가 야기되는 것을 방지합니다.
-:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="nb">set </span>counter 100
-OK
-<span class="o">&gt;</span> incr counter
-<span class="o">(</span>integer<span class="o">)</span> 101
-<span class="o">&gt;</span> incr counter
-<span class="o">(</span>integer<span class="o">)</span> 102
-<span class="o">&gt;</span> incrby counter 50
-<span class="o">(</span>integer<span class="o">)</span> 152
+<p>redis를 접속하기 위해 terminal을 1개 열어 redis가 설치된 서버에 접속합니다.
+src 폴더에 있는 redis-cli를 이용하여 redis 서버에 접속합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>redis-cli
+<span class="nb">set </span>k1 v1
+get k1
 </code></pre></div></div>
 
-<p><a href="https://redis.io/commands/incr">INCR</a> 명령은 문자열 값을 정수로 구문 분석하고 1씩 증가시킨 다음 마지막으로 가져온 값을 새 값으로 설정합니다.<br />
-<a href="https://redis.io/commands/incrby">INCRBY</a>, <a href="https://redis.io/commands/decr">DECR</a> 및 <a href="https://redis.io/commands/decrby">DECRBY</a>와 같은 다른 유사한 명령이 있습니다.<br />
-내부적으로는 항상 동일한 명령이며 약간 다른 방식으로 작동합니다.<br />
-<a href="https://redis.io/commands/incr">INCR</a>이 원자적이라는 것은 무엇을 의미합니까? 동일한 키에 대해 <a href="https://redis.io/commands/incr">INCR</a>을 발행하는 여러 클라이언트라도 경쟁 조건에 빠지지 않습니다. 예를 들어, 클라이언트 1은 “10”을 읽고 클라이언트 2는 동시에 “10”을 읽고 둘 다 11로 증가하고 새 값을 11로 설정하는 경우는 발생하지 않습니다. 최종 값은 항상 12이며 읽기-증분-집합 작업은 다른 모든 클라이언트가 동시에 명령을 실행하지 않는 동안 수행됩니다.<br />
-문자열에서 작동하기위한 여러 명령이 있습니다.<br />
-예를 들어, <a href="https://redis.io/commands/getset">GETSET</a> 명령은 키를 새 값으로 설정하고 이전 값을 결과로 리턴합니다.<br />
-예를 들어 웹 사이트에서 새 방문자를 받을 때마다 <a href="https://redis.io/commands/incr">INCR</a>을 사용하여 Redis 키를 증가시키는 시스템이 있는 경우 이 명령을 사용할 수 있습니다. 이 정보는 한 번에 한 번씩 수집하여 증분을 한 번도 손실하지 않고 수집할 수 있습니다.  키를 <a href="https://redis.io/commands/getset">GETSET</a> 할 수 있으며  새 값 “0”을 할당하고 이전 값을 다시 읽을 수 있습니다.<br />
-단일 명령에서 여러 키의 값을 설정하거나 검색하는 기능은 대기 시간을 줄이는 데에도 유용합니다.<br />
-이러한 이유로 <a href="https://redis.io/commands/mset">MSET</a> 및 <a href="https://redis.io/commands/mget">MGET</a> 명령이 있습니다.:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> mset a 10 b 20 c 30
-OK
-<span class="o">&gt;</span> mget a b c
-1<span class="o">)</span> <span class="s2">"10"</span>
-2<span class="o">)</span> <span class="s2">"20"</span>
-3<span class="o">)</span> <span class="s2">"30"</span>
-</code></pre></div></div>
-
-<p>단일 명령에서 여러 키의 값을 설정하거나 검색하는 기능은 대기 시간을 줄이는 데에도 유용합니다. 이러한 이유로 MSET 및 MGET 명령이 있습니다.
-Altering and querying the key space
-특정 유형에 정의되지 않았지만 키 공간과 상호 작용하는 데 유용한 명령이 있으므로 모든 유형의 키와 함께 사용할 수 있습니다..
-예를 들어, EXISTS 명령은  주어진 키가 데이터베이스에 존재하는지 여부를 알리기 위해 1 또는 0을 반환하는 반면, DEL 명령은 값이 무엇이든 키 및 관련 값을 삭제합니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="nb">set </span>mykey hello
-OK
-<span class="o">&gt;</span> exists mykey
-<span class="o">(</span>integer<span class="o">)</span> 1
-<span class="o">&gt;</span> del mykey
-<span class="o">(</span>integer<span class="o">)</span> 1
-<span class="o">&gt;</span> exists mykey
-<span class="o">(</span>integer<span class="o">)</span> 0
-</code></pre></div></div>
-
-<p>예제에서  DEL 자체가 키가 제거되었는지 (존재했는지) 여부에 따라 1 또는 0을 반환하는 방법을 볼 수 있습니다 (해당 이름의 키가 없음)..
-많은 키 공간 관련 명령이 있지만 위의 두 명령은  지정된 키에 저장된 값의 종류를 반환하는 TYPE 명령과 함께 필수적인 명령입니다.:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="nb">set </span>mykey x
-OK
-<span class="o">&gt;</span> <span class="nb">type </span>mykey
-string
-<span class="o">&gt;</span> del mykey
-<span class="o">(</span>integer<span class="o">)</span> 1
-<span class="o">&gt;</span> <span class="nb">type </span>mykey
-none
-</code></pre></div></div>
-<p>Key expiration
-계속 진행하기 전에 저장하는 값 유형에 관계없이 작동하는 중요한 Redis 기능인 키 만료를 살펴봐야 합니다. 키 만료를 사용하면 “Time to Live” 또는 “TTL”이라고도 하는 키에 대한 시간 제한을 설정할 수 있습니다. 생존 시간이 경과하면 키가 자동으로 파괴됩니다.</p>
-
-<p><strong>키 만료에 대한 몇 가지 중요한 참고 사항:</strong><br />
-•	초 또는 밀리초 정밀도를 사용하여 둘 다 설정할 수 있습니다.<br />
-•	그러나 만료 시간 해상도는 항상 1밀리초입니다.<br />
-•	만료에 대한 정보는 디스크에 복제되고 유지되며, Redis 서버가 중지된 상태로 유지되는 시간은 사실상 경과합니다.<br />
-(즉, Redis는 키가 만료되는 날짜를 저장함).</p>
-
-<p>EXPIRE 명령을 사용하여 키의 만료 설정:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="nb">set </span>key some-value
-OK
-<span class="o">&gt;</span> expire key 5
-<span class="o">(</span>integer<span class="o">)</span> 1
-<span class="o">&gt;</span> get key <span class="o">(</span>immediately<span class="o">)</span>
-<span class="s2">"some-value"</span>
-<span class="o">&gt;</span> get key <span class="o">(</span>after some <span class="nb">time</span><span class="o">)</span>
-<span class="o">(</span>nil<span class="o">)</span>
-</code></pre></div></div>
-<p>두 번째 호출이 5초 이상 지연되었으므로 두 GET 호출 사이에 키가 사라졌습니다. 위의 예에서는  만료를 설정하기 위해 EXPIRE를 사용했습니다 (만료를 제거하고 키를 영원히 지속시키기 위해 PERSIST를 사용할 수있는  것처럼 이미 만료 된 키에 다른 만료를 설정하는 데에도 사용할 수  있습니다). 그러나 다른 Redis 명령을 사용하여 만료 된 키를 만들 수도 있습니다. 예를 들어 SET 옵션 사용:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="nb">set </span>key 100 ex 10
-OK
-<span class="o">&gt;</span> ttl key
-<span class="o">(</span>integer<span class="o">)</span> 9
-</code></pre></div></div>
-<p>위의 예제에서는 문자열 값이 100이고 만료 시간이 10초인 키를 설정합니다. 나중에  TTL 명령이 호출되어 키의 남은 생존 시간을 확인합니다.
-밀리초 단위로 만료를 설정하고 확인하려면 <a href="https://redis.io/commands/pexpire">PEXPIRE</a> 및 <a href="https://redis.io/commands/pttl">PTTL</a> 명령과 SET 옵션의 전체 목록을 확인하십시오. .</p>
-
-<h2 id="redis-정보">Redis 정보</h2>
-<p><a href="https://sungwookkang.com/category/Redis">Data Science Lab</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[Strings Redis 문자열 유형은 Redis 키와 연결할 수 있는 가장 간단한 값 유형입니다. Memcached의 유일한 데이터 유형이므로 신규 사용자가 Redis에서 사용하는 것도 매우 자연스러운 일입니다. Redis 키는 문자열이므로 문자열 유형도 값으로 사용할 때 문자열을 다른 문자열에 매핑합니다. 문자열 데이터 형식은 HTML 조각 또는 페이지 캐싱과 같은 다양한 사용 사례에 유용합니다. redis-cli를 사용하여 문자열 유형을 약간 사용해 보겠습니다 (모든 예제는 이 자습서에서 redis-cli를 통해 수행됨).]]></summary></entry></feed>
+<h2 id="참고">참고</h2>
+<p><a href="https://mozi.tistory.com/536">꽁담</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><summary type="html"><![CDATA[Redis 설치 준비 Redis를 다음의 절차로 설치합니다. OS 업데이트 Development Tools 설치 redis download redis build redis install]]></summary></entry></feed>
