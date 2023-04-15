@@ -1,72 +1,170 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-15T22:49:27+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Getting Start Redis - Redis Cluster Failover 설정</title><link href="http://localhost:4000/cache/failover-redis-cluster/" rel="alternate" type="text/html" title="Getting Start Redis - Redis Cluster Failover 설정" /><published>2023-04-12T00:00:00+09:00</published><updated>2023-04-12T00:00:00+09:00</updated><id>http://localhost:4000/cache/failover-redis-cluster</id><content type="html" xml:base="http://localhost:4000/cache/failover-redis-cluster/"><![CDATA[<h2 id="redis-cluster-configuration-설정">Redis Cluster Configuration 설정</h2>
-<p>Redis Cluster를 구성하고 failover 하기 위해서는 application config 이외에 추가적으로  Redis cluster Confugration이 필요합니다.
-Redis Cluster를 구성하고 Master를 강제로 종료시키면 Replica중 1개가 Master로 승격되어 지속적인 서비스를 이어갈 수 있습니다.<br />
-그리고 Lettuce를 사용하면 이를 자동으로 감지하여 서비스를 지속할 수 있습니다. 
-그러나 쓰기작업이 필요한 서비스는 약간의 delay를 요구하며, Redis Cluster 상태가 refresh되면 정상적인 쓰기 작업이 가능해집니다.
-물론 일기작업은 다음의 설정으로 변함없이 지속적으로 서비스가 가능합니다.</p>
-<h4 id="지속적인-읽기-작업">지속적인 읽기 작업</h4>
-<p>Replica중 1개 또는 모두 종료되더라도 지속적으로 일기 서비스가 가능하도록 하기 위해서는 다음의 설정이 필요합니다.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-15T22:51:59+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Getting Start Redis - docker를 이용하여 Redis Sentinel 구성</title><link href="http://localhost:4000/cache/setup-sentinel-docker/" rel="alternate" type="text/html" title="Getting Start Redis - docker를 이용하여 Redis Sentinel 구성" /><published>2023-04-14T00:00:00+09:00</published><updated>2023-04-14T00:00:00+09:00</updated><id>http://localhost:4000/cache/setup-sentinel-docker</id><content type="html" xml:base="http://localhost:4000/cache/setup-sentinel-docker/"><![CDATA[<h2 id="redis-sentinel-을-docker-를-사용하여-구성---사전준비">Redis Sentinel 을 docker 를 사용하여 구성 - 사전준비</h2>
+<p>Redis Sentinel 을 docker기반으로 구성하기 위해서는 docker, docker-compose를 설치하여야 합니다.</p>
 
-<p><strong>REPLICA_PREFERRED</strong></p>
+<p>docker engine 설치방법은 아래의 <a href="https://yoonjk.github.io/docker/docker/">링크</a>를 참조하세요.</p>
 
-<h4 id="지속적인-쓰기-작업">지속적인 쓰기 작업</h4>
-<p>Redis Cluster Master중 1개가 종료되더라도 지속적으로 쓰기 서비스가 가능하도록 하기 위해서는 다음의 설정이 필요합니다.
-아래의 설정값이 default 값이 false로 되어 있기 때문에 true로 설정을 변경해야 master가 종료되고 replica중 1개가 master로 승격되어 서비스를 계속할 수 있게되고, 이를 Lettuce가 감지하여 애플리케이션에서도 서비스를 지속하기 위해 아래의 설정을 하여야 합니다.</p>
+<h2 id="redis-sentinel---docker-compose">Redis Sentinel - docker-compose</h2>
+<ul>
+  <li>port 설정</li>
+  <li>extra_hosts설정</li>
+  <li>redis master/replica1/2는 netowrk_mode를 host로 설정</li>
+  <li>sentinel은 client에서 접근하기 위해 port를 expose (5000,5001,5002)</li>
+  <li>sentinel 구성은 QUORUM으로 구성합니다.</li>
+</ul>
 
-<p><strong>enablePeriodicRefresh</strong></p>
+<p>redis master 의 port 는 default port 6379로 설정합니다.
+replica의 port는 6383, 6384로 설정합니다.</p>
 
-<p>그리고 Refresh time을 설정하여 Lettuce가 이를 빠르게 감지하도록 설정합니다.
-<strong>refreshPeriod</strong></p>
+<p>extra_hosts에  myIP대신 VM 서버의 IP로 변경합니다.</p>
 
-<p>다음의 코드는 Redis Cluster를 구성하고 replica가 종료되거나 cluster의 master가 종료되더라도 읽기 작업과 쓰기 작업을 지속할 수 있도록 하기 위한 설정정보입니다.</p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="s1">'</span><span class="s">3.7'</span>
 
-<p>전체 소스는 아래의 <a href="https://github.com/yoonjk/redis-cluster.git">github 링크</a>에 있습니다.
-<a href="https://github.com/yoonjk/redis-cluster.git">https://github.com/yoonjk/redis-cluster.git</a></p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.time.Duration</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+<span class="na">services</span><span class="pi">:</span>
 
-<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Value</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Bean</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Configuration</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.data.redis.connection.RedisClusterConfiguration</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.data.redis.connection.RedisConnectionFactory</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory</span><span class="o">;</span>
+  <span class="na">redis-master</span><span class="pi">:</span>
+    <span class="na">container_name</span><span class="pi">:</span> <span class="s">master</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">redis</span>
+    <span class="na">command</span><span class="pi">:</span> <span class="s">redis-server --port </span><span class="m">6379</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+     <span class="pi">-</span> <span class="s2">"</span><span class="s">./master:/data"</span>
+    <span class="na">network_mode</span><span class="pi">:</span> <span class="s">host</span>
+    <span class="na">extra_hosts</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-master:myIp"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-replica1:myIp"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-replica2:myIp"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-sentinel1:myIp</span>
+      <span class="s">-</span><span class="nv"> </span><span class="s">"redis-sentinel2:myIp"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-sentinel3:myIp"</span>
 
-<span class="kn">import</span> <span class="nn">io.lettuce.core.ReadFrom</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">io.lettuce.core.cluster.ClusterClientOptions</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">io.lettuce.core.cluster.ClusterTopologyRefreshOptions</span><span class="o">;</span>
+  <span class="na">redis-replica1</span><span class="pi">:</span>
+    <span class="na">container_name</span><span class="pi">:</span> <span class="s">replica1</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">redis</span>
+    <span class="na">command</span><span class="pi">:</span> <span class="s">redis-server --slaveof redis-master 6379  --replicaof redis-master 6379 --port </span><span class="m">6383</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+     <span class="pi">-</span> <span class="s2">"</span><span class="s">./replica1:/data"</span>
+    <span class="na">network_mode</span><span class="pi">:</span> <span class="s">host</span>
+    <span class="na">extra_hosts</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-master:myIp"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-replica1:myIp"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-replica2:myIp"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-sentinel1:myIp</span>
+      <span class="s">-</span><span class="nv"> </span><span class="s">"redis-sentinel2:myIp"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-sentinel3:myIp"</span>
 
-<span class="nd">@Configuration</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RedisConfig</span> <span class="o">{</span>
-	<span class="nd">@Value</span><span class="o">(</span><span class="s">"${spring.redis.cluster.nodes}"</span><span class="o">)</span>
-	<span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">clusterNodes</span><span class="o">;</span>
-    <span class="c1">// lettuce 사용시</span>
-    <span class="nd">@Bean</span>
-    <span class="kd">public</span> <span class="nc">RedisConnectionFactory</span> <span class="nf">redisConnectionFactory</span><span class="o">(){</span>
-        <span class="nc">LettuceClientConfiguration</span> <span class="n">clientConfiguration</span> <span class="o">=</span> <span class="nc">LettuceClientConfiguration</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
-        		<span class="o">.</span><span class="na">clientOptions</span><span class="o">(</span><span class="nc">ClusterClientOptions</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
-        				<span class="o">.</span><span class="na">topologyRefreshOptions</span><span class="o">(</span><span class="nc">ClusterTopologyRefreshOptions</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
-        						<span class="o">.</span><span class="na">refreshPeriod</span><span class="o">(</span><span class="nc">Duration</span><span class="o">.</span><span class="na">ofMinutes</span><span class="o">(</span><span class="mi">1</span><span class="o">))</span>
-        						<span class="o">.</span><span class="na">enableAdaptiveRefreshTrigger</span><span class="o">()</span>
-        						<span class="o">.</span><span class="na">enablePeriodicRefresh</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span>    <span class="c1">// Default 가 False</span>
-        						<span class="o">.</span><span class="na">build</span><span class="o">())</span>
-        				<span class="o">.</span><span class="na">build</span><span class="o">())</span>
-        		
-                <span class="o">.</span><span class="na">readFrom</span><span class="o">(</span><span class="nc">ReadFrom</span><span class="o">.</span><span class="na">REPLICA_PREFERRED</span><span class="o">)</span> <span class="c1">// 복제본 노드에서 읽지 만 사용할 수없는 경우 마스터에서 읽습니다.</span>
-                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
-        
+  <span class="na">redis-replica2</span><span class="pi">:</span>
+    <span class="na">container_name</span><span class="pi">:</span> <span class="s">replica2</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">redis</span>
+    <span class="na">command</span><span class="pi">:</span> <span class="s">redis-server --slaveof redis-master 6379  --replicaof redis-master 6379 --port </span><span class="m">6384</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+     <span class="pi">-</span> <span class="s2">"</span><span class="s">./replica2:/data"</span>
+    <span class="na">network_mode</span><span class="pi">:</span> <span class="s">host</span>
+    <span class="na">extra_hosts</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-master:myIp"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-replica1:myIp"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-replica2:myIp"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-sentinel1:myIp</span>
+      <span class="s">-</span><span class="nv"> </span><span class="s">"redis-sentinel2:myIp"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-sentinel3:myIp"</span>
 
-        <span class="c1">// 모든 클러스터(master, slave) 정보를 적는다. (해당 서버중 접속되는 서버에서 cluster nodes 명령어를 통해 모든 클러스터 정보를 읽어오기에 다운 됐을 경우를 대비하여 모든 노드 정보를 적어두는편이 좋다.)</span>
-        <span class="nc">RedisClusterConfiguration</span> <span class="n">redisClusterConfiguration</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RedisClusterConfiguration</span><span class="o">(</span><span class="n">clusterNodes</span><span class="o">);</span>
-        
-        <span class="nc">LettuceConnectionFactory</span> <span class="n">lettuceConnectionFactory</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">LettuceConnectionFactory</span><span class="o">(</span><span class="n">redisClusterConfiguration</span><span class="o">,</span> <span class="n">clientConfiguration</span><span class="o">);</span>
+  <span class="c1"># Instance 1</span>
+  <span class="na">redis-sentinel1</span><span class="pi">:</span>
+    <span class="na">container_name</span><span class="pi">:</span> <span class="s">sentinel1</span>
+    <span class="na">build</span><span class="pi">:</span>
+      <span class="na">context</span><span class="pi">:</span> <span class="s">./sentinel</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">5000:26379"</span>
+    <span class="na">extra_hosts</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-master:myIp"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-replica1:myIp"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-replica2:myIp"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-sentinel1:myIp</span>
+      <span class="s">-</span><span class="nv"> </span><span class="s">"redis-sentinel2:myIp"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-sentinel3:myIp"</span>
 
-        <span class="k">return</span> <span class="n">lettuceConnectionFactory</span><span class="o">;</span>
-    <span class="o">}</span>
-        
-<span class="o">}</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><summary type="html"><![CDATA[Redis Cluster Configuration 설정 Redis Cluster를 구성하고 failover 하기 위해서는 application config 이외에 추가적으로 Redis cluster Confugration이 필요합니다. Redis Cluster를 구성하고 Master를 강제로 종료시키면 Replica중 1개가 Master로 승격되어 지속적인 서비스를 이어갈 수 있습니다. 그리고 Lettuce를 사용하면 이를 자동으로 감지하여 서비스를 지속할 수 있습니다. 그러나 쓰기작업이 필요한 서비스는 약간의 delay를 요구하며, Redis Cluster 상태가 refresh되면 정상적인 쓰기 작업이 가능해집니다. 물론 일기작업은 다음의 설정으로 변함없이 지속적으로 서비스가 가능합니다. 지속적인 읽기 작업 Replica중 1개 또는 모두 종료되더라도 지속적으로 일기 서비스가 가능하도록 하기 위해서는 다음의 설정이 필요합니다.]]></summary></entry><entry><title type="html">Getting Start Redis - Docker를 이용한 클러스터링 구성</title><link href="http://localhost:4000/cache/redis-cluster-using-docker/" rel="alternate" type="text/html" title="Getting Start Redis - Docker를 이용한 클러스터링 구성" /><published>2023-04-12T00:00:00+09:00</published><updated>2023-04-12T00:00:00+09:00</updated><id>http://localhost:4000/cache/redis-cluster-using-docker</id><content type="html" xml:base="http://localhost:4000/cache/redis-cluster-using-docker/"><![CDATA[<h2 id="redisconf-편집">redis.conf 편집</h2>
+  <span class="c1"># Instance 2</span>
+  <span class="na">redis-sentinel2</span><span class="pi">:</span>
+    <span class="na">container_name</span><span class="pi">:</span> <span class="s">sentinel2</span>
+    <span class="na">build</span><span class="pi">:</span>
+      <span class="na">context</span><span class="pi">:</span> <span class="s">./sentinel</span>
+    <span class="na">links</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">redis-master</span>
+      <span class="pi">-</span> <span class="s">redis-replica1</span>
+      <span class="pi">-</span> <span class="s">redis-replica2</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">5001:26379"</span>
+    <span class="na">extra_hosts</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-master:myIp"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-replica1:myIp"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-replica2:myIp"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-sentinel1:myIp</span>
+      <span class="s">-</span><span class="nv"> </span><span class="s">"redis-sentinel2:myIp"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-sentinel3:myIp"</span>
+
+  <span class="c1"># Instance 3</span>
+  <span class="na">redis-sentinel3</span><span class="pi">:</span>
+    <span class="na">container_name</span><span class="pi">:</span> <span class="s">sentinel3</span>
+    <span class="na">build</span><span class="pi">:</span>
+      <span class="na">context</span><span class="pi">:</span> <span class="s">./sentinel</span>
+    <span class="na">links</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">redis-master</span>
+      <span class="pi">-</span> <span class="s">redis-replica1</span>
+      <span class="pi">-</span> <span class="s">redis-replica2</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">5002:26379"</span>
+    <span class="na">extra_hosts</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-master:myIp"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-replica1:myIp"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-replica2:myIp"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-sentinel1:myIp</span>
+      <span class="s">-</span><span class="nv"> </span><span class="s">"redis-sentinel2:myIp"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-sentinel3:myIp"</span>
+</code></pre></div></div>
+
+<p>sentinel.conf 파일</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>port 26379
+
+<span class="nb">dir</span> /tmp
+
+sentinel resolve-hostnames <span class="nb">yes
+</span>sentinel monitor redismaster redis-master 6379 <span class="nv">$SENTINEL_QUORUM</span>
+sentinel down-after-milliseconds redismaster <span class="nv">$SENTINEL_DOWN_AFTER</span>
+sentinel parallel-syncs redismaster 1
+sentinel failover-timeout redismaster <span class="nv">$SENTINEL_FAILOVER</span>
+</code></pre></div></div>
+<p>entrypoint.sh 파일</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
+
+<span class="nb">sed</span> <span class="nt">-i</span> <span class="s2">"s/</span><span class="se">\$</span><span class="s2">SENTINEL_QUORUM/</span><span class="nv">$SENTINEL_QUORUM</span><span class="s2">/g"</span> /redis/sentinel.conf
+<span class="nb">sed</span> <span class="nt">-i</span> <span class="s2">"s/</span><span class="se">\$</span><span class="s2">SENTINEL_DOWN_AFTER/</span><span class="nv">$SENTINEL_DOWN_AFTER</span><span class="s2">/g"</span> /redis/sentinel.conf
+<span class="nb">sed</span> <span class="nt">-i</span> <span class="s2">"s/</span><span class="se">\$</span><span class="s2">SENTINEL_FAILOVER/</span><span class="nv">$SENTINEL_FAILOVER</span><span class="s2">/g"</span> /redis/sentinel.conf
+
+redis-server /redis/sentinel.conf <span class="nt">--sentinel</span>
+</code></pre></div></div>
+
+<p>Dockerfile</p>
+<div class="language-dockerfile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">FROM</span><span class="s"> redis</span>
+
+<span class="k">ENV</span><span class="s"> SENTINEL_QUORUM 2</span>
+<span class="k">ENV</span><span class="s"> SENTINEL_DOWN_AFTER 1000</span>
+<span class="k">ENV</span><span class="s"> SENTINEL_FAILOVER 1000</span>
+
+<span class="k">RUN </span><span class="nb">mkdir</span> <span class="nt">-p</span> /redis
+
+<span class="k">WORKDIR</span><span class="s"> /redis</span>
+
+<span class="k">COPY</span><span class="s"> sentinel.conf .</span>
+<span class="k">COPY</span><span class="s"> sentinel-entrypoint.sh /usr/local/bin/</span>
+
+<span class="k">RUN </span><span class="nb">chown </span>redis:redis /redis/<span class="k">*</span> <span class="o">&amp;&amp;</span> <span class="se">\
+</span>    <span class="nb">chmod</span> +x /usr/local/bin/sentinel-entrypoint.sh
+
+<span class="k">EXPOSE</span><span class="s"> 26379</span>
+
+<span class="k">ENTRYPOINT</span><span class="s"> ["sentinel-entrypoint.sh"]</span>
+</code></pre></div></div>
+
+<h2 id="참조-">참조 :</h2>
+<p><a href="https://github.com/Developers-Notebook/Redis-Sentinel-Docker-Compose">Redis-Sentinel-Docker-Compose</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="sentinel" /><summary type="html"><![CDATA[Redis Sentinel 을 docker 를 사용하여 구성 - 사전준비 Redis Sentinel 을 docker기반으로 구성하기 위해서는 docker, docker-compose를 설치하여야 합니다.]]></summary></entry><entry><title type="html">Getting Start Redis - Docker를 이용한 클러스터링 구성</title><link href="http://localhost:4000/cache/redis-cluster-using-docker/" rel="alternate" type="text/html" title="Getting Start Redis - Docker를 이용한 클러스터링 구성" /><published>2023-04-12T00:00:00+09:00</published><updated>2023-04-12T00:00:00+09:00</updated><id>http://localhost:4000/cache/redis-cluster-using-docker</id><content type="html" xml:base="http://localhost:4000/cache/redis-cluster-using-docker/"><![CDATA[<h2 id="redisconf-편집">redis.conf 편집</h2>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> 6300 6301 6302 6400 6401 6402
 </code></pre></div></div>
@@ -206,7 +304,75 @@ redis-cli <span class="nt">--cluster</span> add-node 127.0.0.1:6402 127.0.0.1:63
 <p><img src="/assets/images/cache/13-cache-add-slave-docker.png" alt="Create Admin" /></p>
 <h2 id="참고">참고</h2>
 <p><a href="https://uchupura.tistory.com/56">우쭈뿌라 개발노트</a><br />
-<a href="https://pinggoopark.tistory.com/268">과거의 나를 위해</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="docker" /><summary type="html"><![CDATA[redis.conf 편집]]></summary></entry><entry><title type="html">@Inject과 @Autowired의 차이점</title><link href="http://localhost:4000/springboot/difference-autowired-inject/" rel="alternate" type="text/html" title="@Inject과 @Autowired의 차이점" /><published>2023-04-11T00:00:00+09:00</published><updated>2023-04-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/difference-autowired-inject</id><content type="html" xml:base="http://localhost:4000/springboot/difference-autowired-inject/"><![CDATA[<h2 id="inject-vs-autowired">@Inject vs @Autowired</h2>
+<a href="https://pinggoopark.tistory.com/268">과거의 나를 위해</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="docker" /><summary type="html"><![CDATA[redis.conf 편집]]></summary></entry><entry><title type="html">Getting Start Redis - Redis Cluster Failover 설정</title><link href="http://localhost:4000/cache/failover-redis-cluster/" rel="alternate" type="text/html" title="Getting Start Redis - Redis Cluster Failover 설정" /><published>2023-04-12T00:00:00+09:00</published><updated>2023-04-12T00:00:00+09:00</updated><id>http://localhost:4000/cache/failover-redis-cluster</id><content type="html" xml:base="http://localhost:4000/cache/failover-redis-cluster/"><![CDATA[<h2 id="redis-cluster-configuration-설정">Redis Cluster Configuration 설정</h2>
+<p>Redis Cluster를 구성하고 failover 하기 위해서는 application config 이외에 추가적으로  Redis cluster Confugration이 필요합니다.
+Redis Cluster를 구성하고 Master를 강제로 종료시키면 Replica중 1개가 Master로 승격되어 지속적인 서비스를 이어갈 수 있습니다.<br />
+그리고 Lettuce를 사용하면 이를 자동으로 감지하여 서비스를 지속할 수 있습니다. 
+그러나 쓰기작업이 필요한 서비스는 약간의 delay를 요구하며, Redis Cluster 상태가 refresh되면 정상적인 쓰기 작업이 가능해집니다.
+물론 일기작업은 다음의 설정으로 변함없이 지속적으로 서비스가 가능합니다.</p>
+<h4 id="지속적인-읽기-작업">지속적인 읽기 작업</h4>
+<p>Replica중 1개 또는 모두 종료되더라도 지속적으로 일기 서비스가 가능하도록 하기 위해서는 다음의 설정이 필요합니다.</p>
+
+<p><strong>REPLICA_PREFERRED</strong></p>
+
+<h4 id="지속적인-쓰기-작업">지속적인 쓰기 작업</h4>
+<p>Redis Cluster Master중 1개가 종료되더라도 지속적으로 쓰기 서비스가 가능하도록 하기 위해서는 다음의 설정이 필요합니다.
+아래의 설정값이 default 값이 false로 되어 있기 때문에 true로 설정을 변경해야 master가 종료되고 replica중 1개가 master로 승격되어 서비스를 계속할 수 있게되고, 이를 Lettuce가 감지하여 애플리케이션에서도 서비스를 지속하기 위해 아래의 설정을 하여야 합니다.</p>
+
+<p><strong>enablePeriodicRefresh</strong></p>
+
+<p>그리고 Refresh time을 설정하여 Lettuce가 이를 빠르게 감지하도록 설정합니다.
+<strong>refreshPeriod</strong></p>
+
+<p>다음의 코드는 Redis Cluster를 구성하고 replica가 종료되거나 cluster의 master가 종료되더라도 읽기 작업과 쓰기 작업을 지속할 수 있도록 하기 위한 설정정보입니다.</p>
+
+<p>전체 소스는 아래의 <a href="https://github.com/yoonjk/redis-cluster.git">github 링크</a>에 있습니다.
+<a href="https://github.com/yoonjk/redis-cluster.git">https://github.com/yoonjk/redis-cluster.git</a></p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.time.Duration</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Value</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Bean</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Configuration</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.redis.connection.RedisClusterConfiguration</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.redis.connection.RedisConnectionFactory</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">io.lettuce.core.ReadFrom</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.lettuce.core.cluster.ClusterClientOptions</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.lettuce.core.cluster.ClusterTopologyRefreshOptions</span><span class="o">;</span>
+
+<span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RedisConfig</span> <span class="o">{</span>
+	<span class="nd">@Value</span><span class="o">(</span><span class="s">"${spring.redis.cluster.nodes}"</span><span class="o">)</span>
+	<span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">clusterNodes</span><span class="o">;</span>
+    <span class="c1">// lettuce 사용시</span>
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="nc">RedisConnectionFactory</span> <span class="nf">redisConnectionFactory</span><span class="o">(){</span>
+        <span class="nc">LettuceClientConfiguration</span> <span class="n">clientConfiguration</span> <span class="o">=</span> <span class="nc">LettuceClientConfiguration</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+        		<span class="o">.</span><span class="na">clientOptions</span><span class="o">(</span><span class="nc">ClusterClientOptions</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+        				<span class="o">.</span><span class="na">topologyRefreshOptions</span><span class="o">(</span><span class="nc">ClusterTopologyRefreshOptions</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+        						<span class="o">.</span><span class="na">refreshPeriod</span><span class="o">(</span><span class="nc">Duration</span><span class="o">.</span><span class="na">ofMinutes</span><span class="o">(</span><span class="mi">1</span><span class="o">))</span>
+        						<span class="o">.</span><span class="na">enableAdaptiveRefreshTrigger</span><span class="o">()</span>
+        						<span class="o">.</span><span class="na">enablePeriodicRefresh</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span>    <span class="c1">// Default 가 False</span>
+        						<span class="o">.</span><span class="na">build</span><span class="o">())</span>
+        				<span class="o">.</span><span class="na">build</span><span class="o">())</span>
+        		
+                <span class="o">.</span><span class="na">readFrom</span><span class="o">(</span><span class="nc">ReadFrom</span><span class="o">.</span><span class="na">REPLICA_PREFERRED</span><span class="o">)</span> <span class="c1">// 복제본 노드에서 읽지 만 사용할 수없는 경우 마스터에서 읽습니다.</span>
+                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+        
+
+        <span class="c1">// 모든 클러스터(master, slave) 정보를 적는다. (해당 서버중 접속되는 서버에서 cluster nodes 명령어를 통해 모든 클러스터 정보를 읽어오기에 다운 됐을 경우를 대비하여 모든 노드 정보를 적어두는편이 좋다.)</span>
+        <span class="nc">RedisClusterConfiguration</span> <span class="n">redisClusterConfiguration</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RedisClusterConfiguration</span><span class="o">(</span><span class="n">clusterNodes</span><span class="o">);</span>
+        
+        <span class="nc">LettuceConnectionFactory</span> <span class="n">lettuceConnectionFactory</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">LettuceConnectionFactory</span><span class="o">(</span><span class="n">redisClusterConfiguration</span><span class="o">,</span> <span class="n">clientConfiguration</span><span class="o">);</span>
+
+        <span class="k">return</span> <span class="n">lettuceConnectionFactory</span><span class="o">;</span>
+    <span class="o">}</span>
+        
+<span class="o">}</span>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><summary type="html"><![CDATA[Redis Cluster Configuration 설정 Redis Cluster를 구성하고 failover 하기 위해서는 application config 이외에 추가적으로 Redis cluster Confugration이 필요합니다. Redis Cluster를 구성하고 Master를 강제로 종료시키면 Replica중 1개가 Master로 승격되어 지속적인 서비스를 이어갈 수 있습니다. 그리고 Lettuce를 사용하면 이를 자동으로 감지하여 서비스를 지속할 수 있습니다. 그러나 쓰기작업이 필요한 서비스는 약간의 delay를 요구하며, Redis Cluster 상태가 refresh되면 정상적인 쓰기 작업이 가능해집니다. 물론 일기작업은 다음의 설정으로 변함없이 지속적으로 서비스가 가능합니다. 지속적인 읽기 작업 Replica중 1개 또는 모두 종료되더라도 지속적으로 일기 서비스가 가능하도록 하기 위해서는 다음의 설정이 필요합니다.]]></summary></entry><entry><title type="html">@Inject과 @Autowired의 차이점</title><link href="http://localhost:4000/springboot/difference-autowired-inject/" rel="alternate" type="text/html" title="@Inject과 @Autowired의 차이점" /><published>2023-04-11T00:00:00+09:00</published><updated>2023-04-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/difference-autowired-inject</id><content type="html" xml:base="http://localhost:4000/springboot/difference-autowired-inject/"><![CDATA[<h2 id="inject-vs-autowired">@Inject vs @Autowired</h2>
 <p>@Inject 및 @Autowired 두 주석은 응용 프로그램에서 자동 의존성주입에 사용됩니다.
 @Inject 어노테이션은 Java 6에 도입 된 Java CDI의 일부인 반면 @Autowire 어노테이션은 스프링프레임워크의 일부. 두 어노테이션 모두 동일한 목적을 수행하므로 응용프로그램에서 사용할 수 있는 어노테이션.</p>
 
@@ -743,173 +909,7 @@ src/redis-sentinel redis_5002.conf
 
 <h2 id="참고">참고</h2>
 <p><a href="https://co-de.tistory.com/15">5분 안에 구축하는 Redis-Sentinel</a>
-<a href="https://www.happykoo.net/@happykoo/posts/53">해피쿠</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="sentinel" /><summary type="html"><![CDATA[Redis Sentinel 소개 Redis Sentinel은 Redis의 고가용성 구성을 위한 아키텍처입니다. Sentinel은 Redis를 모니터링하고 master node가 장애가 발생시 알리고 자동으로 장애 조치할 수 있는 여러 Redis 인스턴스를 관리하기 위한 redis 컴포넌트입니다.]]></summary></entry><entry><title type="html">Getting Start Redis - docker를 이용하여 Redis Sentinel 구성</title><link href="http://localhost:4000/cache/setup-sentinel-docker/" rel="alternate" type="text/html" title="Getting Start Redis - docker를 이용하여 Redis Sentinel 구성" /><published>2023-04-08T00:00:00+09:00</published><updated>2023-04-08T00:00:00+09:00</updated><id>http://localhost:4000/cache/setup-sentinel-docker</id><content type="html" xml:base="http://localhost:4000/cache/setup-sentinel-docker/"><![CDATA[<h2 id="redis-sentinel-을-docker-를-사용하여-구성---사전준비">Redis Sentinel 을 docker 를 사용하여 구성 - 사전준비</h2>
-<p>Redis Sentinel 을 docker기반으로 구성하기 위해서는 docker, docker-compose를 설치하여야 합니다.</p>
-
-<p>docker engine 설치방법은 아래의 <a href="https://yoonjk.github.io/docker/docker/">링크</a>를 참조하세요.</p>
-
-<h2 id="redis-sentinel---docker-compose">Redis Sentinel - docker-compose</h2>
-<ul>
-  <li>port 설정</li>
-  <li>extra_hosts설정</li>
-  <li>redis master/replica1/2는 netowrk_mode를 host로 설정</li>
-  <li>sentinel은 client에서 접근하기 위해 port를 expose (5000,5001,5002)</li>
-  <li>sentinel 구성은 QUORUM으로 구성합니다.</li>
-</ul>
-
-<p>redis master 의 port 는 default port 6379로 설정합니다.
-replica의 port는 6383, 6384로 설정합니다.</p>
-
-<p>extra_hosts에  myIP대신 VM 서버의 IP로 변경합니다.</p>
-
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="s1">'</span><span class="s">3.7'</span>
-
-<span class="na">services</span><span class="pi">:</span>
-
-  <span class="na">redis-master</span><span class="pi">:</span>
-    <span class="na">container_name</span><span class="pi">:</span> <span class="s">master</span>
-    <span class="na">image</span><span class="pi">:</span> <span class="s">redis</span>
-    <span class="na">command</span><span class="pi">:</span> <span class="s">redis-server --port </span><span class="m">6379</span>
-    <span class="na">volumes</span><span class="pi">:</span>
-     <span class="pi">-</span> <span class="s2">"</span><span class="s">./master:/data"</span>
-    <span class="na">network_mode</span><span class="pi">:</span> <span class="s">host</span>
-    <span class="na">extra_hosts</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-master:myIp"</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-replica1:myIp"</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-replica2:myIp"</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-sentinel1:myIp</span>
-      <span class="s">-</span><span class="nv"> </span><span class="s">"redis-sentinel2:myIp"</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-sentinel3:myIp"</span>
-
-  <span class="na">redis-replica1</span><span class="pi">:</span>
-    <span class="na">container_name</span><span class="pi">:</span> <span class="s">replica1</span>
-    <span class="na">image</span><span class="pi">:</span> <span class="s">redis</span>
-    <span class="na">command</span><span class="pi">:</span> <span class="s">redis-server --slaveof redis-master 6379  --replicaof redis-master 6379 --port </span><span class="m">6383</span>
-    <span class="na">volumes</span><span class="pi">:</span>
-     <span class="pi">-</span> <span class="s2">"</span><span class="s">./replica1:/data"</span>
-    <span class="na">network_mode</span><span class="pi">:</span> <span class="s">host</span>
-    <span class="na">extra_hosts</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-master:myIp"</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-replica1:myIp"</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-replica2:myIp"</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-sentinel1:myIp</span>
-      <span class="s">-</span><span class="nv"> </span><span class="s">"redis-sentinel2:myIp"</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-sentinel3:myIp"</span>
-
-  <span class="na">redis-replica2</span><span class="pi">:</span>
-    <span class="na">container_name</span><span class="pi">:</span> <span class="s">replica2</span>
-    <span class="na">image</span><span class="pi">:</span> <span class="s">redis</span>
-    <span class="na">command</span><span class="pi">:</span> <span class="s">redis-server --slaveof redis-master 6379  --replicaof redis-master 6379 --port </span><span class="m">6384</span>
-    <span class="na">volumes</span><span class="pi">:</span>
-     <span class="pi">-</span> <span class="s2">"</span><span class="s">./replica2:/data"</span>
-    <span class="na">network_mode</span><span class="pi">:</span> <span class="s">host</span>
-    <span class="na">extra_hosts</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-master:myIp"</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-replica1:myIp"</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-replica2:myIp"</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-sentinel1:myIp</span>
-      <span class="s">-</span><span class="nv"> </span><span class="s">"redis-sentinel2:myIp"</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-sentinel3:myIp"</span>
-
-  <span class="c1"># Instance 1</span>
-  <span class="na">redis-sentinel1</span><span class="pi">:</span>
-    <span class="na">container_name</span><span class="pi">:</span> <span class="s">sentinel1</span>
-    <span class="na">build</span><span class="pi">:</span>
-      <span class="na">context</span><span class="pi">:</span> <span class="s">./sentinel</span>
-    <span class="na">ports</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">5000:26379"</span>
-    <span class="na">extra_hosts</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-master:myIp"</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-replica1:myIp"</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-replica2:myIp"</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-sentinel1:myIp</span>
-      <span class="s">-</span><span class="nv"> </span><span class="s">"redis-sentinel2:myIp"</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-sentinel3:myIp"</span>
-
-  <span class="c1"># Instance 2</span>
-  <span class="na">redis-sentinel2</span><span class="pi">:</span>
-    <span class="na">container_name</span><span class="pi">:</span> <span class="s">sentinel2</span>
-    <span class="na">build</span><span class="pi">:</span>
-      <span class="na">context</span><span class="pi">:</span> <span class="s">./sentinel</span>
-    <span class="na">links</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">redis-master</span>
-      <span class="pi">-</span> <span class="s">redis-replica1</span>
-      <span class="pi">-</span> <span class="s">redis-replica2</span>
-    <span class="na">ports</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">5001:26379"</span>
-    <span class="na">extra_hosts</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-master:myIp"</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-replica1:myIp"</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-replica2:myIp"</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-sentinel1:myIp</span>
-      <span class="s">-</span><span class="nv"> </span><span class="s">"redis-sentinel2:myIp"</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-sentinel3:myIp"</span>
-
-  <span class="c1"># Instance 3</span>
-  <span class="na">redis-sentinel3</span><span class="pi">:</span>
-    <span class="na">container_name</span><span class="pi">:</span> <span class="s">sentinel3</span>
-    <span class="na">build</span><span class="pi">:</span>
-      <span class="na">context</span><span class="pi">:</span> <span class="s">./sentinel</span>
-    <span class="na">links</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">redis-master</span>
-      <span class="pi">-</span> <span class="s">redis-replica1</span>
-      <span class="pi">-</span> <span class="s">redis-replica2</span>
-    <span class="na">ports</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">5002:26379"</span>
-    <span class="na">extra_hosts</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-master:myIp"</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-replica1:myIp"</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-replica2:myIp"</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-sentinel1:myIp</span>
-      <span class="s">-</span><span class="nv"> </span><span class="s">"redis-sentinel2:myIp"</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">redis-sentinel3:myIp"</span>
-</code></pre></div></div>
-
-<p>sentinel.conf 파일</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>port 26379
-
-<span class="nb">dir</span> /tmp
-
-sentinel resolve-hostnames <span class="nb">yes
-</span>sentinel monitor redismaster redis-master 6379 <span class="nv">$SENTINEL_QUORUM</span>
-sentinel down-after-milliseconds redismaster <span class="nv">$SENTINEL_DOWN_AFTER</span>
-sentinel parallel-syncs redismaster 1
-sentinel failover-timeout redismaster <span class="nv">$SENTINEL_FAILOVER</span>
-</code></pre></div></div>
-<p>entrypoint.sh 파일</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
-
-<span class="nb">sed</span> <span class="nt">-i</span> <span class="s2">"s/</span><span class="se">\$</span><span class="s2">SENTINEL_QUORUM/</span><span class="nv">$SENTINEL_QUORUM</span><span class="s2">/g"</span> /redis/sentinel.conf
-<span class="nb">sed</span> <span class="nt">-i</span> <span class="s2">"s/</span><span class="se">\$</span><span class="s2">SENTINEL_DOWN_AFTER/</span><span class="nv">$SENTINEL_DOWN_AFTER</span><span class="s2">/g"</span> /redis/sentinel.conf
-<span class="nb">sed</span> <span class="nt">-i</span> <span class="s2">"s/</span><span class="se">\$</span><span class="s2">SENTINEL_FAILOVER/</span><span class="nv">$SENTINEL_FAILOVER</span><span class="s2">/g"</span> /redis/sentinel.conf
-
-redis-server /redis/sentinel.conf <span class="nt">--sentinel</span>
-</code></pre></div></div>
-
-<p>Dockerfile</p>
-<div class="language-dockerfile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">FROM</span><span class="s"> redis</span>
-
-<span class="k">ENV</span><span class="s"> SENTINEL_QUORUM 2</span>
-<span class="k">ENV</span><span class="s"> SENTINEL_DOWN_AFTER 1000</span>
-<span class="k">ENV</span><span class="s"> SENTINEL_FAILOVER 1000</span>
-
-<span class="k">RUN </span><span class="nb">mkdir</span> <span class="nt">-p</span> /redis
-
-<span class="k">WORKDIR</span><span class="s"> /redis</span>
-
-<span class="k">COPY</span><span class="s"> sentinel.conf .</span>
-<span class="k">COPY</span><span class="s"> sentinel-entrypoint.sh /usr/local/bin/</span>
-
-<span class="k">RUN </span><span class="nb">chown </span>redis:redis /redis/<span class="k">*</span> <span class="o">&amp;&amp;</span> <span class="se">\
-</span>    <span class="nb">chmod</span> +x /usr/local/bin/sentinel-entrypoint.sh
-
-<span class="k">EXPOSE</span><span class="s"> 26379</span>
-
-<span class="k">ENTRYPOINT</span><span class="s"> ["sentinel-entrypoint.sh"]</span>
-</code></pre></div></div>
-
-<h2 id="참조-">참조 :</h2>
-<p><a href="https://github.com/Developers-Notebook/Redis-Sentinel-Docker-Compose">Redis-Sentinel-Docker-Compose</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="sentinel" /><summary type="html"><![CDATA[Redis Sentinel 을 docker 를 사용하여 구성 - 사전준비 Redis Sentinel 을 docker기반으로 구성하기 위해서는 docker, docker-compose를 설치하여야 합니다.]]></summary></entry><entry><title type="html">Getting Start Redis - String</title><link href="http://localhost:4000/cache/string/" rel="alternate" type="text/html" title="Getting Start Redis - String" /><published>2023-04-07T00:00:00+09:00</published><updated>2023-04-07T00:00:00+09:00</updated><id>http://localhost:4000/cache/string</id><content type="html" xml:base="http://localhost:4000/cache/string/"><![CDATA[<h2 id="strings">Strings</h2>
+<a href="https://www.happykoo.net/@happykoo/posts/53">해피쿠</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="sentinel" /><summary type="html"><![CDATA[Redis Sentinel 소개 Redis Sentinel은 Redis의 고가용성 구성을 위한 아키텍처입니다. Sentinel은 Redis를 모니터링하고 master node가 장애가 발생시 알리고 자동으로 장애 조치할 수 있는 여러 Redis 인스턴스를 관리하기 위한 redis 컴포넌트입니다.]]></summary></entry><entry><title type="html">Getting Start Redis - String</title><link href="http://localhost:4000/cache/string/" rel="alternate" type="text/html" title="Getting Start Redis - String" /><published>2023-04-07T00:00:00+09:00</published><updated>2023-04-07T00:00:00+09:00</updated><id>http://localhost:4000/cache/string</id><content type="html" xml:base="http://localhost:4000/cache/string/"><![CDATA[<h2 id="strings">Strings</h2>
 <p>Redis 문자열 유형은 Redis 키와 연결할 수 있는 가장 간단한 값 유형입니다. Memcached의 유일한 데이터 유형이므로 신규 사용자가 Redis에서 사용하는 것도 매우 자연스러운 일입니다.
 Redis 키는 문자열이므로 문자열 유형도 값으로 사용할 때 문자열을 다른 문자열에 매핑합니다. 문자열 데이터 형식은 HTML 조각 또는 페이지 캐싱과 같은 다양한 사용 사례에 유용합니다.
 redis-cli를 사용하여 문자열 유형을 약간 사용해 보겠습니다<br />

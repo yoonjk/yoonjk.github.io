@@ -491,12 +491,6 @@ var store = [{
         "url": "/cache/install-redis/",
         "teaser": null
       },{
-        "title": "Getting Start Redis - docker를 이용하여 Redis Sentinel 구성",
-        "excerpt":"Redis Sentinel 을 docker 를 사용하여 구성 - 사전준비 Redis Sentinel 을 docker기반으로 구성하기 위해서는 docker, docker-compose를 설치하여야 합니다. docker engine 설치방법은 아래의 링크를 참조하세요. Redis Sentinel - docker-compose port 설정 extra_hosts설정 redis master/replica1/2는 netowrk_mode를 host로 설정 sentinel은 client에서 접근하기 위해 port를 expose (5000,5001,5002) sentinel 구성은 QUORUM으로 구성합니다. redis master...","categories": ["cache"],
-        "tags": ["redis","sentinel"],
-        "url": "/cache/setup-sentinel-docker/",
-        "teaser": null
-      },{
         "title": "Getting Start Redis - Redis Sentinel 구성",
         "excerpt":"Redis Sentinel 소개 Redis Sentinel은 Redis의 고가용성 구성을 위한 아키텍처입니다. Sentinel은 Redis를 모니터링하고 master node가 장애가 발생시 알리고 자동으로 장애 조치할 수 있는 여러 Redis 인스턴스를 관리하기 위한 redis 컴포넌트입니다. Redis Sentinel 역할 Redis Sentinel은 Redis의 여러 인스턴스를 모니터링 및 관리하며 아래 3가지 역할을 수행하니다. redis 인스턴스 모니터링 : Sentinel은...","categories": ["cache"],
         "tags": ["redis","sentinel"],
@@ -537,5 +531,11 @@ var store = [{
         "excerpt":"redis.conf 편집 mkdir -p 6300 6301 6302 6400 6401 6402 redis config 파일을 다음과 같이 수정합니다. ## redis.conf 편집 vi redis.conf port 6379 cluster-enabled yes cluster-config-file nodes.conf cluster-node-timeout 3000 appendonly yes redis.conf를 각 폴더에 복사합니다. cp redis.conf 6300/ cp redis.conf 6301/ cp redis.conf 6302/ cp redis.conf 6400/ cp redis.conf 6401/...","categories": ["cache"],
         "tags": ["redis","docker"],
         "url": "/cache/redis-cluster-using-docker/",
+        "teaser": null
+      },{
+        "title": "Getting Start Redis - docker를 이용하여 Redis Sentinel 구성",
+        "excerpt":"Redis Sentinel 을 docker 를 사용하여 구성 - 사전준비 Redis Sentinel 을 docker기반으로 구성하기 위해서는 docker, docker-compose를 설치하여야 합니다. docker engine 설치방법은 아래의 링크를 참조하세요. Redis Sentinel - docker-compose port 설정 extra_hosts설정 redis master/replica1/2는 netowrk_mode를 host로 설정 sentinel은 client에서 접근하기 위해 port를 expose (5000,5001,5002) sentinel 구성은 QUORUM으로 구성합니다. redis master...","categories": ["cache"],
+        "tags": ["redis","sentinel"],
+        "url": "/cache/setup-sentinel-docker/",
         "teaser": null
       }]
