@@ -450,7 +450,7 @@ var store = [{
         "teaser": null
       },{
         "title": "Getting Start Redis - Reids Persistence",
-        "excerpt":"Redis persistence Redis가 디스크에 데이터를 쓰는 방법 지속성은 SSD(반도체 디스크)와 같은 내구성 있는 스토리지에 데이터를 쓰는 것을 말합니다. Redis는 다양한 지속성 옵션을 제공합니다. 여기에는 다음이 포함됩니다. • RDB (Redis Database): RDB 지속성은 지정된 간격으로 데이터 세트의 특정 시점 스냅샷을 수행합니다. • AOF (Append Only File): AOF 지속성은 서버에서 받은 모든...","categories": ["cache"],
+        "excerpt":"Redis persistence Redis가 디스크에 데이터를 쓰는 방법 지속성은 SSD(반도체 디스크)와 같은 내구성 있는 스토리지에 데이터를 쓰는 것을 말합니다. Redis는 다양한 지속성 옵션을 제공합니다. 여기에는 다음이 포함됩니다. RDB (Redis Database): RDB 지속성은 지정된 간격으로 데이터 세트의 특정 시점 스냅샷을 수행합니다. AOF (Append Only File): AOF 지속성은 서버에서 받은 모든 쓰기 작업을...","categories": ["cache"],
         "tags": ["redis"],
         "url": "/cache/redis-persistence/",
         "teaser": null
