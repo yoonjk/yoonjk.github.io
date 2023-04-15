@@ -30,9 +30,7 @@ services:
       - "redis-master:myIP"
       - "redis-replica1:myIP
       - "redis-replica2:myIP"
-      - "redis-sentinel1:myIP"
-      - "redis-sentinel2:myIP"
-      - "redis-sentinel3:myIP"
+  
     ports:
       - "9999:63790"
 ```
