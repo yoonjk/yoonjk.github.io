@@ -551,6 +551,12 @@ var store = [{
         "url": "/cache/redis-stat-docker/",
         "teaser": null
       },{
+        "title": "Redis 시작하기 - Redis Sentinel 고가용성 예시",
+        "excerpt":"Sentinel 구성 이제 Sentinel에 대한 기본 정보를 알았으므로 Sentinel 프로세스를 어디에 배치해야 하는지, 얼마나 많은 Sentinel 프로세스가 필요한지 등이 궁금할 수 있습니다. 이 섹션에서는 몇 가지 배포 예를 보여 줍니다. 그래픽 형식의 구성 예를 보여주기 위해 ASCII 아트를 사용 하며, 이것이 다른 기호가 의미하는 바입니다 box 안에 Redis Instance가 실행중인있...","categories": ["cache"],
+        "tags": ["redis"],
+        "url": "/cache/ha-sentinel-example/",
+        "teaser": null
+      },{
         "title": "Redis 시작하기 - Redis Sentinel 고가용성",
         "excerpt":"Redis Sentinel을 통한 고가용성 클러스터되지 않은 Redis의 고가용성 Redis Sentinel은 Redis Cluster를 사용하지 않을 때 Redis에 대한 고가용성을 제공합니다. Redis Sentinel은 모니터링, 알림과 같은 기타 부수적인 작업도 제공하고 클라이언트에 대한 구성 공급자 역할을 합니다. 다음은 거시적 수준(즉, big picture)에서 Sentinel 기능의 전체 목록입니다. Monitoring. Sentinel은 마스터 및 복제본 인스턴스가 예상대로...","categories": ["cache"],
         "tags": ["redis"],
