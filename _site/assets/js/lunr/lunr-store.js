@@ -557,6 +557,12 @@ var store = [{
         "url": "/cache/functions/",
         "teaser": null
       },{
+        "title": "Redis 시작하기 - Redis Functions 시작하기",
+        "excerpt":"Redis Functions Redis 버전 7.0에 추가된 가장 영향력 있는 기능은 모듈성, 재사용성 및 전반적인 개발자 환경 개선을 통해 스크립트를 개선하는 새로운 프로그래밍 옵션 인 Redis Functions입니다. 함수는 스크립트와 달리 .rdb 및 .aof 파일에 유지될 뿐만 아니라 모든 복제본에 자동으로 복제되므로 Redis의 일부 모듈이 됩니다. Redis는 여러 실행 엔진을 지원할 수...","categories": ["cache"],
+        "tags": ["redis","lua"],
+        "url": "/cache/getting-start-functions/",
+        "teaser": null
+      },{
         "title": "Redis 시작하기 - Redis Sentinel 고가용성 예시",
         "excerpt":"Sentinel 구성 이제 Sentinel에 대한 기본 정보를 알았으므로 Sentinel 프로세스를 어디에 배치해야 하는지, 얼마나 많은 Sentinel 프로세스가 필요한지 등이 궁금할 수 있습니다. 이 섹션에서는 몇 가지 배포 예를 보여 줍니다. 그래픽 형식의 구성 예를 보여주기 위해 ASCII 아트를 사용 하며, 이것이 다른 기호가 의미하는 바입니다 box 안에 Redis Instance가 실행중인있...","categories": ["cache"],
         "tags": ["redis"],
@@ -591,11 +597,5 @@ var store = [{
         "excerpt":"Redis Use Cases      Top Redis Use Cases    ","categories": ["cache"],
         "tags": ["redis","redis-stat"],
         "url": "/cache/usecase/",
-        "teaser": null
-      },{
-        "title": "Redis 시작하기 - Redis Functions 시작하기",
-        "excerpt":"Redis Functions Redis 버전 7.0에 추가된 가장 영향력 있는 기능은 모듈성, 재사용성 및 전반적인 개발자 환경 개선을 통해 스크립트를 개선하는 새로운 프로그래밍 옵션 인 Redis Functions입니다. 함수는 스크립트와 달리 .rdb 및 .aof 파일에 유지될 뿐만 아니라 모든 복제본에 자동으로 복제되므로 Redis의 일부 모듈이 됩니다. Redis는 여러 실행 엔진을 지원할 수...","categories": ["cache"],
-        "tags": ["redis","lua"],
-        "url": "/cache/getting-start-functions/",
         "teaser": null
       }]
