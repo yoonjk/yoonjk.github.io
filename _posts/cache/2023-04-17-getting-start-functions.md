@@ -24,14 +24,15 @@ Redis는 여러 실행 엔진을 지원할 수 있으므로 향후 릴리스 중
 
 또는 Redis Stack을 사용하여 Docker 컨테이너를 스핀업할 수 있습니다:
 ```bash
-$ docker run -p 6379:6379 --name redis-7.0 -it --rm redis/redis-stack:7.0.0-RC4
+mkdir data
+docker run -p 6379:6379 --name redis-7.0 -it  -v $PWD/data:/data redis/redis-stack:7.0.0-RC4
 ```
 NOTE
 이 자습서의 나머지 부분에서는 $ 문자를 사용하여 명령 프롬프트에서 명령을 실행해야 함을 나타내고> redis-cli를 사용하여  redis-cli 프롬프트에 대해 동일한 명령을 나타냅니다.
 Warm-Up
 이제 Redis 서버가 실행 중이므로 mylib.lua라는 파일을 만들고  그 안에 명령줄에 매개 변수로 전달하는 키와 인수를 수신하는 hset이라는 함수를 만들  수 있습니다.
 Redis의 함수는 항상 라이브러리의 일부이며 단일 라이브러리에는 여러 함수가 있을 수 있습니다.
-우선 "Hello Redis 7.0"을 반환하는 간단한 함수를 만들어 mylib.lua 파일에 저장해 보겠습니다.
+우선 "Hello Redis 7.0"을 반환하는 간단한 함수를 만들어 data 폴더에 mylib.lua 파일을 저장합니다.
 ```bash
 #!lua name=mylib
 
@@ -56,7 +57,15 @@ redis.register_function('my_hset', hset)
 
 명령줄에서 함수를 호출하려면 먼저 Redis 서버에 로드하고 등록해야 합니다:
 ```bash
-$ cat /path/to/mylib.lua | redis-cli -x FUNCTION LOAD
+cat /path/to/mylib.lua | redis-cli -x FUNCTION LOAD
+```
+
+docker 기반인 경우 다음과 같이 실행합니다 
+```bash
+docker exec -it redis-7.0 bash
+# data
+cd /data
+cat /path/to/mylib.lua | redis-cli -x FUNCTION LOAD
 ```
 
 마지막으로 등록한 함수를 실행해 보겠습니다:
