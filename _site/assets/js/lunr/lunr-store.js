@@ -563,6 +563,12 @@ var store = [{
         "url": "/cache/ha-sentinel/",
         "teaser": null
       },{
+        "title": "Redis 시작하기 - Redis configuration 예시(redis.conf)",
+        "excerpt":"redis.conf 파일 모든 버전과 함께 제공되는 자체 문서화 된 redis.conf 파일 # Redis configuration file example. # # Note that in order to read the configuration file, Redis must be # started with the file path as first argument: # # ./redis-server /path/to/redis.conf # Note on units: when memory size...","categories": ["cache"],
+        "tags": ["redis"],
+        "url": "/cache/redis-config-example/",
+        "teaser": null
+      },{
         "title": "Redis 시작하기 - Redis 관리",
         "excerpt":"Redis 관리 Tips 프로덕션에서 Redis를 구성하고 관리할때 아래의 사항들을 고려하십시요. Redis setup tips Linux Linux 운영 체제를 사용하여 Redis를 배포합니다. Redis는 OS X에서도 테스트되며 FreeBSD 및 OpenBSD 시스템에서도 수시로 테스트됩니다. 그러나 Linux는 대부분의 스트레스 테스트가 수행되고 대부분의 프로덕션 배포가 실행되는 곳입니다. Linux 커널 오버 커밋 메모리 설정을 1로 설정합니다.. vm.overcommit_memory...","categories": ["cache"],
         "tags": ["redis"],
