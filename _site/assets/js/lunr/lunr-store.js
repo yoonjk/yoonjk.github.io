@@ -545,6 +545,12 @@ var store = [{
         "url": "/cache/setup-sentinel-docker/",
         "teaser": null
       },{
+        "title": "Getting Start Redis - Redis 관리",
+        "excerpt":"Redis 관리 Tips 프로덕션에서 Redis를 구성하고 관리할때 아래의 사항들을 고려하십시요. Redis setup tips Linux Linux 운영 체제를 사용하여 Redis를 배포합니다. Redis는 OS X에서도 테스트되며 FreeBSD 및 OpenBSD 시스템에서도 수시로 테스트됩니다. 그러나 Linux는 대부분의 스트레스 테스트가 수행되고 대부분의 프로덕션 배포가 실행되는 곳입니다. Linux 커널 오버 커밋 메모리 설정을 1로 설정합니다.. vm.overcommit_memory...","categories": ["cache"],
+        "tags": ["redis"],
+        "url": "/cache/redis-management/",
+        "teaser": null
+      },{
         "title": "Getting Start Redis - Docker를 이용하여 모니터링",
         "excerpt":"Redis Sentinel 을 docker 를 사용하여 구성 - 사전준비 Redis Sentinel과 Cluster를 redis-stat로 모니터링하는 것을 docker 기반으로 구성합니다. myIP는 자신의 환경에 맞는 VM Server의 IP를 설정합니다. Redis 모니터링 - docker-compose version: \"3\" services: redis-stat: container_name: redis-stat image: insready/redis-stat command: [ '--verbose', '--server', 'redis-master:6379', 'redis-replica1:6383', 'redis-replica2:6384' ] extra_hosts: - \"redis-master:myIP\" -...","categories": ["cache"],
         "tags": ["redis","sentinel"],
