@@ -1,5 +1,5 @@
 ---
-title: Redis 시작하기 - Reids Persistence
+title: Redis 시작하기 - Redis Persistence
 categories: 
   - cache
 tags:
