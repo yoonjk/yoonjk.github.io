@@ -551,7 +551,7 @@ var store = [{
         "url": "/cache/redis-stat-docker/",
         "teaser": null
       },{
-        "title": "Redis 시작하기 - Functions",
+        "title": "Redis 시작하기 - Redis Functions",
         "excerpt":"Redis 7.0 New Feature Functions        ","categories": ["cache"],
         "tags": ["redis"],
         "url": "/cache/functions/",

@@ -1,5 +1,5 @@
 ---
-title:  Redis 시작하기 - Functions
+title:  Redis 시작하기 - Redis Functions
 categories:
   - cache 
 tags:
