@@ -581,6 +581,12 @@ var store = [{
         "url": "/cache/replication/",
         "teaser": null
       },{
+        "title": "Redis 시작하기 - Functions",
+        "excerpt":"Redis 7.0 New Feature Functions        ","categories": ["cache"],
+        "tags": ["redis"],
+        "url": "/cache/functions/",
+        "teaser": null
+      },{
         "title": "Redis 시작하기 - Use Cases",
         "excerpt":"Redis Use Cases      Top Redis Use Cases    ","categories": ["cache"],
         "tags": ["redis","redis-stat"],
