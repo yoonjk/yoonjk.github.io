@@ -581,8 +581,8 @@ var store = [{
         "url": "/cache/replication/",
         "teaser": null
       },{
-        "title": "Redis 시작하기 - Usecases",
-        "excerpt":"Redis Use cases     ","categories": ["cache"],
+        "title": "Redis 시작하기 - Use Cases",
+        "excerpt":"Redis Use Cases      Top Redis Use Cases    ","categories": ["cache"],
         "tags": ["redis","redis-stat"],
         "url": "/cache/usecase/",
         "teaser": null
