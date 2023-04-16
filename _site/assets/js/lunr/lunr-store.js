@@ -516,7 +516,7 @@ var store = [{
         "teaser": null
       },{
         "title": "Redis 시작하기 - Redis Cluster",
-        "excerpt":"Redis Cluster 환경구성 port [각자포트] # 백그라운드에서 시작하도록 설정 daemonize yes # 클러스터를 사용하겠다. cluster-enabled yes # 클러스터 구성 내용을 저장한는 파일명 지정 (자동 생성됨) cluster-config-file nodes-[각자포트].conf # 클러스터 노드가 다운되었는지 판단하는 시간 (3s) cluster-node-timeout 3000 # Appendonly를 yes로 설정하면 rdb에 저장 안되고 aof에 저장됨 (각각 장단점이 있으니 해당 부분은...","categories": ["cache"],
+        "excerpt":"Redis Cluster 환경구성 다음은 Redis Cluster 의 일반적인 구성입니다. 아래 구성은 Primary 3개, Replica3개로 Cluster를 구성합니다. port [각자포트] # 백그라운드에서 시작하도록 설정 daemonize yes # 클러스터를 사용하겠다. cluster-enabled yes # 클러스터 구성 내용을 저장한는 파일명 지정 (자동 생성됨) cluster-config-file nodes-[각자포트].conf # 클러스터 노드가 다운되었는지 판단하는 시간 (3s) cluster-node-timeout 3000 #...","categories": ["cache"],
         "tags": ["redis","haproxy"],
         "url": "/cache/redis-cluster/",
         "teaser": null
