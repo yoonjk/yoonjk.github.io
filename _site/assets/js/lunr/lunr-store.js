@@ -574,4 +574,10 @@ var store = [{
         "tags": ["redis"],
         "url": "/cache/redis-management/",
         "teaser": null
+      },{
+        "title": "Redis 시작하기 - Redis 복제",
+        "excerpt":"Redis replication Redis가 복제를 통해 고가용성 및 장애 조치를 지원하는 방법 Redis 복제의 기반(Redis Cluster 또는 Redis Sentinel에서 추가 계층으로 제공하는 고가용성 기능 제외)에는 사용 및 구성이 간편한 리더 팔로워(마스터-복제본) 복제가 있습니다. 이를 통해 복제본 Redis 인스턴스는 마스터 인스턴스의 정확한 복사본이 될 수 있습니다. 복제본은 링크가 끊어질 때마다 자동으로 마스터에...","categories": ["cache"],
+        "tags": ["redis"],
+        "url": "/cache/replication/",
+        "teaser": null
       }]
