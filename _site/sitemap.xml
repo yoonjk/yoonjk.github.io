@@ -6,23 +6,7 @@
     <url>
         <loc>http://localhost:4000/cache/usecase/</loc>
         
-        <lastmod>2023-04-17T00:00:00+09:00</lastmod>
-        
-
-        
-        <changefreq>weekly</changefreq>
-        
-
-        
-        <priority>0.5</priority>
-        
-
-    </url>
-    
-    <url>
-        <loc>http://localhost:4000/cache/functions/</loc>
-        
-        <lastmod>2023-04-17T00:00:00+09:00</lastmod>
+        <lastmod>2023-04-16T00:00:00+09:00</lastmod>
         
 
         
@@ -101,6 +85,22 @@
     
     <url>
         <loc>http://localhost:4000/cache/ha-sentinel-example/</loc>
+        
+        <lastmod>2023-04-16T00:00:00+09:00</lastmod>
+        
+
+        
+        <changefreq>weekly</changefreq>
+        
+
+        
+        <priority>0.5</priority>
+        
+
+    </url>
+    
+    <url>
+        <loc>http://localhost:4000/cache/functions/</loc>
         
         <lastmod>2023-04-16T00:00:00+09:00</lastmod>
         

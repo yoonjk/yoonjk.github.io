@@ -551,6 +551,12 @@ var store = [{
         "url": "/cache/redis-stat-docker/",
         "teaser": null
       },{
+        "title": "Redis 시작하기 - Functions",
+        "excerpt":"Redis 7.0 New Feature Functions        ","categories": ["cache"],
+        "tags": ["redis"],
+        "url": "/cache/functions/",
+        "teaser": null
+      },{
         "title": "Redis 시작하기 - Redis Sentinel 고가용성 예시",
         "excerpt":"Sentinel 구성 이제 Sentinel에 대한 기본 정보를 알았으므로 Sentinel 프로세스를 어디에 배치해야 하는지, 얼마나 많은 Sentinel 프로세스가 필요한지 등이 궁금할 수 있습니다. 이 섹션에서는 몇 가지 배포 예를 보여 줍니다. 그래픽 형식의 구성 예를 보여주기 위해 ASCII 아트를 사용 하며, 이것이 다른 기호가 의미하는 바입니다 box 안에 Redis Instance가 실행중인있...","categories": ["cache"],
         "tags": ["redis"],
@@ -579,12 +585,6 @@ var store = [{
         "excerpt":"Redis replication Redis가 복제를 통해 고가용성 및 장애 조치를 지원하는 방법 Redis 복제의 기반(Redis Cluster 또는 Redis Sentinel에서 추가 계층으로 제공하는 고가용성 기능 제외)에는 사용 및 구성이 간편한 리더 팔로워(마스터-복제본) 복제가 있습니다. 이를 통해 복제본 Redis 인스턴스는 마스터 인스턴스의 정확한 복사본이 될 수 있습니다. 복제본은 링크가 끊어질 때마다 자동으로 마스터에...","categories": ["cache"],
         "tags": ["redis"],
         "url": "/cache/replication/",
-        "teaser": null
-      },{
-        "title": "Redis 시작하기 - Functions",
-        "excerpt":"Redis 7.0 New Feature Functions        ","categories": ["cache"],
-        "tags": ["redis"],
-        "url": "/cache/functions/",
         "teaser": null
       },{
         "title": "Redis 시작하기 - Use Cases",
