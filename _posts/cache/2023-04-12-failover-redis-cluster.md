@@ -1,5 +1,5 @@
 ---
-title: Redis 시작하기 - Redis Cluster Failover 설정
+title: Redis 시작하기 - Springboot Redis Cluster Failover 설정
 categories:
   - cache 
 tags:
