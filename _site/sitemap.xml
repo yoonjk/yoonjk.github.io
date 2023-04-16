@@ -4,6 +4,22 @@
         xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     
     <url>
+        <loc>http://localhost:4000/2023-04-16-install-lua/</loc>
+        
+        <lastmod>2023-04-17T08:07:17+09:00</lastmod>
+        
+
+        
+        <changefreq>weekly</changefreq>
+        
+
+        
+        <priority>0.5</priority>
+        
+
+    </url>
+    
+    <url>
         <loc>http://localhost:4000/cache/usecase/</loc>
         
         <lastmod>2023-04-16T00:00:00+09:00</lastmod>
