@@ -1,5 +1,5 @@
 ---
-title: Getting Start Redis - Sorted Sets
+title: Redis 시작하기 - Sorted Sets
 categories:
   - cache 
 tags:

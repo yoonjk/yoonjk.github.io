@@ -1,5 +1,5 @@
 ---
-title: Getting Start Redis - Redis Key 규칙 
+title: Redis 시작하기 - Redis Key 규칙 
 categories:
   - cache
 tags: 

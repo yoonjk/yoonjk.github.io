@@ -1,5 +1,5 @@
 ---
-title: Getting Start Redis - Docker를 이용하여 Redis Sentinel 구성
+title: Redis 시작하기 - Docker를 이용하여 Redis Sentinel 구성
 categories: 
   - cache
 tags:

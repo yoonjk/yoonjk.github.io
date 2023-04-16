@@ -1,5 +1,5 @@
 ---
-title: Getting Start Redis - Redis 관리
+title: Redis 시작하기 - Redis 관리
 categories: 
   - cache
 tags:

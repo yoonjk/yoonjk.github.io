@@ -1,5 +1,5 @@
 ---
-title: Getting Start Redis - Docker를 이용하여 모니터링
+title: Redis 시작하기 - Docker를 이용하여 모니터링
 categories: 
   - cache
 tags:

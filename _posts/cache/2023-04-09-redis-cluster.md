@@ -1,5 +1,5 @@
 ---
-title: Getting Start Redis - Redis Cluster
+title: Redis 시작하기 - Redis Cluster
 categories:
   - cache 
 tags:

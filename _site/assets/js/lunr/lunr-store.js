@@ -431,91 +431,91 @@ var store = [{
         "url": "/springboot/remove-null-dto/",
         "teaser": null
       },{
-        "title": "Getting Start Redis - Jupyter Notebook",
+        "title": "Redis 시작하기 - Jupyter Notebook",
         "excerpt":"Jupyter Notebook을 환경에서 Python을 이용하여 Redis를 알아봅니다. redis-py를 이용하여 redis를 연결하고, 다음과 같이 데이터를 set/get을 수행하여 결과를 확인합니다.  Connect  import redis  redisClient = redis.Redis(host='localhost', port=6379, decode_responses=True)  redisClient.set('foo', 'bar') redisClient.get('foo')      ","categories": ["cache"],
         "tags": ["redis","jupyter"],
         "url": "/cache/getting-starting-jupyter/",
         "teaser": null
       },{
-        "title": "Getting Start Redis - Jupyter Notebook 설치",
+        "title": "Redis 시작하기 - Jupyter Notebook 설치",
         "excerpt":"Jupyter Notebook을 이용하여 Redis를 실습할 수 있는 환경을 구성합니다. Setup Redis on Docker 설치형 redis를 하지않고 학습용으로 최적의 환경인 docker를 사용하여 간단히 Redis를 실행합니다. 아래의 docker-compose.yaml 파일을 작성하고 작성된 폴더위치에서 다음과 같이 docker-compose를 실행하여 redis를 실행합니다. 그러면 redis docker image를 pull 받아서 background로 실행합니다. version: '3.7' services: redis: image: redis:alpine...","categories": ["cache"],
         "tags": ["redis","jupyter"],
         "url": "/cache/setup-jupyter/",
         "teaser": null
       },{
-        "title": "Getting Start Redis - Redis Key 규칙",
+        "title": "Redis 시작하기 - Redis Key 규칙",
         "excerpt":"기본 Redis 데이터 형식 및 사용 방법 다음은 Redis CLI를 사용하여 핵심 Redis 데이터 유형을 학습하는 실습 자습서입니다. 데이터 형식에 대한 일반적인 개요는 데이터 형식 소개를 참조하세요. Keys Redis 키는 바이너리로부터 안전하므로 “foo”와 같은 문자열에서 JPEG 파일의 내용에 이르기까지 모든 바이너리 시퀀스를 키로 사용할 수 있습니다. 빈 문자열도 유효한 키입니다....","categories": ["cache"],
         "tags": ["redis","jupyter"],
         "url": "/cache/naming-rule/",
         "teaser": null
       },{
-        "title": "Getting Start Redis - Reids Persistence",
+        "title": "Redis 시작하기 - Reids Persistence",
         "excerpt":"Redis persistence Redis가 디스크에 데이터를 쓰는 방법 지속성은 SSD(반도체 디스크)와 같은 내구성 있는 스토리지에 데이터를 쓰는 것을 말합니다. Redis는 다양한 지속성 옵션을 제공합니다. 여기에는 다음이 포함됩니다. RDB (Redis Database): RDB 지속성은 지정된 간격으로 데이터 세트의 특정 시점 스냅샷을 수행합니다. AOF (Append Only File): AOF 지속성은 서버에서 받은 모든 쓰기 작업을...","categories": ["cache"],
         "tags": ["redis"],
         "url": "/cache/redis-persistence/",
         "teaser": null
       },{
-        "title": "Getting Start Redis - Bitmap",
+        "title": "Redis 시작하기 - Bitmap",
         "excerpt":"Bitmaps 비트맵은 실제 데이터 형식이 아니라 String 형식에 정의된 비트 지향 작업 집합입니다. 문자열은 이진 안전 Blob이고 최대 길이는 512MB이므로 최대 2^32비트를 설정하는 데 적합합니다. 비트 연산은 두 그룹으로 나뉩니다: 비트를 1 또는 0으로 설정하거나 값을 가져오는 것과 같은 상수 시간 단일 비트 연산과 비트 그룹에 대한 연산(예: 지정된 비트...","categories": ["cache"],
         "tags": ["redis"],
         "url": "/cache/bitmap/",
         "teaser": null
       },{
-        "title": "Getting Start Redis - Sorted Sets",
+        "title": "Redis 시작하기 - Sorted Sets",
         "excerpt":"Sorted Sets 정렬된 집합은 Set과 해시 간의 혼합과 유사한 데이터 유형입니다. 집합과 마찬가지로 정렬된 집합은 반복되지 않는 고유한 문자열 요소로 구성되므로 어떤 의미에서는 정렬된 집합도 집합입니다. 그러나 집합 내의 요소는 정렬되지 않지만 정렬 된 집합의 모든 요소는 score라고하는 부동 소수점 값과 연결됩니다 (모든 요소가 값에 매핑되기 때문에 유형이 해시와 유사한...","categories": ["cache"],
         "tags": ["redis","jupyter"],
         "url": "/cache/sorted-sets/",
         "teaser": null
       },{
-        "title": "Getting Start Redis - Set",
+        "title": "Redis 시작하기 - Set",
         "excerpt":"Sets Redis 집합은 순서가 지정되지 않은 문자열 컬렉션입니다. SADD 명령은 세트에 새 요소를 추가합니다. 주어진 요소가 이미 존재하는지 테스트, 여러 집합 간의 교차, 합집합 또는 차이 수행 등과 같은 집합에 대해 여러 가지 다른 작업을 수행 할 수도 있습니다. &gt; sadd myset 1 2 3 (integer) 3 &gt; smembers myset...","categories": ["cache"],
         "tags": ["redis","jupyter"],
         "url": "/cache/set/",
         "teaser": null
       },{
-        "title": "Getting Start Redis - Hashes",
+        "title": "Redis 시작하기 - Hashes",
         "excerpt":"Hashes Redis 해시는 필드-값 쌍을 사용하여 “해시”가 어떻게 보이는지 정확히 보여줍니다.: &gt; hset user:1000 username antirez birthyear 1977 verified 1 (integer) 3 &gt; hget user:1000 username \"antirez\" &gt; hget user:1000 birthyear \"1977\" &gt; hgetall user:1000 1) \"username\" 2) \"antirez\" 3) \"birthyear\" 4) \"1977\" 5) \"verified\" 6) \"1\" 해시는 객체를 나타내는...","categories": ["cache"],
         "tags": ["redis","jupyter"],
         "url": "/cache/hashes/",
         "teaser": null
       },{
-        "title": "Getting Start Redis - List",
+        "title": "Redis 시작하기 - List",
         "excerpt":"List List 데이터 유형을 설명하려면 List라는 용어가 정보 기술 담당자에 의해 부적절한 방식으로 자주 사용되기 때문에 약간의 이론으로 시작하는 것이 좋습니다. 예를 들어 “파이썬 목록”은 이름이 암시하는 것 (연결 목록)이 아니라 배열 (실제로 Ruby에서는 동일한 데이터 유형을 배열이라고 함)입니다. 매우 일반적인 관점에서 List는 정렬된 요소의 시퀀스일 뿐입니다: 10,20,1,2,3은 목록입니다. 그러나...","categories": ["cache"],
         "tags": ["redis"],
         "url": "/cache/list/",
         "teaser": null
       },{
-        "title": "Getting Start Redis - String",
+        "title": "Redis 시작하기 - String",
         "excerpt":"Strings Redis 문자열 유형은 Redis 키와 연결할 수 있는 가장 간단한 값 유형입니다. Memcached의 유일한 데이터 유형이므로 신규 사용자가 Redis에서 사용하는 것도 매우 자연스러운 일입니다. Redis 키는 문자열이므로 문자열 유형도 값으로 사용할 때 문자열을 다른 문자열에 매핑합니다. 문자열 데이터 형식은 HTML 조각 또는 페이지 캐싱과 같은 다양한 사용 사례에 유용합니다....","categories": ["cache"],
         "tags": ["redis","jupyter"],
         "url": "/cache/string/",
         "teaser": null
       },{
-        "title": "Getting Start Redis - Redis 설치(Centos)",
+        "title": "Redis 시작하기 - Redis 설치(Centos)",
         "excerpt":"Redis 설치 준비 Redis를 다음의 절차로 설치합니다. OS 업데이트 Development Tools 설치 redis download redis build redis install Centos7 OS 버전을 최신으로 업그레이드 하고, Development Tools를 설치합니다. Redis download site 에 가서 원하는 redis 를 확인하고 address link를 복사합니다. sudo yum update -y yum groupinstall 'Development Tools' sudo wget http://download.redis.io/releases/redis-7.0.10.tar.gz...","categories": ["cache"],
         "tags": ["redis"],
         "url": "/cache/install-redis/",
         "teaser": null
       },{
-        "title": "Getting Start Redis - Redis Sentinel 구성",
+        "title": "Redis 시작하기 - Redis Sentinel 구성",
         "excerpt":"Redis Sentinel 소개 Redis Sentinel은 Redis의 고가용성 구성을 위한 아키텍처입니다. Sentinel은 Redis를 모니터링하고 master node가 장애가 발생시 알리고 자동으로 장애 조치할 수 있는 여러 Redis 인스턴스를 관리하기 위한 redis 컴포넌트입니다. Redis Sentinel 역할 Redis Sentinel은 Redis의 여러 인스턴스를 모니터링 및 관리하며 아래 3가지 역할을 수행하니다. redis 인스턴스 모니터링 : Sentinel은...","categories": ["cache"],
         "tags": ["redis","sentinel"],
         "url": "/cache/setup-sentinel-redis/",
         "teaser": null
       },{
-        "title": "Getting Start Redis - Redis Sentinel & HAProxy",
+        "title": "Redis 시작하기 - Redis Sentinel & HAProxy",
         "excerpt":"Redis Sentinel을 구성하고, slave의 loadbalance를 위해 haproxy를 구성합니다. haproxy의 UI화면에서 redis의 master/slave의 active/deactive를 상태를 한눈에 파악하기 쉽습니다. Haproxy 환경 구성 HAProxy 설치를 위한 의존성 패키지 설치 # HAProxy 설치를 위한 의존성 패키지 설치 yum install -y gcc openssl openssl-devel pcre-static pcre-devel systemd-devel Haproxy 설치 haproxy를 구성하기 위해 haproxy 최근 버전을...","categories": ["cache"],
         "tags": ["redis","haproxy"],
         "url": "/cache/haproxy/",
         "teaser": null
       },{
-        "title": "Getting Start Redis - 레디스 모니터링 Redis Stat",
+        "title": "Redis 시작하기 - 레디스 모니터링 Redis Stat",
         "excerpt":"Redis 서버의 메모리 사용량을 모니터링하고자 하는 경우 오픈소스 Redis Stat를 사용할 수 있습니다. Redis Stat 설치 Redis Stat는 ruby로 개발되어 있어서 Ruby가 설치되어 있어야 합니다. Ruby를 설치하기전에 의존성 패키지를 먼저 설치합니다. yum install -y ruby-devel gcc make rpm-build rubygems # Ruby install git clone https://github.com/rbenv/rbenv-installer cd rbenv-installer cd bin ./rbenv-installer...","categories": ["cache"],
         "tags": ["redis","redis-stat"],
         "url": "/cache/monitoring-redis-stat/",
         "teaser": null
       },{
-        "title": "Getting Start Redis - Redis Cluster",
+        "title": "Redis 시작하기 - Redis Cluster",
         "excerpt":"Redis Cluster 환경구성 port [각자포트] # 백그라운드에서 시작하도록 설정 daemonize yes # 클러스터를 사용하겠다. cluster-enabled yes # 클러스터 구성 내용을 저장한는 파일명 지정 (자동 생성됨) cluster-config-file nodes-[각자포트].conf # 클러스터 노드가 다운되었는지 판단하는 시간 (3s) cluster-node-timeout 3000 # Appendonly를 yes로 설정하면 rdb에 저장 안되고 aof에 저장됨 (각각 장단점이 있으니 해당 부분은...","categories": ["cache"],
         "tags": ["redis","haproxy"],
         "url": "/cache/redis-cluster/",
@@ -527,33 +527,39 @@ var store = [{
         "url": "/springboot/difference-autowired-inject/",
         "teaser": null
       },{
-        "title": "Getting Start Redis - Redis Cluster Failover 설정",
+        "title": "Redis 시작하기 - Redis Cluster Failover 설정",
         "excerpt":"Redis Cluster Configuration 설정 Redis Cluster를 구성하고 failover 하기 위해서는 application config 이외에 추가적으로 Redis cluster Confugration이 필요합니다. Redis Cluster를 구성하고 Master를 강제로 종료시키면 Replica중 1개가 Master로 승격되어 지속적인 서비스를 이어갈 수 있습니다. 그리고 Lettuce를 사용하면 이를 자동으로 감지하여 서비스를 지속할 수 있습니다. 그러나 쓰기작업이 필요한 서비스는 약간의 delay를 요구하며,...","categories": ["cache"],
         "tags": ["redis"],
         "url": "/cache/failover-redis-cluster/",
         "teaser": null
       },{
-        "title": "Getting Start Redis - Docker를 이용한 클러스터링 구성",
+        "title": "Redis 시작하기 - Docker를 이용한 클러스터링 구성",
         "excerpt":"redis.conf 편집 mkdir -p 6300 6301 6302 6400 6401 6402 redis config 파일을 다음과 같이 수정합니다. ## redis.conf 편집 vi redis.conf port 6379 cluster-enabled yes cluster-config-file nodes.conf cluster-node-timeout 3000 appendonly yes redis.conf를 각 폴더에 복사합니다. cp redis.conf 6300/ cp redis.conf 6301/ cp redis.conf 6302/ cp redis.conf 6400/ cp redis.conf 6401/...","categories": ["cache"],
         "tags": ["redis","docker"],
         "url": "/cache/redis-cluster-using-docker/",
         "teaser": null
       },{
-        "title": "Getting Start Redis - Docker를 이용하여 Redis Sentinel 구성",
+        "title": "Redis 시작하기 - Docker를 이용하여 Redis Sentinel 구성",
         "excerpt":"Redis Sentinel 을 docker 를 사용하여 구성 - 사전준비 Redis Sentinel 을 docker기반으로 구성하기 위해서는 docker, docker-compose를 설치하여야 합니다. docker engine 설치방법은 아래의 링크를 참조하세요. Redis Sentinel - docker-compose port 설정 extra_hosts설정 redis master/replica1/2는 netowrk_mode를 host로 설정 sentinel은 client에서 접근하기 위해 port를 expose (5000,5001,5002) sentinel 구성은 QUORUM으로 구성합니다. redis master...","categories": ["cache"],
         "tags": ["redis","sentinel"],
         "url": "/cache/setup-sentinel-docker/",
         "teaser": null
       },{
-        "title": "Getting Start Redis - Redis 관리",
+        "title": "Redis 시작하기 - Redis 관리",
         "excerpt":"Redis 관리 Tips 프로덕션에서 Redis를 구성하고 관리할때 아래의 사항들을 고려하십시요. Redis setup tips Linux Linux 운영 체제를 사용하여 Redis를 배포합니다. Redis는 OS X에서도 테스트되며 FreeBSD 및 OpenBSD 시스템에서도 수시로 테스트됩니다. 그러나 Linux는 대부분의 스트레스 테스트가 수행되고 대부분의 프로덕션 배포가 실행되는 곳입니다. Linux 커널 오버 커밋 메모리 설정을 1로 설정합니다.. vm.overcommit_memory...","categories": ["cache"],
         "tags": ["redis"],
         "url": "/cache/redis-management/",
         "teaser": null
       },{
-        "title": "Getting Start Redis - Docker를 이용하여 모니터링",
+        "title": "Redis 시작하기 - Docker를 이용하여 모니터링",
         "excerpt":"Redis Sentinel 을 docker 를 사용하여 구성 - 사전준비 Redis Sentinel과 Cluster를 redis-stat로 모니터링하는 것을 docker 기반으로 구성합니다. myIP는 자신의 환경에 맞는 VM Server의 IP를 설정합니다. Redis 모니터링 - docker-compose version: \"3\" services: redis-stat: container_name: redis-stat image: insready/redis-stat command: [ '--verbose', '--server', 'redis-master:6379', 'redis-replica1:6383', 'redis-replica2:6384' ] extra_hosts: - \"redis-master:myIP\" -...","categories": ["cache"],
         "tags": ["redis","sentinel"],
         "url": "/cache/redis-stat-docker/",
+        "teaser": null
+      },{
+        "title": "Redis 시작하기 - Redis Sentinel 고가용성",
+        "excerpt":"Redis Sentinel을 통한 고가용성 클러스터되지 않은 Redis의 고가용성 Redis Sentinel은 Redis Cluster를 사용하지 않을 때 Redis에 대한 고가용성을 제공합니다. Redis Sentinel은 모니터링, 알림과 같은 기타 부수적인 작업도 제공하고 클라이언트에 대한 구성 공급자 역할을 합니다. 다음은 거시적 수준(즉, big picture)에서 Sentinel 기능의 전체 목록입니다. Monitoring. Sentinel은 마스터 및 복제본 인스턴스가 예상대로...","categories": ["cache"],
+        "tags": ["redis"],
+        "url": "/cache/ha-sentinel/",
         "teaser": null
       }]

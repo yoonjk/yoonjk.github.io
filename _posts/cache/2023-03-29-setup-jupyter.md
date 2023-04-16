@@ -1,5 +1,5 @@
 ---
-title: Getting Start Redis - Jupyter Notebook 설치
+title: Redis 시작하기 - Jupyter Notebook 설치
 categories:
   - cache
 tags: 

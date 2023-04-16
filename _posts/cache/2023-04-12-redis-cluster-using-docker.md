@@ -1,5 +1,5 @@
 ---
-title: Getting Start Redis - Docker를 이용한 클러스터링 구성
+title: Redis 시작하기 - Docker를 이용한 클러스터링 구성
 categories:
   - cache 
 tags:

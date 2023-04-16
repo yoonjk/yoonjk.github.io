@@ -1,4 +1,51 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-16T09:04:02+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Getting Start Redis - Redis 관리</title><link href="http://localhost:4000/cache/redis-management/" rel="alternate" type="text/html" title="Getting Start Redis - Redis 관리" /><published>2023-04-15T00:00:00+09:00</published><updated>2023-04-15T00:00:00+09:00</updated><id>http://localhost:4000/cache/redis-management</id><content type="html" xml:base="http://localhost:4000/cache/redis-management/"><![CDATA[<h2 id="redis-관리-tips">Redis 관리 Tips</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-16T09:30:16+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Redis 시작하기 - Redis Sentinel 고가용성</title><link href="http://localhost:4000/cache/ha-sentinel/" rel="alternate" type="text/html" title="Redis 시작하기 - Redis Sentinel 고가용성" /><published>2023-04-16T00:00:00+09:00</published><updated>2023-04-16T00:00:00+09:00</updated><id>http://localhost:4000/cache/ha-sentinel</id><content type="html" xml:base="http://localhost:4000/cache/ha-sentinel/"><![CDATA[<h2 id="redis-sentinel을-통한-고가용성">Redis Sentinel을 통한 고가용성</h2>
+<p>클러스터되지 않은 Redis의 고가용성<br />
+Redis Sentinel은 Redis Cluster를 사용하지 않을 때 Redis에 대한 고가용성을 제공합니다. Redis Sentinel은 모니터링, 알림과 같은 기타 부수적인 작업도 제공하고 클라이언트에 대한 구성 공급자 역할을 합니다.</p>
+
+<p>다음은 거시적 수준(즉, big picture)에서 Sentinel 기능의 전체 목록입니다.</p>
+<ul>
+  <li>Monitoring. Sentinel은 마스터 및 복제본 인스턴스가 예상대로 작동하는지 지속적으로 확인합니다.</li>
+  <li>Notification. Sentinel은 API를 통해 시스템 관리자 또는 기타 컴퓨터 프로그램에 모니터링되는 Redis 인스턴스 중 하나에 문제가 있음을 알릴 수 있습니다.</li>
+  <li>Automatic failover. 마스터가 예상대로 작동하지 않는 경우 Sentinel은 복제본이 마스터로 승격되고, 다른 추가 복제본이 새 마스터를 사용하도록 다시 구성되며, Redis 서버를 사용하는 애플리케이션에 연결할 때 사용할 새 주소에 대한 알림을 받는 장애 조치 프로세스를 시작할 수 있습니다.</li>
+  <li>Configuration provider. Sentinel은 클라이언트 서비스 검색을 위한 권한 소스 역할을 하며, 클라이언트는 지정된 서비스를 담당하는 현재 Redis 마스터의 주소를 요청하기 위해 Sentinels에 연결합니다. 장애 조치(failover)가 발생하면 Sentinels는 새 주소를 보고합니다.</li>
+</ul>
+
+<h2 id="분산-시스템으로서의-sentinel">분산 시스템으로서의 Sentinel</h2>
+<p>Redis Sentinel은 분산 시스템입니다:<br />
+Sentinel 자체는 여러 Sentinel 프로세스가 함께 협력하는 구성에서 실행되도록 설계되었습니다. 여러 Sentinel 프로세스가 협력할 경우 다음과 같은 이점이 있습니다:</p>
+<ol>
+  <li>오류 감지는 여러 Sentinel이 지정된 마스터를 더 이상 사용할 수 없다는 사실에 동의할 때 수행됩니다. 이렇게 하면 장애발생 확률이 낮아집니다.</li>
+  <li>Sentinel은 모든 Sentinel 프로세스가 작동하지 않더라도 작동하므로 시스템이 오류에 대해 견고합니다. 그 자체로 단일 실패 지점인 장애 조치 시스템을 갖는 것은 재미가 없습니다.</li>
+</ol>
+
+<p>Sentinel, Redis 인스턴스(마스터 및 복제본) 및 Sentinel 및 Redis에 연결하는 클라이언트의 합계도 특정 속성을 가진 더 큰 분산 시스템입니다. 이 문서에서는 Sentinel의 기본 속성을 이해하는 데 필요한 기본 정보부터 Sentinel의 작동 방식을 이해하기 위해 보다 복잡한 정보(선택 사항)에 이르기까지 개념을 점진적으로 소개합니다.</p>
+
+<h2 id="sentinel-quick-start">Sentinel quick start</h2>
+<h4 id="obtaining-sentinel">Obtaining Sentinel</h4>
+<p>현재 버전의 Sentinel을 Sentinel 2라고 합니다. 더 강력하고 예측하기 쉬운 알고리즘(이 설명서에 설명되어 있음)을 사용하여 초기 Sentinel 구현을 다시 작성한 것입니다.<br />
+Redis 2.8부터 Redis Sentinel의 안정적인 릴리스가 제공됩니다.<br />
+새로운 개발은 불안정한 분기에서 수행  되며, 새로운 기능은 안정적인 것으로 간주되는 즉시 최신 안정 분기로 다시 이식되는 경우가 있습니다.
+Redis 2.6과 함께 제공되는 Redis Sentinel 버전 1은 더 이상 사용되지 않으며 사용해서는 안 됩니다.</p>
+<h4 id="running-sentinel">Running Sentinel</h4>
+<p>redis-sentinel 실행 파일을 사용하는 경우  (또는 해당 이름의 redis-server 실행 파일에 대한 심볼릭 링크가 있는 경우  ) 다음 명령줄을 사용하여 Sentinel을 실행할 수 있습니다.:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>redis-sentinel /path/to/sentinel.conf
+</code></pre></div></div>
+<p>그렇지 않으면 redis-server 실행 파일을 직접 사용하여 Sentinel 모드에서 시작할 수 있습니다.:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>redis-server /path/to/sentinel.conf <span class="nt">--sentinel</span>
+</code></pre></div></div>
+<p>두 가지 방법 모두 동일하게 작동합니다.<br />
+그러나  Sentinel을 실행할 때는 이 파일이 다시 시작될 경우 다시 로드될 현재 상태를 저장하기 위해 시스템에서 사용되므로 구성 파일을 사용해야 합니다. Sentinel은 구성 파일이 제공되지 않거나 구성 파일 경로를 쓸 수 없는 경우 시작을 거부합니다.<br />
+Sentinel은 기본적으로 TCP 포트 26379에 대한 연결을 수신하므로 Sentinels가 작동하려면 서버의 포트 26379  가 열려 있어야 다른 Sentinel 인스턴스의 IP 주소에서 연결을 수신할 수 있습니다  . 그렇지 않으면 Sentinels가 대화할 수 없고 수행할 작업에 대해 동의할 수 없으므로 장애 조치(failover)가 수행되지 않습니다.</p>
+
+<h4 id="배포하기-전에-sentinel에-대해-알아야-할-기본-사항">배포하기 전에 Sentinel에 대해 알아야 할 기본 사항</h4>
+<ol>
+  <li>강력한 배포를 위해 최소 3개의 Sentinel 인스턴스가 필요합니다.</li>
+  <li>세 개의 Sentinel 인스턴스는 독립적인 방식으로 오류가 발생하는 것으로 여겨지는 컴퓨터 또는 가상 머신에 배치해야 합니다. 예를 들어 서로 다른 물리적 서버 또는 서로 다른 가용성 영역에서 실행되는 Virtual Machines는 다음과 같습니다..</li>
+  <li>Sentinel + Redis 분산 시스템은 Redis가 비동기 복제를 사용하므로 오류 중에 승인된 쓰기가 유지되도록 보장하지 않습니다. 그러나 쓰기 손실 창을 특정 순간으로 제한하는 Sentinel을 배포하는 방법이 있지만 덜 안전한 다른 방법이 있습니다.</li>
+  <li>클라이언트에서 Sentinel 지원이 필요합니다. 인기 있는 클라이언트 라이브러리는 Sentinel을 지원하지만 전부는 아닙니다.</li>
+  <li>개발 환경에서 수시로 테스트하지 않는 경우 안전한 HA 설정이 없으며, 프로덕션 환경에서 작동하는 경우 가능한 경우 더 좋습니다. 너무 늦었을 때(마스터가 작동을 멈추는 새벽 3시)에만 분명해지는 잘못된 구성이 있을 수 있습니다.</li>
+  <li>Sentinel, Docker 또는 다른 형태의 네트워크 주소 변환 또는 포트 매핑은 주의해서 혼합해야 합니다. Docker는 포트 다시 매핑을 수행하여 다른 Sentinel 프로세스의 Sentinel 자동 검색 및 마스터에 대한 복제본 목록을 중단합니다.  자세한 내용은 이 문서의 뒷부분에 있는 Sentinel 및 Docker에 대한 섹션을  확인하세요.</li>
+</ol>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><summary type="html"><![CDATA[Redis Sentinel을 통한 고가용성 클러스터되지 않은 Redis의 고가용성 Redis Sentinel은 Redis Cluster를 사용하지 않을 때 Redis에 대한 고가용성을 제공합니다. Redis Sentinel은 모니터링, 알림과 같은 기타 부수적인 작업도 제공하고 클라이언트에 대한 구성 공급자 역할을 합니다.]]></summary></entry><entry><title type="html">Redis 시작하기 - Redis 관리</title><link href="http://localhost:4000/cache/redis-management/" rel="alternate" type="text/html" title="Redis 시작하기 - Redis 관리" /><published>2023-04-15T00:00:00+09:00</published><updated>2023-04-15T00:00:00+09:00</updated><id>http://localhost:4000/cache/redis-management</id><content type="html" xml:base="http://localhost:4000/cache/redis-management/"><![CDATA[<h2 id="redis-관리-tips">Redis 관리 Tips</h2>
 <p>프로덕션에서 Redis를 구성하고 관리할때 아래의 사항들을 고려하십시요.</p>
 
 <h2 id="redis-setup-tips">Redis setup tips</h2>
@@ -62,7 +109,7 @@ Redis는 서버에서 장기 실행 프로세스로 설계되었습니다. CONFI
   <li>마스터가 더 이상 쿼리를 수신하지 않는 것을 확인하면(MONITOR 명령을 사용하여 이를 확인할 수 있음) REPLICAOF NO ONE 명령을 사용하여 마스터할 복제본을 선택한  다음 마스터를 종료합니다.</li>
 </ul>
 
-<p>Redis Sentinel 또는 Redis Cluster를 사용하는 경우 최신 버전으로 업그레이드하는 가장 간단한 방법은 복제본을 하나씩 업그레이드하는 것입니다. 그런 다음 수동 장애 조치(failover)를 수행하여 업그레이드된 복제본 중 하나를 마스터로 승격하고 마지막으로 마지막 복제본을 승격할 수 있습니다</p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><summary type="html"><![CDATA[Redis 관리 Tips 프로덕션에서 Redis를 구성하고 관리할때 아래의 사항들을 고려하십시요.]]></summary></entry><entry><title type="html">Getting Start Redis - Docker를 이용하여 모니터링</title><link href="http://localhost:4000/cache/redis-stat-docker/" rel="alternate" type="text/html" title="Getting Start Redis - Docker를 이용하여 모니터링" /><published>2023-04-15T00:00:00+09:00</published><updated>2023-04-15T00:00:00+09:00</updated><id>http://localhost:4000/cache/redis-stat-docker</id><content type="html" xml:base="http://localhost:4000/cache/redis-stat-docker/"><![CDATA[<h2 id="redis-sentinel-을-docker-를-사용하여-구성---사전준비">Redis Sentinel 을 docker 를 사용하여 구성 - 사전준비</h2>
+<p>Redis Sentinel 또는 Redis Cluster를 사용하는 경우 최신 버전으로 업그레이드하는 가장 간단한 방법은 복제본을 하나씩 업그레이드하는 것입니다. 그런 다음 수동 장애 조치(failover)를 수행하여 업그레이드된 복제본 중 하나를 마스터로 승격하고 마지막으로 마지막 복제본을 승격할 수 있습니다</p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><summary type="html"><![CDATA[Redis 관리 Tips 프로덕션에서 Redis를 구성하고 관리할때 아래의 사항들을 고려하십시요.]]></summary></entry><entry><title type="html">Redis 시작하기 - Docker를 이용하여 모니터링</title><link href="http://localhost:4000/cache/redis-stat-docker/" rel="alternate" type="text/html" title="Redis 시작하기 - Docker를 이용하여 모니터링" /><published>2023-04-15T00:00:00+09:00</published><updated>2023-04-15T00:00:00+09:00</updated><id>http://localhost:4000/cache/redis-stat-docker</id><content type="html" xml:base="http://localhost:4000/cache/redis-stat-docker/"><![CDATA[<h2 id="redis-sentinel-을-docker-를-사용하여-구성---사전준비">Redis Sentinel 을 docker 를 사용하여 구성 - 사전준비</h2>
 <p>Redis Sentinel과 Cluster를 redis-stat로 모니터링하는 것을 docker 기반으로 구성합니다.
 myIP는 자신의 환경에 맞는 VM Server의 IP를 설정합니다.</p>
 
@@ -89,7 +136,7 @@ myIP는 자신의 환경에 맞는 VM Server의 IP를 설정합니다.</p>
       <span class="pi">-</span> <span class="s2">"</span><span class="s">9999:63790"</span>
 </code></pre></div></div>
 <h2 id="참조-">참조 :</h2>
-<p><a href="https://hyos-dev-log.tistory.com/m/22">Hyo’s Dev Log</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="sentinel" /><summary type="html"><![CDATA[Redis Sentinel 을 docker 를 사용하여 구성 - 사전준비 Redis Sentinel과 Cluster를 redis-stat로 모니터링하는 것을 docker 기반으로 구성합니다. myIP는 자신의 환경에 맞는 VM Server의 IP를 설정합니다.]]></summary></entry><entry><title type="html">Getting Start Redis - Docker를 이용하여 Redis Sentinel 구성</title><link href="http://localhost:4000/cache/setup-sentinel-docker/" rel="alternate" type="text/html" title="Getting Start Redis - Docker를 이용하여 Redis Sentinel 구성" /><published>2023-04-14T00:00:00+09:00</published><updated>2023-04-14T00:00:00+09:00</updated><id>http://localhost:4000/cache/setup-sentinel-docker</id><content type="html" xml:base="http://localhost:4000/cache/setup-sentinel-docker/"><![CDATA[<h2 id="redis-sentinel-을-docker-를-사용하여-구성---사전준비">Redis Sentinel 을 docker 를 사용하여 구성 - 사전준비</h2>
+<p><a href="https://hyos-dev-log.tistory.com/m/22">Hyo’s Dev Log</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="sentinel" /><summary type="html"><![CDATA[Redis Sentinel 을 docker 를 사용하여 구성 - 사전준비 Redis Sentinel과 Cluster를 redis-stat로 모니터링하는 것을 docker 기반으로 구성합니다. myIP는 자신의 환경에 맞는 VM Server의 IP를 설정합니다.]]></summary></entry><entry><title type="html">Redis 시작하기 - Docker를 이용하여 Redis Sentinel 구성</title><link href="http://localhost:4000/cache/setup-sentinel-docker/" rel="alternate" type="text/html" title="Redis 시작하기 - Docker를 이용하여 Redis Sentinel 구성" /><published>2023-04-14T00:00:00+09:00</published><updated>2023-04-14T00:00:00+09:00</updated><id>http://localhost:4000/cache/setup-sentinel-docker</id><content type="html" xml:base="http://localhost:4000/cache/setup-sentinel-docker/"><![CDATA[<h2 id="redis-sentinel-을-docker-를-사용하여-구성---사전준비">Redis Sentinel 을 docker 를 사용하여 구성 - 사전준비</h2>
 <p>Redis Sentinel 을 docker기반으로 구성하기 위해서는 docker, docker-compose를 설치하여야 합니다.</p>
 
 <p>docker engine 설치방법은 아래의 <a href="https://yoonjk.github.io/docker/docker/">링크</a>를 참조하세요.</p>
@@ -255,7 +302,7 @@ redis-server /redis/sentinel.conf <span class="nt">--sentinel</span>
 </code></pre></div></div>
 
 <h2 id="참조-">참조 :</h2>
-<p><a href="https://github.com/Developers-Notebook/Redis-Sentinel-Docker-Compose">Redis-Sentinel-Docker-Compose</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="sentinel" /><summary type="html"><![CDATA[Redis Sentinel 을 docker 를 사용하여 구성 - 사전준비 Redis Sentinel 을 docker기반으로 구성하기 위해서는 docker, docker-compose를 설치하여야 합니다.]]></summary></entry><entry><title type="html">Getting Start Redis - Redis Cluster Failover 설정</title><link href="http://localhost:4000/cache/failover-redis-cluster/" rel="alternate" type="text/html" title="Getting Start Redis - Redis Cluster Failover 설정" /><published>2023-04-12T00:00:00+09:00</published><updated>2023-04-12T00:00:00+09:00</updated><id>http://localhost:4000/cache/failover-redis-cluster</id><content type="html" xml:base="http://localhost:4000/cache/failover-redis-cluster/"><![CDATA[<h2 id="redis-cluster-configuration-설정">Redis Cluster Configuration 설정</h2>
+<p><a href="https://github.com/Developers-Notebook/Redis-Sentinel-Docker-Compose">Redis-Sentinel-Docker-Compose</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="sentinel" /><summary type="html"><![CDATA[Redis Sentinel 을 docker 를 사용하여 구성 - 사전준비 Redis Sentinel 을 docker기반으로 구성하기 위해서는 docker, docker-compose를 설치하여야 합니다.]]></summary></entry><entry><title type="html">Redis 시작하기 - Redis Cluster Failover 설정</title><link href="http://localhost:4000/cache/failover-redis-cluster/" rel="alternate" type="text/html" title="Redis 시작하기 - Redis Cluster Failover 설정" /><published>2023-04-12T00:00:00+09:00</published><updated>2023-04-12T00:00:00+09:00</updated><id>http://localhost:4000/cache/failover-redis-cluster</id><content type="html" xml:base="http://localhost:4000/cache/failover-redis-cluster/"><![CDATA[<h2 id="redis-cluster-configuration-설정">Redis Cluster Configuration 설정</h2>
 <p>Redis Cluster를 구성하고 failover 하기 위해서는 application config 이외에 추가적으로  Redis cluster Confugration이 필요합니다.
 Redis Cluster를 구성하고 Master를 강제로 종료시키면 Replica중 1개가 Master로 승격되어 지속적인 서비스를 이어갈 수 있습니다.<br />
 그리고 Lettuce를 사용하면 이를 자동으로 감지하여 서비스를 지속할 수 있습니다. 
@@ -323,7 +370,7 @@ Redis Cluster를 구성하고 Master를 강제로 종료시키면 Replica중 1�
     <span class="o">}</span>
         
 <span class="o">}</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><summary type="html"><![CDATA[Redis Cluster Configuration 설정 Redis Cluster를 구성하고 failover 하기 위해서는 application config 이외에 추가적으로 Redis cluster Confugration이 필요합니다. Redis Cluster를 구성하고 Master를 강제로 종료시키면 Replica중 1개가 Master로 승격되어 지속적인 서비스를 이어갈 수 있습니다. 그리고 Lettuce를 사용하면 이를 자동으로 감지하여 서비스를 지속할 수 있습니다. 그러나 쓰기작업이 필요한 서비스는 약간의 delay를 요구하며, Redis Cluster 상태가 refresh되면 정상적인 쓰기 작업이 가능해집니다. 물론 일기작업은 다음의 설정으로 변함없이 지속적으로 서비스가 가능합니다. 지속적인 읽기 작업 Replica중 1개 또는 모두 종료되더라도 지속적으로 일기 서비스가 가능하도록 하기 위해서는 다음의 설정이 필요합니다.]]></summary></entry><entry><title type="html">Getting Start Redis - Docker를 이용한 클러스터링 구성</title><link href="http://localhost:4000/cache/redis-cluster-using-docker/" rel="alternate" type="text/html" title="Getting Start Redis - Docker를 이용한 클러스터링 구성" /><published>2023-04-12T00:00:00+09:00</published><updated>2023-04-12T00:00:00+09:00</updated><id>http://localhost:4000/cache/redis-cluster-using-docker</id><content type="html" xml:base="http://localhost:4000/cache/redis-cluster-using-docker/"><![CDATA[<h2 id="redisconf-편집">redis.conf 편집</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><summary type="html"><![CDATA[Redis Cluster Configuration 설정 Redis Cluster를 구성하고 failover 하기 위해서는 application config 이외에 추가적으로 Redis cluster Confugration이 필요합니다. Redis Cluster를 구성하고 Master를 강제로 종료시키면 Replica중 1개가 Master로 승격되어 지속적인 서비스를 이어갈 수 있습니다. 그리고 Lettuce를 사용하면 이를 자동으로 감지하여 서비스를 지속할 수 있습니다. 그러나 쓰기작업이 필요한 서비스는 약간의 delay를 요구하며, Redis Cluster 상태가 refresh되면 정상적인 쓰기 작업이 가능해집니다. 물론 일기작업은 다음의 설정으로 변함없이 지속적으로 서비스가 가능합니다. 지속적인 읽기 작업 Replica중 1개 또는 모두 종료되더라도 지속적으로 일기 서비스가 가능하도록 하기 위해서는 다음의 설정이 필요합니다.]]></summary></entry><entry><title type="html">Redis 시작하기 - Docker를 이용한 클러스터링 구성</title><link href="http://localhost:4000/cache/redis-cluster-using-docker/" rel="alternate" type="text/html" title="Redis 시작하기 - Docker를 이용한 클러스터링 구성" /><published>2023-04-12T00:00:00+09:00</published><updated>2023-04-12T00:00:00+09:00</updated><id>http://localhost:4000/cache/redis-cluster-using-docker</id><content type="html" xml:base="http://localhost:4000/cache/redis-cluster-using-docker/"><![CDATA[<h2 id="redisconf-편집">redis.conf 편집</h2>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> 6300 6301 6302 6400 6401 6402
 </code></pre></div></div>
@@ -517,7 +564,7 @@ redis-cli <span class="nt">--cluster</span> add-node 127.0.0.1:6402 127.0.0.1:63
    <span class="nd">@Autowired</span>
    <span class="kd">private</span> <span class="nc">CarBean</span> <span class="n">carbean</span><span class="o">;</span>
 <span class="o">}</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="springboot" /><summary type="html"><![CDATA[@Inject vs @Autowired @Inject 및 @Autowired 두 주석은 응용 프로그램에서 자동 의존성주입에 사용됩니다. @Inject 어노테이션은 Java 6에 도입 된 Java CDI의 일부인 반면 @Autowire 어노테이션은 스프링프레임워크의 일부. 두 어노테이션 모두 동일한 목적을 수행하므로 응용프로그램에서 사용할 수 있는 어노테이션.]]></summary></entry><entry><title type="html">Getting Start Redis - 레디스 모니터링 Redis Stat</title><link href="http://localhost:4000/cache/monitoring-redis-stat/" rel="alternate" type="text/html" title="Getting Start Redis - 레디스 모니터링 Redis Stat" /><published>2023-04-09T00:00:00+09:00</published><updated>2023-04-09T00:00:00+09:00</updated><id>http://localhost:4000/cache/monitoring-redis-stat</id><content type="html" xml:base="http://localhost:4000/cache/monitoring-redis-stat/"><![CDATA[<p>Redis 서버의 메모리 사용량을 모니터링하고자 하는 경우 오픈소스 Redis Stat를 사용할 수 있습니다.</p>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="springboot" /><summary type="html"><![CDATA[@Inject vs @Autowired @Inject 및 @Autowired 두 주석은 응용 프로그램에서 자동 의존성주입에 사용됩니다. @Inject 어노테이션은 Java 6에 도입 된 Java CDI의 일부인 반면 @Autowire 어노테이션은 스프링프레임워크의 일부. 두 어노테이션 모두 동일한 목적을 수행하므로 응용프로그램에서 사용할 수 있는 어노테이션.]]></summary></entry><entry><title type="html">Redis 시작하기 - 레디스 모니터링 Redis Stat</title><link href="http://localhost:4000/cache/monitoring-redis-stat/" rel="alternate" type="text/html" title="Redis 시작하기 - 레디스 모니터링 Redis Stat" /><published>2023-04-09T00:00:00+09:00</published><updated>2023-04-09T00:00:00+09:00</updated><id>http://localhost:4000/cache/monitoring-redis-stat</id><content type="html" xml:base="http://localhost:4000/cache/monitoring-redis-stat/"><![CDATA[<p>Redis 서버의 메모리 사용량을 모니터링하고자 하는 경우 오픈소스 Redis Stat를 사용할 수 있습니다.</p>
 
 <h2 id="redis-stat-설치">Redis Stat 설치</h2>
 <p>Redis Stat는 ruby로 개발되어 있어서 Ruby가 설치되어 있어야 합니다. Ruby를 설치하기전에 의존성 패키지를 먼저 설치합니다.</p>
@@ -543,7 +590,109 @@ gem <span class="nb">install </span>redis-stat
 
 <p><img src="/assets/images/cache/12-cache-redis-stat-1.png" alt="Jupyter log" /></p>
 
-<p><img src="/assets/images/cache/12-cache-redis-stat-2.png" alt="Jupyter log" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="redis-stat" /><summary type="html"><![CDATA[Redis 서버의 메모리 사용량을 모니터링하고자 하는 경우 오픈소스 Redis Stat를 사용할 수 있습니다.]]></summary></entry><entry><title type="html">Getting Start Redis - Redis Sentinel &amp;amp; HAProxy</title><link href="http://localhost:4000/cache/haproxy/" rel="alternate" type="text/html" title="Getting Start Redis - Redis Sentinel &amp;amp; HAProxy" /><published>2023-04-09T00:00:00+09:00</published><updated>2023-04-09T00:00:00+09:00</updated><id>http://localhost:4000/cache/haproxy</id><content type="html" xml:base="http://localhost:4000/cache/haproxy/"><![CDATA[<p>Redis Sentinel을 구성하고, slave의 loadbalance를 위해 haproxy를 구성합니다. haproxy의 UI화면에서 redis의 master/slave의 active/deactive를 상태를 한눈에 파악하기 쉽습니다.</p>
+<p><img src="/assets/images/cache/12-cache-redis-stat-2.png" alt="Jupyter log" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="redis-stat" /><summary type="html"><![CDATA[Redis 서버의 메모리 사용량을 모니터링하고자 하는 경우 오픈소스 Redis Stat를 사용할 수 있습니다.]]></summary></entry><entry><title type="html">Redis 시작하기 - Redis Cluster</title><link href="http://localhost:4000/cache/redis-cluster/" rel="alternate" type="text/html" title="Redis 시작하기 - Redis Cluster" /><published>2023-04-09T00:00:00+09:00</published><updated>2023-04-09T00:00:00+09:00</updated><id>http://localhost:4000/cache/redis-cluster</id><content type="html" xml:base="http://localhost:4000/cache/redis-cluster/"><![CDATA[<h2 id="redis-cluster-환경구성">Redis Cluster 환경구성</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>port <span class="o">[</span>각자포트]
+<span class="c"># 백그라운드에서 시작하도록 설정</span>
+daemonize <span class="nb">yes</span>
+<span class="c"># 클러스터를 사용하겠다.</span>
+cluster-enabled <span class="nb">yes</span> 
+<span class="c"># 클러스터 구성 내용을 저장한는 파일명 지정 (자동 생성됨)</span>
+cluster-config-file nodes-[각자포트].conf 
+<span class="c"># 클러스터 노드가 다운되었는지 판단하는 시간 (3s)</span>
+cluster-node-timeout 3000 
+<span class="c"># Appendonly를 yes로 설정하면 rdb에 저장 안되고 aof에 저장됨 (각각 장단점이 있으니 해당 부분은 선택 사항)</span>
+appendonly <span class="nb">yes</span> 
+<span class="c"># append only yes 시 해당 부분도 수정</span>
+appendfilename appendonly_[각자포트].aof 
+<span class="c"># 프로세스 아이디 저장 경로 설정</span>
+pidfile /var/run/redis_[각자포트].pid
+<span class="c"># 로그 파일 저장 경로 지정</span>
+logfile logs/redis_[각자포트].log
+</code></pre></div></div>
+<p>redis.conf 파일을 각 서버의 포트별로 파일을 작성합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># redis-server 6300</span>
+<span class="nb">cp </span>redis.conf redis_6300.conf
+vi redis_6300.conf
+</code></pre></div></div>
+<p>redis_6300.conf 파일을 다음과 같이 수정합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>port 6300
+<span class="c"># 백그라운드에서 시작하도록 설정</span>
+daemonize <span class="nb">yes</span>
+<span class="c"># 클러스터를 사용하겠다.</span>
+cluster-enabled <span class="nb">yes</span> 
+<span class="c"># 클러스터 구성 내용을 저장한는 파일명 지정 (자동 생성됨)</span>
+cluster-config-file nodes-6300.conf 
+<span class="c"># 클러스터 노드가 다운되었는지 판단하는 시간 (3s)</span>
+cluster-node-timeout 3000 
+<span class="c"># Appendonly를 yes로 설정하면 rdb에 저장 안되고 aof에 저장됨 (각각 장단점이 있으니 해당 부분은 선택 사항)</span>
+appendonly <span class="nb">yes</span> 
+<span class="c"># append only yes 시 해당 부분도 수정</span>
+appendfilename appendonly_6300.aof 
+<span class="c"># 프로세스 아이디 저장 경로 설정</span>
+pidfile /var/run/redis_6300.pid
+<span class="c"># 로그 파일 저장 경로 지정</span>
+logfile logs/redis_6300.log
+</code></pre></div></div>
+<p>나머지 redis server의 환경파일을 복사하고 수정합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp </span>redis_6300.conf redis_6301.conf
+<span class="nb">cp </span>redis_6300.conf redis_6302.conf
+<span class="nb">cp </span>redis_6300.conf redis_6400.conf
+<span class="nb">cp </span>redis_6300.conf redis_6401.conf
+<span class="nb">cp </span>redis_6300.conf redis_6402.conf
+
+<span class="nb">sed</span> <span class="nt">-i</span> <span class="s1">'s/6300/6301/g'</span> redis_6301.conf
+<span class="nb">sed</span> <span class="nt">-i</span> <span class="s1">'s/6300/6302/g'</span> redis_6302.conf
+<span class="nb">sed</span> <span class="nt">-i</span> <span class="s1">'s/6300/6400/g'</span> redis_6400.conf
+<span class="nb">sed</span> <span class="nt">-i</span> <span class="s1">'s/6300/6401/g'</span> redis_6401.conf
+<span class="nb">sed</span> <span class="nt">-i</span> <span class="s1">'s/6300/6402/g'</span> redis_6402.conf
+</code></pre></div></div>
+
+<h2 id="redis-cluster-실행">Redis Cluster 실행</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./src/redis-server redis_6300.conf
+./src/redis-server redis_6301.conf
+./src/redis-server redis_6302.conf
+./src/redis-server redis_6400.conf
+./src/redis-server redis_6401.conf
+./src/redis-server redis_6402.conf
+
+redis-cli <span class="nt">--cluster</span> create 127.0.0.1:6300 127.0.0.1:6301 127.0.0.1:6302
+</code></pre></div></div>
+<h4 id="redis-cluster-실행로그">redis cluster 실행로그</h4>
+<p><img src="/assets/images/cache/08-cache-create-redis-cluster.png" alt="Jupyter log" /></p>
+
+<h4 id="master-노드-로그">Master 노드 로그</h4>
+<p><img src="/assets/images/cache/09-cache-log-redis-cluster.png" alt="Jupyter log" /></p>
+
+<h2 id="slave1-등록">Slave1 등록</h2>
+<p>Master1(6300)에 Slave1(6400) node를 추가합니다</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>redis-cli <span class="nt">--cluster</span> add-node 127.0.0.1:6400 127.0.0.1:6300 <span class="nt">--cluster-slave</span>
+</code></pre></div></div>
+<h4 id="slave-등록-로그">Slave 등록 로그</h4>
+<p><img src="/assets/images/cache/10-cache-add-slave-node.png" alt="Jupyter log" /></p>
+
+<h4 id="master-로그">Master 로그</h4>
+<p><img src="/assets/images/cache/11-cache-log-redis-master.png" alt="Jupyter log" /></p>
+
+<h4 id="slave2-등록">Slave2 등록</h4>
+<p>Master2(6301)에 Slave1(6401) node를 추가합니다</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>redis-cli <span class="nt">--cluster</span> add-node 127.0.0.1:6401 127.0.0.1:6301 <span class="nt">--cluster-slave</span>
+</code></pre></div></div>
+
+<h4 id="slave3-등록">Slave3 등록</h4>
+<p>Master3(6302)에 Slave1(6402) node를 추가합니다</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>redis-cli <span class="nt">--cluster</span> add-node 127.0.0.1:6402 127.0.0.1:6302 <span class="nt">--cluster-slave</span>
+</code></pre></div></div>
+
+<h2 id="클러스터-정보확인">클러스터 정보확인</h2>
+<p>redis 클러스터 정보를 다음과 같이 확인합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>redis-cli <span class="nt">--cluster</span> info 127.0.0.1:6300
+</code></pre></div></div>
+<h4 id="redis-cluster-failover">Redis Cluster Failover</h4>
+<p>Redis Master를 강제로 종료했을 떄 어떻게 failover되는지 확인하기 위해 master1(6300)을 강제로 종료하여 redis stat로 확인합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ps <span class="nt">-ef</span>|grep redis
+<span class="nb">kill</span> <span class="nt">-9</span> pid
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="haproxy" /><summary type="html"><![CDATA[Redis Cluster 환경구성 port [각자포트] # 백그라운드에서 시작하도록 설정 daemonize yes # 클러스터를 사용하겠다. cluster-enabled yes # 클러스터 구성 내용을 저장한는 파일명 지정 (자동 생성됨) cluster-config-file nodes-[각자포트].conf # 클러스터 노드가 다운되었는지 판단하는 시간 (3s) cluster-node-timeout 3000 # Appendonly를 yes로 설정하면 rdb에 저장 안되고 aof에 저장됨 (각각 장단점이 있으니 해당 부분은 선택 사항) appendonly yes # append only yes 시 해당 부분도 수정 appendfilename appendonly_[각자포트].aof # 프로세스 아이디 저장 경로 설정 pidfile /var/run/redis_[각자포트].pid # 로그 파일 저장 경로 지정 logfile logs/redis_[각자포트].log redis.conf 파일을 각 서버의 포트별로 파일을 작성합니다. # redis-server 6300 cp redis.conf redis_6300.conf vi redis_6300.conf redis_6300.conf 파일을 다음과 같이 수정합니다. port 6300 # 백그라운드에서 시작하도록 설정 daemonize yes # 클러스터를 사용하겠다. cluster-enabled yes # 클러스터 구성 내용을 저장한는 파일명 지정 (자동 생성됨) cluster-config-file nodes-6300.conf # 클러스터 노드가 다운되었는지 판단하는 시간 (3s) cluster-node-timeout 3000 # Appendonly를 yes로 설정하면 rdb에 저장 안되고 aof에 저장됨 (각각 장단점이 있으니 해당 부분은 선택 사항) appendonly yes # append only yes 시 해당 부분도 수정 appendfilename appendonly_6300.aof # 프로세스 아이디 저장 경로 설정 pidfile /var/run/redis_6300.pid # 로그 파일 저장 경로 지정 logfile logs/redis_6300.log 나머지 redis server의 환경파일을 복사하고 수정합니다. ```bash cp redis_6300.conf redis_6301.conf cp redis_6300.conf redis_6302.conf cp redis_6300.conf redis_6400.conf cp redis_6300.conf redis_6401.conf cp redis_6300.conf redis_6402.conf]]></summary></entry><entry><title type="html">Redis 시작하기 - Redis Sentinel &amp;amp; HAProxy</title><link href="http://localhost:4000/cache/haproxy/" rel="alternate" type="text/html" title="Redis 시작하기 - Redis Sentinel &amp;amp; HAProxy" /><published>2023-04-09T00:00:00+09:00</published><updated>2023-04-09T00:00:00+09:00</updated><id>http://localhost:4000/cache/haproxy</id><content type="html" xml:base="http://localhost:4000/cache/haproxy/"><![CDATA[<p>Redis Sentinel을 구성하고, slave의 loadbalance를 위해 haproxy를 구성합니다. haproxy의 UI화면에서 redis의 master/slave의 active/deactive를 상태를 한눈에 파악하기 쉽습니다.</p>
 
 <h2 id="haproxy-환경-구성">Haproxy 환경 구성</h2>
 
@@ -740,148 +889,4 @@ redis-cli를 사용해 slave에 연결해서 계속해서 조회가 가능합니
 
 <h2 id="참고">참고</h2>
 <p><a href="https://co-de.tistory.com/22">5분 안에 구축하는 Redis-Sentinel + HAProxy</a>
-<a href="https://engineeringcode.tistory.com/125">공학코드 연구노트</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="haproxy" /><summary type="html"><![CDATA[Redis Sentinel을 구성하고, slave의 loadbalance를 위해 haproxy를 구성합니다. haproxy의 UI화면에서 redis의 master/slave의 active/deactive를 상태를 한눈에 파악하기 쉽습니다.]]></summary></entry><entry><title type="html">Getting Start Redis - Redis Cluster</title><link href="http://localhost:4000/cache/redis-cluster/" rel="alternate" type="text/html" title="Getting Start Redis - Redis Cluster" /><published>2023-04-09T00:00:00+09:00</published><updated>2023-04-09T00:00:00+09:00</updated><id>http://localhost:4000/cache/redis-cluster</id><content type="html" xml:base="http://localhost:4000/cache/redis-cluster/"><![CDATA[<h2 id="redis-cluster-환경구성">Redis Cluster 환경구성</h2>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>port <span class="o">[</span>각자포트]
-<span class="c"># 백그라운드에서 시작하도록 설정</span>
-daemonize <span class="nb">yes</span>
-<span class="c"># 클러스터를 사용하겠다.</span>
-cluster-enabled <span class="nb">yes</span> 
-<span class="c"># 클러스터 구성 내용을 저장한는 파일명 지정 (자동 생성됨)</span>
-cluster-config-file nodes-[각자포트].conf 
-<span class="c"># 클러스터 노드가 다운되었는지 판단하는 시간 (3s)</span>
-cluster-node-timeout 3000 
-<span class="c"># Appendonly를 yes로 설정하면 rdb에 저장 안되고 aof에 저장됨 (각각 장단점이 있으니 해당 부분은 선택 사항)</span>
-appendonly <span class="nb">yes</span> 
-<span class="c"># append only yes 시 해당 부분도 수정</span>
-appendfilename appendonly_[각자포트].aof 
-<span class="c"># 프로세스 아이디 저장 경로 설정</span>
-pidfile /var/run/redis_[각자포트].pid
-<span class="c"># 로그 파일 저장 경로 지정</span>
-logfile logs/redis_[각자포트].log
-</code></pre></div></div>
-<p>redis.conf 파일을 각 서버의 포트별로 파일을 작성합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># redis-server 6300</span>
-<span class="nb">cp </span>redis.conf redis_6300.conf
-vi redis_6300.conf
-</code></pre></div></div>
-<p>redis_6300.conf 파일을 다음과 같이 수정합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>port 6300
-<span class="c"># 백그라운드에서 시작하도록 설정</span>
-daemonize <span class="nb">yes</span>
-<span class="c"># 클러스터를 사용하겠다.</span>
-cluster-enabled <span class="nb">yes</span> 
-<span class="c"># 클러스터 구성 내용을 저장한는 파일명 지정 (자동 생성됨)</span>
-cluster-config-file nodes-6300.conf 
-<span class="c"># 클러스터 노드가 다운되었는지 판단하는 시간 (3s)</span>
-cluster-node-timeout 3000 
-<span class="c"># Appendonly를 yes로 설정하면 rdb에 저장 안되고 aof에 저장됨 (각각 장단점이 있으니 해당 부분은 선택 사항)</span>
-appendonly <span class="nb">yes</span> 
-<span class="c"># append only yes 시 해당 부분도 수정</span>
-appendfilename appendonly_6300.aof 
-<span class="c"># 프로세스 아이디 저장 경로 설정</span>
-pidfile /var/run/redis_6300.pid
-<span class="c"># 로그 파일 저장 경로 지정</span>
-logfile logs/redis_6300.log
-</code></pre></div></div>
-<p>나머지 redis server의 환경파일을 복사하고 수정합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp </span>redis_6300.conf redis_6301.conf
-<span class="nb">cp </span>redis_6300.conf redis_6302.conf
-<span class="nb">cp </span>redis_6300.conf redis_6400.conf
-<span class="nb">cp </span>redis_6300.conf redis_6401.conf
-<span class="nb">cp </span>redis_6300.conf redis_6402.conf
-
-<span class="nb">sed</span> <span class="nt">-i</span> <span class="s1">'s/6300/6301/g'</span> redis_6301.conf
-<span class="nb">sed</span> <span class="nt">-i</span> <span class="s1">'s/6300/6302/g'</span> redis_6302.conf
-<span class="nb">sed</span> <span class="nt">-i</span> <span class="s1">'s/6300/6400/g'</span> redis_6400.conf
-<span class="nb">sed</span> <span class="nt">-i</span> <span class="s1">'s/6300/6401/g'</span> redis_6401.conf
-<span class="nb">sed</span> <span class="nt">-i</span> <span class="s1">'s/6300/6402/g'</span> redis_6402.conf
-</code></pre></div></div>
-
-<h2 id="redis-cluster-실행">Redis Cluster 실행</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./src/redis-server redis_6300.conf
-./src/redis-server redis_6301.conf
-./src/redis-server redis_6302.conf
-./src/redis-server redis_6400.conf
-./src/redis-server redis_6401.conf
-./src/redis-server redis_6402.conf
-
-redis-cli <span class="nt">--cluster</span> create 127.0.0.1:6300 127.0.0.1:6301 127.0.0.1:6302
-</code></pre></div></div>
-<h4 id="redis-cluster-실행로그">redis cluster 실행로그</h4>
-<p><img src="/assets/images/cache/08-cache-create-redis-cluster.png" alt="Jupyter log" /></p>
-
-<h4 id="master-노드-로그">Master 노드 로그</h4>
-<p><img src="/assets/images/cache/09-cache-log-redis-cluster.png" alt="Jupyter log" /></p>
-
-<h2 id="slave1-등록">Slave1 등록</h2>
-<p>Master1(6300)에 Slave1(6400) node를 추가합니다</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>redis-cli <span class="nt">--cluster</span> add-node 127.0.0.1:6400 127.0.0.1:6300 <span class="nt">--cluster-slave</span>
-</code></pre></div></div>
-<h4 id="slave-등록-로그">Slave 등록 로그</h4>
-<p><img src="/assets/images/cache/10-cache-add-slave-node.png" alt="Jupyter log" /></p>
-
-<h4 id="master-로그">Master 로그</h4>
-<p><img src="/assets/images/cache/11-cache-log-redis-master.png" alt="Jupyter log" /></p>
-
-<h4 id="slave2-등록">Slave2 등록</h4>
-<p>Master2(6301)에 Slave1(6401) node를 추가합니다</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>redis-cli <span class="nt">--cluster</span> add-node 127.0.0.1:6401 127.0.0.1:6301 <span class="nt">--cluster-slave</span>
-</code></pre></div></div>
-
-<h4 id="slave3-등록">Slave3 등록</h4>
-<p>Master3(6302)에 Slave1(6402) node를 추가합니다</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>redis-cli <span class="nt">--cluster</span> add-node 127.0.0.1:6402 127.0.0.1:6302 <span class="nt">--cluster-slave</span>
-</code></pre></div></div>
-
-<h2 id="클러스터-정보확인">클러스터 정보확인</h2>
-<p>redis 클러스터 정보를 다음과 같이 확인합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>redis-cli <span class="nt">--cluster</span> info 127.0.0.1:6300
-</code></pre></div></div>
-<h4 id="redis-cluster-failover">Redis Cluster Failover</h4>
-<p>Redis Master를 강제로 종료했을 떄 어떻게 failover되는지 확인하기 위해 master1(6300)을 강제로 종료하여 redis stat로 확인합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ps <span class="nt">-ef</span>|grep redis
-<span class="nb">kill</span> <span class="nt">-9</span> pid
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="haproxy" /><summary type="html"><![CDATA[Redis Cluster 환경구성 port [각자포트] # 백그라운드에서 시작하도록 설정 daemonize yes # 클러스터를 사용하겠다. cluster-enabled yes # 클러스터 구성 내용을 저장한는 파일명 지정 (자동 생성됨) cluster-config-file nodes-[각자포트].conf # 클러스터 노드가 다운되었는지 판단하는 시간 (3s) cluster-node-timeout 3000 # Appendonly를 yes로 설정하면 rdb에 저장 안되고 aof에 저장됨 (각각 장단점이 있으니 해당 부분은 선택 사항) appendonly yes # append only yes 시 해당 부분도 수정 appendfilename appendonly_[각자포트].aof # 프로세스 아이디 저장 경로 설정 pidfile /var/run/redis_[각자포트].pid # 로그 파일 저장 경로 지정 logfile logs/redis_[각자포트].log redis.conf 파일을 각 서버의 포트별로 파일을 작성합니다. # redis-server 6300 cp redis.conf redis_6300.conf vi redis_6300.conf redis_6300.conf 파일을 다음과 같이 수정합니다. port 6300 # 백그라운드에서 시작하도록 설정 daemonize yes # 클러스터를 사용하겠다. cluster-enabled yes # 클러스터 구성 내용을 저장한는 파일명 지정 (자동 생성됨) cluster-config-file nodes-6300.conf # 클러스터 노드가 다운되었는지 판단하는 시간 (3s) cluster-node-timeout 3000 # Appendonly를 yes로 설정하면 rdb에 저장 안되고 aof에 저장됨 (각각 장단점이 있으니 해당 부분은 선택 사항) appendonly yes # append only yes 시 해당 부분도 수정 appendfilename appendonly_6300.aof # 프로세스 아이디 저장 경로 설정 pidfile /var/run/redis_6300.pid # 로그 파일 저장 경로 지정 logfile logs/redis_6300.log 나머지 redis server의 환경파일을 복사하고 수정합니다. ```bash cp redis_6300.conf redis_6301.conf cp redis_6300.conf redis_6302.conf cp redis_6300.conf redis_6400.conf cp redis_6300.conf redis_6401.conf cp redis_6300.conf redis_6402.conf]]></summary></entry><entry><title type="html">Getting Start Redis - Redis 설치(Centos)</title><link href="http://localhost:4000/cache/install-redis/" rel="alternate" type="text/html" title="Getting Start Redis - Redis 설치(Centos)" /><published>2023-04-08T00:00:00+09:00</published><updated>2023-04-08T00:00:00+09:00</updated><id>http://localhost:4000/cache/install%20redis</id><content type="html" xml:base="http://localhost:4000/cache/install-redis/"><![CDATA[<h2 id="redis-설치-준비">Redis 설치 준비</h2>
-<p>Redis를 다음의 절차로 설치합니다.</p>
-<ul>
-  <li>OS 업데이트</li>
-  <li>Development Tools 설치</li>
-  <li>redis download</li>
-  <li>redis build</li>
-  <li>redis install</li>
-</ul>
-
-<p>Centos7 OS 버전을 최신으로 업그레이드 하고, Development Tools를 설치합니다. Redis <a href="http://download.redis.io/releases/">download</a> site 에 가서 원하는 redis 를 확인하고 address link를 복사합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum update <span class="nt">-y</span>
-yum groupinstall <span class="s1">'Development Tools'</span>
-<span class="nb">sudo </span>wget http://download.redis.io/releases/redis-7.0.10.tar.gz
-<span class="nb">tar </span>xvzf redis-7.0.10.tar.gz
-<span class="nb">cd </span>redis-7.0.10
-</code></pre></div></div>
-<p>Redis 압축파일을 해제한 후 make 명령어를 수행하면 아래처럼 jemalloc No such file or directory 오류가 발생합니다.
-이를 해결하기 위해서는 deps 폴더에서 compile을 해야합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>deps
-make hiredis jemalloc linenoise lua
-<span class="nb">cd</span> ..
-</code></pre></div></div>
-<p>Redis 압축 해제했던 폴더로 되돌아와서 다시 build합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># redis-7.0.10</span>
-make
-make <span class="nb">install</span>
-</code></pre></div></div>
-
-<h2 id="redis-서버-실행">Redis 서버 실행</h2>
-<p>redis 를 install 후 redis 서버를 실행합니다.</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>src/redis-server redis.conf
-</code></pre></div></div>
-
-<p>redis를 접속하기 위해 terminal을 1개 열어 redis가 설치된 서버에 접속합니다.
-src 폴더에 있는 redis-cli를 이용하여 redis 서버에 접속합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>redis-cli
-<span class="nb">set </span>k1 v1
-get k1
-</code></pre></div></div>
-
-<h2 id="참고">참고</h2>
-<p><a href="https://mozi.tistory.com/536">꽁담</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><summary type="html"><![CDATA[Redis 설치 준비 Redis를 다음의 절차로 설치합니다. OS 업데이트 Development Tools 설치 redis download redis build redis install]]></summary></entry></feed>
+<a href="https://engineeringcode.tistory.com/125">공학코드 연구노트</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="haproxy" /><summary type="html"><![CDATA[Redis Sentinel을 구성하고, slave의 loadbalance를 위해 haproxy를 구성합니다. haproxy의 UI화면에서 redis의 master/slave의 active/deactive를 상태를 한눈에 파악하기 쉽습니다.]]></summary></entry></feed>

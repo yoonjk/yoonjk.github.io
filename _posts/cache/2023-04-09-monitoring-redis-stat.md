@@ -1,5 +1,5 @@
 ---
-title:  Getting Start Redis - 레디스 모니터링 Redis Stat
+title:  Redis 시작하기 - 레디스 모니터링 Redis Stat
 categories:
   - cache 
 tags:
