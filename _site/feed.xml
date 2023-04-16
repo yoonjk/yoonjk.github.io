@@ -1,4 +1,55 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-17T05:01:20+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Redis 시작하기 - Redis 복제</title><link href="http://localhost:4000/cache/replication/" rel="alternate" type="text/html" title="Redis 시작하기 - Redis 복제" /><published>2023-04-16T00:00:00+09:00</published><updated>2023-04-16T00:00:00+09:00</updated><id>http://localhost:4000/cache/replication</id><content type="html" xml:base="http://localhost:4000/cache/replication/"><![CDATA[<h2 id="redis-replication">Redis replication</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-17T07:21:30+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Redis 시작하기 - Redis Functions 시작하기</title><link href="http://localhost:4000/cache/getting-start-functions/" rel="alternate" type="text/html" title="Redis 시작하기 - Redis Functions 시작하기" /><published>2023-04-17T00:00:00+09:00</published><updated>2023-04-17T00:00:00+09:00</updated><id>http://localhost:4000/cache/getting-start-functions</id><content type="html" xml:base="http://localhost:4000/cache/getting-start-functions/"><![CDATA[<h2 id="redis-functions">Redis Functions</h2>
+<p>Redis 버전 7.0에 추가된 가장 영향력 있는 기능은 모듈성, 재사용성 및 전반적인 개발자 환경 개선을  통해 스크립트를 개선하는 새로운 프로그래밍 옵션  인 Redis Functions입니다.</p>
+
+<p>함수는 스크립트와 달리 .rdb 및 .aof 파일에 유지될 뿐만 아니라 모든 복제본에 자동으로 복제되므로 Redis의 일부 모듈이 됩니다.
+Redis는 여러 실행 엔진을 지원할 수 있으므로 향후 릴리스 중 하나에서 Lua, Javascript 및 기타 언어로 Redis 함수를 작성할 수 있지만 현재(Redis v7.0) 지원되는 유일한 언어는 Lua입니다.</p>
+
+<p>개발자의 일반적인 고충은 논리 스키마를 통해 데이터 엔터티에 대한 일관된 보기를 유지하는 것입니다. Redis Functions는 이 문제를 해결하는 데 이상적으로 적합하며 이 자습서에서는 두 가지 기능이 있는 라이브러리를 만듭니다. 첫 번째는 자동으로 할 수 있는지 확인합니다.  해시 키에 대한 타임스탬프  _created_at 및 _updated_at 설정두 번째는  다른 요소를 변경하지 않고 단순히 _updated_at 타임스탬프를 업데이트하여 “터치” Unix 기능을 시뮬레이션합니다. 시작합시다!</p>
+
+<h2 id="environment-setup">Environment setup</h2>
+<p>먼저 Redis 7로 작업 환경을 설정해 보겠습니다. 운영 체제에 따라 아래 가이드의 설치 지침을 따를 수 있습니다:</p>
+<ul>
+  <li><a href="https://redis.io/docs/getting-started/installation/install-redis-from-source/">Install Redis from Source</a></li>
+  <li><a href="https://redis.io/docs/getting-started/installation/install-redis-on-linux/">Install Redis on Linux</a></li>
+  <li><a href="https://redis.io/docs/getting-started/installation/install-redis-on-mac-os/">Install Redis on macOS</a></li>
+  <li><a href="https://redis.io/docs/getting-started/installation/install-redis-on-windows/">Install Redis on Windows</a></li>
+</ul>
+
+<p>또는 Redis Stack을 사용하여 Docker 컨테이너를 스핀업할 수 있습니다:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker run <span class="nt">-p</span> 6379:6379 <span class="nt">--name</span> redis-7.0 <span class="nt">-it</span> <span class="nt">--rm</span> redis/redis-stack:7.0.0-RC4
+</code></pre></div></div>
+<p>NOTE
+이 자습서의 나머지 부분에서는 $ 문자를 사용하여 명령 프롬프트에서 명령을 실행해야 함을 나타내고&gt; redis-cli를 사용하여  redis-cli 프롬프트에 대해 동일한 명령을 나타냅니다.
+Warm-Up
+이제 Redis 서버가 실행 중이므로 mylib.lua라는 파일을 만들고  그 안에 명령줄에 매개 변수로 전달하는 키와 인수를 수신하는 hset이라는 함수를 만들  수 있습니다.
+Redis의 함수는 항상 라이브러리의 일부이며 단일 라이브러리에는 여러 함수가 있을 수 있습니다.
+우선 “Hello Redis 7.0”을 반환하는 간단한 함수를 만들어 mylib.lua 파일에 저장해 보겠습니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!lua name=mylib</span>
+
+<span class="nb">local </span><span class="k">function </span>hset<span class="o">(</span>keys, args<span class="o">)</span>
+   <span class="k">return</span> <span class="s2">"Hello Redis 7.0"</span>
+end
+</code></pre></div></div>
+<p>첫 번째 줄은 Lua 엔진을 사용하여 이 함수를 실행하고 해당 이름을 mylib로 지정합니다. 이름은 라이브러리 식별자이며 업데이트해야 할 때마다 사용합니다.
+다음으로 Functions API를 통해 액세스할 수 있도록 이 함수를 등록해야 합니다. 등록에서 함수 hset을 my_hset라는  이름으로 호출할 수  있도록 지정합니다.:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>redis.register_function<span class="o">(</span><span class="s1">'my_hset'</span>, hset<span class="o">)</span>
+</code></pre></div></div>
+<p>지금까지의 전체 코드는 다음과 같습니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!lua name=mylib</span>
+<span class="nb">local </span><span class="k">function </span>hset<span class="o">(</span>keys, args<span class="o">)</span>
+   <span class="k">return</span> <span class="s2">"Hello Redis 7.0"</span>
+end
+
+redis.register_function<span class="o">(</span><span class="s1">'my_hset'</span>, hset<span class="o">)</span>
+</code></pre></div></div>
+
+<p>명령줄에서 함수를 호출하려면 먼저 Redis 서버에 로드하고 등록해야 합니다:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cat</span> /path/to/mylib.lua | redis-cli <span class="nt">-x</span> FUNCTION LOAD
+</code></pre></div></div>
+
+<p>마지막으로 등록한 함수를 실행해 보겠습니다:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>redis-cli&gt; FCALL my_hset 1 foo
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="lua" /><summary type="html"><![CDATA[Redis Functions Redis 버전 7.0에 추가된 가장 영향력 있는 기능은 모듈성, 재사용성 및 전반적인 개발자 환경 개선을 통해 스크립트를 개선하는 새로운 프로그래밍 옵션 인 Redis Functions입니다.]]></summary></entry><entry><title type="html">Redis 시작하기 - Redis 복제</title><link href="http://localhost:4000/cache/replication/" rel="alternate" type="text/html" title="Redis 시작하기 - Redis 복제" /><published>2023-04-16T00:00:00+09:00</published><updated>2023-04-16T00:00:00+09:00</updated><id>http://localhost:4000/cache/replication</id><content type="html" xml:base="http://localhost:4000/cache/replication/"><![CDATA[<h2 id="redis-replication">Redis replication</h2>
 <p>Redis가 복제를 통해 고가용성 및 장애 조치를 지원하는 방법<br />
 Redis 복제의 기반(Redis Cluster 또는 Redis Sentinel에서 추가 계층으로 제공하는 고가용성 기능 제외)에는  사용 및 구성이 간편한 리더 팔로워(마스터-복제본) 복제가 있습니다. 이를 통해 복제본 Redis 인스턴스는 마스터 인스턴스의 정확한 복사본이 될 수 있습니다. 복제본은 링크가 끊어질 때마다 자동으로 마스터에 다시 연결되며 마스터에  어떤 일이 발생하든 관계없이 복제본의 정확한 복사본이 되려고 시도합니다.</p>
 
@@ -2941,144 +2992,4 @@ redis-server /redis/sentinel.conf <span class="nt">--sentinel</span>
 </code></pre></div></div>
 
 <h2 id="참조-">참조 :</h2>
-<p><a href="https://github.com/Developers-Notebook/Redis-Sentinel-Docker-Compose">Redis-Sentinel-Docker-Compose</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="sentinel" /><summary type="html"><![CDATA[Redis Sentinel 을 docker 를 사용하여 구성 - 사전준비 Redis Sentinel 을 docker기반으로 구성하기 위해서는 docker, docker-compose를 설치하여야 합니다.]]></summary></entry><entry><title type="html">Redis 시작하기 - Docker를 이용한 클러스터링 구성</title><link href="http://localhost:4000/cache/redis-cluster-using-docker/" rel="alternate" type="text/html" title="Redis 시작하기 - Docker를 이용한 클러스터링 구성" /><published>2023-04-12T00:00:00+09:00</published><updated>2023-04-12T00:00:00+09:00</updated><id>http://localhost:4000/cache/redis-cluster-using-docker</id><content type="html" xml:base="http://localhost:4000/cache/redis-cluster-using-docker/"><![CDATA[<h2 id="redisconf-편집">redis.conf 편집</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> 6300 6301 6302 6400 6401 6402
-</code></pre></div></div>
-<p>redis config 파일을 다음과 같이 수정합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">## redis.conf 편집</span>
-vi redis.conf
-port 6379
-cluster-enabled <span class="nb">yes
-</span>cluster-config-file nodes.conf
-cluster-node-timeout 3000
-appendonly <span class="nb">yes</span>
-</code></pre></div></div>
-<p>redis.conf를 각 폴더에 복사합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp </span>redis.conf 6300/
-<span class="nb">cp </span>redis.conf 6301/
-<span class="nb">cp </span>redis.conf 6302/
-<span class="nb">cp </span>redis.conf 6400/
-<span class="nb">cp </span>redis.conf 6401/
-<span class="nb">cp </span>redis.conf 6402/
-</code></pre></div></div>
-
-<p>redis.conf를 편집합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sed</span> <span class="nt">-i</span> <span class="s1">'s/6379/6300/g'</span> 6300/redis.conf
-<span class="nb">sed</span> <span class="nt">-i</span> <span class="s1">'s/6379/6301/g'</span> 6300/redis.conf
-<span class="nb">sed</span> <span class="nt">-i</span> <span class="s1">'s/6379/6302/g'</span> 6300/redis.conf
-<span class="nb">sed</span> <span class="nt">-i</span> <span class="s1">'s/6379/6400/g'</span> 6300/redis.conf
-<span class="nb">sed</span> <span class="nt">-i</span> <span class="s1">'s/6379/6401/g'</span> 6300/redis.conf
-<span class="nb">sed</span> <span class="nt">-i</span> <span class="s1">'s/6379/6402/g'</span> 6300/redis.conf
-</code></pre></div></div>
-
-<h2 id="master-redis-작성">Master Redis 작성</h2>
-
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="s1">'</span><span class="s">3'</span>
-
-<span class="na">services</span><span class="pi">:</span>
-  <span class="na">redis1</span><span class="pi">:</span>
-    <span class="na">hostname</span><span class="pi">:</span> <span class="s">redis1</span>
-    <span class="na">container_name</span><span class="pi">:</span> <span class="s">redis1</span>
-    <span class="na">image</span><span class="pi">:</span> <span class="s">redis</span>
-    <span class="na">network_mode</span><span class="pi">:</span> <span class="s2">"</span><span class="s">host"</span>
-    <span class="na">command</span><span class="pi">:</span> <span class="s">redis-server /etc/redis.conf</span>
-    <span class="na">volumes</span><span class="pi">:</span>
-    <span class="pi">-</span> <span class="s">./6300/redis.conf:/etc/redis.conf</span>
-    <span class="na">ports</span><span class="pi">:</span>
-    <span class="pi">-</span> <span class="s">6300:6300</span>
-    <span class="pi">-</span> <span class="s">16300:16300</span>
-
-  <span class="na">redis2</span><span class="pi">:</span>
-    <span class="na">hostname</span><span class="pi">:</span> <span class="s">redis2</span>
-    <span class="na">container_name</span><span class="pi">:</span> <span class="s">redis2</span>
-    <span class="na">image</span><span class="pi">:</span> <span class="s">redis</span>
-    <span class="na">network_mode</span><span class="pi">:</span> <span class="s2">"</span><span class="s">host"</span>
-    <span class="na">command</span><span class="pi">:</span> <span class="s">redis-server /etc/redis.conf</span>
-    <span class="na">volumes</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">./6301/redis.conf:/etc/redis.conf</span>
-    <span class="na">ports</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">6301:6301</span>
-      <span class="pi">-</span> <span class="s">16301:16301</span>
-
-  <span class="na">redis3</span><span class="pi">:</span>
-    <span class="na">hostname</span><span class="pi">:</span> <span class="s">redis3</span>
-    <span class="na">container_name</span><span class="pi">:</span> <span class="s">redis3</span>
-    <span class="na">image</span><span class="pi">:</span> <span class="s">redis</span>
-    <span class="na">network_mode</span><span class="pi">:</span> <span class="s2">"</span><span class="s">host"</span>
-    <span class="na">command</span><span class="pi">:</span> <span class="s">redis-server /etc/redis.conf</span>
-    <span class="na">volumes</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">./6302/redis.conf:/etc/redis.conf</span>
-    <span class="na">ports</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">6302:6302</span>
-      <span class="pi">-</span> <span class="s">16302:16302</span>
-
-  <span class="na">redis4</span><span class="pi">:</span>
-    <span class="na">hostname</span><span class="pi">:</span> <span class="s">redis4</span>
-    <span class="na">container_name</span><span class="pi">:</span> <span class="s">redis4</span>
-    <span class="na">image</span><span class="pi">:</span> <span class="s">redis</span>
-    <span class="na">network_mode</span><span class="pi">:</span> <span class="s2">"</span><span class="s">host"</span>
-    <span class="na">command</span><span class="pi">:</span> <span class="s">redis-server /etc/redis.conf</span>
-    <span class="na">volumes</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">./6400/redis.conf:/etc/redis.conf</span>
-    <span class="na">ports</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">6400:6400</span>
-      <span class="pi">-</span> <span class="s">16400:16400</span>
-
-  <span class="na">redis5</span><span class="pi">:</span>
-    <span class="na">hostname</span><span class="pi">:</span> <span class="s">redis5</span>
-    <span class="na">container_name</span><span class="pi">:</span> <span class="s">redis5</span>
-    <span class="na">image</span><span class="pi">:</span> <span class="s">redis</span>
-    <span class="na">network_mode</span><span class="pi">:</span> <span class="s2">"</span><span class="s">host"</span>
-    <span class="na">command</span><span class="pi">:</span> <span class="s">redis-server /etc/redis.conf</span>
-    <span class="na">volumes</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">./6401/redis.conf:/etc/redis.conf</span>
-    <span class="na">ports</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">6401:6401</span>
-      <span class="pi">-</span> <span class="s">16401:16401</span>
-
-  <span class="na">redis6</span><span class="pi">:</span>
-    <span class="na">hostname</span><span class="pi">:</span> <span class="s">redis6</span>
-    <span class="na">container_name</span><span class="pi">:</span> <span class="s">redis6</span>
-    <span class="na">image</span><span class="pi">:</span> <span class="s">redis</span>
-    <span class="na">network_mode</span><span class="pi">:</span> <span class="s2">"</span><span class="s">host"</span>
-    <span class="na">command</span><span class="pi">:</span> <span class="s">redis-server /etc/redis.conf</span>
-    <span class="na">volumes</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">./6402/redis.conf:/etc/redis.conf</span>
-    <span class="na">ports</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">6402:6402</span>
-      <span class="pi">-</span> <span class="s">16402:16402</span>
-</code></pre></div></div>
-<h2 id="redis-cluster-시작">Redis cluster 시작</h2>
-<p>docker-compose 이용하여 Redis Cluster를 시작합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose up <span class="nt">-d</span>
-docker ps
-</code></pre></div></div>
-
-<h4 id="클러스터-구성">클러스터 구성</h4>
-<p>6개의 docker container redis가 실행중인 것을 확인하고 redis1에 접속하여 다음과 같이 클러스터를 구성합니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker <span class="nb">exec</span> <span class="nt">-it</span> redis1 bash
-redis-cli <span class="nt">--cluster</span> create 127.0.0.1:6300 127.0.0.1:6301 127.0.0.1:6302
-<span class="nb">exit</span>
-</code></pre></div></div>
-<p>redis1 container의 로그를 다음과 같이 확인합니다.</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker logs -f redis1
-</code></pre></div></div>
-<h4 id="replicas-구성">Replicas 구성</h4>
-<p>Redis Master에 각각 1개의 Replica를 추가합니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># master1에 replica 1 추가</span>
-docker <span class="nb">exec</span> <span class="nt">-it</span> redis1 bash
-redis-cli <span class="nt">--cluster</span> add-node 127.0.0.1:6400 127.0.0.1:6300 <span class="nt">--cluster-slave</span>
-
-<span class="c"># master2에 replica 2 추가</span>
-redis-cli <span class="nt">--cluster</span> add-node 127.0.0.1:6401 127.0.0.1:6301 <span class="nt">--cluster-slave</span>
-
-<span class="c"># master3에 replica 3 추가</span>
-redis-cli <span class="nt">--cluster</span> add-node 127.0.0.1:6402 127.0.0.1:6302 <span class="nt">--cluster-slave</span>
-</code></pre></div></div>
-
-<p><img src="/assets/images/cache/13-cache-add-slave-docker.png" alt="Create Admin" /></p>
-<h2 id="참고">참고</h2>
-<p><a href="https://uchupura.tistory.com/56">우쭈뿌라 개발노트</a><br />
-<a href="https://pinggoopark.tistory.com/268">과거의 나를 위해</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="docker" /><summary type="html"><![CDATA[redis.conf 편집]]></summary></entry></feed>
+<p><a href="https://github.com/Developers-Notebook/Redis-Sentinel-Docker-Compose">Redis-Sentinel-Docker-Compose</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="sentinel" /><summary type="html"><![CDATA[Redis Sentinel 을 docker 를 사용하여 구성 - 사전준비 Redis Sentinel 을 docker기반으로 구성하기 위해서는 docker, docker-compose를 설치하여야 합니다.]]></summary></entry></feed>

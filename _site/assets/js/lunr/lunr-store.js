@@ -592,4 +592,10 @@ var store = [{
         "tags": ["redis","redis-stat"],
         "url": "/cache/usecase/",
         "teaser": null
+      },{
+        "title": "Redis 시작하기 - Redis Functions 시작하기",
+        "excerpt":"Redis Functions Redis 버전 7.0에 추가된 가장 영향력 있는 기능은 모듈성, 재사용성 및 전반적인 개발자 환경 개선을 통해 스크립트를 개선하는 새로운 프로그래밍 옵션 인 Redis Functions입니다. 함수는 스크립트와 달리 .rdb 및 .aof 파일에 유지될 뿐만 아니라 모든 복제본에 자동으로 복제되므로 Redis의 일부 모듈이 됩니다. Redis는 여러 실행 엔진을 지원할 수...","categories": ["cache"],
+        "tags": ["redis","lua"],
+        "url": "/cache/getting-start-functions/",
+        "teaser": null
       }]
