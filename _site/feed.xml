@@ -1,4 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-16T18:44:16+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Redis 시작하기 - Redis 관리</title><link href="http://localhost:4000/cache/redis-management/" rel="alternate" type="text/html" title="Redis 시작하기 - Redis 관리" /><published>2023-04-16T00:00:00+09:00</published><updated>2023-04-16T00:00:00+09:00</updated><id>http://localhost:4000/cache/redis-management</id><content type="html" xml:base="http://localhost:4000/cache/redis-management/"><![CDATA[<h2 id="redis-관리-tips">Redis 관리 Tips</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-17T03:28:16+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html">Redis 시작하기 - Usecases</title><link href="http://localhost:4000/cache/usecase/" rel="alternate" type="text/html" title="Redis 시작하기 - Usecases" /><published>2023-04-17T00:00:00+09:00</published><updated>2023-04-17T00:00:00+09:00</updated><id>http://localhost:4000/cache/usecase</id><content type="html" xml:base="http://localhost:4000/cache/usecase/"><![CDATA[<h2 id="redis-use-cases">Redis Use cases</h2>
+
+<p><img src="/assets/images/cache/25-cache-usecase.png" alt="m1s1-r1s2-r3s3" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="redis-stat" /><summary type="html"><![CDATA[Redis Use cases]]></summary></entry><entry><title type="html">Redis 시작하기 - Redis 관리</title><link href="http://localhost:4000/cache/redis-management/" rel="alternate" type="text/html" title="Redis 시작하기 - Redis 관리" /><published>2023-04-16T00:00:00+09:00</published><updated>2023-04-16T00:00:00+09:00</updated><id>http://localhost:4000/cache/redis-management</id><content type="html" xml:base="http://localhost:4000/cache/redis-management/"><![CDATA[<h2 id="redis-관리-tips">Redis 관리 Tips</h2>
 <p>프로덕션에서 Redis를 구성하고 관리할때 아래의 사항들을 고려하십시요.</p>
 
 <h2 id="redis-setup-tips">Redis setup tips</h2>
@@ -3140,58 +3142,4 @@ Redis Cluster를 구성하고 Master를 강제로 종료시키면 Replica중 1�
     <span class="o">}</span>
         
 <span class="o">}</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><summary type="html"><![CDATA[Redis Cluster Configuration 설정 Redis Cluster를 구성하고 failover 하기 위해서는 application config 이외에 추가적으로 Redis cluster Confugration이 필요합니다. Redis Cluster를 구성하고 Master를 강제로 종료시키면 Replica중 1개가 Master로 승격되어 지속적인 서비스를 이어갈 수 있습니다. 그리고 Lettuce를 사용하면 이를 자동으로 감지하여 서비스를 지속할 수 있습니다. 그러나 쓰기작업이 필요한 서비스는 약간의 delay를 요구하며, Redis Cluster 상태가 refresh되면 정상적인 쓰기 작업이 가능해집니다. 물론 일기작업은 다음의 설정으로 변함없이 지속적으로 서비스가 가능합니다. 지속적인 읽기 작업 Replica중 1개 또는 모두 종료되더라도 지속적으로 일기 서비스가 가능하도록 하기 위해서는 다음의 설정이 필요합니다.]]></summary></entry><entry><title type="html">@Inject과 @Autowired의 차이점</title><link href="http://localhost:4000/springboot/difference-autowired-inject/" rel="alternate" type="text/html" title="@Inject과 @Autowired의 차이점" /><published>2023-04-11T00:00:00+09:00</published><updated>2023-04-11T00:00:00+09:00</updated><id>http://localhost:4000/springboot/difference-autowired-inject</id><content type="html" xml:base="http://localhost:4000/springboot/difference-autowired-inject/"><![CDATA[<h2 id="inject-vs-autowired">@Inject vs @Autowired</h2>
-<p>@Inject 및 @Autowired 두 주석은 응용 프로그램에서 자동 의존성주입에 사용됩니다.
-@Inject 어노테이션은 Java 6에 도입 된 Java CDI의 일부인 반면 @Autowire 어노테이션은 스프링프레임워크의 일부. 두 어노테이션 모두 동일한 목적을 수행하므로 응용프로그램에서 사용할 수 있는 어노테이션.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Sr. No.	Key</th>
-      <th>@Inject</th>
-      <th>@Autowired</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>1	Basic</td>
-      <td>그것은 자바 CDI의 일부입니다</td>
-      <td>스프링 프레임 워크의 일부입니다.</td>
-    </tr>
-    <tr>
-      <td>2	Required</td>
-      <td>required 속성이 없습니다.</td>
-      <td>required속성이 있습니다.</td>
-    </tr>
-    <tr>
-      <td>3	Default Scope	autowire</td>
-      <td>기본 범위는 싱글톤입니다.</td>
-      <td>주입 빈의 기본 범위는 prototype입니다.</td>
-    </tr>
-    <tr>
-      <td>4	Ambiguity</td>
-      <td>주입을 위해 빈에 모호성이있는 경우 코드에 @Named해야합니다</td>
-      <td>주입을 위해 Bean에 모호한 경우 코드에 @Qualifer 추가해야합니다.</td>
-    </tr>
-    <tr>
-      <td>5	Advantage</td>
-      <td>Java CDI의 일부이므로 DI 프레임워크에 의존하지 않습니다.</td>
-      <td>시스템을 느슨하게 결합합니다.</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>응용 프로그램을 Spring 프레임워크와 밀접하게 결합시킵니다. 나중에 다른 DI 프레임워크로 이동하려면 응용 프로그램을 다시 구성해야합니다.</p>
-
-<p>@Injection 어노테이션 예시</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">InjectionExample</span> <span class="o">{</span>
-   <span class="nd">@Inject</span>
-   <span class="kd">private</span> <span class="nc">CarBean</span> <span class="n">carbean</span><span class="o">;</span>
-<span class="o">}</span>
-</code></pre></div></div>
-<p>@Autowired 어노테이션 예시</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">AutowiredExample</span> <span class="o">{</span>
-   <span class="nd">@Autowired</span>
-   <span class="kd">private</span> <span class="nc">CarBean</span> <span class="n">carbean</span><span class="o">;</span>
-<span class="o">}</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="springboot" /><summary type="html"><![CDATA[@Inject vs @Autowired @Inject 및 @Autowired 두 주석은 응용 프로그램에서 자동 의존성주입에 사용됩니다. @Inject 어노테이션은 Java 6에 도입 된 Java CDI의 일부인 반면 @Autowire 어노테이션은 스프링프레임워크의 일부. 두 어노테이션 모두 동일한 목적을 수행하므로 응용프로그램에서 사용할 수 있는 어노테이션.]]></summary></entry></feed>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><summary type="html"><![CDATA[Redis Cluster Configuration 설정 Redis Cluster를 구성하고 failover 하기 위해서는 application config 이외에 추가적으로 Redis cluster Confugration이 필요합니다. Redis Cluster를 구성하고 Master를 강제로 종료시키면 Replica중 1개가 Master로 승격되어 지속적인 서비스를 이어갈 수 있습니다. 그리고 Lettuce를 사용하면 이를 자동으로 감지하여 서비스를 지속할 수 있습니다. 그러나 쓰기작업이 필요한 서비스는 약간의 delay를 요구하며, Redis Cluster 상태가 refresh되면 정상적인 쓰기 작업이 가능해집니다. 물론 일기작업은 다음의 설정으로 변함없이 지속적으로 서비스가 가능합니다. 지속적인 읽기 작업 Replica중 1개 또는 모두 종료되더라도 지속적으로 일기 서비스가 가능하도록 하기 위해서는 다음의 설정이 필요합니다.]]></summary></entry></feed>
