@@ -1,5 +1,5 @@
 ---
-title: Redis 시작하기 - lua 설치 (Centos)
+title: "Redis 시작하기 - lua 설치 (Centos)"
 categories: 
   - cache
 tags:
