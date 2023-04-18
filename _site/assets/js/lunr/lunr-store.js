@@ -599,6 +599,18 @@ var store = [{
         "url": "/cache/usecase/",
         "teaser": null
       },{
+        "title": "Redis 시작하기 - Redisearch",
+        "excerpt":"Hands-on을 위해 docker 기반으로 redis-stack-server를 설치합니다. docker run -d --name redis-stack-server -p 6379:6379 redis/redis-stack-server 인덱스 생성 FT.CREATE 명령을 사용하여 필드와 인덱스를 생성합니다(기본 가중치는 1.0). 127.0.0.1:6379&gt; FT.CREATE myIdx ON HASH PREFIX 1 doc: SCHEMA title TEXT WEIGHT 5.0 body TEXT url TEXT OK doc:xx 접두사가 있는 키가 있는 기존 해시 문서는...","categories": ["cache"],
+        "tags": ["redis","redisearch"],
+        "url": "/cache/installl-redisearch-on-docker/",
+        "teaser": null
+      },{
+        "title": "Springboot기반 Redis @Transactional 어노테이션 사용",
+        "excerpt":"@Transactional Springboot 기반 Redis를 사용할 때 @Tranactional 사용하여 commit 과 rollback 을 처리할 수 있습니다. rollback 은 exception을 throw하면 redis cache에 데이터가 저장되지 않습니다. PlatformTransactionManager를 Bean으로 등록되어 있고, 메소드에 @tranactional 어노테이션이 있고,메소드 로직에 @redisTemplate을 사용하고 있다면 이는 트랜잭션으로 처리되어, 예외(Exception)가 발생하면 데이터베이스에 처리했던 작업이 rollback 되고, 또한 로직에서 Redis에 저장했던...","categories": ["springboot"],
+        "tags": ["springboot"],
+        "url": "/springboot/springboot-redis-transactional/",
+        "teaser": null
+      },{
         "title": null,
         "excerpt":"lua 설치 - 사전준비 사전에 compiler가 설치되어 있어야 합니다. Compiler가 설치되어 있지 않는 경우 다음을 실행합니다. sudo yum update -y yum groupinstall -y 'Development Tools' lua 설치 curl -R -O http://www.lua.org/ftp/lua-5.4.4.tar.gz tar zxf lua-5.4.4.tar.gz cd lua-5.4.4 make all test lua cli 실행 lua를 실행하고 Hello World를 출력합니다. src/lua str =...","categories": [],
         "tags": null,
