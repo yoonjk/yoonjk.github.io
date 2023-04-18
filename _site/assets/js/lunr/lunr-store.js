@@ -599,10 +599,16 @@ var store = [{
         "url": "/cache/usecase/",
         "teaser": null
       },{
-        "title": "Redis 시작하기 - Redisearch",
+        "title": "Redis 시작하기 - RediSearch",
         "excerpt":"Hands-on을 위해 docker 기반으로 redis-stack-server를 설치합니다. docker run -d --name redis-stack-server -p 6379:6379 redis/redis-stack-server 인덱스 생성 FT.CREATE 명령을 사용하여 필드와 인덱스를 생성합니다(기본 가중치는 1.0). 127.0.0.1:6379&gt; FT.CREATE myIdx ON HASH PREFIX 1 doc: SCHEMA title TEXT WEIGHT 5.0 body TEXT url TEXT OK doc:xx 접두사가 있는 키가 있는 기존 해시 문서는...","categories": ["cache"],
         "tags": ["redis","redisearch"],
         "url": "/cache/installl-redisearch-on-docker/",
+        "teaser": null
+      },{
+        "title": "Redis 시작하기 - Redis with lua",
+        "excerpt":"Lua Script 사용 명령어 eval \"lua script\" 키개수 [KEYS[1], KEYS[2],...] [ARGV[1],ARGV[2],...] eval : lua script를 실행하기 위한 예약어 lua script : Redis에서 실행하기 위한 lua script 입니다. 키개수 : 파라메터로 받을 키개수 입니다. =&gt; KEYS[1], KEYS[2],… KEYS : 키개수 다음으로 오는 파라메터로 키개수 만큼 파라메터를 입력합니다. ARGV : ARGV는 lua에서...","categories": ["cache"],
+        "tags": ["redis","lua"],
+        "url": "/cache/redis-with-lua/",
         "teaser": null
       },{
         "title": "Springboot기반 Redis @Transactional 어노테이션 사용",

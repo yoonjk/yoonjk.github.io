@@ -1,5 +1,5 @@
 ---
-title:  Redis 시작하기 - Redisearch 
+title:  Redis 시작하기 - RediSearch 
 categories:
   - cache 
 tags:
