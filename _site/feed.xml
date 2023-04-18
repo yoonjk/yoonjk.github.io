@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-19T08:19:44+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html"></title><link href="http://localhost:4000/2023-04-16-install-lua/" rel="alternate" type="text/html" title="" /><published>2023-04-19T08:19:44+09:00</published><updated>2023-04-19T08:19:44+09:00</updated><id>http://localhost:4000/2023-04-16-install-lua</id><content type="html" xml:base="http://localhost:4000/2023-04-16-install-lua/"><![CDATA[<h2 id="lua-설치---사전준비">lua 설치 - 사전준비</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-19T08:23:16+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html"></title><link href="http://localhost:4000/2023-04-16-install-lua/" rel="alternate" type="text/html" title="" /><published>2023-04-19T08:23:16+09:00</published><updated>2023-04-19T08:23:16+09:00</updated><id>http://localhost:4000/2023-04-16-install-lua</id><content type="html" xml:base="http://localhost:4000/2023-04-16-install-lua/"><![CDATA[<h2 id="lua-설치---사전준비">lua 설치 - 사전준비</h2>
 <p>사전에 compiler가 설치되어 있어야 합니다.
 Compiler가 설치되어 있지 않는 경우 다음을 실행합니다.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo yum update -y
@@ -98,16 +98,15 @@ lua script : Redis에서 실행하기 위한 lua script 입니다.<br />
 KEYS : 키개수 다음으로 오는 파라메터로 키개수 만큼 파라메터를 입력합니다.<br />
 ARGV : ARGV는 lua에서 가변적으로 입력받는 파라메터입니다.</p>
 
-<p>```bash
-eval “return { KEYS[1], KEYS[2], KEYS[3], ARGV[1], ARGV[2]}” 3 k1 k2 k3 arg1 arg2</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">eval</span> <span class="s2">"return { KEYS[1], KEYS[2], KEYS[3], ARGV[1], ARGV[2]}"</span> 3 k1 k2 k3 arg1 arg2
 
-<h1 id="결과">결과</h1>
-<p>1) “k1”
-2) “k2”
-3) “k3”
-4) “arg1”
-5) “arg2”</p>
-
+<span class="c"># 결과</span>
+1<span class="o">)</span> <span class="s2">"k1"</span> 
+2<span class="o">)</span> <span class="s2">"k2"</span>
+3<span class="o">)</span> <span class="s2">"k3"</span>
+4<span class="o">)</span> <span class="s2">"arg1"</span>
+5<span class="o">)</span> <span class="s2">"arg2"</span>
+</code></pre></div></div>
 <h2 id="참고">참고</h2>
 <p><a href="https://code-factory.tistory.com/13">코드공장</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="lua" /><summary type="html"><![CDATA[Lua Script 사용 명령어]]></summary></entry><entry><title type="html">Redis 시작하기 - RediSearch</title><link href="http://localhost:4000/cache/installl-redisearch-on-docker/" rel="alternate" type="text/html" title="Redis 시작하기 - RediSearch" /><published>2023-04-17T00:00:00+09:00</published><updated>2023-04-17T00:00:00+09:00</updated><id>http://localhost:4000/cache/installl-redisearch-on-docker</id><content type="html" xml:base="http://localhost:4000/cache/installl-redisearch-on-docker/"><![CDATA[<p>Hands-on을 위해 docker 기반으로 redis-stack-server를 설치합니다.</p>
 

@@ -21,11 +21,11 @@ ARGV : ARGV는 lua에서 가변적으로 입력받는 파라메터입니다.
 eval "return { KEYS[1], KEYS[2], KEYS[3], ARGV[1], ARGV[2]}" 3 k1 k2 k3 arg1 arg2
 
 # 결과
-1) "k1"
+1) "k1" 
 2) "k2"
 3) "k3"
 4) "arg1"
 5) "arg2"
-
+```
 ## 참고
 [코드공장](https://code-factory.tistory.com/13)
