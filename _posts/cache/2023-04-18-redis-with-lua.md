@@ -58,3 +58,4 @@ redis-cli를 redis에 접속하여 다음과 같이 실행할 수 있습니다.
 ```
 ## 참고
 [코드공장](https://code-factory.tistory.com/13)
+[everydayminder](https://luran.me/381)
