@@ -600,7 +600,7 @@ var store = [{
         "teaser": null
       },{
         "title": "Redis 시작하기 - RediSearch",
-        "excerpt":"Hands-on을 위해 docker 기반으로 redis-stack-server를 설치합니다. docker run -d --name redis-stack-server -p 6379:6379 redis/redis-stack-server 인덱스 생성 FT.CREATE 명령을 사용하여 필드와 인덱스를 생성합니다(기본 가중치는 1.0). 127.0.0.1:6379&gt; FT.CREATE myIdx ON HASH PREFIX 1 doc: SCHEMA title TEXT WEIGHT 5.0 body TEXT url TEXT OK doc:xx 접두사가 있는 키가 있는 기존 해시 문서는...","categories": ["cache"],
+        "excerpt":"RediSearch 소개 set user1 value1 GET user1 HSET user1 name jaeguk HGETALL user1 name 그러나 GET users WHERE name=”jaeguk” GET users WHERE name like “jae%” Solution is RediSearch Secondary index over Full-text engine Incremental indexing Multi-field queries AND OR NOT complex Boolean queries Numeric filters and ranges Data Aggregation Auto-complete...","categories": ["cache"],
         "tags": ["redis","redisearch"],
         "url": "/cache/installl-redisearch-on-docker/",
         "teaser": null

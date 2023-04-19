@@ -6,7 +6,27 @@ tags:
   - redis
   - redisearch
 ---
-Hands-on을 위해 docker 기반으로 redis-stack-server를 설치합니다.
+## RediSearch 소개
+
+* set user1 value1 GET user1 
+* HSET user1 name jaeguk HGETALL user1 name
+
+그러나 
+* GET users WHERE name="jaeguk"
+* GET users WHERE name like "jae%"
+
+Solution is RediSearch
+* Secondary index over
+* Full-text engine
+* Incremental indexing
+* Multi-field queries
+* AND OR NOT complex Boolean queries
+* Numeric filters and ranges
+* Data Aggregation
+* Auto-complete suggestions
+* Geo Indexing and filtering
+
+RediSearch는 Redis Datasets에서 __SQL과 유사한 기능__ 을 제공합니다!!!
 
 ```bash
 docker run -d --name redis-stack-server -p 6379:6379 redis/redis-stack-server
