@@ -6,6 +6,13 @@ tags:
   - redis
   - lua
 ---
+## lua
+Lua 스크립트는 다음과 같은 장점을 가집니다.
+
+* Pipelining처럼, 여러 명령을 한 번의 request/response만으로 수행할 수 있습니다.
+* 원하는 함수를 redis에서 지원하고 있지 않더라도 lua 스크립트로 대체 가능합니다.(반환되는 값 count, 반환되는 value 모두 더하기 등)
+* 스크립트를 재활용할 수도 있습니다
+
 ## Lua Script 사용 명령어
 Redis에서 lua script를 실행하기 위해 [eval](https://redis.io/commands/eval/) 명령어는 다음과 같습니다.
 ```bash
@@ -80,7 +87,15 @@ redis-cli를 redis에 접속하여 다음과 같이 실행할 수 있습니다.
 
 127.0.0.1:6379> evalsha d57be6feffc53b0a7096b8a5d1c802c04ebc139e 1 users:point -inf inf 0
 ```
+
+## redis 명령어 호출방법
+아래 두 개의 lua 함수를 사용하여, lua script에서 redis 명령을 호출할 수 있습니다.
+```bash
+redis.call()
+redis.pcall()
+```
 ## 참고
 [코드공장](https://code-factory.tistory.com/13)
 [everydayminder](https://luran.me/381)
 [Redis 코스](http://www.w3big.com/ko/redis/sorted-sets-zrangebyscore.html#gsc.tab=0)
+[PlanB의 백엔드 엔지니어링](https://planbs.tistory.com/entry/Redis-Eval)

@@ -606,7 +606,7 @@ var store = [{
         "teaser": null
       },{
         "title": "Redis 시작하기 - Redis with lua",
-        "excerpt":"Lua Script 사용 명령어 Redis에서 lua script를 실행하기 위해 eval 명령어는 다음과 같습니다. eval \"lua script\" 키개수 [KEY1,KEY2,...] [ARGV1,ARGV2,...] eval : lua script를 실행하기 위한 예약어 lua script : Redis에서 실행하기 위한 lua script 입니다. 키개수 : 파라메터로 받을 키(KEYS)개수 입니다. 이는 뒤에 추가적으로 붙을 선택 인자들 중 몇 개가...","categories": ["cache"],
+        "excerpt":"lua Lua 스크립트는 다음과 같은 장점을 가집니다. Pipelining처럼, 여러 명령을 한 번의 request/response만으로 수행할 수 있습니다. 원하는 함수를 redis에서 지원하고 있지 않더라도 lua 스크립트로 대체 가능합니다.(반환되는 값 count, 반환되는 value 모두 더하기 등) 스크립트를 재활용할 수도 있습니다 Lua Script 사용 명령어 Redis에서 lua script를 실행하기 위해 eval 명령어는 다음과 같습니다....","categories": ["cache"],
         "tags": ["redis","lua"],
         "url": "/cache/redis-with-lua/",
         "teaser": null
