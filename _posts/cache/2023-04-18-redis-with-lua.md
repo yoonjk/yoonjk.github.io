@@ -9,12 +9,12 @@ tags:
 ## Lua Script 사용 명령어
 
 ```bash
-eval "lua script" 키개수 [KEYS[1], KEYS[2],...] [ARGV[1],ARGV[2],...]
+eval "lua script" 키개수 [KEY1,KEY2,...] [ARGV1,ARGV2,...]
 ```
 eval : lua script를 실행하기 위한 예약어  
 lua script : Redis에서 실행하기 위한 lua script 입니다.  
-키개수 : 파라메터로 받을 키(KEYS)개수 입니다. 
-KEYS : 키개수 다음으로 오는 파라메터로 키개수 만큼 파라메터를 입력합니다.  
+키개수 : 파라메터로 받을 키(KEYS)개수 입니다. 이는 뒤에 추가적으로 붙을 선택 인자들 중 몇 개가 key인지를 lua가 알 수 있도록 하기 위함입니다.  
+KEYS : 키개수 다음으로 오는 파라메터로 키개수 만큼 파라메터를 입력합니다. 그러면 lua는 KEYS 배열에 바인딩됩니다 
 
 * 0 이면  KEYS 파라메터가 없는 script입니다.
 * 1 이면  => 1 KEY1
@@ -22,7 +22,7 @@ KEYS : 키개수 다음으로 오는 파라메터로 키개수 만큼 파라메�
 * 3 이면  => 3 KEY1 KEY2 KEY3
 script에서는 KEYS[1], KEYS[2], KEYS[3]  이렇게 참조합니다.  
 
-ARGV : ARGV는 lua에서 가변적으로 입력받는 파라메터입니다.   
+ARGV : ARGV는 lua에서 가변적으로 입력받는 파라메터입니다. 인자 [ARGV ...]는 각각 lua에서 사용할 수 있도록 ARGV 배열에 바인팅 됩니다.  
 
 ```bash
 eval "return { KEYS[1], KEYS[2], KEYS[3], ARGV[1], ARGV[2]}" 3 k1 k2 k3 arg1 arg2
