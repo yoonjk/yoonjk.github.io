@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-20T07:38:25+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html"></title><link href="http://localhost:4000/2023-04-16-install-lua/" rel="alternate" type="text/html" title="" /><published>2023-04-20T07:38:25+09:00</published><updated>2023-04-20T07:38:25+09:00</updated><id>http://localhost:4000/2023-04-16-install-lua</id><content type="html" xml:base="http://localhost:4000/2023-04-16-install-lua/"><![CDATA[<h2 id="lua-설치---사전준비">lua 설치 - 사전준비</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-20T07:57:55+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html"></title><link href="http://localhost:4000/2023-04-16-install-lua/" rel="alternate" type="text/html" title="" /><published>2023-04-20T07:57:55+09:00</published><updated>2023-04-20T07:57:55+09:00</updated><id>http://localhost:4000/2023-04-16-install-lua</id><content type="html" xml:base="http://localhost:4000/2023-04-16-install-lua/"><![CDATA[<h2 id="lua-설치---사전준비">lua 설치 - 사전준비</h2>
 <p>사전에 compiler가 설치되어 있어야 합니다.
 Compiler가 설치되어 있지 않는 경우 다음을 실행합니다.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo yum update -y
@@ -89,7 +89,7 @@ PlatformTransactionManager를 Bean으로 등록되어 있고, 메소드에 @tran
 
 <h2 id="참조">참조</h2>
 <p><a href="https://sabarada.tistory.com/178">사바라다는 차곡차곡</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="springboot" /><summary type="html"><![CDATA[@Transactional Springboot 기반 Redis를 사용할 때 @Tranactional 사용하여 commit 과 rollback 을 처리할 수 있습니다. rollback 은 exception을 throw하면 redis cache에 데이터가 저장되지 않습니다. PlatformTransactionManager를 Bean으로 등록되어 있고, 메소드에 @tranactional 어노테이션이 있고,메소드 로직에 @redisTemplate을 사용하고 있다면 이는 트랜잭션으로 처리되어, 예외(Exception)가 발생하면 데이터베이스에 처리했던 작업이 rollback 되고, 또한 로직에서 Redis에 저장했던 데이터 또한 저장되지 않고 rollback 됩니다.]]></summary></entry><entry><title type="html">Redis 시작하기 - Redis with lua</title><link href="http://localhost:4000/cache/redis-with-lua/" rel="alternate" type="text/html" title="Redis 시작하기 - Redis with lua" /><published>2023-04-18T00:00:00+09:00</published><updated>2023-04-18T00:00:00+09:00</updated><id>http://localhost:4000/cache/redis-with-lua</id><content type="html" xml:base="http://localhost:4000/cache/redis-with-lua/"><![CDATA[<h2 id="lua-script-사용-명령어">Lua Script 사용 명령어</h2>
-
+<p>Redis에서 lua script를 실행하기 위해 <a href="https://redis.io/commands/eval/">eval</a> 명령어는 다음과 같습니다.</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">eval</span> <span class="s2">"lua script"</span> 키개수 <span class="o">[</span>KEY1,KEY2,...] <span class="o">[</span>ARGV1,ARGV2,...]
 </code></pre></div></div>
 <p>eval : lua script를 실행하기 위한 예약어<br />
@@ -98,7 +98,10 @@ lua script : Redis에서 실행하기 위한 lua script 입니다.<br />
 KEYS : 키개수 다음으로 오는 파라메터로 키개수 만큼 파라메터를 입력합니다. 그러면 lua는 KEYS 배열에 바인딩됩니다</p>
 
 <ul>
-  <li>0 이면  KEYS 파라메터가 없는 script입니다.</li>
+  <li>0 이면  KEYS 파라메터가 없는 script입니다.
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">eval</span> <span class="s1">'return "Hello World"'</span> 0
+</code></pre></div>    </div>
+  </li>
   <li>1 이면  =&gt; 1 KEY1</li>
   <li>2 이면  =&gt; 2 KEY1 KEY2</li>
   <li>3 이면  =&gt; 3 KEY1 KEY2 KEY3
@@ -116,7 +119,18 @@ script에서는 KEYS[1], KEYS[2], KEYS[3]  이렇게 참조합니다.</li>
 4<span class="o">)</span> <span class="s2">"arg1"</span>
 5<span class="o">)</span> <span class="s2">"arg2"</span>
 </code></pre></div></div>
+<h2 id="eval">eval</h2>
+<p>Redis에서 Lua를 사용하여 eval로 Hello World를 출력할 수 있습니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">eval</span> <span class="s1">'return "Hello World"'</span> 0
+</code></pre></div></div>
 
+<p>예제 2</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">eval</span> <span class="s1">'return string.format("Hi %s", KEYS[1])'</span> 1 jaeguk
+</code></pre></div></div>
+
+<p>예제 3</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">eval</span> <span class="s1">'return string.format("key1 is %s, key2 is %s", KEYS[1],KEYS[2])'</span> 2 age score
+</code></pre></div></div>
 <h2 id="lua-script-load">lua script load</h2>
 <p>아래와 같은 lua script를 redis-cli로 load시 반환값으로 출력되는 sha값으로 lua를 실행할 수 도 있습니다.</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">local </span>current <span class="o">=</span> redis.call<span class="o">(</span><span class="s1">'zrangebyscore'</span>, KEYS[1], ARGV[1], ARGV[2], <span class="s1">'LIMIT'</span>, ARGV[3], ARGV[4]<span class="o">)</span>
@@ -145,7 +159,7 @@ end
 <h2 id="참고">참고</h2>
 <p><a href="https://code-factory.tistory.com/13">코드공장</a>
 <a href="https://luran.me/381">everydayminder</a>
-<a href="http://www.w3big.com/ko/redis/sorted-sets-zrangebyscore.html#gsc.tab=0">Redis 코스</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="lua" /><summary type="html"><![CDATA[Lua Script 사용 명령어]]></summary></entry><entry><title type="html">Redis 시작하기 - RediSearch</title><link href="http://localhost:4000/cache/installl-redisearch-on-docker/" rel="alternate" type="text/html" title="Redis 시작하기 - RediSearch" /><published>2023-04-17T00:00:00+09:00</published><updated>2023-04-17T00:00:00+09:00</updated><id>http://localhost:4000/cache/installl-redisearch-on-docker</id><content type="html" xml:base="http://localhost:4000/cache/installl-redisearch-on-docker/"><![CDATA[<h2 id="redisearch-소개">RediSearch 소개</h2>
+<a href="http://www.w3big.com/ko/redis/sorted-sets-zrangebyscore.html#gsc.tab=0">Redis 코스</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="lua" /><summary type="html"><![CDATA[Lua Script 사용 명령어 Redis에서 lua script를 실행하기 위해 eval 명령어는 다음과 같습니다. eval "lua script" 키개수 [KEY1,KEY2,...] [ARGV1,ARGV2,...] eval : lua script를 실행하기 위한 예약어 lua script : Redis에서 실행하기 위한 lua script 입니다. 키개수 : 파라메터로 받을 키(KEYS)개수 입니다. 이는 뒤에 추가적으로 붙을 선택 인자들 중 몇 개가 key인지를 lua가 알 수 있도록 하기 위함입니다. KEYS : 키개수 다음으로 오는 파라메터로 키개수 만큼 파라메터를 입력합니다. 그러면 lua는 KEYS 배열에 바인딩됩니다]]></summary></entry><entry><title type="html">Redis 시작하기 - RediSearch</title><link href="http://localhost:4000/cache/installl-redisearch-on-docker/" rel="alternate" type="text/html" title="Redis 시작하기 - RediSearch" /><published>2023-04-17T00:00:00+09:00</published><updated>2023-04-17T00:00:00+09:00</updated><id>http://localhost:4000/cache/installl-redisearch-on-docker</id><content type="html" xml:base="http://localhost:4000/cache/installl-redisearch-on-docker/"><![CDATA[<h2 id="redisearch-소개">RediSearch 소개</h2>
 <p>Redis는 다음과 같이 key/value 형식으로 조회가 가능합니다.</p>
 <ul>
   <li>set user1 value1 GET user1</li>

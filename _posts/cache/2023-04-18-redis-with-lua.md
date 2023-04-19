@@ -7,7 +7,7 @@ tags:
   - lua
 ---
 ## Lua Script 사용 명령어
-
+Redis에서 lua script를 실행하기 위해 [eval](https://redis.io/commands/eval/) 명령어는 다음과 같습니다.
 ```bash
 eval "lua script" 키개수 [KEY1,KEY2,...] [ARGV1,ARGV2,...]
 ```
@@ -17,6 +17,9 @@ lua script : Redis에서 실행하기 위한 lua script 입니다.
 KEYS : 키개수 다음으로 오는 파라메터로 키개수 만큼 파라메터를 입력합니다. 그러면 lua는 KEYS 배열에 바인딩됩니다 
 
 * 0 이면  KEYS 파라메터가 없는 script입니다.
+```bash
+eval 'return "Hello World"' 0
+```
 * 1 이면  => 1 KEY1
 * 2 이면  => 2 KEY1 KEY2
 * 3 이면  => 3 KEY1 KEY2 KEY3
@@ -34,7 +37,21 @@ eval "return { KEYS[1], KEYS[2], KEYS[3], ARGV[1], ARGV[2]}" 3 k1 k2 k3 arg1 arg
 4) "arg1"
 5) "arg2"
 ```
+## eval 
+Redis에서 Lua를 사용하여 eval로 Hello World를 출력할 수 있습니다.
+```bash
+eval 'return "Hello World"' 0
+```
 
+예제 2
+```bash
+eval 'return string.format("Hi %s", KEYS[1])' 1 jaeguk
+```
+
+예제 3
+```bash
+eval 'return string.format("key1 is %s, key2 is %s", KEYS[1],KEYS[2])' 2 age score
+```
 ## lua script load
 아래와 같은 lua script를 redis-cli로 load시 반환값으로 출력되는 sha값으로 lua를 실행할 수 도 있습니다.
 ```bash
