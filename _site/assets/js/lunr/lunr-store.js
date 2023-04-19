@@ -600,7 +600,7 @@ var store = [{
         "teaser": null
       },{
         "title": "Redis 시작하기 - RediSearch",
-        "excerpt":"RediSearch 소개 set user1 value1 GET user1 HSET user1 name jaeguk HGETALL user1 name 그러나 GET users WHERE name=”jaeguk” GET users WHERE name like “jae%” Solution is RediSearch Secondary index over Full-text engine Incremental indexing Multi-field queries AND OR NOT complex Boolean queries Numeric filters and ranges Data Aggregation Auto-complete...","categories": ["cache"],
+        "excerpt":"RediSearch 소개 Redis는 다음과 같이 key/value 형식으로 조회가 가능합니다. set user1 value1 GET user1 HSET user1 name jaeguk HGETALL user1 name 그러나 아래와 같이 SQL의 WHERE 절의 Parameters 처럼 조회는 지원하지 않습니다. GET users WHERE name=”jaeguk” GET users WHERE name like “jae%” 위한 같이 SQL과 유사한 기능 사용할 슈 있게...","categories": ["cache"],
         "tags": ["redis","redisearch"],
         "url": "/cache/installl-redisearch-on-docker/",
         "teaser": null

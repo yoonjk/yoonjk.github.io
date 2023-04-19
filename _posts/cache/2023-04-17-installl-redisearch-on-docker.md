@@ -7,15 +7,16 @@ tags:
   - redisearch
 ---
 ## RediSearch 소개
-
+Redis는 다음과 같이 key/value 형식으로 조회가 가능합니다.
 * set user1 value1 GET user1 
 * HSET user1 name jaeguk HGETALL user1 name
 
-그러나 
+그러나 아래와 같이 SQL의 WHERE 절의 Parameters 처럼 조회는 지원하지 않습니다.
 * GET users WHERE name="jaeguk"
 * GET users WHERE name like "jae%"
 
-Solution is RediSearch
+위한 같이 __SQL과 유사한 기능__  사용할 슈 있게 지원하는 것이 RediSearch 솔루션입니다.  
+RediSearch 는 다믐의 기능을 지원합니다.
 * Secondary index over
 * Full-text engine
 * Incremental indexing
@@ -26,7 +27,7 @@ Solution is RediSearch
 * Auto-complete suggestions
 * Geo Indexing and filtering
 
-RediSearch는 Redis Datasets에서 __SQL과 유사한 기능__ 을 제공합니다!!!
+## RediSearch 실습환경 구성
 
 ```bash
 docker run -d --name redis-stack-server -p 6379:6379 redis/redis-stack-server
