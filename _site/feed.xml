@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-19T08:59:40+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html"></title><link href="http://localhost:4000/2023-04-16-install-lua/" rel="alternate" type="text/html" title="" /><published>2023-04-19T08:59:40+09:00</published><updated>2023-04-19T08:59:40+09:00</updated><id>http://localhost:4000/2023-04-16-install-lua</id><content type="html" xml:base="http://localhost:4000/2023-04-16-install-lua/"><![CDATA[<h2 id="lua-설치---사전준비">lua 설치 - 사전준비</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-20T07:06:20+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html"></title><link href="http://localhost:4000/2023-04-16-install-lua/" rel="alternate" type="text/html" title="" /><published>2023-04-20T07:06:20+09:00</published><updated>2023-04-20T07:06:20+09:00</updated><id>http://localhost:4000/2023-04-16-install-lua</id><content type="html" xml:base="http://localhost:4000/2023-04-16-install-lua/"><![CDATA[<h2 id="lua-설치---사전준비">lua 설치 - 사전준비</h2>
 <p>사전에 compiler가 설치되어 있어야 합니다.
 Compiler가 설치되어 있지 않는 경우 다음을 실행합니다.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo yum update -y
@@ -94,9 +94,18 @@ PlatformTransactionManager를 Bean으로 등록되어 있고, 메소드에 @tran
 </code></pre></div></div>
 <p>eval : lua script를 실행하기 위한 예약어<br />
 lua script : Redis에서 실행하기 위한 lua script 입니다.<br />
-키개수 : 파라메터로 받을 키개수 입니다. =&gt; KEYS[1], KEYS[2],…<br />
-KEYS : 키개수 다음으로 오는 파라메터로 키개수 만큼 파라메터를 입력합니다.<br />
-ARGV : ARGV는 lua에서 가변적으로 입력받는 파라메터입니다.</p>
+키개수 : 파라메터로 받을 키(KEYS)개수 입니다. 
+KEYS : 키개수 다음으로 오는 파라메터로 키개수 만큼 파라메터를 입력합니다.</p>
+
+<ul>
+  <li>0 이면  KEYS 파라메터가 없는 script입니다.</li>
+  <li>1 이면  =&gt; 1 KEY1</li>
+  <li>2 이면  =&gt; 2 KEY1 KEY2</li>
+  <li>3 이면  =&gt; 3 KEY1 KEY2 KEY3
+script에서는 KEYS[1], KEYS[2], KEYS[3]  이렇게 참조합니다.</li>
+</ul>
+
+<p>ARGV : ARGV는 lua에서 가변적으로 입력받는 파라메터입니다.</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">eval</span> <span class="s2">"return { KEYS[1], KEYS[2], KEYS[3], ARGV[1], ARGV[2]}"</span> 3 k1 k2 k3 arg1 arg2
 

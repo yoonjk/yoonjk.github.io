@@ -606,7 +606,7 @@ var store = [{
         "teaser": null
       },{
         "title": "Redis 시작하기 - Redis with lua",
-        "excerpt":"Lua Script 사용 명령어 eval \"lua script\" 키개수 [KEYS[1], KEYS[2],...] [ARGV[1],ARGV[2],...] eval : lua script를 실행하기 위한 예약어 lua script : Redis에서 실행하기 위한 lua script 입니다. 키개수 : 파라메터로 받을 키개수 입니다. =&gt; KEYS[1], KEYS[2],… KEYS : 키개수 다음으로 오는 파라메터로 키개수 만큼 파라메터를 입력합니다. ARGV : ARGV는 lua에서...","categories": ["cache"],
+        "excerpt":"Lua Script 사용 명령어 eval \"lua script\" 키개수 [KEYS[1], KEYS[2],...] [ARGV[1],ARGV[2],...] eval : lua script를 실행하기 위한 예약어 lua script : Redis에서 실행하기 위한 lua script 입니다. 키개수 : 파라메터로 받을 키(KEYS)개수 입니다. KEYS : 키개수 다음으로 오는 파라메터로 키개수 만큼 파라메터를 입력합니다. 0 이면 KEYS 파라메터가 없는 script입니다. 1...","categories": ["cache"],
         "tags": ["redis","lua"],
         "url": "/cache/redis-with-lua/",
         "teaser": null
