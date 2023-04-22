@@ -72,3 +72,4 @@ fcd2612e1ca113b83fdfbc2a88493d3b231a32ad
 ## 참조
 [Hong's Programing World](https://hsg2510.tistory.com/category/Lua%20Script)
 [Lua manual](https://www.lua.org/manual/5.4/)
+[freeCodeCamp](https://www.freecodecamp.org/news/a-quick-guide-to-redis-lua-scripting/)
