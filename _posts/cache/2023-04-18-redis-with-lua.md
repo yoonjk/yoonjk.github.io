@@ -174,8 +174,8 @@ eval "local members = redis.call('keys', 'kstar:info:*') local results = {} for 
 6) "kstar:info:joinday=>2022.11.17"
 ```
 ## 참고
-[코드공장](https://code-factory.tistory.com/13)
-[everydayminder](https://luran.me/381)
-[Redis 코스](http://www.w3big.com/ko/redis/sorted-sets-zrangebyscore.html#gsc.tab=0)
-[PlanB의 백엔드 엔지니어링](https://planbs.tistory.com/entry/Redis-Eval)
-[멋지게 놀아라라](https://bstar36.tistory.com/category/%EA%B8%B0%ED%83%80%20DBMS/Redis?page=5)
+[코드공장](https://code-factory.tistory.com/13)  
+[everydayminder](https://luran.me/381)  
+[Redis 코스](http://www.w3big.com/ko/redis/sorted-sets-zrangebyscore.html#gsc.tab=0)  
+[PlanB의 백엔드 엔지니어링](https://planbs.tistory.com/entry/Redis-Eval)  
+[멋지게 놀아라라](https://bstar36.tistory.com/category/%EA%B8%B0%ED%83%80%20DBMS/Redis?page=5)  
