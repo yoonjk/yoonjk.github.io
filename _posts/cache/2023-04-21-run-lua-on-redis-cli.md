@@ -32,6 +32,13 @@ cat script.lua | redis-cli -x script load
 
 ## Lua Script 실행방법
 #### redis-cli 
+
+Sample 데이터 
+```bash
+127.0.0.1:6379> hmset hkeys key:1 value:1 key:2 value:2 key:3 value:3 key:4 value:4 key:5 value:5 key:6 value:6
+127.0.0.1:6379> zadd order 1 key:3 2 key:1 3 key:2
+```
+
 redis-cli -p 6383 eval "$(cat scriptfile)" keynum keys argv 
 ```bash
 -- example01.lua
@@ -43,6 +50,11 @@ redis-cli eval "$(example01.lua)" 1 key1 value
 ```
 
 예시 2
+```bash
+-- example02.lua
+local order = redis.call('zrange', KEYS[1], 0, -1); return redis.call('hmget',KEYS[2], unpack(order))
+```
+
 ```bash
 SHA=$(cat example02.lua |redis-cli -p 6383 -x script load)
 redis-cli -p 6383 evalsha "$SHA" 2 order hkeys

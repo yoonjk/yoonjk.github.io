@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-23T07:05:28+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html"></title><link href="http://localhost:4000/2023-04-16-install-lua/" rel="alternate" type="text/html" title="" /><published>2023-04-23T07:05:28+09:00</published><updated>2023-04-23T07:05:28+09:00</updated><id>http://localhost:4000/2023-04-16-install-lua</id><content type="html" xml:base="http://localhost:4000/2023-04-16-install-lua/"><![CDATA[<h2 id="lua-설치---사전준비">lua 설치 - 사전준비</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-23T07:13:16+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html"></title><link href="http://localhost:4000/2023-04-16-install-lua/" rel="alternate" type="text/html" title="" /><published>2023-04-23T07:13:16+09:00</published><updated>2023-04-23T07:13:16+09:00</updated><id>http://localhost:4000/2023-04-16-install-lua</id><content type="html" xml:base="http://localhost:4000/2023-04-16-install-lua/"><![CDATA[<h2 id="lua-설치---사전준비">lua 설치 - 사전준비</h2>
 <p>사전에 compiler가 설치되어 있어야 합니다.
 Compiler가 설치되어 있지 않는 경우 다음을 실행합니다.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo yum update -y
@@ -98,6 +98,12 @@ Redis 스크립트를 사용하면 제어 구조와 같은 프로그래밍 도�
 
 <h2 id="lua-script-실행방법">Lua Script 실행방법</h2>
 <h4 id="redis-cli">redis-cli</h4>
+
+<p>Sample 데이터</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>127.0.0.1:6379&gt; hmset hkeys key:1 value:1 key:2 value:2 key:3 value:3 key:4 value:4 key:5 value:5 key:6 value:6
+127.0.0.1:6379&gt; zadd order 1 key:3 2 key:1 3 key:2
+</code></pre></div></div>
+
 <p>redis-cli -p 6383 eval “$(cat scriptfile)” keynum keys argv</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">--</span> example01.lua
 redis.call<span class="o">(</span><span class="s1">'SET'</span>, KEYS[1], ARGV[1]<span class="o">)</span>
@@ -107,6 +113,10 @@ redis.call<span class="o">(</span><span class="s1">'SET'</span>, KEYS[1], ARGV[1
 </code></pre></div></div>
 
 <p>예시 2</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">--</span> example02.lua
+<span class="nb">local </span>order <span class="o">=</span> redis.call<span class="o">(</span><span class="s1">'zrange'</span>, KEYS[1], 0, <span class="nt">-1</span><span class="o">)</span><span class="p">;</span> <span class="k">return </span>redis.call<span class="o">(</span><span class="s1">'hmget'</span>,KEYS[2], unpack<span class="o">(</span>order<span class="o">))</span>
+</code></pre></div></div>
+
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">SHA</span><span class="o">=</span><span class="si">$(</span><span class="nb">cat </span>example02.lua |redis-cli <span class="nt">-p</span> 6383 <span class="nt">-x</span> script load<span class="si">)</span>
 redis-cli <span class="nt">-p</span> 6383 evalsha <span class="s2">"</span><span class="nv">$SHA</span><span class="s2">"</span> 2 order hkeys
 </code></pre></div></div>
