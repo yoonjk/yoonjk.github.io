@@ -58,3 +58,6 @@ Score가 동일한 경우
  9) "white"
 10) "1"
 ```
+
+## 참조 
+[Redis Sorted Sets: ZADD](https://www.w3resource.com/redis/redis-zadd-key-score1-member1.php)
