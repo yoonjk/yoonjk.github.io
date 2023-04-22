@@ -46,6 +46,10 @@ redis-cli eval "$(example01.lua)" 1 key1 value
 ```bash
 127.0.0.1:6379> EVAL "return 'Hello, world!'"
 127.0.0.1:6379> EVAL "redis.call('SET', KEYS[1], ARGV[1])" 1 key1 "Example Value"
+
+127.0.0.1:6379> hmset hkeys key:1 value:1 key:2 value:2 key:3 value:3 key:4 value:4 key:5 value:5 key:6 value:6
+127.0.0.1:6379> zadd order 1 key:3 2 key:1 3 key:2
+127.0.0.1:6379> eval "local order = redis.call(‘zrange’, KEYS[1], 0, -1); return redis.call(‘hmget’,KEYS[2],unpack(order));" 2 order hkeys
 ```
 
 EVALSHA <your_script_sha> 1 key argv
