@@ -163,6 +163,16 @@ eval 'local members = redis.call("keys", "kstar:info:*") local results = {} for 
    3) "academy"
 6) 1) "2022.11.17"
 ```
+Key 값에 대한 Value 를 조회하여 key => value 형으로 출력
+```bash
+eval "local members = redis.call('keys', 'kstar:info:*') local results = {} for index, key in ipairs(members) do results[index] = key ..'=>'.. unpack(redis.call('smembers', key)) end return results " 0
+1) "kstar:info:lastloginday=>2023.01.02"
+2) "kstar:info:sex=>M"
+3) "kstar:info:totallogincount=>54"
+4) "kstar:info:age=>25"
+5) "kstar:info:siteid=>job"
+6) "kstar:info:joinday=>2022.11.17"
+```
 ## 참고
 [코드공장](https://code-factory.tistory.com/13)
 [everydayminder](https://luran.me/381)
