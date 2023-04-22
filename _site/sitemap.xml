@@ -6,7 +6,7 @@
     <url>
         <loc>http://localhost:4000/2023-04-16-install-lua/</loc>
         
-        <lastmod>2023-04-22T22:27:17+09:00</lastmod>
+        <lastmod>2023-04-22T22:50:48+09:00</lastmod>
         
 
         
@@ -21,6 +21,22 @@
     
     <url>
         <loc>http://localhost:4000/cache/run-lua-on-redis-cli/</loc>
+        
+        <lastmod>2023-04-21T00:00:00+09:00</lastmod>
+        
+
+        
+        <changefreq>weekly</changefreq>
+        
+
+        
+        <priority>0.5</priority>
+        
+
+    </url>
+    
+    <url>
+        <loc>http://localhost:4000/cache/redis-mencache/</loc>
         
         <lastmod>2023-04-21T00:00:00+09:00</lastmod>
         

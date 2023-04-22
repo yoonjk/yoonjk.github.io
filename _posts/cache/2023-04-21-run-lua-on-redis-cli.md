@@ -60,3 +60,7 @@ fcd2612e1ca113b83fdfbc2a88493d3b231a32ad
 127.0.0.1:6379> EVALSHA fcd2612e1ca113b83fdfbc2a88493d3b231a32ad 1 key1 test1
 127.0.0.1:6379> get key1
 ```
+
+## 참조
+[Hong's Programing World](https://hsg2510.tistory.com/category/Lua%20Script)
+[Lua manual](https://www.lua.org/manual/5.4/)

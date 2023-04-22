@@ -623,6 +623,12 @@ var store = [{
         "url": "/springboot/springboot-redis-transactional/",
         "teaser": null
       },{
+        "title": "Redis 시작하기 - Redis vs Memcache",
+        "excerpt":"redis와 Memcached를 비교합니다. 항목 Redis Memcached 특징 메모리 DB 고성능 분산 캐시 서버 저장방식 메모리 캐시 및 스토리지 메모리 지원 데이터 타입 다양한 데이터 타입지원 String/List/Hashes/Set/Sorted Set String key/value만 지원 키목록 조죄 모든 키목록 모든 키 목록 지원 않음 복제 Controller/replica 복제 지원 않음 클러스터 클러스터 지원 Not support Pub/Sub...","categories": ["cache"],
+        "tags": ["redis","mencache"],
+        "url": "/cache/redis-mencache/",
+        "teaser": null
+      },{
         "title": "Redis 시작하기 - Lua 스크립트 등록 및 실행",
         "excerpt":"스크립팅을 사용하면 Redis 내에서 복잡한 작업을 실행할 수 있습니다. Redis 스크립트를 사용하면 제어 구조와 같은 프로그래밍 도구를 사용할 수 있으며 거의 ​​모든 Redis 명령에 액세스 할 수 있습니다. 그렇다면 왜 명령을 직접 실행하여 또는 응용 프로그램 자체에서 Redis 스크립트를 사용합니까? 작업이 Redis Cache 서버에서 직접 실행되 성능이 크게 증가합니다. Logic은...","categories": ["cache"],
         "tags": ["redis","lua"],
