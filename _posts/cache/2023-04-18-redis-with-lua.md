@@ -124,6 +124,45 @@ redis-cli를 redis에 접속하여 다음과 같이 실행할 수 있습니다.
 redis.call()
 redis.pcall()
 ```
+
+## Lua 예제 
+Key 등록 
+```bash
+127.0.0.1:6379> sadd kstar:info:age 25
+(integer) 1
+127.0.0.1:6379> sadd kstar:info:joinday "2022.11.17"
+(integer) 1
+127.0.0.1:6379> sadd kstar:info:siteid job academy campstudy
+(integer) 3
+127.0.0.1:6379> sadd kstar:info:lastloginday "2023.01.02"
+(integer) 1
+127.0.0.1:6379> sadd kstar:info:sex M
+(integer) 1
+sadd kstar:info:totallogincount 54
+```
+Key 목록 조회하기
+```bash
+127.0.0.1:6379> eval 'local members = redis.call("keys", "kstar:info:*") local results = {} for index,key in ipairs(members) do results[index] = key end return results'  0
+1) "kstar:info:lastloginday"
+2) "kstar:info:sex"
+3) "kstar:info:totallogincount"
+4) "kstar:info:age"
+5) "kstar:info:siteid"
+6) "kstar:info:joinday"
+```
+
+Key 값에 대한 Value 를 조회
+```bash
+eval 'local members = redis.call("keys", "kstar:info:*") local results = {} for index,key in ipairs(members) do results[index] = redis.call("smembers", key) end return results ' 0
+1) 1) "2023.01.02"
+2) 1) "M"
+3) 1) "54"
+4) 1) "25"
+5) 1) "job"
+   2) "campstudy"
+   3) "academy"
+6) 1) "2022.11.17"
+```
 ## 참고
 [코드공장](https://code-factory.tistory.com/13)
 [everydayminder](https://luran.me/381)
