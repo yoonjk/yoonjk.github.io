@@ -37,10 +37,18 @@ redis-cli -p 6383 eval "$(cat scriptfile)" keynum keys argv
 -- example01.lua
 redis.call('SET', KEYS[1], ARGV[1])
 ```
-예시
+예시 1
 ```bash
 redis-cli eval "$(example01.lua)" 1 key1 value
 ```
+
+예시 2
+```bash
+SHA=$(cat example02.lua |redis-cli -p 6383 -x script load)
+redis-cli -p 6383 evalsha "$SHA" 2 order hkeys
+```
+
+
 #### redis 서버
 기본 Redis 스크립트는 EVAL 명령을 사용하여 실행할 수 있습니다. 명령은 Redis에서 직접 스크립트를 실행합니다
 ```bash
