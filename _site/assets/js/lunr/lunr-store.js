@@ -473,6 +473,12 @@ var store = [{
         "url": "/cache/sorted-sets/",
         "teaser": null
       },{
+        "title": "Redis 시작하기 - Sorted Sets - ZADD",
+        "excerpt":"ZADD key score1 member1 [score2 member2] Redis ZADD 명령은 지정된 Score와 함께 지정된 모든 멤버를 키에 저장된 정렬된 집합에 추가하는 데 사용됩니다. 지정된 멤버가 저장된 집합의 기존 멤버인 경우 점수가 업데이트되고 요소가 올바른 위치에 다시 삽입되어 올바른 순서가 보장됩니다. 지정된 멤버가 유일한 멤버로 있는 새 정렬 집합이 만들어지며, 키가 존재하지...","categories": ["cache"],
+        "tags": ["redis"],
+        "url": "/cache/sorted-set-zadd/",
+        "teaser": null
+      },{
         "title": "Redis 시작하기 - Set",
         "excerpt":"Sets Redis 집합은 순서가 지정되지 않은 문자열 컬렉션입니다. SADD 명령은 세트에 새 요소를 추가합니다. 주어진 요소가 이미 존재하는지 테스트, 여러 집합 간의 교차, 합집합 또는 차이 수행 등과 같은 집합에 대해 여러 가지 다른 작업을 수행 할 수도 있습니다. &gt; sadd myset 1 2 3 (integer) 3 &gt; smembers myset...","categories": ["cache"],
         "tags": ["redis","jupyter"],
