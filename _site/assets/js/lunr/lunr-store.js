@@ -617,6 +617,12 @@ var store = [{
         "url": "/springboot/springboot-redis-transactional/",
         "teaser": null
       },{
+        "title": "Redis 시작하기 - Lua 스크립트 등록 및 실행",
+        "excerpt":"스크립팅을 사용하면 Redis 내에서 복잡한 작업을 실행할 수 있습니다. Redis 스크립트를 사용하면 제어 구조와 같은 프로그래밍 도구를 사용할 수 있으며 거의 ​​모든 Redis 명령에 액세스 할 수 있습니다. 그렇다면 왜 명령을 직접 실행하여 또는 응용 프로그램 자체에서 Redis 스크립트를 사용합니까? 작업이 Redis Cache 서버에서 직접 실행되 성능이 크게 증가합니다. Logic은...","categories": ["cache"],
+        "tags": ["redis","lua"],
+        "url": "/cache/run-lua-on-redis-cli/",
+        "teaser": null
+      },{
         "title": null,
         "excerpt":"lua 설치 - 사전준비 사전에 compiler가 설치되어 있어야 합니다. Compiler가 설치되어 있지 않는 경우 다음을 실행합니다. sudo yum update -y yum groupinstall -y 'Development Tools' lua 설치 curl -R -O http://www.lua.org/ftp/lua-5.4.4.tar.gz tar zxf lua-5.4.4.tar.gz cd lua-5.4.4 make all test lua cli 실행 lua를 실행하고 Hello World를 출력합니다. src/lua str =...","categories": [],
         "tags": null,
