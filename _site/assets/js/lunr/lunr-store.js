@@ -455,6 +455,12 @@ var store = [{
         "url": "/cache/redis-persistence/",
         "teaser": null
       },{
+        "title": "Redis 시작하기 - Redis 데이터타입",
+        "excerpt":"Redis는 일반 키-값 저장소가 아니라 실제로 다른 종류의 값을 지원하는 데이터 구조 서버입니다. 기존 키-값 저장소에서는 문자열 키를 문자열 값에 연결했지만 Redis에서는 값이 단순한 문자열로 제한되지 않고 더 복잡한 데이터 구조를 지원할 수 있습니다. 다음은 Redis에서 지원하는 모든 데이터타입 목록입니다. Binary-safe strings. Lists Sets Sorted sets Hashes Bit arrays (or...","categories": ["cache"],
+        "tags": ["redis"],
+        "url": "/cache/datatype/",
+        "teaser": null
+      },{
         "title": "Redis 시작하기 - Bitmap",
         "excerpt":"Bitmaps 비트맵은 실제 데이터 형식이 아니라 String 형식에 정의된 비트 지향 작업 집합입니다. 문자열은 이진 안전 Blob이고 최대 길이는 512MB이므로 최대 2^32비트를 설정하는 데 적합합니다. 비트 연산은 두 그룹으로 나뉩니다: 비트를 1 또는 0으로 설정하거나 값을 가져오는 것과 같은 상수 시간 단일 비트 연산과 비트 그룹에 대한 연산(예: 지정된 비트...","categories": ["cache"],
         "tags": ["redis"],
