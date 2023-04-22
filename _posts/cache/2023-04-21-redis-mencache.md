@@ -1,10 +1,10 @@
 ---
-title:  Redis 시작하기 - Redis vs Memcache
+title:  Redis 시작하기 - Redis vs Memcached
 categories:
   - cache 
 tags:
   - redis
-  - mencache
+  - mencached
 ---
 redis와 Memcached를 비교합니다.
 
