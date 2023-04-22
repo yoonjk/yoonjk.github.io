@@ -1,5 +1,5 @@
 ---
-title:  Redis 시작하기 - Redis with lua
+title:  Redis 시작하기 - Redis with Lua
 categories:
   - cache 
 tags:
@@ -7,11 +7,41 @@ tags:
   - lua
 ---
 ## lua
-Lua 스크립트는 다음과 같은 장점을 가집니다.
+Lua는 달을 뜻하는 포르투갈어이며 1993년 브라질에서 처음 개발되었으며, light-weight하며 이식성이 좋은 스크립트 언어입니다.
+
+__Lua 스크립트는 다음과 같은 특징__ 이 있습니다.
+* 대소 문자를 구분
+* 다른 스크립트 언어처럼 변수 형을 선언하지 않음 
+* 변수 명의 첫글자는 영문 또는 _(언더스코어)로 시작 
+* 예약어는 다음과 같습니다.
+```bash
+and / break / do / else / elseif / end / false / for /function / if / in / local / nil / not / or / repeat / then / true /until / while 
+```
+* local 키워드를 사용하여 전역변수와 지역변수를 구분하고, 지역변수 사용을 권고
+* 배열의 인덱스는 1부터 시작 
+
+__Lua 스크립트는 다음과 같은 장점__ 을 가집니다.
 
 * Pipelining처럼, 여러 명령을 한 번의 request/response만으로 수행할 수 있습니다.
 * 원하는 함수를 redis에서 지원하고 있지 않더라도 lua 스크립트로 대체 가능합니다.(반환되는 값 count, 반환되는 value 모두 더하기 등)
 * 스크립트를 재활용할 수도 있습니다
+* 그래픽 시뮬레이션을 위한 스크립트언어로 개발되었기 때문에 타 스크립트언어보다 빠른 성능을 제공합니다.
+* 자바처럼 가비지 컬렉션을 제공하기 때문에 사용하지 않는 변수를 제거하기 위해 별도의 처리가 필요없습니다. 가비스 컬렉션 대상으로 만들려면 변수에 nil을 할당하면 됩니다. 
+
+#### Redis and Lua
+* Redis에서는 2.6부터 Lua 5.1 버전을 지원하기 시작
+* eval 명령어로 Redis에 전송하여 실행 
+* Lua 스크립트를 script load 명령을 이용하여 Redis 서버에 등록하여 Cache하여 사용가능
+* Redis 에서 Lua 스크립트를 실행할 때 파라메터를 입력받을 수 있다.
+* Lua 스크립트에서 Redis 명령을 사용가능 
+* Redis에서 실행되는 Lua 스크립트는 Atomic으로 처리된다. 즉 스크립트가 실행되는 동안 다른 Redis 명령이 실행되지 못한다.
+* lua-time-limit : Lua 스크립트가 수행될 때 최대 시간을 밀리초 단위로 설정한다. 해당 시간이 지나면 SCRIPT KILL 명령을 이용해서 Lua 스크립트를 중지 할 수 있게 된다. 기본값은  50000(0.0005 초)
+  * 0 이나 음수를 입력하면 스크립트 제한 시간이 없음.  
+  * Lua 스크립트가 수행되고 lua-time-limit 설정값이 되기 전에 SCRIPT KILL 명령을 수행해도 중지되지 않음.  
+  * 무한 loop Lua 스크립트가 수행되고 있을 때 다른 세션에서는 다음과 같은 메시지가 출력됨   
+  __BUSY Redis is busy running a script. You can only call SCRIPT KILL or SHUTDOWN NOSAVE__
+
+
 
 ## Lua Script 사용 명령어
 Redis에서 lua script를 실행하기 위해 [eval](https://redis.io/commands/eval/) 명령어는 다음과 같습니다.

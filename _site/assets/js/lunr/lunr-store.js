@@ -617,8 +617,8 @@ var store = [{
         "url": "/cache/installl-redisearch-on-docker/",
         "teaser": null
       },{
-        "title": "Redis 시작하기 - Redis with lua",
-        "excerpt":"lua Lua 스크립트는 다음과 같은 장점을 가집니다. Pipelining처럼, 여러 명령을 한 번의 request/response만으로 수행할 수 있습니다. 원하는 함수를 redis에서 지원하고 있지 않더라도 lua 스크립트로 대체 가능합니다.(반환되는 값 count, 반환되는 value 모두 더하기 등) 스크립트를 재활용할 수도 있습니다 Lua Script 사용 명령어 Redis에서 lua script를 실행하기 위해 eval 명령어는 다음과 같습니다....","categories": ["cache"],
+        "title": "Redis 시작하기 - Redis with Lua",
+        "excerpt":"lua Lua는 달을 뜻하는 포르투갈어이며 1993년 브라질에서 처음 개발되었으며, light-weight하며 이식성이 좋은 스크립트 언어입니다. Lua 스크립트는 다음과 같은 특징 이 있습니다. 대소 문자를 구분 다른 스크립트 언어처럼 변수 형을 선언하지 않음 변수 명의 첫글자는 영문 또는 _(언더스코어)로 시작 예약어는 다음과 같습니다. and / break / do / else / elseif...","categories": ["cache"],
         "tags": ["redis","lua"],
         "url": "/cache/redis-with-lua/",
         "teaser": null
