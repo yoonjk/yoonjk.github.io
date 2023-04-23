@@ -476,7 +476,13 @@ var store = [{
         "title": "Redis 시작하기 - Sorted Sets - ZADD",
         "excerpt":"ZADD key score1 member1 [score2 member2] Redis ZADD 명령은 지정된 Score와 함께 지정된 모든 멤버를 키에 저장된 정렬된 집합에 추가하는 데 사용됩니다. 지정된 멤버가 저장된 집합의 기존 멤버인 경우 점수가 업데이트되고 요소가 올바른 위치에 다시 삽입되어 올바른 순서가 보장됩니다. 지정된 멤버가 유일한 멤버로 있는 새 정렬 집합이 만들어지며, 키가 존재하지...","categories": ["cache"],
         "tags": ["redis"],
-        "url": "/cache/sorted-set-zadd/",
+        "url": "/cache/sorted-sets-zadd/",
+        "teaser": null
+      },{
+        "title": "Redis 시작하기 - Sorted Sets - ZCARD",
+        "excerpt":"Redis Zcard 명령은 지정된 키에서 세트에 저장된 member의 개수를 반환하는 데 사용됩니다. 문법 : ZCARD KEY_NAME 반환 유형 : sorted set 의 member 개수 또는 0 127.0.0.1:6379&gt; ZADD mycolorset 10 white 12 black 14 red 16 blue (integer) 4 127.0.0.1:6379&gt; ZADD mycolorset 18 green 20 orange 22 pink 24 yellow...","categories": ["cache"],
+        "tags": ["redis","ZCARD"],
+        "url": "/cache/sorted-sets-zcard/",
         "teaser": null
       },{
         "title": "Redis 시작하기 - Set",
