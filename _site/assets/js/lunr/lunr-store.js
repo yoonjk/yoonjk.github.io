@@ -473,18 +473,6 @@ var store = [{
         "url": "/cache/sorted-sets/",
         "teaser": null
       },{
-        "title": "Redis 시작하기 - Sorted Sets - ZADD",
-        "excerpt":"ZADD key score1 member1 [score2 member2] Redis ZADD 명령은 지정된 Score와 함께 지정된 모든 멤버를 키에 저장된 정렬된 집합에 추가하는 데 사용됩니다. 지정된 멤버가 저장된 집합의 기존 멤버인 경우 점수가 업데이트되고 요소가 올바른 위치에 다시 삽입되어 올바른 순서가 보장됩니다. 지정된 멤버가 유일한 멤버로 있는 새 정렬 집합이 만들어지며, 키가 존재하지...","categories": ["cache"],
-        "tags": ["redis"],
-        "url": "/cache/sorted-sets-zadd/",
-        "teaser": null
-      },{
-        "title": "Redis 시작하기 - Sorted Sets - ZCARD",
-        "excerpt":"Redis Zcard 명령은 지정된 키에서 세트에 저장된 member의 개수를 반환하는 데 사용됩니다. 문법 : ZCARD KEY_NAME 반환 유형 : sorted set 의 member 개수 또는 0 127.0.0.1:6379&gt; ZADD mycolorset 10 white 12 black 14 red 16 blue (integer) 4 127.0.0.1:6379&gt; ZADD mycolorset 18 green 20 orange 22 pink 24 yellow...","categories": ["cache"],
-        "tags": ["redis","ZCARD"],
-        "url": "/cache/sorted-sets-zcard/",
-        "teaser": null
-      },{
         "title": "Redis 시작하기 - Set",
         "excerpt":"Sets Redis 집합은 순서가 지정되지 않은 문자열 컬렉션입니다. SADD 명령은 세트에 새 요소를 추가합니다. 주어진 요소가 이미 존재하는지 테스트, 여러 집합 간의 교차, 합집합 또는 차이 수행 등과 같은 집합에 대해 여러 가지 다른 작업을 수행 할 수도 있습니다. &gt; sadd myset 1 2 3 (integer) 3 &gt; smembers myset...","categories": ["cache"],
         "tags": ["redis","jupyter"],
@@ -645,6 +633,12 @@ var store = [{
         "excerpt":"스크립팅을 사용하면 Redis 내에서 복잡한 작업을 실행할 수 있습니다. Redis 스크립트를 사용하면 제어 구조와 같은 프로그래밍 도구를 사용할 수 있으며 거의 ​​모든 Redis 명령에 액세스 할 수 있습니다. 그렇다면 왜 명령을 직접 실행하여 또는 응용 프로그램 자체에서 Redis 스크립트를 사용합니까? 작업이 Redis Cache 서버에서 직접 실행되 성능이 크게 증가합니다. Logic은...","categories": ["cache"],
         "tags": ["redis","lua"],
         "url": "/cache/run-lua-on-redis-cli/",
+        "teaser": null
+      },{
+        "title": "Redis 시작하기 - Usecases - Leaderboard",
+        "excerpt":"LUA 스크립팅의 효율적인 방법으로 수행 할 수 있는 사례에 사용될 수 사례를 살펴봅니다. 여기에는 Redis zset에 유지되는 리더 보드가 있으며, 현재 사용 사례를 위해 주어진 사용자의 경우 해당 사용자의 순위와 리더 보드에서 사용자의 주변의 rank를 얻을 수도 있습니다. 아래의 2 개의 명령이 연속적으로 수행했을 때 정확한 결과를 가져오는가? 첫 번째는...","categories": ["cache"],
+        "tags": ["redis","jupyter"],
+        "url": "/cache/usecases-leaderboard/",
         "teaser": null
       },{
         "title": null,

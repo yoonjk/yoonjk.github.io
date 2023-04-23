@@ -149,6 +149,77 @@ Lexicographical scores
 범위는 포괄적이거나 배타적일 수 있으며(첫 번째 문자에 따라 다름), 문자열 무한 및 빼기 무한대도 + 및 - 문자열로 각각 지정됩니다  . 자세한 내용은 설명서를 참조하십시오..
 이 기능은 정렬 된 집합을 일반 인덱스로 사용할 수 있기 때문에 중요합니다. 예를 들어 128비트 부호 없는 정수 인수로 요소를 인덱싱하려면 점수는 같지만(예: 0) 빅 엔디안의 128비트 숫자로 구성된 16바이트 접두사를 사용하여 정렬된 집합에 요소를 추가하기만 하면 됩니다. 빅 엔디안의 숫자는 사전순으로 (원시 바이트 순서로) 정렬 될 때 실제로 숫자로 정렬되므로 128 비트 공간의 범위를 요청하고 접두사를 버리는 요소의 값을 가져올 수 있습니다.
 
-점수 업데이트: 리더 보드
-다음 주제로 전환하기 전에 정렬 된 세트에 대한 마지막 참고 사항입니다. 정렬된 세트의 점수는 언제든지 업데이트할 수 있습니다.  정렬 된 집합에 이미 포함 된 요소에 대해 [ZADD](https://redis.io/commands/zadd)를 호출하면 O (log (N)) 시간 복잡성으로 점수 (및 위치)가 업데이트됩니다. 따라서 정렬 된 세트는 업데이트가 많을 때 적합합니다..
-이러한 특성 때문에 일반적인 사용 사례는 리더 보드입니다. 일반적인 응용 프로그램은 상위 N 명의 사용자와 리더 보드의 사용자 순위를 표시하기 위해 사용자를 최고 점수별로 정렬하는 기능과 get-rank 작업을 결합하는 Facebook 게임입니다. 
+
+## ZADD
+ZADD key score1 member1 [score2 member2]
+
+Redis ZADD 명령은 지정된 Score와 함께 지정된 모든 멤버를 키에 저장된 정렬된 집합에 추가하는 데 사용됩니다. 지정된 멤버가 저장된 집합의 기존 멤버인 경우 점수가 업데이트되고 요소가 올바른 위치에 다시 삽입되어 올바른 순서가 보장됩니다. 지정된 멤버가 유일한 멤버로 있는 새 정렬 집합이 만들어지며, 키가 존재하지 않거나 정렬된 집합이 비어 있을 때 새로 만들어집니다. 키가 있지만 정렬된 집합이 없으면 오류가 반환됩니다.
+
+
+Return : Integer는 Score가 업데이트 된 이미 존재하는 요소는 개수에 포함하지 않고  신규 추가 된 요소는 개수에 포함된 개수를 반환.
+문법 : 
+```bash
+ZADD KEY_NAME SCORE1 VALUE1.. SCOREN VALUEN
+```
+1개의 요소를 추가하는 경우
+```bash
+127.0.0.1:6379> ZADD mycolorset 1 white
+(integer) 1
+127.0.0.1:6379> ZADD mycolorset 2 black
+(integer) 1
+127.0.0.1:6379> ZADD mycolorset 3 red
+(integer) 1
+127.0.0.1:6379> ZRANGE mycolorset 0 -1
+```
+여러개 요소를 추가하는 경우
+```bash
+127.0.0.1:6379> ZADD mycolorset 4 blue 5 green
+(integer) 2
+127.0.0.1:6379> ZRANGE mycolorset 0 -1 WITHSCORES
+ 1) "white"
+ 2) "1"
+ 3) "black"
+ 4) "2"
+ 5) "red"
+ 6) "3"
+ 7) "blue"
+ 8) "4"
+ 9) "green"
+1)  "5"
+```
+Score가 동일한 경우
+```bash
+127.0.0.1:6379> ZADD mycolorset 1 white 1 black 1 red 1 blue 1 green
+(integer) 5
+127.0.0.1:6379> ZRANGE mycolorset 0 -1 WITHSCORES
+ 1) "black"
+ 2) "1"
+ 3) "blue"
+ 4) "1"
+ 5) "green"
+ 6) "1"
+ 7) "red"
+ 8) "1"
+ 9) "white"
+1)  "1"
+```
+
+## ZCARD 
+Redis Zcard 명령은 지정된 키에서 세트에 저장된 member의 개수를 반환하는 데 사용됩니다.
+
+문법 : 
+ZCARD KEY_NAME
+
+반환 유형 : sorted set 의 member 개수 또는 0
+
+```bash
+127.0.0.1:6379> ZADD mycolorset 10 white 12 black 14 red 16 blue
+(integer) 4
+127.0.0.1:6379> ZADD mycolorset 18 green 20 orange 22 pink 24 yellow
+(integer) 4
+127.0.0.1:6379> ZCARD mycolorset
+(integer) 8
+```
+
+## 참조 
+[Redis Sorted Sets: ZADD](https://www.w3resource.com/redis/redis-zadd-key-score1-member1.php)
