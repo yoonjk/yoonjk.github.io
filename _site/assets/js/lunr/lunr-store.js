@@ -641,10 +641,22 @@ var store = [{
         "url": "/cache/run-lua-on-redis-cli/",
         "teaser": null
       },{
+        "title": "Redis 시작하기 - Usecases - Pre Loading a Lua Script into Redis With Lettuce",
+        "excerpt":"양상추를 사용하여 redis에 대해 루아 스크립트를 실행하는 것을 우리는 매번 인수와 함께 전체 스크립트 redis가 원자 적으로 실행될 것를 보냈습니다. 매우 작은 스크립트의 경우 문제가 될 것 같지 않지만 EVALSHA를 사용하여이를 수행하는 더 효율적인 방법이 있습니다 . EVALSHA evalsha 없이 lua 스크립트를 실행한다는 것은 이미 다룬 것처럼 매번 스크립트와 인수를...","categories": ["cache"],
+        "tags": ["redis","Lua"],
+        "url": "/cache/preload-lua-script/",
+        "teaser": null
+      },{
         "title": "Redis 시작하기 - Usecases - Leaderboard",
         "excerpt":"LUA 스크립팅의 효율적인 방법으로 수행 할 수 있는 사례에 사용될 수 사례를 살펴봅니다. 여기에는 Redis zset에 유지되는 리더 보드가 있으며, 현재 사용 사례를 위해 주어진 사용자의 경우 해당 사용자의 순위와 리더 보드에서 사용자의 주변의 rank를 얻을 수도 있습니다. 아래의 2 개의 명령이 연속적으로 수행했을 때 정확한 결과를 가져오는가? 첫 번째는...","categories": ["cache"],
         "tags": ["redis","jupyter"],
         "url": "/cache/usecases-leaderboard/",
+        "teaser": null
+      },{
+        "title": "Redis 시작하기 - PubSub - springboot",
+        "excerpt":"Redis에서 Pub/Sub을 지원합니다. 특정 topic에 메시지를 전송하는 것을 Springboot을 이용하여 구현하는 것을 알아봅니다. application.yml 설정 spring: main.allow-circular-references: true application: name: redis-cluster redis: topic: ${MY_TOPIC:topic1} ChatMessage Model @Getter @Setter @ToString public class ChatMessage { private String sender; private String context; } ChatMessage Dto @Getter @Setter @ToString public class ChatMessageDto { private...","categories": ["cache"],
+        "tags": ["redis","springboot"],
+        "url": "/cache/pub-sub/",
         "teaser": null
       },{
         "title": null,
