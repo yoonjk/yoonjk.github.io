@@ -1,5 +1,5 @@
 ---
-title: Redis 시작하기 - Usecases - Pre Loading a Lua Script into Redis With Lettuce
+title: Redis 시작하기 - Pre Loading a Lua Script into Redis With Lettuce
 categories:
   - cache 
 tags:

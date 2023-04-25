@@ -641,7 +641,7 @@ var store = [{
         "url": "/cache/run-lua-on-redis-cli/",
         "teaser": null
       },{
-        "title": "Redis 시작하기 - Usecases - Pre Loading a Lua Script into Redis With Lettuce",
+        "title": "Redis 시작하기 - Pre Loading a Lua Script into Redis With Lettuce",
         "excerpt":"양상추를 사용하여 redis에 대해 루아 스크립트를 실행하는 것을 우리는 매번 인수와 함께 전체 스크립트 redis가 원자 적으로 실행될 것를 보냈습니다. 매우 작은 스크립트의 경우 문제가 될 것 같지 않지만 EVALSHA를 사용하여이를 수행하는 더 효율적인 방법이 있습니다 . EVALSHA evalsha 없이 lua 스크립트를 실행한다는 것은 이미 다룬 것처럼 매번 스크립트와 인수를...","categories": ["cache"],
         "tags": ["redis","Lua"],
         "url": "/cache/preload-lua-script/",
