@@ -59,12 +59,17 @@ Redis는 서버에서 LUA 스크립트를 업로드하고 실행할 수 있으�
 간단한 LUA 스크립트를 작성하여 어떻게 문제를 해결할 수 있는지 보자.
 
 ```bash
-local rank = redis.call('zrank', KEYS[1], ARGV[1]);
-local min = math.max(rank - ARGV[2], 0);
-local max = rank + ARGV[2];
-local ldb = redis.call('zrange', KEYS[1], min, max);
+local rank = redis.call('zrank', KEYS[1], KEYS[2])
+local min = math.max(rank - ARGV[1], 0)
+local max = rank + ARGV[1]
+local ldb = redis.call('zrange', KEYS[1], min, max)
+local results = {}
 
-return {rank+1, ldb};
+results['rank'] = tostring(rank + 1)
+results['item'] = ldb
+
+local vars = cjson.encode(results)
+return vars
 ```
 
 | member | score | rank |
