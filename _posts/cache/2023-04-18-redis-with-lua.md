@@ -63,9 +63,11 @@ eval 'return "Hello World"' 0
 * 1 이면  => 1 KEY1
 * 2 이면  => 2 KEY1 KEY2
 * 3 이면  => 3 KEY1 KEY2 KEY3
-script에서는 KEYS[1], KEYS[2], KEYS[3]  이렇게 참조합니다.  
-
-__ARGV__ : ARGV는 lua에서 가변적으로 입력받는 파라메터입니다. 인자 [ARGV ...]는 각각 lua에서 사용할 수 있도록 ARGV 배열에 바인팅 됩니다.  
+LUA에서 ARGV 테이블로 사용할 수있는 키 다음에 여러개의 인수를 제공 할 수 있습니다.
+Lua Script에서는 index가 1부터 시작하며, ARGV table은 KEYS[1], KEYS[2], KEYS[3] 이렇게 참조합니다.  
+의
+__ARGV__ : ARGV는 lua에서 가변적으로 입력받을 수 있는 파라메터입니다. 인자 [ARGV ...]는 각각 lua에서 사용할 수 있도록 ARGV 배열에 바인팅 됩니다.  
+ARGV table도 lua에서는 1부터 시작하며, ARGV table은 ARGV[1], ARGV[2], ARGV[3] 이렇게 참조합니다.
 
 ```bash
 eval "return { KEYS[1], KEYS[2], KEYS[3], ARGV[1], ARGV[2]}" 3 k1 k2 k3 arg1 arg2
