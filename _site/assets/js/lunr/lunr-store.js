@@ -629,6 +629,12 @@ var store = [{
         "url": "/cache/redis-mencache/",
         "teaser": null
       },{
+        "title": "Redis 시작하기 - Lua 에서 return String, List, JSON 형식으로 받기.",
+        "excerpt":"Springboot Lettuce기반 Lua를 호출하여 결과값을 List 받는 방법을 공유합니다. Lua를 를 이용해서 Boolean, Long 타입은 별다른 어려움없이 응답을 받을 수 있습니다. 그러나 String이나 List같은 경우는 RedisTemplate 기본 설정으로는 결과를 받을 수 없고 다음과 같은 오류를 만나게 될 것입니다. 이것은 GenericJackson2JsonRedisSerializer에서 byte[]를 deserialization을 하지 못해서 발생하는 에러입니다. com.fasterxml.jackson.core.JsonParseException: Unrecognized token 'test':...","categories": ["cache"],
+        "tags": ["redis","Lua"],
+        "url": "/cache/return-list-using-lua/",
+        "teaser": null
+      },{
         "title": "Redis 시작하기 - Lua 스크립트 등록 및 실행",
         "excerpt":"스크립팅을 사용하면 Redis 내에서 복잡한 작업을 실행할 수 있습니다. Redis 스크립트를 사용하면 제어 구조와 같은 프로그래밍 도구를 사용할 수 있으며 거의 ​​모든 Redis 명령에 액세스 할 수 있습니다. 그렇다면 왜 명령을 직접 실행하여 또는 응용 프로그램 자체에서 Redis 스크립트를 사용합니까? 작업이 Redis Cache 서버에서 직접 실행되 성능이 크게 증가합니다. Logic은...","categories": ["cache"],
         "tags": ["redis","lua"],
