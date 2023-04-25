@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-25T17:29:12+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html"></title><link href="http://localhost:4000/2023-04-16-install-lua/" rel="alternate" type="text/html" title="" /><published>2023-04-25T17:29:12+09:00</published><updated>2023-04-25T17:29:12+09:00</updated><id>http://localhost:4000/2023-04-16-install-lua</id><content type="html" xml:base="http://localhost:4000/2023-04-16-install-lua/"><![CDATA[<h2 id="lua-설치---사전준비">lua 설치 - 사전준비</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-25T19:09:39+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html"></title><link href="http://localhost:4000/2023-04-16-install-lua/" rel="alternate" type="text/html" title="" /><published>2023-04-25T19:09:39+09:00</published><updated>2023-04-25T19:09:39+09:00</updated><id>http://localhost:4000/2023-04-16-install-lua</id><content type="html" xml:base="http://localhost:4000/2023-04-16-install-lua/"><![CDATA[<h2 id="lua-설치---사전준비">lua 설치 - 사전준비</h2>
 <p>사전에 compiler가 설치되어 있어야 합니다.
 Compiler가 설치되어 있지 않는 경우 다음을 실행합니다.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo yum update -y
@@ -222,20 +222,18 @@ Lua를 를 이용해서 Boolean, Long 타입은 별다른 어려움없이 응답
 <p>RedisTemplate Value Serializer에 CustomJackson2JsonRedisSerializer를 설정합니다.</p>
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nd">@Bean</span>
     <span class="kd">public</span> <span class="nc">RedisTemplate</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Object</span><span class="o">&gt;</span> <span class="nf">redisTemplate</span><span class="o">(</span><span class="nc">RedisConnectionFactory</span> <span class="n">redisConnectionFactory</span><span class="o">){</span>
-    	<span class="nc">CustomJackson2JsonRedisSerializer</span> <span class="n">customJackson2JsonRedisSerializer</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CustomJackson2JsonRedisSerializer</span><span class="o">();</span>
+    		<span class="nc">CustomJackson2JsonRedisSerializer</span> <span class="n">customJackson2JsonRedisSerializer</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CustomJackson2JsonRedisSerializer</span><span class="o">();</span>
     	
         <span class="nc">RedisTemplate</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Object</span><span class="o">&gt;</span> <span class="n">redisTemplate</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RedisTemplate</span><span class="o">&lt;&gt;();</span>
         <span class="n">redisTemplate</span><span class="o">.</span><span class="na">setConnectionFactory</span><span class="o">(</span><span class="n">redisConnectionFactory</span><span class="o">);</span>
         <span class="n">redisTemplate</span><span class="o">.</span><span class="na">setKeySerializer</span><span class="o">(</span><span class="k">new</span> <span class="nc">StringRedisSerializer</span><span class="o">());</span>
         <span class="n">redisTemplate</span><span class="o">.</span><span class="na">setValueSerializer</span><span class="o">(</span><span class="n">customJackson2JsonRedisSerializer</span><span class="o">);</span>
         <span class="n">redisTemplate</span><span class="o">.</span><span class="na">setDefaultSerializer</span><span class="o">(</span><span class="n">customJackson2JsonRedisSerializer</span><span class="o">);</span>
-        <span class="n">redisTemplate</span><span class="o">.</span><span class="na">setDefaultSerializer</span><span class="o">(</span><span class="n">customJackson2JsonRedisSerializer</span><span class="o">);</span>
-        <span class="n">redisTemplate</span><span class="o">.</span><span class="na">setKeySerializer</span><span class="o">(</span><span class="k">new</span> <span class="nc">StringRedisSerializer</span><span class="o">());</span>
-        <span class="n">redisTemplate</span><span class="o">.</span><span class="na">setValueSerializer</span><span class="o">(</span><span class="n">customJackson2JsonRedisSerializer</span><span class="o">);</span>
-        <span class="n">redisTemplate</span><span class="o">.</span><span class="na">setHashKeySerializer</span><span class="o">(</span><span class="n">customJackson2JsonRedisSerializer</span><span class="o">);</span>
-        <span class="n">redisTemplate</span><span class="o">.</span><span class="na">setHashValueSerializer</span><span class="o">(</span><span class="n">customJackson2JsonRedisSerializer</span><span class="o">);</span>        
+        <span class="n">redisTemplate</span><span class="o">.</span><span class="na">setHashKeySerializer</span><span class="o">(</span><span class="k">new</span> <span class="nc">StringRedisSerializer</span><span class="o">());</span>
+        <span class="n">redisTemplate</span><span class="o">.</span><span class="na">setHashValueSerializer</span><span class="o">(</span><span class="n">customJackson2JsonRedisSerializer</span><span class="o">);</span>   
+        
         <span class="k">return</span> <span class="n">redisTemplate</span><span class="o">;</span>
-    <span class="o">}</span>   
+    <span class="o">}</span> 
 </code></pre></div></div>
 <h4 id="leaderboard-lua">leaderboard Lua</h4>
 <p>Lua 예제는 다음과 같습니다.</p>

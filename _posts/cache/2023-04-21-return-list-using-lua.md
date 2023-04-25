@@ -70,20 +70,18 @@ RedisTemplate Value Serializer에 CustomJackson2JsonRedisSerializer를 설정합
 ```java
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory){
-    	CustomJackson2JsonRedisSerializer customJackson2JsonRedisSerializer = new CustomJackson2JsonRedisSerializer();
+    		CustomJackson2JsonRedisSerializer customJackson2JsonRedisSerializer = new CustomJackson2JsonRedisSerializer();
     	
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setValueSerializer(customJackson2JsonRedisSerializer);
         redisTemplate.setDefaultSerializer(customJackson2JsonRedisSerializer);
-        redisTemplate.setDefaultSerializer(customJackson2JsonRedisSerializer);
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
-        redisTemplate.setValueSerializer(customJackson2JsonRedisSerializer);
-        redisTemplate.setHashKeySerializer(customJackson2JsonRedisSerializer);
-        redisTemplate.setHashValueSerializer(customJackson2JsonRedisSerializer);        
+        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+        redisTemplate.setHashValueSerializer(customJackson2JsonRedisSerializer);   
+        
         return redisTemplate;
-    }   
+    } 
 ```
 #### leaderboard Lua
 Lua 예제는 다음과 같습니다.
