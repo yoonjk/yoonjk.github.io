@@ -21,7 +21,7 @@ com.fasterxml.jackson.core.JsonParseException: Unrecognized token 'test': was ex
 * GenericJackson2JsonRedisSerializer에서 extends 
 * deserialize를 overriding
   
-GenericJackson2JsonRedisSerializer를 extention하여 overriding하는 소는 다음과 같습니다. GenericJackson2JsonRedisSerializer를 CustomJackson2JsonRedisSerializer로 변경하면 Lua에서 반환값을 다양하게 받을 수 있습니다.
+GenericJackson2JsonRedisSerializer를 extention하여 overriding하는 소스는 다음과 같습니다. GenericJackson2JsonRedisSerializer를 CustomJackson2JsonRedisSerializer로 변경하면 Lua에서 반환값을 다양하게 받을 수 있습니다.
 
 ```java
 import java.util.Objects;
@@ -64,6 +64,26 @@ public class CustomJackson2JsonRedisSerializer extends GenericJackson2JsonRedisS
 		}
 	}
 }
+```
+#### Redis Configuration
+RedisTemplate Value Serializer에 CustomJackson2JsonRedisSerializer를 설정합니다.
+```java
+    @Bean
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory){
+    	CustomJackson2JsonRedisSerializer customJackson2JsonRedisSerializer = new CustomJackson2JsonRedisSerializer();
+    	
+        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(redisConnectionFactory);
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(customJackson2JsonRedisSerializer);
+        redisTemplate.setDefaultSerializer(customJackson2JsonRedisSerializer);
+        redisTemplate.setDefaultSerializer(customJackson2JsonRedisSerializer);
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(customJackson2JsonRedisSerializer);
+        redisTemplate.setHashKeySerializer(customJackson2JsonRedisSerializer);
+        redisTemplate.setHashValueSerializer(customJackson2JsonRedisSerializer);        
+        return redisTemplate;
+    }   
 ```
 #### leaderboard Lua
 Lua 예제는 다음과 같습니다.
