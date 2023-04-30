@@ -659,6 +659,12 @@ var store = [{
         "url": "/cache/pub-sub/",
         "teaser": null
       },{
+        "title": "VS Code에서 사용하거나 사용하지 않는 import 클래스 단축키로 일용등록/삭제.",
+        "excerpt":"맥북 개발자가 springboot기반으로 개발환경을 사용할 때 자동 import 를 하거나 사용하지 않는 Class가 import되어 있는 것이 있을 때 이를 단축키로 자동으로 제거하는 명렁어는 Shift + alt(option) + o 를 동시에 누르면 Never used 로 되어 있는 import 클래스를 삭제해줍니다.   ","categories": ["springboot"],
+        "tags": ["quickfix"],
+        "url": "/springboot/quick-fix/",
+        "teaser": null
+      },{
         "title": null,
         "excerpt":"lua 설치 - 사전준비 사전에 compiler가 설치되어 있어야 합니다. Compiler가 설치되어 있지 않는 경우 다음을 실행합니다. sudo yum update -y yum groupinstall -y 'Development Tools' lua 설치 curl -R -O http://www.lua.org/ftp/lua-5.4.4.tar.gz tar zxf lua-5.4.4.tar.gz cd lua-5.4.4 make all test lua cli 실행 lua를 실행하고 Hello World를 출력합니다. src/lua str =...","categories": [],
         "tags": null,
