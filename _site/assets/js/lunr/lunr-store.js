@@ -659,6 +659,12 @@ var store = [{
         "url": "/cache/pub-sub/",
         "teaser": null
       },{
+        "title": "maven에서 jdk 버전이 변경되지 않는 경우",
+        "excerpt":"jdk1.8 에서 jdk11로 전환하여 개발을 하는 경우 jdk는 11로 변경되었지만 maven은 여전히 jdk1.8로 빌드를 하는 경우 다음과 같이 추가합니다.  vi $HOME/.mavenrc  export JAVA_HOME=$(/usr/libexec/java_home -v 110)  ","categories": ["springboot"],
+        "tags": ["quickfix"],
+        "url": "/springboot/change-jdk11-to-maven/",
+        "teaser": null
+      },{
         "title": "VS Code에서 사용하거나 사용하지 않는 import 클래스 단축키로 일용등록/삭제.",
         "excerpt":"맥북 개발자가 springboot기반으로 개발환경을 사용할 때 자동 import 를 하거나 사용하지 않는 Class가 import되어 있는 것이 있을 때 이를 단축키로 자동으로 제거하는 명렁어는 Shift + alt(option) + o 를 동시에 누르면 Never used 로 되어 있는 import 클래스를 삭제해줍니다.   ","categories": ["springboot"],
         "tags": ["quickfix"],
