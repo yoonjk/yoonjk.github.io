@@ -9,7 +9,7 @@ tags:
 
 
 ## Redis Cluster 환경구성
-다음은 Redis Cluster 의 일반적인 구성입니다.  아래 구성은 Primary 3개, Replica3개로 Cluster를 구성합니다.
+다음은 Redis Cluster 의 일반적인 구성입니다.  아래 구성은 Primary 3개, Replica3개로 Cluster를 구성합니다. 본 예제는 primary 3개, replica 3로 구성합니다.  
 ![m1s1-r1s2-r3s3]({{ "/assets/images/cache/27-cache-cluster.png" }}) 
 
 ```bash

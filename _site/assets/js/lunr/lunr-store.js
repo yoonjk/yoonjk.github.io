@@ -503,6 +503,12 @@ var store = [{
         "url": "/cache/install-redis/",
         "teaser": null
       },{
+        "title": "Redis 시작하기 - Redis 아키텍처",
+        "excerpt":" Image from https://architecturenotes.co/redis/  ","categories": ["cache"],
+        "tags": ["redis","sentinel"],
+        "url": "/cache/redis-arch/",
+        "teaser": null
+      },{
         "title": "Redis 시작하기 - Redis Sentinel 구성",
         "excerpt":"Redis Sentinel 소개 Redis Sentinel은 Redis의 고가용성 구성을 위한 아키텍처입니다. Sentinel은 Redis를 모니터링하고 master node가 장애가 발생시 알리고 자동으로 장애 조치할 수 있는 여러 Redis 인스턴스를 관리하기 위한 redis 컴포넌트입니다. Redis Sentinel 역할 Redis Sentinel은 Redis의 여러 인스턴스를 모니터링 및 관리하며 아래 3가지 역할을 수행하니다. redis 인스턴스 모니터링 : Sentinel은...","categories": ["cache"],
         "tags": ["redis","sentinel"],
@@ -522,7 +528,7 @@ var store = [{
         "teaser": null
       },{
         "title": "Redis 시작하기 - Redis Cluster",
-        "excerpt":"Redis Cluster 환경구성 다음은 Redis Cluster 의 일반적인 구성입니다. 아래 구성은 Primary 3개, Replica3개로 Cluster를 구성합니다. port [각자포트] # 백그라운드에서 시작하도록 설정 daemonize yes # 클러스터를 사용하겠다. cluster-enabled yes # 클러스터 구성 내용을 저장한는 파일명 지정 (자동 생성됨) cluster-config-file nodes-[각자포트].conf # 클러스터 노드가 다운되었는지 판단하는 시간 (3s) cluster-node-timeout 3000 #...","categories": ["cache"],
+        "excerpt":"Redis Cluster 환경구성 다음은 Redis Cluster 의 일반적인 구성입니다. 아래 구성은 Primary 3개, Replica3개로 Cluster를 구성합니다. 본 예제는 primary 3개, replica 3로 구성합니다. port [각자포트] # 백그라운드에서 시작하도록 설정 daemonize yes # 클러스터를 사용하겠다. cluster-enabled yes # 클러스터 구성 내용을 저장한는 파일명 지정 (자동 생성됨) cluster-config-file nodes-[각자포트].conf # 클러스터 노드가...","categories": ["cache"],
         "tags": ["redis","haproxy"],
         "url": "/cache/redis-cluster/",
         "teaser": null
