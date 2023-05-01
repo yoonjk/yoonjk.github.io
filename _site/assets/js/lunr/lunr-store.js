@@ -504,7 +504,7 @@ var store = [{
         "teaser": null
       },{
         "title": "Redis 시작하기 - Redis 아키텍처",
-        "excerpt":" Image from https://architecturenotes.co/redis/  ","categories": ["cache"],
+        "excerpt":"  Image from https://architecturenotes.co/redis/  ","categories": ["cache"],
         "tags": ["redis","sentinel"],
         "url": "/cache/redis-arch/",
         "teaser": null

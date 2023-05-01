@@ -7,5 +7,5 @@ tags:
   - sentinel 
 ---
 
-![Jupyter log]({{ "/assets/images/cache/00-cache-redis-arch.png" }})
-Image from [https://architecturenotes.co/redis/](Image from https://architecturenotes.co/redis/)
+![Jupyter log]({{ "/assets/images/cache/00-cache-redis-arch.png" }})  
+Image from [https://architecturenotes.co/redis/](https://architecturenotes.co/redis/)
