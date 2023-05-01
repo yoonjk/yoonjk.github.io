@@ -1,5 +1,5 @@
 ---
-title: Redis 시작하기 - Jupyter Notebook
+title: Redis 시작하기 - 파이썬 with Redis on Juypter
 categories:
   - cache
 tags: 
@@ -15,6 +15,14 @@ redisClient = redis.Redis(host='localhost', port=6379, decode_responses=True)
 
 redisClient.set('foo', 'bar')
 redisClient.get('foo')
+
+redisClient.set('mykey', 'Hello from Python!')
+value = redisClient.get('mykey')
+print(value)
+
+redisClient.zadd('vehicles', {'car' : 0})
+redisClient.zadd('vehicles', {'bike' : 0})
+vehicles = redisClient.zrange('vehicles', 0, -1)
 ```
 
 ![Jupyter log]({{ "/assets/images/cache/06-cache-get-set.png" }})
