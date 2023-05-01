@@ -671,7 +671,7 @@ var store = [{
         "url": "/springboot/quick-fix/",
         "teaser": null
       },{
-        "title": "Redis 시작하기 - Lua 중급으로 가는길",
+        "title": "Lua Script 및 Redis7 FUNCTION",
         "excerpt":"Lua를 이용하여 Redis에 있는 데이터를 월별 합계를 계산하거나, from ~ to 기간을 입력받아 합계를 계산할 수 도 있습니다. 다음은 그 예시입니다. 초기 데이터 로드 127.0.0.1:6379&gt; hmset SiteID:TotalCnt 20180101 10 20180102 2 20180103 5 20180120 10 20180131 30 20180205 20 20180210 5 20180331 23 20181230 1230 20190130 130 20190301 310 20200102...","categories": ["cache"],
         "tags": ["redis","lua"],
         "url": "/cache/lua-example/",

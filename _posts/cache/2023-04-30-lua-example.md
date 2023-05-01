@@ -1,5 +1,5 @@
 ---
-title: Redis 시작하기 - Lua 중급으로 가는길
+title: Lua Script 및 Redis7 FUNCTION
 categories:
   - cache 
 tags:
