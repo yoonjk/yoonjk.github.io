@@ -671,6 +671,12 @@ var store = [{
         "url": "/springboot/quick-fix/",
         "teaser": null
       },{
+        "title": "Redis 시작하기 - Lua 중급으로 가는길",
+        "excerpt":"Lua를 이용하여 Redis에 있는 데이터를 월별 합계를 계산하거나, from ~ to 기간을 입력받아 합계를 계산할 수 도 있습니다. 다음은 그 예시입니다. 초기 데이터 로드 127.0.0.1:6379&gt; hmset SiteID:TotalCnt 20180101 10 20180102 2 20180103 5 20180120 10 20180131 30 20180205 20 20180210 5 20180331 23 20181230 1230 20190130 130 20190301 310 20200102...","categories": ["cache"],
+        "tags": ["redis","lua"],
+        "url": "/cache/lua-example/",
+        "teaser": null
+      },{
         "title": null,
         "excerpt":"lua 설치 - 사전준비 사전에 compiler가 설치되어 있어야 합니다. Compiler가 설치되어 있지 않는 경우 다음을 실행합니다. sudo yum update -y yum groupinstall -y 'Development Tools' lua 설치 curl -R -O http://www.lua.org/ftp/lua-5.4.4.tar.gz tar zxf lua-5.4.4.tar.gz cd lua-5.4.4 make all test lua cli 실행 lua를 실행하고 Hello World를 출력합니다. src/lua str =...","categories": [],
         "tags": null,
