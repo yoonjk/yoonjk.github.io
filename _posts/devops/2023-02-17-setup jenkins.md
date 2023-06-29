@@ -41,7 +41,7 @@ https://maven.apache.org/download.cgi 에서 최근  maven 링크를 복사합�
 ```bash
 wget https://dlcdn.apache.org/maven/maven-3/3.8.8/binaries/apache-maven-3.8.8-bin.tar.gz
 
-tar xvzf apache-maven-3.8.7-bin.tar.gz -C /usr/local
+tar xvzf apache-maven-3.8.8-bin.tar.gz -C /usr/local
 ```
 
 ~/.bash_profile을 vi editor로 열어MAVEN_HOME 환경정보를 추가합니다.  
