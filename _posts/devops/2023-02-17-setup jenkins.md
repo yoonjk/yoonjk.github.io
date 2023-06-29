@@ -50,7 +50,7 @@ vi ~/.bash_profile
 ```
 
 ```bash
-export MAVEN_HOME=/usr/local/apache-maven-3.8.7 
+export MAVEN_HOME=/usr/local/apache-maven-3.8.8 
 PATH=$PATH:$MAVEN_HOME/bin 
 ```
 
