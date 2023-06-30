@@ -1,4 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-05-01T14:28:24+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html"></title><link href="http://localhost:4000/2023-04-16-install-lua/" rel="alternate" type="text/html" title="" /><published>2023-05-01T14:28:24+09:00</published><updated>2023-05-01T14:28:24+09:00</updated><id>http://localhost:4000/2023-04-16-install-lua</id><content type="html" xml:base="http://localhost:4000/2023-04-16-install-lua/"><![CDATA[<h2 id="lua-설치---사전준비">lua 설치 - 사전준비</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-06-30T10:58:21+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html"></title><link href="http://localhost:4000/2023-06-30-install-argo-workflow/" rel="alternate" type="text/html" title="" /><published>2023-06-30T10:58:21+09:00</published><updated>2023-06-30T10:58:21+09:00</updated><id>http://localhost:4000/2023-06-30-install-argo-workflow</id><content type="html" xml:base="http://localhost:4000/2023-06-30-install-argo-workflow/"><![CDATA[<h2 id="argo-workflow-설치">Argo Workflow 설치</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl apply <span class="nt">-n</span> argo <span class="nt">-f</span> https://github.com/argoproj/argo-workflows/releases/download/v3.4.6/namespace-install.yaml
+</code></pre></div></div>
+
+<h2 id="argo-workflow-server-login-변경없이-접근">Argo Workflow server login 변경없이 접근</h2>
+<p>Argo Workflow 3.x 이후 부터 UI에 접근하기 위해 로그인하도록 변경되었습니다.
+그존 방식처럼 로그인 없이 사용하기 위해 다음과 같이 설정합니다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl patch deployment   argo-server   <span class="nt">--namespace</span> argo   <span class="nt">--type</span><span class="o">=</span><span class="s1">'json'</span>   <span class="nt">-p</span><span class="o">=</span><span class="s1">'[{"op": "replace", "path": "/spec/template/spec/containers/0/args", "value": [
+  "server",
+  "--auth-mode=server"
+]}]'</span>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author></entry><entry><title type="html"></title><link href="http://localhost:4000/2023-04-16-install-lua/" rel="alternate" type="text/html" title="" /><published>2023-06-30T10:58:21+09:00</published><updated>2023-06-30T10:58:21+09:00</updated><id>http://localhost:4000/2023-04-16-install-lua</id><content type="html" xml:base="http://localhost:4000/2023-04-16-install-lua/"><![CDATA[<h2 id="lua-설치---사전준비">lua 설치 - 사전준비</h2>
 <p>사전에 compiler가 설치되어 있어야 합니다.
 Compiler가 설치되어 있지 않는 경우 다음을 실행합니다.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo yum update -y
@@ -16,7 +27,48 @@ make all <span class="nb">test</span>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>src/lua
 str = "Hello World"
 print(str)
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author></entry><entry><title type="html">Lua Script 및 Redis7 FUNCTION</title><link href="http://localhost:4000/cache/lua-example/" rel="alternate" type="text/html" title="Lua Script 및 Redis7 FUNCTION" /><published>2023-04-30T00:00:00+09:00</published><updated>2023-04-30T00:00:00+09:00</updated><id>http://localhost:4000/cache/lua-example</id><content type="html" xml:base="http://localhost:4000/cache/lua-example/"><![CDATA[<p>Lua를 이용하여 Redis에 있는 데이터를 월별 합계를 계산하거나, from ~ to 기간을 입력받아 합계를 계산할 수 도 있습니다.</p>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author></entry><entry><title type="html">맥환경에서 eclipse 자동완성 단축키 설정</title><link href="http://localhost:4000/springboot/auto-sts/" rel="alternate" type="text/html" title="맥환경에서 eclipse 자동완성 단축키 설정" /><published>2023-06-01T00:00:00+09:00</published><updated>2023-06-01T00:00:00+09:00</updated><id>http://localhost:4000/springboot/auto-sts</id><content type="html" xml:base="http://localhost:4000/springboot/auto-sts/"><![CDATA[<p>윈도우에서 자동완성 단축키는 Ctrl + Space 입니다. 하지만 맥북환경에서는 Ctrl + Space로 기본으로 설정되어 있습니다.
+그래서 자동완성 단축키를 Shift + Space로 변경해서 사용합니다.</p>
+
+<p><img src="/assets/images/springboot/05-sts-short-cut-mac.png" alt="sts-short-cut-mac" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="short-key" /><summary type="html"><![CDATA[윈도우에서 자동완성 단축키는 Ctrl + Space 입니다. 하지만 맥북환경에서는 Ctrl + Space로 기본으로 설정되어 있습니다. 그래서 자동완성 단축키를 Shift + Space로 변경해서 사용합니다.]]></summary></entry><entry><title type="html">Kafka using docker-compose</title><link href="http://localhost:4000/docker/kafka-on-docker/" rel="alternate" type="text/html" title="Kafka using docker-compose" /><published>2023-05-13T00:00:00+09:00</published><updated>2023-05-13T00:00:00+09:00</updated><id>http://localhost:4000/docker/kafka-on-docker</id><content type="html" xml:base="http://localhost:4000/docker/kafka-on-docker/"><![CDATA[<p>카프카 브로커 1개, 주키퍼 1로 구성된 confluent사의 docker 이미지를 기반으로 실행하는 docker-compose 파일입니다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>version: '2'
+
+services:
+  zookeeper:
+    container_name: zookeeper
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_SERVER_ID: 1
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKEEPER_INIT_LIMIT: 5
+      ZOOKEEPER_SYNC_LIMIT: 2
+    ports:
+      - "2181:2181"
+
+  kafka:
+    container_name: kafka
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+</code></pre></div></div>
+
+<h2 id="kafka-연결">Kafka 연결</h2>
+<p>Confluent 사의 docker image에서는 kafka CLI 들이  sh 확장자가 없습니다. apache 나 Bitnami 에서 제공하는 docker image는 sh 확장자가 있는 것이 특징입니다.</p>
+
+<p>다음의 명령어로 현재 topic 목록을 조회합니다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker exec -it kafka kafka-topics --bootstrap-server kafka:9092 --list
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="Kafka" /><summary type="html"><![CDATA[카프카 브로커 1개, 주키퍼 1로 구성된 confluent사의 docker 이미지를 기반으로 실행하는 docker-compose 파일입니다. ``` version: ‘2’]]></summary></entry><entry><title type="html">Lua Script 및 Redis7 FUNCTION</title><link href="http://localhost:4000/cache/lua-example/" rel="alternate" type="text/html" title="Lua Script 및 Redis7 FUNCTION" /><published>2023-04-30T00:00:00+09:00</published><updated>2023-04-30T00:00:00+09:00</updated><id>http://localhost:4000/cache/lua-example</id><content type="html" xml:base="http://localhost:4000/cache/lua-example/"><![CDATA[<p>Lua를 이용하여 Redis에 있는 데이터를 월별 합계를 계산하거나, from ~ to 기간을 입력받아 합계를 계산할 수 도 있습니다.</p>
 
 <p>다음은 그 예시입니다.</p>
 
@@ -331,251 +383,4 @@ EVAL <span class="s2">"local score = redis.call('ZSCORE', KEYS[1], ARGV[1]) </sp
 <span class="o">(</span>integer<span class="o">)</span> 1
 </code></pre></div></div>
 
-<p>스크립트를 한 줄로 보면</p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[LUA 스크립팅의 효율적인 방법으로 수행 할 수 있는 사례에 사용될 수 사례를 살펴봅니다. 여기에는 Redis zset에 유지되는 리더 보드가 있으며, 현재 사용 사례를 위해 주어진 사용자의 경우 해당 사용자의 순위와 리더 보드에서 사용자의 주변의 rank를 얻을 수도 있습니다.]]></summary></entry><entry><title type="html">Redis 시작하기 - Lua 스크립트 등록 및 실행</title><link href="http://localhost:4000/cache/run-lua-on-redis-cli/" rel="alternate" type="text/html" title="Redis 시작하기 - Lua 스크립트 등록 및 실행" /><published>2023-04-21T00:00:00+09:00</published><updated>2023-04-21T00:00:00+09:00</updated><id>http://localhost:4000/cache/run-lua-on-redis-cli</id><content type="html" xml:base="http://localhost:4000/cache/run-lua-on-redis-cli/"><![CDATA[<p>스크립팅을 사용하면 Redis 내에서 복잡한 작업을 실행할 수 있습니다.<br />
-Redis 스크립트를 사용하면 제어 구조와 같은 프로그래밍 도구를 사용할 수 있으며 거의 ​​모든 Redis 명령에 액세스 할 수 있습니다.</p>
-
-<p>그렇다면 왜 명령을 직접 실행하여 또는 응용 프로그램 자체에서 Redis 스크립트를 사용합니까?</p>
-<ul>
-  <li>작업이 Redis Cache 서버에서 직접 실행되 성능이 크게 증가합니다.</li>
-  <li>Logic은  Redis 서버에서 직접 적재되고, 분산되어 있는 여러 응용프로그램에서 사용가능.</li>
-  <li>atomic하게 실행되므로 스크립트가 실행중인 동안 동시에 다른 서버가 해당 스크립트를 실행 하는 것을 방지 함.</li>
-</ul>
-
-<p>Lua는 Redis 스크립팅의 언어입니다. LUA 언어는 단순성과 간결함을 제공하므로 스크립팅 작업에 효과적인 언어입니다.</p>
-
-<p>그러나 스크립트가 모든 경우에 적합하지는 않습니다. Redis 서버는 스크긴트가 실행되는 동안 다른 작업을 차단하기 때문에 로직이 긴 스크립트는 실제로 성능에 영향을 미칠 수 있습니다.</p>
-
-<p>Lua 스크립트를 작성하고, 스크립트를 등록하고 Caching하여 실행하거나, EVAL 명령어로 script를 직접 실행하는 방법들이 있습니다.</p>
-<h2 id="lua-script-등록-방법">Lua Script 등록 방법</h2>
-
-<ul>
-  <li>CLI로 등록
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>script.lua | redis-cli <span class="nt">-x</span> script load
-</code></pre></div>    </div>
-  </li>
-  <li>script load  명령어
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>127.0.0.1:6379&gt; script load <span class="s2">"redis.call('SET', KEYS[1], ARGV[1])"</span>
-</code></pre></div>    </div>
-  </li>
-</ul>
-
-<h2 id="lua-script-실행방법">Lua Script 실행방법</h2>
-<h4 id="redis-cli">redis-cli</h4>
-
-<p>Sample 데이터</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>127.0.0.1:6379&gt; hmset hkeys key:1 value:1 key:2 value:2 key:3 value:3 key:4 value:4 key:5 value:5 key:6 value:6
-127.0.0.1:6379&gt; zadd order 1 key:3 2 key:1 3 key:2
-</code></pre></div></div>
-
-<p>redis-cli -p 6383 eval “$(cat scriptfile)” keynum keys argv</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">--</span> example01.lua
-redis.call<span class="o">(</span><span class="s1">'SET'</span>, KEYS[1], ARGV[1]<span class="o">)</span>
-</code></pre></div></div>
-<p>예시 1</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>redis-cli <span class="nb">eval</span> <span class="s2">"</span><span class="si">$(</span>example01.lua<span class="si">)</span><span class="s2">"</span> 1 key1 value
-</code></pre></div></div>
-
-<p>예시 2</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">--</span> example02.lua
-<span class="nb">local </span>order <span class="o">=</span> redis.call<span class="o">(</span><span class="s1">'zrange'</span>, KEYS[1], 0, <span class="nt">-1</span><span class="o">)</span><span class="p">;</span> <span class="k">return </span>redis.call<span class="o">(</span><span class="s1">'hmget'</span>,KEYS[2], unpack<span class="o">(</span>order<span class="o">))</span>
-</code></pre></div></div>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">SHA</span><span class="o">=</span><span class="si">$(</span><span class="nb">cat </span>example02.lua |redis-cli <span class="nt">-p</span> 6383 <span class="nt">-x</span> script load<span class="si">)</span>
-redis-cli <span class="nt">-p</span> 6383 evalsha <span class="s2">"</span><span class="nv">$SHA</span><span class="s2">"</span> 2 order hkeys
-</code></pre></div></div>
-
-<h4 id="redis-서버">redis 서버</h4>
-<p>기본 Redis 스크립트는 EVAL 명령을 사용하여 실행할 수 있습니다. 명령은 Redis에서 직접 스크립트를 실행합니다</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>127.0.0.1:6379&gt; EVAL <span class="s2">"return 'Hello, world!'"</span>
-127.0.0.1:6379&gt; EVAL <span class="s2">"redis.call('SET', KEYS[1], ARGV[1])"</span> 1 key1 <span class="s2">"Example Value"</span>
-
-127.0.0.1:6379&gt; hmset hkeys key:1 value:1 key:2 value:2 key:3 value:3 key:4 value:4 key:5 value:5 key:6 value:6
-127.0.0.1:6379&gt; zadd order 1 key:3 2 key:1 3 key:2
-127.0.0.1:6379&gt; <span class="nb">eval</span> <span class="s2">"local order = redis.call(‘zrange’, KEYS[1], 0, -1); return redis.call(‘hmget’,KEYS[2],unpack(order));"</span> 2 order hkeys
-</code></pre></div></div>
-
-<p>EVALSHA <your_script_sha> 1 key argv</your_script_sha></p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>127.0.0.1:6379&gt; script load <span class="s2">"redis.call('SET', KEYS[1], ARGV[1])"</span> 
-fcd2612e1ca113b83fdfbc2a88493d3b231a32ad
-
-127.0.0.1:6379&gt; EVALSHA fcd2612e1ca113b83fdfbc2a88493d3b231a32ad 1 key1 test1
-127.0.0.1:6379&gt; get key1
-</code></pre></div></div>
-
-<h2 id="참조">참조</h2>
-<p><a href="https://hsg2510.tistory.com/category/Lua%20Script">Hong’s Programing World</a><br />
-<a href="https://www.lua.org/manual/5.4/">Lua manual</a><br />
-<a href="https://www.freecodecamp.org/news/a-quick-guide-to-redis-lua-scripting/">freeCodeCamp</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="lua" /><summary type="html"><![CDATA[스크립팅을 사용하면 Redis 내에서 복잡한 작업을 실행할 수 있습니다. Redis 스크립트를 사용하면 제어 구조와 같은 프로그래밍 도구를 사용할 수 있으며 거의 ​​모든 Redis 명령에 액세스 할 수 있습니다.]]></summary></entry><entry><title type="html">Redis 시작하기 - Redis vs Memcached</title><link href="http://localhost:4000/cache/redis-mencache/" rel="alternate" type="text/html" title="Redis 시작하기 - Redis vs Memcached" /><published>2023-04-21T00:00:00+09:00</published><updated>2023-04-21T00:00:00+09:00</updated><id>http://localhost:4000/cache/redis-mencache</id><content type="html" xml:base="http://localhost:4000/cache/redis-mencache/"><![CDATA[<p>redis와 Memcached를 비교합니다.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>항목</th>
-      <th>Redis</th>
-      <th>Memcached</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>특징</td>
-      <td>메모리 DB</td>
-      <td>고성능 분산 캐시 서버</td>
-    </tr>
-    <tr>
-      <td>저장방식</td>
-      <td>메모리 캐시 및 스토리지</td>
-      <td>메모리</td>
-    </tr>
-    <tr>
-      <td>지원 데이터 타입</td>
-      <td>다양한 데이터 타입지원<br />String/List/Hashes/Set/Sorted Set</td>
-      <td>String key/value만 지원</td>
-    </tr>
-    <tr>
-      <td>키목록 조죄</td>
-      <td>모든 키목록</td>
-      <td>모든 키 목록 지원 않음</td>
-    </tr>
-    <tr>
-      <td>복제</td>
-      <td>Primary/replica</td>
-      <td>복제 지원 않음</td>
-    </tr>
-    <tr>
-      <td>클러스터</td>
-      <td>클러스터 지원</td>
-      <td>Not support</td>
-    </tr>
-    <tr>
-      <td>Pub/Sub</td>
-      <td>Pub/Sub model 지원</td>
-      <td>Not support</td>
-    </tr>
-    <tr>
-      <td>Script</td>
-      <td>LUA Script 지원</td>
-      <td>Not support</td>
-    </tr>
-  </tbody>
-</table>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="mencached" /><summary type="html"><![CDATA[redis와 Memcached를 비교합니다.]]></summary></entry><entry><title type="html">Redis 시작하기 - Lua 에서 return String, List, JSON 형식으로 받기.</title><link href="http://localhost:4000/cache/return-list-using-lua/" rel="alternate" type="text/html" title="Redis 시작하기 - Lua 에서 return String, List, JSON 형식으로 받기." /><published>2023-04-21T00:00:00+09:00</published><updated>2023-04-21T00:00:00+09:00</updated><id>http://localhost:4000/cache/return-list-using-lua</id><content type="html" xml:base="http://localhost:4000/cache/return-list-using-lua/"><![CDATA[<p>Springboot Lettuce기반 Lua를 호출하여 결과값을 List 받는 방법을 공유합니다.
-Lua를 를 이용해서 Boolean, Long 타입은 별다른 어려움없이 응답을 받을 수 있습니다. 그러나 String이나 List같은 경우는 RedisTemplate 기본 설정으로는 결과를 받을 수 없고 다음과 같은 오류를 만나게 될 것입니다. 이것은 GenericJackson2JsonRedisSerializer에서 byte[]를 deserialization을 하지 못해서 발생하는 에러입니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>com.fasterxml.jackson.core.JsonParseException: Unrecognized token <span class="s1">'test'</span>: was expecting <span class="o">(</span>JSON String, Number, Array, Object or token <span class="s1">'null'</span>, <span class="s1">'true'</span> or <span class="s1">'false'</span><span class="o">)</span>
- at <span class="o">[</span>Source: <span class="o">(</span>byte[]<span class="o">)</span><span class="s2">"test"</span><span class="p">;</span> line: 1, column: 5]
-	at com.fasterxml.jackson.core.JsonParser._constructError<span class="o">(</span>JsonParser.java:2391<span class="o">)</span> ~[jackson-core-2.13.5.jar!/:2.13.5]
-</code></pre></div></div>
-
-<p>그래서 다음과 같은 방법으로 해결이 가능하며, Lua를 통해서 JSON, String, List등을 반환값으로 받을 수 있습니다.</p>
-
-<ul>
-  <li>GenericJackson2JsonRedisSerializer에서 extends</li>
-  <li>deserialize를 overriding</li>
-</ul>
-
-<p>GenericJackson2JsonRedisSerializer를 extention하여 overriding하는 소스는 다음과 같습니다. GenericJackson2JsonRedisSerializer를 CustomJackson2JsonRedisSerializer로 변경하면 Lua에서 반환값을 다양하게 받을 수 있습니다.</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.Objects</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.data.redis.serializer.SerializationException</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.lang.Nullable</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.util.Assert</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">com.fasterxml.jackson.databind.ObjectMapper</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">lombok.extern.slf4j.Slf4j</span><span class="o">;</span>
-
-<span class="nd">@Slf4j</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CustomJackson2JsonRedisSerializer</span> <span class="kd">extends</span> <span class="nc">GenericJackson2JsonRedisSerializer</span> <span class="o">{</span>
-	<span class="nc">ObjectMapper</span> <span class="n">objectMapper</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ObjectMapper</span><span class="o">();</span>
-	<span class="cm">/**
-	 * @param source can be {@literal null}.
-	 * @param type must not be {@literal null}.
-	 * @return {@literal null} for empty source.
-	 * @throws SerializationException
-	 */</span>
-	<span class="nd">@Nullable</span>
-	<span class="kd">public</span> <span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="no">T</span> <span class="nf">deserialize</span><span class="o">(</span><span class="nd">@Nullable</span> <span class="kt">byte</span><span class="o">[]</span> <span class="n">source</span><span class="o">,</span> <span class="nc">Class</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">type</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">SerializationException</span> <span class="o">{</span>
-		<span class="no">T</span> <span class="n">clazz</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-		<span class="k">try</span> <span class="o">{</span>
-			
-			<span class="nc">Assert</span><span class="o">.</span><span class="na">notNull</span><span class="o">(</span><span class="n">type</span><span class="o">,</span>
-					<span class="s">"Deserialization type must not be null! Please provide Object.class to make use of Jackson2 default typing."</span><span class="o">);</span>
-
-			<span class="k">if</span> <span class="o">(</span><span class="nc">Objects</span><span class="o">.</span><span class="na">isNull</span><span class="o">(</span><span class="n">source</span><span class="o">))</span> <span class="o">{</span>
-				<span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
-			<span class="o">}</span>
-
-			<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"Source:{}, class:{}"</span><span class="o">,</span> <span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="n">source</span><span class="o">),</span> <span class="n">type</span><span class="o">);</span>
-			<span class="n">clazz</span> <span class="o">=</span> <span class="n">objectMapper</span><span class="o">.</span><span class="na">readValue</span><span class="o">(</span><span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="n">source</span><span class="o">),</span> <span class="n">type</span><span class="o">);</span>
-			<span class="k">return</span> <span class="n">clazz</span><span class="o">;</span>
-		<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
-			<span class="k">throw</span> <span class="k">new</span> <span class="nf">SerializationException</span><span class="o">(</span><span class="s">"Could not read JSON: "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">(),</span> <span class="n">ex</span><span class="o">);</span>
-		<span class="o">}</span>
-	<span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
-<h4 id="redis-configuration">Redis Configuration</h4>
-<p>RedisTemplate Value Serializer에 CustomJackson2JsonRedisSerializer를 설정합니다.</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nd">@Bean</span>
-    <span class="kd">public</span> <span class="nc">RedisTemplate</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Object</span><span class="o">&gt;</span> <span class="nf">redisTemplate</span><span class="o">(</span><span class="nc">RedisConnectionFactory</span> <span class="n">redisConnectionFactory</span><span class="o">){</span>
-    		<span class="nc">CustomJackson2JsonRedisSerializer</span> <span class="n">customJackson2JsonRedisSerializer</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CustomJackson2JsonRedisSerializer</span><span class="o">();</span>
-    	
-        <span class="nc">RedisTemplate</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Object</span><span class="o">&gt;</span> <span class="n">redisTemplate</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RedisTemplate</span><span class="o">&lt;&gt;();</span>
-        <span class="n">redisTemplate</span><span class="o">.</span><span class="na">setConnectionFactory</span><span class="o">(</span><span class="n">redisConnectionFactory</span><span class="o">);</span>
-        <span class="n">redisTemplate</span><span class="o">.</span><span class="na">setKeySerializer</span><span class="o">(</span><span class="k">new</span> <span class="nc">StringRedisSerializer</span><span class="o">());</span>
-        <span class="n">redisTemplate</span><span class="o">.</span><span class="na">setValueSerializer</span><span class="o">(</span><span class="n">customJackson2JsonRedisSerializer</span><span class="o">);</span>
-        <span class="n">redisTemplate</span><span class="o">.</span><span class="na">setDefaultSerializer</span><span class="o">(</span><span class="n">customJackson2JsonRedisSerializer</span><span class="o">);</span>
-        <span class="n">redisTemplate</span><span class="o">.</span><span class="na">setHashKeySerializer</span><span class="o">(</span><span class="k">new</span> <span class="nc">StringRedisSerializer</span><span class="o">());</span>
-        <span class="n">redisTemplate</span><span class="o">.</span><span class="na">setHashValueSerializer</span><span class="o">(</span><span class="n">customJackson2JsonRedisSerializer</span><span class="o">);</span>   
-        
-        <span class="k">return</span> <span class="n">redisTemplate</span><span class="o">;</span>
-    <span class="o">}</span> 
-</code></pre></div></div>
-<h4 id="leaderboard-lua">leaderboard Lua</h4>
-<p>Lua 예제는 다음과 같습니다.</p>
-<div class="language-lua highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- leaderboard.lua </span>
-<span class="kd">local</span> <span class="n">rank</span> <span class="o">=</span> <span class="n">redis</span><span class="p">.</span><span class="n">call</span><span class="p">(</span><span class="s1">'zrank'</span><span class="p">,</span> <span class="n">KEYS</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">KEYS</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
-<span class="kd">local</span> <span class="n">min</span> <span class="o">=</span> <span class="nb">math.max</span><span class="p">(</span><span class="n">rank</span> <span class="o">-</span> <span class="n">ARGV</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">max</span> <span class="o">=</span> <span class="n">rank</span> <span class="o">+</span> <span class="n">ARGV</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<span class="kd">local</span> <span class="n">ldb</span> <span class="o">=</span> <span class="n">redis</span><span class="p">.</span><span class="n">call</span><span class="p">(</span><span class="s1">'zrange'</span><span class="p">,</span> <span class="n">KEYS</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">min</span><span class="p">,</span> <span class="n">max</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
-
-<span class="n">results</span><span class="p">[</span><span class="s1">'rank'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">tostring</span><span class="p">(</span><span class="n">rank</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">results</span><span class="p">[</span><span class="s1">'item'</span><span class="p">]</span> <span class="o">=</span> <span class="n">ldb</span>
-
-<span class="kd">local</span> <span class="n">vars</span> <span class="o">=</span> <span class="n">cjson</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
-
-<span class="k">return</span> <span class="n">vars</span>
-</code></pre></div></div>
-
-<h4 id="redis에-적용하기">redis에 적용하기</h4>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>leaderboard.lua | redis-cli <span class="nt">-x</span> script load
-<span class="s2">"60e0429ac3aed8dbb3abfeb4fb2d13dde103d575"</span>
-
- 127.0.0.1:6379&gt; evalsha <span class="s2">"60e0429ac3aed8dbb3abfeb4fb2d13dde103d575"</span> 2 leaderboard Heather 3
-<span class="s2">"{</span><span class="se">\"</span><span class="s2">item</span><span class="se">\"</span><span class="s2">:[</span><span class="se">\"</span><span class="s2">Andy</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">Dolly</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">Cathy</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">Heather</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">Gilbert</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">Lilly</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">Dinesh</span><span class="se">\"</span><span class="s2">],</span><span class="se">\"</span><span class="s2">rank</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">6</span><span class="se">\"</span><span class="s2">}"</span>
-</code></pre></div></div>
-<h4 id="redistemplate--lettuce를-이용">RedisTemplate &amp; Lettuce를 이용</h4>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">public</span> <span class="nc">Object</span> <span class="nf">retrieveLeaderBoard</span><span class="o">(</span><span class="nc">LeaderBoardReqVO</span> <span class="n">leaderBoardReqVO</span><span class="o">)</span> <span class="o">{</span>
-    	<span class="nc">DefaultRedisScript</span><span class="o">&lt;</span><span class="nc">Object</span><span class="o">&gt;</span> <span class="n">redisScript</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">DefaultRedisScript</span><span class="o">&lt;&gt;();</span>
-    	<span class="nc">Resource</span> <span class="n">resource</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ClassPathResource</span><span class="o">(</span><span class="n">leaderBoard</span><span class="o">);</span>
-    	<span class="n">redisScript</span><span class="o">.</span><span class="na">setScriptSource</span><span class="o">(</span><span class="k">new</span> <span class="nc">ResourceScriptSource</span><span class="o">(</span><span class="n">resource</span><span class="o">));</span>
-    	<span class="n">redisScript</span><span class="o">.</span><span class="na">setResultType</span><span class="o">(</span><span class="nc">Object</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-    	<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"retrieveLeaderBoard:{}"</span><span class="o">,</span> <span class="n">leaderBoardReqVO</span><span class="o">);</span>
-    	<span class="nc">Object</span><span class="o">[]</span> <span class="n">args</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Object</span><span class="o">[]</span> <span class="o">{</span><span class="n">leaderBoardReqVO</span><span class="o">.</span><span class="na">getUser</span><span class="o">()};</span>
-    	<span class="nc">Object</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">redisTemplate</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">redisScript</span><span class="o">,</span>  <span class="nc">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="n">leaderBoardReqVO</span><span class="o">.</span><span class="na">getKey</span><span class="o">(),</span> <span class="n">leaderBoardReqVO</span><span class="o">.</span><span class="na">getUser</span><span class="o">()),</span> <span class="n">leaderBoardReqVO</span><span class="o">.</span><span class="na">getCount</span><span class="o">());</span>
-    	
-    	<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"retrieveLeaderBoard ret:{}"</span><span class="o">,</span> <span class="n">ret</span><span class="o">);</span>
-    	
-    	<span class="k">return</span> <span class="n">ret</span><span class="o">;</span>
-    <span class="o">}</span>
-</code></pre></div></div>
-
-<h2 id="swagger-ui에서-호출">Swagger UI에서 호출</h2>
-
-<p><img src="/assets/images/cache/31-cache-leaderboard-swagger.png" alt="m1s1-r1s2-r3s3" /></p>
-
-<p>[수행결과과]<br />
-<img src="/assets/images/cache/32-cache-result-leaderboard.png" alt="m1s1-r1s2-r3s3" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="Lua" /><summary type="html"><![CDATA[Springboot Lettuce기반 Lua를 호출하여 결과값을 List 받는 방법을 공유합니다. Lua를 를 이용해서 Boolean, Long 타입은 별다른 어려움없이 응답을 받을 수 있습니다. 그러나 String이나 List같은 경우는 RedisTemplate 기본 설정으로는 결과를 받을 수 없고 다음과 같은 오류를 만나게 될 것입니다. 이것은 GenericJackson2JsonRedisSerializer에서 byte[]를 deserialization을 하지 못해서 발생하는 에러입니다.]]></summary></entry></feed>
+<p>스크립트를 한 줄로 보면</p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[LUA 스크립팅의 효율적인 방법으로 수행 할 수 있는 사례에 사용될 수 사례를 살펴봅니다. 여기에는 Redis zset에 유지되는 리더 보드가 있으며, 현재 사용 사례를 위해 주어진 사용자의 경우 해당 사용자의 순위와 리더 보드에서 사용자의 주변의 rank를 얻을 수도 있습니다.]]></summary></entry></feed>

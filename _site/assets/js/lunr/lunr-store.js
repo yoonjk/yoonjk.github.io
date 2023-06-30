@@ -683,9 +683,27 @@ var store = [{
         "url": "/cache/lua-example/",
         "teaser": null
       },{
+        "title": "Kafka using docker-compose",
+        "excerpt":"카프카 브로커 1개, 주키퍼 1로 구성된 confluent사의 docker 이미지를 기반으로 실행하는 docker-compose 파일입니다. version: '2' services: zookeeper: container_name: zookeeper image: confluentinc/cp-zookeeper:latest environment: ZOOKEEPER_SERVER_ID: 1 ZOOKEEPER_CLIENT_PORT: 2181 ZOOKEEPER_TICK_TIME: 2000 ZOOKEEPER_INIT_LIMIT: 5 ZOOKEEPER_SYNC_LIMIT: 2 ports: - \"2181:2181\" kafka: container_name: kafka image: confluentinc/cp-kafka:latest depends_on: - zookeeper ports: - \"9092:9092\" environment: KAFKA_BROKER_ID: 1 KAFKA_ZOOKEEPER_CONNECT:...","categories": ["docker"],
+        "tags": ["Kafka"],
+        "url": "/docker/kafka-on-docker/",
+        "teaser": null
+      },{
+        "title": "맥환경에서 eclipse 자동완성 단축키 설정",
+        "excerpt":"윈도우에서 자동완성 단축키는 Ctrl + Space 입니다. 하지만 맥북환경에서는 Ctrl + Space로 기본으로 설정되어 있습니다. 그래서 자동완성 단축키를 Shift + Space로 변경해서 사용합니다.      ","categories": ["springboot"],
+        "tags": ["short-key"],
+        "url": "/springboot/auto-sts/",
+        "teaser": null
+      },{
         "title": null,
         "excerpt":"lua 설치 - 사전준비 사전에 compiler가 설치되어 있어야 합니다. Compiler가 설치되어 있지 않는 경우 다음을 실행합니다. sudo yum update -y yum groupinstall -y 'Development Tools' lua 설치 curl -R -O http://www.lua.org/ftp/lua-5.4.4.tar.gz tar zxf lua-5.4.4.tar.gz cd lua-5.4.4 make all test lua cli 실행 lua를 실행하고 Hello World를 출력합니다. src/lua str =...","categories": [],
         "tags": null,
         "url": "/2023-04-16-install-lua/",
+        "teaser": null
+      },{
+        "title": null,
+        "excerpt":"Argo Workflow 설치 kubectl apply -n argo -f https://github.com/argoproj/argo-workflows/releases/download/v3.4.6/namespace-install.yaml Argo Workflow server login 변경없이 접근 Argo Workflow 3.x 이후 부터 UI에 접근하기 위해 로그인하도록 변경되었습니다. 그존 방식처럼 로그인 없이 사용하기 위해 다음과 같이 설정합니다. kubectl patch deployment argo-server --namespace argo --type='json' -p='[{\"op\": \"replace\", \"path\": \"/spec/template/spec/containers/0/args\", \"value\": [ \"server\", \"--auth-mode=server\" ]}]'...","categories": [],
+        "tags": null,
+        "url": "/2023-06-30-install-argo-workflow/",
         "teaser": null
       }]
