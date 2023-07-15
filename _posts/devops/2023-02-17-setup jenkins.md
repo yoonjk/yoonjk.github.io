@@ -39,9 +39,9 @@ https://maven.apache.org/download.cgi 에서 최근  maven 링크를 복사합�
 설치하고자 하는 경로에 압축파일을 다운 받아 압축을 해제한 후, 해당 폴더가 위치한 곳을 MAVEN_HOME으로 설정합니다.
 
 ```bash
-wget https://dlcdn.apache.org/maven/maven-3/3.8.8/binaries/apache-maven-3.8.8-bin.tar.gz
+wget https://dlcdn.apache.org/maven/maven-3/3.8.7/binaries/apache-maven-3.8.7-bin.tar.gz
 
-tar xvzf apache-maven-3.8.8-bin.tar.gz -C /usr/local
+tar xvzf apache-maven-3.8.7-bin.tar.gz -C /usr/local
 ```
 
 ~/.bash_profile을 vi editor로 열어MAVEN_HOME 환경정보를 추가합니다.  
@@ -50,7 +50,7 @@ vi ~/.bash_profile
 ```
 
 ```bash
-export MAVEN_HOME=/usr/local/apache-maven-3.8.8 
+export MAVEN_HOME=/usr/local/apache-maven-3.8.7 
 PATH=$PATH:$MAVEN_HOME/bin 
 ```
 
@@ -82,7 +82,7 @@ wget https://pkg.jenkins.io/redhat-stable/jenkins.repo -O /etc/yum.repos.d/jenki
 rpm에 젠킨스를 추가합니다.
 
 ```bash
-sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
 ```
 
 Jenkins 를 다음과 같이 설치합니다.
