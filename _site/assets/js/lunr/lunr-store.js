@@ -695,6 +695,12 @@ var store = [{
         "url": "/springboot/auto-sts/",
         "teaser": null
       },{
+        "title": "Watson Assistant 로 코딩없이 ChatBot 만들기",
+        "excerpt":"IBM 왓슨 어시스턴트로 챗봇을 구축하는 방법 이 글에서는 IBM 왓슨 어시스턴트를 사용하여 작동하는 챗봇을 구축하는 방법에 대해 알아보겠습니다. 왓슨 어시스턴트는 IBM 클라우드에서 호스팅되는 챗봇 구축용 서비스로, 별도의 프로그래밍 없이도 챗봇을 구축할 수 있습니다. 챗봇 구축을 시작하기 전에 챗봇이란 무엇이며 챗봇의 사용 사례를 이해해 보겠습니다. 챗봇은 사람과 대화를 시뮬레이션할 수 있는...","categories": ["watson"],
+        "tags": ["watson assistant"],
+        "url": "/watson/watson-assistant-tutorial/",
+        "teaser": null
+      },{
         "title": null,
         "excerpt":"lua 설치 - 사전준비 사전에 compiler가 설치되어 있어야 합니다. Compiler가 설치되어 있지 않는 경우 다음을 실행합니다. sudo yum update -y yum groupinstall -y 'Development Tools' lua 설치 curl -R -O http://www.lua.org/ftp/lua-5.4.4.tar.gz tar zxf lua-5.4.4.tar.gz cd lua-5.4.4 make all test lua cli 실행 lua를 실행하고 Hello World를 출력합니다. src/lua str =...","categories": [],
         "tags": null,

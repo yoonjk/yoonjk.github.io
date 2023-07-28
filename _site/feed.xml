@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-07-15T22:41:50+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html"></title><link href="http://localhost:4000/2023-06-30-install-argo-workflow/" rel="alternate" type="text/html" title="" /><published>2023-07-15T22:41:50+09:00</published><updated>2023-07-15T22:41:50+09:00</updated><id>http://localhost:4000/2023-06-30-install-argo-workflow</id><content type="html" xml:base="http://localhost:4000/2023-06-30-install-argo-workflow/"><![CDATA[<h2 id="argo-workflow-설치">Argo Workflow 설치</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-07-28T11:25:59+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html"></title><link href="http://localhost:4000/2023-06-30-install-argo-workflow/" rel="alternate" type="text/html" title="" /><published>2023-07-28T11:25:59+09:00</published><updated>2023-07-28T11:25:59+09:00</updated><id>http://localhost:4000/2023-06-30-install-argo-workflow</id><content type="html" xml:base="http://localhost:4000/2023-06-30-install-argo-workflow/"><![CDATA[<h2 id="argo-workflow-설치">Argo Workflow 설치</h2>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl apply <span class="nt">-n</span> argo <span class="nt">-f</span> https://github.com/argoproj/argo-workflows/releases/download/v3.4.6/namespace-install.yaml
 </code></pre></div></div>
 
@@ -9,7 +9,7 @@
   "server",
   "--auth-mode=server"
 ]}]'</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author></entry><entry><title type="html"></title><link href="http://localhost:4000/2023-04-16-install-lua/" rel="alternate" type="text/html" title="" /><published>2023-07-15T22:41:50+09:00</published><updated>2023-07-15T22:41:50+09:00</updated><id>http://localhost:4000/2023-04-16-install-lua</id><content type="html" xml:base="http://localhost:4000/2023-04-16-install-lua/"><![CDATA[<h2 id="lua-설치---사전준비">lua 설치 - 사전준비</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author></entry><entry><title type="html"></title><link href="http://localhost:4000/2023-04-16-install-lua/" rel="alternate" type="text/html" title="" /><published>2023-07-28T11:25:59+09:00</published><updated>2023-07-28T11:25:59+09:00</updated><id>http://localhost:4000/2023-04-16-install-lua</id><content type="html" xml:base="http://localhost:4000/2023-04-16-install-lua/"><![CDATA[<h2 id="lua-설치---사전준비">lua 설치 - 사전준비</h2>
 <p>사전에 compiler가 설치되어 있어야 합니다.
 Compiler가 설치되어 있지 않는 경우 다음을 실행합니다.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo yum update -y
@@ -27,7 +27,73 @@ make all <span class="nb">test</span>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>src/lua
 str = "Hello World"
 print(str)
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author></entry><entry><title type="html">맥환경에서 eclipse 자동완성 단축키 설정</title><link href="http://localhost:4000/springboot/auto-sts/" rel="alternate" type="text/html" title="맥환경에서 eclipse 자동완성 단축키 설정" /><published>2023-06-01T00:00:00+09:00</published><updated>2023-06-01T00:00:00+09:00</updated><id>http://localhost:4000/springboot/auto-sts</id><content type="html" xml:base="http://localhost:4000/springboot/auto-sts/"><![CDATA[<p>윈도우에서 자동완성 단축키는 Ctrl + Space 입니다. 하지만 맥북환경에서는 Ctrl + Space로 기본으로 설정되어 있습니다.
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author></entry><entry><title type="html">Watson Assistant 로 코딩없이 ChatBot 만들기</title><link href="http://localhost:4000/watson/watson-assistant-tutorial/" rel="alternate" type="text/html" title="Watson Assistant 로 코딩없이 ChatBot 만들기" /><published>2023-07-27T00:00:00+09:00</published><updated>2023-07-27T00:00:00+09:00</updated><id>http://localhost:4000/watson/watson-assistant-tutorial</id><content type="html" xml:base="http://localhost:4000/watson/watson-assistant-tutorial/"><![CDATA[<h2 id="ibm-왓슨-어시스턴트로-챗봇을-구축하는-방법">IBM 왓슨 어시스턴트로 챗봇을 구축하는 방법</h2>
+<p>이 글에서는 IBM 왓슨 어시스턴트를 사용하여 작동하는 챗봇을 구축하는 방법에 대해 알아보겠습니다.<br />
+왓슨 어시스턴트는 IBM 클라우드에서 호스팅되는 챗봇 구축용 서비스로, 별도의 프로그래밍 없이도 챗봇을 구축할 수 있습니다.</p>
+
+<p><img src="/assets/images/watson/01-bot.png" alt="" /></p>
+
+<p>챗봇 구축을 시작하기 전에 챗봇이란 무엇이며 챗봇의 사용 사례를 이해해 보겠습니다.</p>
+<blockquote>
+  <p>챗봇은 사람과 대화를 시뮬레이션할 수 있는 인공 지능(AI) 소프트웨어입니다. 챗봇 서비스는 사용자의 텍스트, 
+시각 또는 청각 입력에 응답하도록 프로그래밍되어 있으며 SMS, 웹사이트 채팅창, 소셜 메시징 서비스 등의 매체를 활용하여 메시지를 수신하고 응답합니다.</p>
+</blockquote>
+
+<p>챗봇은 FAQ 답변, 24*7 고객 관리 지원, 티켓 예약, 피자 주문 접수 등 다양한 서비스에서 사용할 수 있습니다.</p>
+
+<p>다음 작업을 처리할 수 있는 레스토랑용 챗봇을 구축하겠습니다:</p>
+
+<ol>
+  <li><strong>예약하기</strong> - 챗봇이 최종 사용자를 위해 테이블을 예약할 수 있습니다.</li>
+  <li><strong>영업시간</strong> - 챗봇이 레스토랑의 영업 시간에 대한 정보를 제공할 수 있습니다.</li>
+</ol>
+
+<p>원하는 만큼 많은 기능을 추가할 수 있지만,<br />
+단순화와 이해를 돕기 위해 위의 두 가지 기능에만 초점을 맞춰 설명하겠습니다.</p>
+
+<p>이제 챗봇이 수행할 수 있는 작업의 종류에 대한 의도를 설정했으니 구축을 시작하겠습니다.</p>
+
+<h2 id="챗봇-만들기">챗봇 만들기</h2>
+<p>IBM 왓슨 어시스턴트 서비스를 사용하려면 IBM 클라우드 계정이 있어야 합니다.<br />
+IBM Cloud 계정에 로그인합니다. 계정이 없는 경우 여기에서 무료로 가입할 수 있습니다.</p>
+
+<p><a href="https://cloud.ibm.com/registration">IBM Cloud 가입</a></p>
+
+<p><strong>1단계: 왓슨 어시스턴트 서비스 인스턴스 만들기</strong><br />
+IBM 클라우드 계정에 로그인하면 대시보드에 아래와 같은 화면이 나타납니다.<br />
+<img src="/assets/images/watson/02-dashboard.png" alt="" /></p>
+
+<p>검색창에 “왓슨 어시스턴트”를 입력하고 왓슨 어시스턴트 서비스를 생성합니다.</p>
+
+<p>왓슨 어시스턴트 서비스를 생성한 후 해당 서비스를 클릭하면 다음과 같은 화면이 나타납니다.</p>
+
+<p><img src="/assets/images/watson/03-start-by-launching the tool.png" alt="" /></p>
+
+<p>이제 ‘왓슨 어시스턴트 실행’을 클릭하여 서비스를 시작합니다.</p>
+
+<p><strong>2단계: 어시스턴트에 대화 스킬 추가하기</strong>
+첫 번째 단계를 완료하면 다음 이미지가 표시됩니다.</p>
+
+<p><img src="/assets/images/watson/04-add-a-dialog-skill-to the assistant.png" alt="" /></p>
+
+<p>이 단계에서는 어시스턴트에 대화 스킬을 추가하겠습니다.<br />
+대화 스킬은 어시스턴트가 언급된 작업을 수행하는 데 도움이 됩니다.</p>
+
+<p>어시스턴트에 대화 스킬을 추가하려면 “내 첫 번째 어시스턴트”를 클릭합니다. 다음 이미지가 표시됩니다.</p>
+
+<p><img src="/assets/images/watson/05-my-first-assistant.png" alt="" /></p>
+
+<p>여기에서 어시스턴트에 연결된 액션 스킬이 있음을 알 수 있습니다.<br />
+어떤 경우에는 어시스턴트에 연결된 액션 스킬이 있고 어떤 경우에는 어시스턴트에 연결된 대화 스킬이 있습니다.</p>
+
+<p>어시스턴트에 연결된 대화 스킬이 있는 경우에는 아무것도 변경할 필요가 없지만, 우리의 경우에는<br />
+어시스턴트에 연결된 액션 스킬이 있고 대화 스킬을 연결하려고 합니다.<br />
+이렇게 하려면 먼저 어시스턴트에서 액션 스킬을 제거합니다.</p>
+
+<p><img src="/assets/images/watson/06-remove-action-skill.png" alt="" /></p>
+
+<p>기존 액션 스킬을 제거하려면 내 첫 번째 스킬의 오른쪽 상단 모서리에 있는 점 3개를 클릭하고 스킬 제거를 클릭합니다.<br />
+액션 스킬을 성공적으로 제거하면 다음 이미지가 표시됩니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="watson" /><category term="watson assistant" /><summary type="html"><![CDATA[IBM 왓슨 어시스턴트로 챗봇을 구축하는 방법 이 글에서는 IBM 왓슨 어시스턴트를 사용하여 작동하는 챗봇을 구축하는 방법에 대해 알아보겠습니다. 왓슨 어시스턴트는 IBM 클라우드에서 호스팅되는 챗봇 구축용 서비스로, 별도의 프로그래밍 없이도 챗봇을 구축할 수 있습니다.]]></summary></entry><entry><title type="html">맥환경에서 eclipse 자동완성 단축키 설정</title><link href="http://localhost:4000/springboot/auto-sts/" rel="alternate" type="text/html" title="맥환경에서 eclipse 자동완성 단축키 설정" /><published>2023-06-01T00:00:00+09:00</published><updated>2023-06-01T00:00:00+09:00</updated><id>http://localhost:4000/springboot/auto-sts</id><content type="html" xml:base="http://localhost:4000/springboot/auto-sts/"><![CDATA[<p>윈도우에서 자동완성 단축키는 Ctrl + Space 입니다. 하지만 맥북환경에서는 Ctrl + Space로 기본으로 설정되어 있습니다.
 그래서 자동완성 단축키를 Shift + Space로 변경해서 사용합니다.</p>
 
 <p><img src="/assets/images/springboot/05-sts-short-cut-mac.png" alt="sts-short-cut-mac" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="short-key" /><summary type="html"><![CDATA[윈도우에서 자동완성 단축키는 Ctrl + Space 입니다. 하지만 맥북환경에서는 Ctrl + Space로 기본으로 설정되어 있습니다. 그래서 자동완성 단축키를 Shift + Space로 변경해서 사용합니다.]]></summary></entry><entry><title type="html">Kafka using docker-compose</title><link href="http://localhost:4000/docker/kafka-on-docker/" rel="alternate" type="text/html" title="Kafka using docker-compose" /><published>2023-05-13T00:00:00+09:00</published><updated>2023-05-13T00:00:00+09:00</updated><id>http://localhost:4000/docker/kafka-on-docker</id><content type="html" xml:base="http://localhost:4000/docker/kafka-on-docker/"><![CDATA[<p>카프카 브로커 1개, 주키퍼 1로 구성된 confluent사의 docker 이미지를 기반으로 실행하는 docker-compose 파일입니다.</p>
@@ -141,12 +207,12 @@ redis.register_function<span class="o">(</span><span class="s1">'get_days_in_mon
 </code></pre></div></div>
 
 <h2 id="참조">참조</h2>
-<p><a href="https://bstar36.tistory.com/348">멋지게 놀아라</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="lua" /><summary type="html"><![CDATA[Lua를 이용하여 Redis에 있는 데이터를 월별 합계를 계산하거나, from ~ to 기간을 입력받아 합계를 계산할 수 도 있습니다.]]></summary></entry><entry><title type="html">maven에서 jdk 버전이 변경되지 않는 경우</title><link href="http://localhost:4000/springboot/change-jdk11-to-maven/" rel="alternate" type="text/html" title="maven에서 jdk 버전이 변경되지 않는 경우" /><published>2023-04-28T00:00:00+09:00</published><updated>2023-04-28T00:00:00+09:00</updated><id>http://localhost:4000/springboot/change-jdk11-to-maven</id><content type="html" xml:base="http://localhost:4000/springboot/change-jdk11-to-maven/"><![CDATA[<p>jdk1.8 에서 jdk11로 전환하여 개발을 하는 경우 jdk는 11로 변경되었지만 maven은 여전히 jdk1.8로 빌드를 하는 경우 다음과 같이 추가합니다.</p>
+<p><a href="https://bstar36.tistory.com/348">멋지게 놀아라</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="lua" /><summary type="html"><![CDATA[Lua를 이용하여 Redis에 있는 데이터를 월별 합계를 계산하거나, from ~ to 기간을 입력받아 합계를 계산할 수 도 있습니다.]]></summary></entry><entry><title type="html">VS Code에서 사용하거나 사용하지 않는 import 클래스 단축키로 일용등록/삭제.</title><link href="http://localhost:4000/springboot/quick-fix/" rel="alternate" type="text/html" title="VS Code에서 사용하거나 사용하지 않는 import 클래스 단축키로 일용등록/삭제." /><published>2023-04-28T00:00:00+09:00</published><updated>2023-04-28T00:00:00+09:00</updated><id>http://localhost:4000/springboot/quick-fix</id><content type="html" xml:base="http://localhost:4000/springboot/quick-fix/"><![CDATA[<p>맥북 개발자가 springboot기반으로 개발환경을 사용할 때 자동 import 를 하거나 사용하지 않는 Class가 import되어 있는 것이 있을 때 이를 단축키로 자동으로 제거하는 명렁어는
+<strong>Shift + alt(option) + o</strong> 를 동시에 누르면 Never used 로 되어 있는 import 클래스를 삭제해줍니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="quickfix" /><summary type="html"><![CDATA[맥북 개발자가 springboot기반으로 개발환경을 사용할 때 자동 import 를 하거나 사용하지 않는 Class가 import되어 있는 것이 있을 때 이를 단축키로 자동으로 제거하는 명렁어는 Shift + alt(option) + o 를 동시에 누르면 Never used 로 되어 있는 import 클래스를 삭제해줍니다.]]></summary></entry><entry><title type="html">maven에서 jdk 버전이 변경되지 않는 경우</title><link href="http://localhost:4000/springboot/change-jdk11-to-maven/" rel="alternate" type="text/html" title="maven에서 jdk 버전이 변경되지 않는 경우" /><published>2023-04-28T00:00:00+09:00</published><updated>2023-04-28T00:00:00+09:00</updated><id>http://localhost:4000/springboot/change-jdk11-to-maven</id><content type="html" xml:base="http://localhost:4000/springboot/change-jdk11-to-maven/"><![CDATA[<p>jdk1.8 에서 jdk11로 전환하여 개발을 하는 경우 jdk는 11로 변경되었지만 maven은 여전히 jdk1.8로 빌드를 하는 경우 다음과 같이 추가합니다.</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi <span class="nv">$HOME</span>/.mavenrc
 
 <span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span><span class="si">$(</span>/usr/libexec/java_home <span class="nt">-v</span> 110<span class="si">)</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="quickfix" /><summary type="html"><![CDATA[jdk1.8 에서 jdk11로 전환하여 개발을 하는 경우 jdk는 11로 변경되었지만 maven은 여전히 jdk1.8로 빌드를 하는 경우 다음과 같이 추가합니다. ```bash vi $HOME/.mavenrc]]></summary></entry><entry><title type="html">VS Code에서 사용하거나 사용하지 않는 import 클래스 단축키로 일용등록/삭제.</title><link href="http://localhost:4000/springboot/quick-fix/" rel="alternate" type="text/html" title="VS Code에서 사용하거나 사용하지 않는 import 클래스 단축키로 일용등록/삭제." /><published>2023-04-28T00:00:00+09:00</published><updated>2023-04-28T00:00:00+09:00</updated><id>http://localhost:4000/springboot/quick-fix</id><content type="html" xml:base="http://localhost:4000/springboot/quick-fix/"><![CDATA[<p>맥북 개발자가 springboot기반으로 개발환경을 사용할 때 자동 import 를 하거나 사용하지 않는 Class가 import되어 있는 것이 있을 때 이를 단축키로 자동으로 제거하는 명렁어는
-<strong>Shift + alt(option) + o</strong> 를 동시에 누르면 Never used 로 되어 있는 import 클래스를 삭제해줍니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="quickfix" /><summary type="html"><![CDATA[맥북 개발자가 springboot기반으로 개발환경을 사용할 때 자동 import 를 하거나 사용하지 않는 Class가 import되어 있는 것이 있을 때 이를 단축키로 자동으로 제거하는 명렁어는 Shift + alt(option) + o 를 동시에 누르면 Never used 로 되어 있는 import 클래스를 삭제해줍니다.]]></summary></entry><entry><title type="html">Redis 시작하기 - PubSub - springboot</title><link href="http://localhost:4000/cache/pub-sub/" rel="alternate" type="text/html" title="Redis 시작하기 - PubSub - springboot" /><published>2023-04-23T00:00:00+09:00</published><updated>2023-04-23T00:00:00+09:00</updated><id>http://localhost:4000/cache/pub-sub</id><content type="html" xml:base="http://localhost:4000/cache/pub-sub/"><![CDATA[<p>Redis에서 Pub/Sub을 지원합니다. 특정 topic에 메시지를 전송하는 것을 Springboot을 이용하여 구현하는 것을 알아봅니다.</p>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="quickfix" /><summary type="html"><![CDATA[jdk1.8 에서 jdk11로 전환하여 개발을 하는 경우 jdk는 11로 변경되었지만 maven은 여전히 jdk1.8로 빌드를 하는 경우 다음과 같이 추가합니다. ```bash vi $HOME/.mavenrc]]></summary></entry><entry><title type="html">Redis 시작하기 - PubSub - springboot</title><link href="http://localhost:4000/cache/pub-sub/" rel="alternate" type="text/html" title="Redis 시작하기 - PubSub - springboot" /><published>2023-04-23T00:00:00+09:00</published><updated>2023-04-23T00:00:00+09:00</updated><id>http://localhost:4000/cache/pub-sub</id><content type="html" xml:base="http://localhost:4000/cache/pub-sub/"><![CDATA[<p>Redis에서 Pub/Sub을 지원합니다. 특정 topic에 메시지를 전송하는 것을 Springboot을 이용하여 구현하는 것을 알아봅니다.</p>
 
 <h2 id="applicationyml-설정">application.yml 설정</h2>
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">spring</span><span class="pi">:</span>
@@ -259,34 +325,7 @@ redis.register_function<span class="o">(</span><span class="s1">'get_days_in_mon
     <span class="o">}</span>
 <span class="o">}</span>
 
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="springboot" /><summary type="html"><![CDATA[Redis에서 Pub/Sub을 지원합니다. 특정 topic에 메시지를 전송하는 것을 Springboot을 이용하여 구현하는 것을 알아봅니다.]]></summary></entry><entry><title type="html">Redis 시작하기 - Pre Loading a Lua Script into Redis With Lettuce</title><link href="http://localhost:4000/cache/preload-lua-script/" rel="alternate" type="text/html" title="Redis 시작하기 - Pre Loading a Lua Script into Redis With Lettuce" /><published>2023-04-22T00:00:00+09:00</published><updated>2023-04-22T00:00:00+09:00</updated><id>http://localhost:4000/cache/preload-lua-script</id><content type="html" xml:base="http://localhost:4000/cache/preload-lua-script/"><![CDATA[<p>양상추를 사용하여 redis에 대해 루아 스크립트를 실행하는 것을 우리는 매번 인수와 함께 전체 스크립트 redis가 원자 적으로 실행될 것를 보냈습니다. 매우 작은 스크립트의 경우 문제가 될 것 같지 않지만 EVALSHA를 사용하여이를 수행하는 더 효율적인 방법이 있습니다 .</p>
-
-<h2 id="evalsha">EVALSHA</h2>
-<p>evalsha 없이 lua 스크립트를 실행한다는 것은 이미 다룬 것처럼 매번 스크립트와 인수를 보낸다는 것을 의미합니다:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>redis-cli <span class="nb">eval</span> <span class="s2">"return redis.call('set',KEYS[1],ARGV[1],'ex',ARGV[2])"</span> 1 foo1 bar1 10
-OK
-</code></pre></div></div>
-<p>SCRIPT LOAD를 사용하면 redis에 “이것은 내 스크립트입니다, 기억하십시오”라고 말한 다음 EVALSHA를 사용하여 redis가 기억하는 스크립트를 실행할 수 있습니다. 예를 들어 CLI를 사용하면 다음과 같습니다.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>redis-cli
-<span class="o">&gt;</span> SCRIPT LOAD <span class="s2">"return redis.call('set',KEYS[1],ARGV[1],'ex',ARGV[2])"</span>
-<span class="s2">"cf4df3d8eb7f521ceb285c6870e5713d79e2bb0b"</span>
-
-<span class="o">&gt;</span> evalsha cf4df3d8eb7f521ceb285c6870e5713d79e2bb0b 1 foo1 bar1 10
-OK
-
-</code></pre></div></div>
-<p>다음과 같은 쉘 스크립트로 작동하는지 확인할 수 있습니다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ SHA</span><span class="o">=</span><span class="si">$(</span>redis-cli script load <span class="s2">"return redis.call('set',KEYS[1],ARGV[1],'ex',ARGV[2])"</span><span class="si">)</span>
-<span class="nv">$ </span>redis-cli evalsha <span class="s2">"</span><span class="nv">$SHA</span><span class="s2">"</span> 1 foo1 bar1 10<span class="p">;</span> redis-cli ttl foo1<span class="p">;</span> redis-cli get foo1      
-OK
-<span class="o">(</span>integer<span class="o">)</span> 10
-<span class="s2">"bar1"</span>
-</code></pre></div></div>
-<p>스크립트의 해시 [sha1 hash, 더 구체적으로 말하면]를 참조하여 전체 스크립트를 보낼 필요가 없습니다. 실제로 로드하는 스크립트의 크기에 관계없이 스크립트를 나타내는 해시의 크기는 컴팩트하게 유지됩니다.</p>
-
-<h2 id="evalsha-with-lettuce">EVALSHA with Lettuce</h2>
-<p>Lettuce를 곁들인 EVALSHA는 우리가 원한다면 거의 같은 방식으로 작동 할 수 있습니다. 스크립트를 로드하고 반환 된 해시를 사용했습니다 [SHA1 해시는 16 진수 문자열로 표시됩니다] :</p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="Lua" /><summary type="html"><![CDATA[양상추를 사용하여 redis에 대해 루아 스크립트를 실행하는 것을 우리는 매번 인수와 함께 전체 스크립트 redis가 원자 적으로 실행될 것를 보냈습니다. 매우 작은 스크립트의 경우 문제가 될 것 같지 않지만 EVALSHA를 사용하여이를 수행하는 더 효율적인 방법이 있습니다 .]]></summary></entry><entry><title type="html">Redis 시작하기 - Usecases - Leaderboard</title><link href="http://localhost:4000/cache/usecases-leaderboard/" rel="alternate" type="text/html" title="Redis 시작하기 - Usecases - Leaderboard" /><published>2023-04-22T00:00:00+09:00</published><updated>2023-04-22T00:00:00+09:00</updated><id>http://localhost:4000/cache/usecases-leaderboard</id><content type="html" xml:base="http://localhost:4000/cache/usecases-leaderboard/"><![CDATA[<p>LUA 스크립팅의 효율적인 방법으로 수행 할 수 있는 사례에 사용될 수 사례를 살펴봅니다.
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="springboot" /><summary type="html"><![CDATA[Redis에서 Pub/Sub을 지원합니다. 특정 topic에 메시지를 전송하는 것을 Springboot을 이용하여 구현하는 것을 알아봅니다.]]></summary></entry><entry><title type="html">Redis 시작하기 - Usecases - Leaderboard</title><link href="http://localhost:4000/cache/usecases-leaderboard/" rel="alternate" type="text/html" title="Redis 시작하기 - Usecases - Leaderboard" /><published>2023-04-22T00:00:00+09:00</published><updated>2023-04-22T00:00:00+09:00</updated><id>http://localhost:4000/cache/usecases-leaderboard</id><content type="html" xml:base="http://localhost:4000/cache/usecases-leaderboard/"><![CDATA[<p>LUA 스크립팅의 효율적인 방법으로 수행 할 수 있는 사례에 사용될 수 사례를 살펴봅니다.
 여기에는 Redis zset에 유지되는 리더 보드가 있으며, 현재 사용 사례를 위해 주어진 사용자의 경우 해당 사용자의 순위와 리더 보드에서 사용자의 주변의 rank를 얻을 수도 있습니다.</p>
 
 <p><img src="/assets/images/cache/30-cache-leaderboard.png" alt="locked" /></p>

@@ -62,6 +62,15 @@
                     {% endif %}
                 {% endfor %}
             </ul>  
+
+            <span class="nav__sub-title">AI / Machine Learning</span>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "watson" %}
+                        <li><a href="/categories/watson" class="">Watson ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>              
       </li>
 
 
