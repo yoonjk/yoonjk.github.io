@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-07-28T11:25:59+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html"></title><link href="http://localhost:4000/2023-06-30-install-argo-workflow/" rel="alternate" type="text/html" title="" /><published>2023-07-28T11:25:59+09:00</published><updated>2023-07-28T11:25:59+09:00</updated><id>http://localhost:4000/2023-06-30-install-argo-workflow</id><content type="html" xml:base="http://localhost:4000/2023-06-30-install-argo-workflow/"><![CDATA[<h2 id="argo-workflow-설치">Argo Workflow 설치</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-07-28T16:29:18+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html"></title><link href="http://localhost:4000/2023-06-30-install-argo-workflow/" rel="alternate" type="text/html" title="" /><published>2023-07-28T16:29:18+09:00</published><updated>2023-07-28T16:29:18+09:00</updated><id>http://localhost:4000/2023-06-30-install-argo-workflow</id><content type="html" xml:base="http://localhost:4000/2023-06-30-install-argo-workflow/"><![CDATA[<h2 id="argo-workflow-설치">Argo Workflow 설치</h2>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl apply <span class="nt">-n</span> argo <span class="nt">-f</span> https://github.com/argoproj/argo-workflows/releases/download/v3.4.6/namespace-install.yaml
 </code></pre></div></div>
 
@@ -9,7 +9,7 @@
   "server",
   "--auth-mode=server"
 ]}]'</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author></entry><entry><title type="html"></title><link href="http://localhost:4000/2023-04-16-install-lua/" rel="alternate" type="text/html" title="" /><published>2023-07-28T11:25:59+09:00</published><updated>2023-07-28T11:25:59+09:00</updated><id>http://localhost:4000/2023-04-16-install-lua</id><content type="html" xml:base="http://localhost:4000/2023-04-16-install-lua/"><![CDATA[<h2 id="lua-설치---사전준비">lua 설치 - 사전준비</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author></entry><entry><title type="html"></title><link href="http://localhost:4000/2023-04-16-install-lua/" rel="alternate" type="text/html" title="" /><published>2023-07-28T16:29:18+09:00</published><updated>2023-07-28T16:29:18+09:00</updated><id>http://localhost:4000/2023-04-16-install-lua</id><content type="html" xml:base="http://localhost:4000/2023-04-16-install-lua/"><![CDATA[<h2 id="lua-설치---사전준비">lua 설치 - 사전준비</h2>
 <p>사전에 compiler가 설치되어 있어야 합니다.
 Compiler가 설치되어 있지 않는 경우 다음을 실행합니다.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo yum update -y
@@ -93,7 +93,145 @@ IBM 클라우드 계정에 로그인하면 대시보드에 아래와 같은 화�
 <p><img src="/assets/images/watson/06-remove-action-skill.png" alt="" /></p>
 
 <p>기존 액션 스킬을 제거하려면 내 첫 번째 스킬의 오른쪽 상단 모서리에 있는 점 3개를 클릭하고 스킬 제거를 클릭합니다.<br />
-액션 스킬을 성공적으로 제거하면 다음 이미지가 표시됩니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="watson" /><category term="watson assistant" /><summary type="html"><![CDATA[IBM 왓슨 어시스턴트로 챗봇을 구축하는 방법 이 글에서는 IBM 왓슨 어시스턴트를 사용하여 작동하는 챗봇을 구축하는 방법에 대해 알아보겠습니다. 왓슨 어시스턴트는 IBM 클라우드에서 호스팅되는 챗봇 구축용 서비스로, 별도의 프로그래밍 없이도 챗봇을 구축할 수 있습니다.]]></summary></entry><entry><title type="html">맥환경에서 eclipse 자동완성 단축키 설정</title><link href="http://localhost:4000/springboot/auto-sts/" rel="alternate" type="text/html" title="맥환경에서 eclipse 자동완성 단축키 설정" /><published>2023-06-01T00:00:00+09:00</published><updated>2023-06-01T00:00:00+09:00</updated><id>http://localhost:4000/springboot/auto-sts</id><content type="html" xml:base="http://localhost:4000/springboot/auto-sts/"><![CDATA[<p>윈도우에서 자동완성 단축키는 Ctrl + Space 입니다. 하지만 맥북환경에서는 Ctrl + Space로 기본으로 설정되어 있습니다.
+액션 스킬을 성공적으로 제거하면 다음 이미지가 표시됩니다.</p>
+
+<p><img src="/assets/images/watson/07-add-dialog-skill.png" alt="" /></p>
+
+<p>이제 대화 스킬을 추가하려면 “액션 또는 대화 스킬 추가”를 클릭하고<br />
+“Restaurant Skill” 이라는 이름의 새 대화 스킬을 만든 다음 스킬 만들기를 클릭합니다.</p>
+
+<p><img src="/assets/images/watson//08-add-action-or-dialog.png" alt="" /></p>
+
+<p>이 작업을 완료하면 어시스턴트에 새 대화 스킬이 추가됩니다. 이것으로 챗봇 구축의 2단계가 완료됩니다.</p>
+
+<p><img src="/assets/images/watson/09-complete-step2.png" alt="" /></p>
+
+<p><strong>3단계: 인텐트를 만들고 스킬에 추가하기</strong></p>
+
+<p>이 단계에서는 인텐트를 생성하고 스킬에 추가하겠습니다. 하지만 그 전에 인텐트가 무엇인지 이해해야 합니다.</p>
+
+<p>왓슨 어시스턴트에 따르면</p>
+
+<blockquote>
+  <p>인텐트는 동일한 의미를 가진 사용자 질의 문장의 모음입니다.<br />
+인텐트를 만들면 어시스턴트가 사용자가 목표를 표현하는 다양한 방식을 이해하도록 훈련시킬 수 있습니다.</p>
+</blockquote>
+
+<p>인텐트는 단순히 동일한 의미를 가진 사용자 문장의 모음입니다. 
+이러한 문장은 사용자가 원하는 목표를 표현하는 문장이 될 수 있으며, 이 경우 테이블 예약하기와 같은 문장이 될 수 있습니다.</p>
+
+<p>사용자가 레스토랑에서 테이블을 예약하기 위해 말할 수 있는 다양한 방법에는 어떤 것이 있나요?</p>
+
+<p>테이블 예약하기.</p>
+
+<p>나를 위한 테이블 예약하기.</p>
+
+<p>레스토랑의 테이블을 예약하세요.</p>
+
+<p>테이블 예약하기.</p>
+
+<p>저녁 식사를 위한 테이블을 예약하고 싶습니다.</p>
+
+<p>이 모든 예는 사용자가 테이블을 예약하려는 의도를 보여줍니다.<br />
+이 예시를 보면 사용자가 테이블을 예약하고 싶다는 것을 쉽게 알 수 있습니다. 챗봇의 인텐트도 마찬가지입니다.</p>
+
+<p>인텐트는 챗봇이 사용자가 달성하고자 하는 목표를 식별하는 데 도움이 됩니다. <br />
+이러한 목표는 예약하기, 운영 시간 정보를 얻기 등이 될 수 있습니다.</p>
+
+<p>챗봇에서는 예약을 하고 영업시간에 대한 정보를 얻는 두 가지 주요 목표를 달성하고자 합니다.<br />
+따라서 각각에 대해 하나씩 두 개의 인텐트를 만들 것입니다.</p>
+
+<p>먼저, 사용자의 테이블 예약 의도를 파악하기 위해 인텐트를 생성합니다.</p>
+
+<p>인텐트를 생성하려면 먼저 레스토랑 스킬을 클릭합니다. 다음 이미지가 표시됩니다.</p>
+
+<p><img src="/assets/images/watson/09-make-intent.png" alt="" /></p>
+
+<p>이제 인텐트 생성을 클릭합니다. 그런 다음 인텐트 이름 “make_booking”을 입력한 다음 인텐트 생성을 클릭합니다.<br />
+다음 이미지가 표시됩니다.</p>
+
+<p><img src="/assets/images/watson/10-make-a-booking.png" alt="" /></p>
+
+<p>이제 인텐트 생성을 클릭합니다. 그런 다음 인텐트 이름 “make_booking”을 입력한 다음 인텐트 생성을 클릭합니다. 다음 이미지가 표시됩니다.</p>
+
+<p>테이블을 예약.</p>
+
+<p>나를 위해 테이블을 예약.</p>
+
+<p>레스토랑의 테이블을 예약.</p>
+
+<p>테이블 예약하기.</p>
+
+<p>저녁 식사를 위한 테이블을 예약하고 싶습니다.</p>
+
+<p>예제를 추가하려면 문장을 입력한 다음 예제 추가를 클릭하세요. 모든 예제를 성공적으로 추가하면 다음 이미지가 표시됩니다.</p>
+
+<p><img src="/assets/images/watson/11-add-examples.png" alt="" /></p>
+
+<p>마찬가지로 다음 예제를 사용하여 운영 시간에 대한 다른 인텐트를 만듭니다.</p>
+
+<p>운영 시간은 어떻게 되나요?</p>
+
+<p>주말에 영업하나요?</p>
+
+<p>일요일에도 영업하나요?</p>
+
+<p>근무 시간은 어떻게 되나요?</p>
+
+<p>레스토랑의 영업 시간은 언제인가요?</p>
+
+<p><img src="/assets/images/watson/12-house-of-operations.png" alt="" /></p>
+
+<p><strong>결과</strong><br />
+<img src="/assets/images/watson/13-house-of-operations-examples.png" alt="" /></p>
+
+<p>지금까지 왓슨 어시스턴트 서비스 인스턴스를 생성하고 어시스턴트에 대화 스킬을 추가하고 두 개의 인텐트를 생성했습니다.<br />
+다음 단계로 넘어가겠습니다.</p>
+
+<p><strong>4단계: 엔티티를 생성하고 스킬에 추가하기</strong></p>
+
+<p>이 단계에서는 엔티티를 만들어 스킬에 추가하겠습니다. 하지만 그 전에 엔티티가 무엇이며 챗봇을 구축하는 데 어떻게 사용될 수 있는지 이해해 보겠습니다.</p>
+
+<p>왓슨 어시스턴트에 따르면…</p>
+
+<blockquote>
+  <p>엔티티는 사용자 입력에서 사용자의 목적과 관련된 정보를 나타냅니다.</p>
+</blockquote>
+
+<p>인텐트가 동사(사용자가 수행하려는 작업)를 나타내는 경우 엔티티는 명사(해당 작업의 대상 또는 해당 작업의 컨텍스트)를 나타냅니다.<br />
+예를 들어 일기 예보를 확인하는 것이 인텐트인 경우 애플리케이션이 정확한 예보를 반환하려면 관련 위치 및 날짜 엔티티가 필요합니다.</p>
+
+<p>이 예제에서 사용자는 레스토랑에서 테이블을 예약하려고 합니다.<br />
+하지만 테이블을 예약하려면 챗봇은 사용자가 몇 시, 몇 날짜에 테이블을 예약하려는지 알아야 합니다.<br />
+여기서 날짜와 시간은 테이블을 예약하는 데 필요한 엔티티입니다.</p>
+
+<p>따라서 대화 스킬에 날짜와 시간이라는 두 개의 엔티티를 추가하겠습니다. 다행히도 이 두 엔티티를 만들 필요는 없습니다.<br />
+왓슨 어시스턴트에서 이 두 엔티티는 시스템 엔티티에 미리 정의되어 있습니다.<br />
+이 두 엔티티를 사용하도록 설정하기만 하면 됩니다.</p>
+
+<p>이 두 엔티티를 활성화하려면 “Restuarant 스킬”에서 “엔티티”를 클릭합니다.<br />
+클릭하면 다음 이미지가 표시됩니다</p>
+
+<p><img src="/assets/images/watson/13-entities.png" alt="" /></p>
+
+<p>엔티티 섹션에 내 엔티티와 시스템 엔티티라는 두 가지 옵션이 표시됩니다.<br />
+시스템 엔티티를 클릭하고 시스템 날짜 및 시스템 시간 엔티티를 활성화하면 챗봇에서 사용할 수 있습니다.</p>
+
+<p><img src="/assets/images/watson/14-systems-entities.png" alt="" /></p>
+
+<p>이제 시스템 날짜 및 시스템 시간 엔티티를 활성화했습니다. 이제 챗봇을 구축하는 데 사용할 수 있습니다.</p>
+
+<p><strong>5단계: 대화 상자 만들기</strong> .<br />
+이제 사용자 입력에 대한 응답을 제공하는 대화 상자를 만들겠습니다.<br />
+하지만 그 전에 대화 상자가 무엇인지 이해해 봅시다.</p>
+
+<p>왓슨 어시스턴트에 따르면…</p>
+
+<blockquote>
+  <p>Dialog는 논리 트리의 형태로 대화의 흐름을 정의합니다.<br />
+이 트리는 의도(사용자가 말하는 내용)와 응답(챗봇이 응답하는 내용)을 일치시킵니다.<br />
+트리의 각 노드에는 사용자 입력에 따라 트리를 트리거하는 조건이 있습니다.</p>
+</blockquote>]]></content><author><name>Jaeguk Yun</name></author><category term="watson" /><category term="watson assistant" /><summary type="html"><![CDATA[IBM 왓슨 어시스턴트로 챗봇을 구축하는 방법 이 글에서는 IBM 왓슨 어시스턴트를 사용하여 작동하는 챗봇을 구축하는 방법에 대해 알아보겠습니다. 왓슨 어시스턴트는 IBM 클라우드에서 호스팅되는 챗봇 구축용 서비스로, 별도의 프로그래밍 없이도 챗봇을 구축할 수 있습니다.]]></summary></entry><entry><title type="html">맥환경에서 eclipse 자동완성 단축키 설정</title><link href="http://localhost:4000/springboot/auto-sts/" rel="alternate" type="text/html" title="맥환경에서 eclipse 자동완성 단축키 설정" /><published>2023-06-01T00:00:00+09:00</published><updated>2023-06-01T00:00:00+09:00</updated><id>http://localhost:4000/springboot/auto-sts</id><content type="html" xml:base="http://localhost:4000/springboot/auto-sts/"><![CDATA[<p>윈도우에서 자동완성 단축키는 Ctrl + Space 입니다. 하지만 맥북환경에서는 Ctrl + Space로 기본으로 설정되어 있습니다.
 그래서 자동완성 단축키를 Shift + Space로 변경해서 사용합니다.</p>
 
 <p><img src="/assets/images/springboot/05-sts-short-cut-mac.png" alt="sts-short-cut-mac" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="short-key" /><summary type="html"><![CDATA[윈도우에서 자동완성 단축키는 Ctrl + Space 입니다. 하지만 맥북환경에서는 Ctrl + Space로 기본으로 설정되어 있습니다. 그래서 자동완성 단축키를 Shift + Space로 변경해서 사용합니다.]]></summary></entry><entry><title type="html">Kafka using docker-compose</title><link href="http://localhost:4000/docker/kafka-on-docker/" rel="alternate" type="text/html" title="Kafka using docker-compose" /><published>2023-05-13T00:00:00+09:00</published><updated>2023-05-13T00:00:00+09:00</updated><id>http://localhost:4000/docker/kafka-on-docker</id><content type="html" xml:base="http://localhost:4000/docker/kafka-on-docker/"><![CDATA[<p>카프카 브로커 1개, 주키퍼 1로 구성된 confluent사의 docker 이미지를 기반으로 실행하는 docker-compose 파일입니다.</p>
