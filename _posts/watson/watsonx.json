@@ -1,0 +1,75 @@
+{
+    "swagger": "2.0",
+    "basePath": "/",
+    "paths": {
+        "/watsonx/hello": {
+            "post": {
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "operationId": "post_my_service",
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/ModelReq"
+                        }
+                    }
+                ],
+                "tags": [
+                    "watsonx"
+                ]
+            },
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "operationId": "get_my_service",
+                "tags": [
+                    "watsonx"
+                ]
+            }
+        }
+    },
+    "info": {
+        "title": "API \ubb38\uc11c",
+        "version": "1.0",
+        "description": "Swagger \ubb38\uc11c"
+    },
+    "produces": [
+        "application/json"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "tags": [
+        {
+            "name": "watsonx",
+            "description": "\uc870\ud68c API"
+        }
+    ],
+    "definitions": {
+        "ModelReq": {
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        }
+    },
+    "responses": {
+        "ParseError": {
+            "description": "When a mask can't be parsed"
+        },
+        "MaskError": {
+            "description": "When any error occurs on mask"
+        }
+    }
+}
