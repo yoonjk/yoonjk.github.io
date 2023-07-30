@@ -701,6 +701,12 @@ var store = [{
         "url": "/watson/watson-assistant-tutorial/",
         "teaser": null
       },{
+        "title": "LLM 앱을 구축하기 위해 알아야 할 모든 것",
+        "excerpt":"LLM이 필요한 이유 언어의 진화는 오늘날까지 인간을 엄청나게 발전시켰습니다. 덕분에 오늘날 우리가 알고 있는 형태로 지식을 효율적으로 공유하고 협업할 수 있게 되었습니다. 그 결과, 우리의 집단 지식은 대부분 정리되지 않은 서면 텍스트를 통해 계속 보존되고 전달되고 있습니다. 지난 20년 동안 정보와 프로세스를 디지털화하기 위해 수행된 이니셔티브는 종종 관계형 데이터베이스에 점점...","categories": ["watson"],
+        "tags": ["LLM"],
+        "url": "/watson/my-first-llm-app/",
+        "teaser": null
+      },{
         "title": null,
         "excerpt":"lua 설치 - 사전준비 사전에 compiler가 설치되어 있어야 합니다. Compiler가 설치되어 있지 않는 경우 다음을 실행합니다. sudo yum update -y yum groupinstall -y 'Development Tools' lua 설치 curl -R -O http://www.lua.org/ftp/lua-5.4.4.tar.gz tar zxf lua-5.4.4.tar.gz cd lua-5.4.4 make all test lua cli 실행 lua를 실행하고 Hello World를 출력합니다. src/lua str =...","categories": [],
         "tags": null,

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-07-30T14:04:09+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html"></title><link href="http://localhost:4000/2023-06-30-install-argo-workflow/" rel="alternate" type="text/html" title="" /><published>2023-07-30T14:04:09+09:00</published><updated>2023-07-30T14:04:09+09:00</updated><id>http://localhost:4000/2023-06-30-install-argo-workflow</id><content type="html" xml:base="http://localhost:4000/2023-06-30-install-argo-workflow/"><![CDATA[<h2 id="argo-workflow-설치">Argo Workflow 설치</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-07-30T14:21:00+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html"></title><link href="http://localhost:4000/2023-06-30-install-argo-workflow/" rel="alternate" type="text/html" title="" /><published>2023-07-30T14:21:00+09:00</published><updated>2023-07-30T14:21:00+09:00</updated><id>http://localhost:4000/2023-06-30-install-argo-workflow</id><content type="html" xml:base="http://localhost:4000/2023-06-30-install-argo-workflow/"><![CDATA[<h2 id="argo-workflow-설치">Argo Workflow 설치</h2>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl apply <span class="nt">-n</span> argo <span class="nt">-f</span> https://github.com/argoproj/argo-workflows/releases/download/v3.4.6/namespace-install.yaml
 </code></pre></div></div>
 
@@ -9,7 +9,7 @@
   "server",
   "--auth-mode=server"
 ]}]'</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author></entry><entry><title type="html"></title><link href="http://localhost:4000/2023-04-16-install-lua/" rel="alternate" type="text/html" title="" /><published>2023-07-30T14:04:09+09:00</published><updated>2023-07-30T14:04:09+09:00</updated><id>http://localhost:4000/2023-04-16-install-lua</id><content type="html" xml:base="http://localhost:4000/2023-04-16-install-lua/"><![CDATA[<h2 id="lua-설치---사전준비">lua 설치 - 사전준비</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author></entry><entry><title type="html"></title><link href="http://localhost:4000/2023-04-16-install-lua/" rel="alternate" type="text/html" title="" /><published>2023-07-30T14:21:00+09:00</published><updated>2023-07-30T14:21:00+09:00</updated><id>http://localhost:4000/2023-04-16-install-lua</id><content type="html" xml:base="http://localhost:4000/2023-04-16-install-lua/"><![CDATA[<h2 id="lua-설치---사전준비">lua 설치 - 사전준비</h2>
 <p>사전에 compiler가 설치되어 있어야 합니다.
 Compiler가 설치되어 있지 않는 경우 다음을 실행합니다.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo yum update -y
@@ -27,7 +27,24 @@ make all <span class="nb">test</span>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>src/lua
 str = "Hello World"
 print(str)
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author></entry><entry><title type="html">코딩없이 ChatBot 만들기</title><link href="http://localhost:4000/watson/watson-assistant-tutorial/" rel="alternate" type="text/html" title="코딩없이 ChatBot 만들기" /><published>2023-07-27T00:00:00+09:00</published><updated>2023-07-27T00:00:00+09:00</updated><id>http://localhost:4000/watson/watson-assistant-tutorial</id><content type="html" xml:base="http://localhost:4000/watson/watson-assistant-tutorial/"><![CDATA[<h2 id="ibm-왓슨-어시스턴트로-챗봇을-구축하는-방법">IBM 왓슨 어시스턴트로 챗봇을 구축하는 방법</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author></entry><entry><title type="html">LLM 앱을 구축하기 위해 알아야 할 모든 것</title><link href="http://localhost:4000/watson/my-first-llm-app/" rel="alternate" type="text/html" title="LLM 앱을 구축하기 위해 알아야 할 모든 것" /><published>2023-07-28T00:00:00+09:00</published><updated>2023-07-28T00:00:00+09:00</updated><id>http://localhost:4000/watson/my-first-llm-app</id><content type="html" xml:base="http://localhost:4000/watson/my-first-llm-app/"><![CDATA[<h2 id="llm이-필요한-이유">LLM이 필요한 이유</h2>
+<p>언어의 진화는 오늘날까지 인간을 엄청나게 발전시켰습니다. 덕분에 오늘날 우리가 알고 있는 형태로 지식을 효율적으로 공유하고 협업할 수 있게 되었습니다. 그 결과, 우리의 집단 지식은 대부분 정리되지 않은 서면 텍스트를 통해 계속 보존되고 전달되고 있습니다.</p>
+
+<p>지난 20년 동안 정보와 프로세스를 디지털화하기 위해 수행된 이니셔티브는 종종 관계형 데이터베이스에 점점 더 많은 데이터를 축적하는 데 중점을 두었습니다. 이러한 접근 방식은 기존의 분석 머신러닝 알고리즘이 데이터를 처리하고 이해할 수 있게 해줍니다.</p>
+
+<p>그러나 점점 더 많은 양의 데이터를 구조화된 방식으로 저장하기 위한 광범위한 노력에도 불구하고 여전히 지식의 전체를 포착하고 처리할 수는 없습니다.</p>
+
+<blockquote>
+  <p>기업 내 모든 데이터의 약 80%는<br />
+업무 설명, 이력서, 이메일, 텍스트 문서, 파워포인트 슬라이드, 음성 녹음, 동영상 및 소셜 미디어와 같은<br />
+비정형 데이터입니다.</p>
+
+</blockquote>
+
+<p>GPT3.5로 이어지는 개발과 발전은 구조의 유무에 관계없이<br />
+ 다양한 데이터 세트를 효과적으로 해석하고 분석할 수 있도록 지원한다는 점에서 중요한 이정표가 될 것입니다.<br />
+오늘날에는 텍스트, 이미지, 오디오 파일 등 다양한 형태의 콘텐츠를 이해하고<br />
+생성할 수 있는 모델을 보유하고 있습니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="watson" /><category term="LLM" /><summary type="html"><![CDATA[LLM이 필요한 이유 언어의 진화는 오늘날까지 인간을 엄청나게 발전시켰습니다. 덕분에 오늘날 우리가 알고 있는 형태로 지식을 효율적으로 공유하고 협업할 수 있게 되었습니다. 그 결과, 우리의 집단 지식은 대부분 정리되지 않은 서면 텍스트를 통해 계속 보존되고 전달되고 있습니다.]]></summary></entry><entry><title type="html">코딩없이 ChatBot 만들기</title><link href="http://localhost:4000/watson/watson-assistant-tutorial/" rel="alternate" type="text/html" title="코딩없이 ChatBot 만들기" /><published>2023-07-27T00:00:00+09:00</published><updated>2023-07-27T00:00:00+09:00</updated><id>http://localhost:4000/watson/watson-assistant-tutorial</id><content type="html" xml:base="http://localhost:4000/watson/watson-assistant-tutorial/"><![CDATA[<h2 id="ibm-왓슨-어시스턴트로-챗봇을-구축하는-방법">IBM 왓슨 어시스턴트로 챗봇을 구축하는 방법</h2>
 <p>이 글에서는 IBM 왓슨 어시스턴트를 사용하여 작동하는 챗봇을 구축하는 방법에 대해 알아보겠습니다.<br />
 왓슨 어시스턴트는 IBM 클라우드에서 호스팅되는 챗봇 구축용 서비스로, 별도의 프로그래밍 없이도 챗봇을 구축할 수 있습니다.</p>
 
@@ -452,12 +469,12 @@ redis.register_function<span class="o">(</span><span class="s1">'get_days_in_mon
 </code></pre></div></div>
 
 <h2 id="참조">참조</h2>
-<p><a href="https://bstar36.tistory.com/348">멋지게 놀아라</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="lua" /><summary type="html"><![CDATA[Lua를 이용하여 Redis에 있는 데이터를 월별 합계를 계산하거나, from ~ to 기간을 입력받아 합계를 계산할 수 도 있습니다.]]></summary></entry><entry><title type="html">VS Code에서 사용하거나 사용하지 않는 import 클래스 단축키로 일용등록/삭제.</title><link href="http://localhost:4000/springboot/quick-fix/" rel="alternate" type="text/html" title="VS Code에서 사용하거나 사용하지 않는 import 클래스 단축키로 일용등록/삭제." /><published>2023-04-28T00:00:00+09:00</published><updated>2023-04-28T00:00:00+09:00</updated><id>http://localhost:4000/springboot/quick-fix</id><content type="html" xml:base="http://localhost:4000/springboot/quick-fix/"><![CDATA[<p>맥북 개발자가 springboot기반으로 개발환경을 사용할 때 자동 import 를 하거나 사용하지 않는 Class가 import되어 있는 것이 있을 때 이를 단축키로 자동으로 제거하는 명렁어는
-<strong>Shift + alt(option) + o</strong> 를 동시에 누르면 Never used 로 되어 있는 import 클래스를 삭제해줍니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="quickfix" /><summary type="html"><![CDATA[맥북 개발자가 springboot기반으로 개발환경을 사용할 때 자동 import 를 하거나 사용하지 않는 Class가 import되어 있는 것이 있을 때 이를 단축키로 자동으로 제거하는 명렁어는 Shift + alt(option) + o 를 동시에 누르면 Never used 로 되어 있는 import 클래스를 삭제해줍니다.]]></summary></entry><entry><title type="html">maven에서 jdk 버전이 변경되지 않는 경우</title><link href="http://localhost:4000/springboot/change-jdk11-to-maven/" rel="alternate" type="text/html" title="maven에서 jdk 버전이 변경되지 않는 경우" /><published>2023-04-28T00:00:00+09:00</published><updated>2023-04-28T00:00:00+09:00</updated><id>http://localhost:4000/springboot/change-jdk11-to-maven</id><content type="html" xml:base="http://localhost:4000/springboot/change-jdk11-to-maven/"><![CDATA[<p>jdk1.8 에서 jdk11로 전환하여 개발을 하는 경우 jdk는 11로 변경되었지만 maven은 여전히 jdk1.8로 빌드를 하는 경우 다음과 같이 추가합니다.</p>
+<p><a href="https://bstar36.tistory.com/348">멋지게 놀아라</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="lua" /><summary type="html"><![CDATA[Lua를 이용하여 Redis에 있는 데이터를 월별 합계를 계산하거나, from ~ to 기간을 입력받아 합계를 계산할 수 도 있습니다.]]></summary></entry><entry><title type="html">maven에서 jdk 버전이 변경되지 않는 경우</title><link href="http://localhost:4000/springboot/change-jdk11-to-maven/" rel="alternate" type="text/html" title="maven에서 jdk 버전이 변경되지 않는 경우" /><published>2023-04-28T00:00:00+09:00</published><updated>2023-04-28T00:00:00+09:00</updated><id>http://localhost:4000/springboot/change-jdk11-to-maven</id><content type="html" xml:base="http://localhost:4000/springboot/change-jdk11-to-maven/"><![CDATA[<p>jdk1.8 에서 jdk11로 전환하여 개발을 하는 경우 jdk는 11로 변경되었지만 maven은 여전히 jdk1.8로 빌드를 하는 경우 다음과 같이 추가합니다.</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi <span class="nv">$HOME</span>/.mavenrc
 
 <span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span><span class="si">$(</span>/usr/libexec/java_home <span class="nt">-v</span> 110<span class="si">)</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="quickfix" /><summary type="html"><![CDATA[jdk1.8 에서 jdk11로 전환하여 개발을 하는 경우 jdk는 11로 변경되었지만 maven은 여전히 jdk1.8로 빌드를 하는 경우 다음과 같이 추가합니다. ```bash vi $HOME/.mavenrc]]></summary></entry><entry><title type="html">Redis 시작하기 - PubSub - springboot</title><link href="http://localhost:4000/cache/pub-sub/" rel="alternate" type="text/html" title="Redis 시작하기 - PubSub - springboot" /><published>2023-04-23T00:00:00+09:00</published><updated>2023-04-23T00:00:00+09:00</updated><id>http://localhost:4000/cache/pub-sub</id><content type="html" xml:base="http://localhost:4000/cache/pub-sub/"><![CDATA[<p>Redis에서 Pub/Sub을 지원합니다. 특정 topic에 메시지를 전송하는 것을 Springboot을 이용하여 구현하는 것을 알아봅니다.</p>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="quickfix" /><summary type="html"><![CDATA[jdk1.8 에서 jdk11로 전환하여 개발을 하는 경우 jdk는 11로 변경되었지만 maven은 여전히 jdk1.8로 빌드를 하는 경우 다음과 같이 추가합니다. ```bash vi $HOME/.mavenrc]]></summary></entry><entry><title type="html">VS Code에서 사용하거나 사용하지 않는 import 클래스 단축키로 일용등록/삭제.</title><link href="http://localhost:4000/springboot/quick-fix/" rel="alternate" type="text/html" title="VS Code에서 사용하거나 사용하지 않는 import 클래스 단축키로 일용등록/삭제." /><published>2023-04-28T00:00:00+09:00</published><updated>2023-04-28T00:00:00+09:00</updated><id>http://localhost:4000/springboot/quick-fix</id><content type="html" xml:base="http://localhost:4000/springboot/quick-fix/"><![CDATA[<p>맥북 개발자가 springboot기반으로 개발환경을 사용할 때 자동 import 를 하거나 사용하지 않는 Class가 import되어 있는 것이 있을 때 이를 단축키로 자동으로 제거하는 명렁어는
+<strong>Shift + alt(option) + o</strong> 를 동시에 누르면 Never used 로 되어 있는 import 클래스를 삭제해줍니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="quickfix" /><summary type="html"><![CDATA[맥북 개발자가 springboot기반으로 개발환경을 사용할 때 자동 import 를 하거나 사용하지 않는 Class가 import되어 있는 것이 있을 때 이를 단축키로 자동으로 제거하는 명렁어는 Shift + alt(option) + o 를 동시에 누르면 Never used 로 되어 있는 import 클래스를 삭제해줍니다.]]></summary></entry><entry><title type="html">Redis 시작하기 - PubSub - springboot</title><link href="http://localhost:4000/cache/pub-sub/" rel="alternate" type="text/html" title="Redis 시작하기 - PubSub - springboot" /><published>2023-04-23T00:00:00+09:00</published><updated>2023-04-23T00:00:00+09:00</updated><id>http://localhost:4000/cache/pub-sub</id><content type="html" xml:base="http://localhost:4000/cache/pub-sub/"><![CDATA[<p>Redis에서 Pub/Sub을 지원합니다. 특정 topic에 메시지를 전송하는 것을 Springboot을 이용하여 구현하는 것을 알아봅니다.</p>
 
 <h2 id="applicationyml-설정">application.yml 설정</h2>
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">spring</span><span class="pi">:</span>
@@ -570,101 +587,4 @@ redis.register_function<span class="o">(</span><span class="s1">'get_days_in_mon
     <span class="o">}</span>
 <span class="o">}</span>
 
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="springboot" /><summary type="html"><![CDATA[Redis에서 Pub/Sub을 지원합니다. 특정 topic에 메시지를 전송하는 것을 Springboot을 이용하여 구현하는 것을 알아봅니다.]]></summary></entry><entry><title type="html">Redis 시작하기 - Usecases - Leaderboard</title><link href="http://localhost:4000/cache/usecases-leaderboard/" rel="alternate" type="text/html" title="Redis 시작하기 - Usecases - Leaderboard" /><published>2023-04-22T00:00:00+09:00</published><updated>2023-04-22T00:00:00+09:00</updated><id>http://localhost:4000/cache/usecases-leaderboard</id><content type="html" xml:base="http://localhost:4000/cache/usecases-leaderboard/"><![CDATA[<p>LUA 스크립팅의 효율적인 방법으로 수행 할 수 있는 사례에 사용될 수 사례를 살펴봅니다.
-여기에는 Redis zset에 유지되는 리더 보드가 있으며, 현재 사용 사례를 위해 주어진 사용자의 경우 해당 사용자의 순위와 리더 보드에서 사용자의 주변의 rank를 얻을 수도 있습니다.</p>
-
-<p><img src="/assets/images/cache/30-cache-leaderboard.png" alt="locked" /></p>
-
-<p>아래의 2 개의 명령이 연속적으로 수행했을 때 정확한 결과를 가져오는가?</p>
-
-<ul>
-  <li>첫 번째는 Zrank Leaderboard Heather를 사용하여 사용자 순위를 얻습니다</li>
-  <li>그런 다음 위의 순위를 사용하여 하위 및 상한을 얻으려면 아래에서 3을, 아래 3 개를 원한다고 가정 해 봅시다.</li>
-</ul>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>127.0.0.1:6383&gt; zadd leaderboard 10 Andrew 20 Bella 30 Andy 33 Dolly 40 Cathy 42 Heather 43 Gilbert 45 Lilly 50  Dinesh 58 <span class="s2">"Jon snow"</span> 60 Ygnitte
-</code></pre></div></div>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>127.0.0.1:6383&gt; zrange leaderboard 0 <span class="nt">-1</span>
- 1<span class="o">)</span> <span class="s2">"Andrew"</span>
- 2<span class="o">)</span> <span class="s2">"Bella"</span>
- 3<span class="o">)</span> <span class="s2">"Andy"</span>
- 4<span class="o">)</span> <span class="s2">"Dolly"</span>
- 5<span class="o">)</span> <span class="s2">"Cathy"</span>
- 6<span class="o">)</span> <span class="s2">"Heather"</span>
- 7<span class="o">)</span> <span class="s2">"Gilbert"</span>
- 8<span class="o">)</span> <span class="s2">"Lilly"</span>
- 9<span class="o">)</span> <span class="s2">"Dinesh"</span>
-10<span class="o">)</span> <span class="s2">"Jon snow"</span>
-11<span class="o">)</span> <span class="s2">"Ygnitte"</span>
-127.0.0.1:6383&gt; zrank leaderboard Heather
-<span class="o">(</span>integer<span class="o">)</span> 5
-127.0.0.1:6383&gt; zrange leaderboard 2 8
-1<span class="o">)</span> <span class="s2">"Andy"</span>
-2<span class="o">)</span> <span class="s2">"Dolly"</span>
-3<span class="o">)</span> <span class="s2">"Cathy"</span>
-4<span class="o">)</span> <span class="s2">"Heather"</span>
-5<span class="o">)</span> <span class="s2">"Gilbert"</span>
-6<span class="o">)</span> <span class="s2">"Lilly"</span>
-7<span class="o">)</span> <span class="s2">"Dinesh"</span>
-</code></pre></div></div>
-
-<p>그러나 리더 보드는 zrank와 zrange Redis 명령어를 실행하는 사이에 순위가 변경 될 수 있습니다.
-이를 해결하기 위한 솔루션 중 하나는 사용자의 순위를 얻기 전에 일종의 lock 장치를 사용한 다음 zrange를 사용한 다음 lock을 제거하는 것입니다. 그리고 이전에, 리더 보드에 쓰고, 우리는 lock을 점검해야하며, lock 장치가 있으면 lock 장치가 제거 될 때까지 재 시도해야합니다.</p>
-
-<p><img src="/assets/images/cache/29-cache-locked.png" alt="locked" /></p>
-
-<p>유스 케이스를 처리하는 우아한 방법은 LUA 스크립트를 사용하는 것입니다
-Redis는 서버에서 LUA 스크립트를 업로드하고 실행할 수 있으며 스크립트가 서버에서 실행되기 때문에 스크립트에서 데이터를 읽고 쓰는 것이 매우 효율적입니다.
-또한 Redis는 스크립트의 원자(Atomic) 실행을 보장합니다. 스크립트를 실행하는 동안 전체 런타임 중에 모든 서버의 명령이 차단됩니다.</p>
-
-<p>간단한 LUA 스크립트를 작성하여 어떻게 문제를 해결할 수 있는지 보자.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">local </span>rank <span class="o">=</span> redis.call<span class="o">(</span><span class="s1">'zrank'</span>, KEYS[1], KEYS[2]<span class="o">)</span>
-<span class="nb">local </span>min <span class="o">=</span> math.max<span class="o">(</span>rank - ARGV[1], 0<span class="o">)</span>
-<span class="nb">local </span>max <span class="o">=</span> rank + ARGV[1]
-<span class="nb">local </span>ldb <span class="o">=</span> redis.call<span class="o">(</span><span class="s1">'zrange'</span>, KEYS[1], min, max<span class="o">)</span>
-<span class="nb">local </span>results <span class="o">=</span> <span class="o">{}</span>
-
-results[<span class="s1">'rank'</span><span class="o">]</span> <span class="o">=</span> tostring<span class="o">(</span>rank + 1<span class="o">)</span>
-results[<span class="s1">'item'</span><span class="o">]</span> <span class="o">=</span> ldb
-
-<span class="nb">local </span>vars <span class="o">=</span> cjson.encode<span class="o">(</span>results<span class="o">)</span>
-<span class="k">return </span>vars
-</code></pre></div></div>
-
-<p>| member | score | rank |
-— — — — — — — — — — —
-| member_1 | 50 | 1 |
-| member_2 | 50 | 1 |
-| member_3 | 30 | 3 |
-| member_4 | 30 | 3 |
-| member_5 | 10 | 5 |</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>127.0.0.1:6379&gt; zadd test-leaderboard 9 user1
-<span class="o">(</span>integer<span class="o">)</span> 1
-127.0.0.1:6379&gt; zadd test-leaderboard 5 user2
-<span class="o">(</span>integer<span class="o">)</span> 1
-127.0.0.1:6379&gt; zadd test-leaderboard 5 user3
-<span class="o">(</span>integer<span class="o">)</span> 1
-127.0.0.1:6379&gt; zadd test-leaderboard 3 user4
-<span class="o">(</span>integer<span class="o">)</span> 1
-
-127.0.0.1:6379&gt; zrank test-leaderboard user2
-<span class="o">(</span>integer<span class="o">)</span> 1
-127.0.0.1:6379&gt; zrank test-leaderboard user3
-<span class="o">(</span>integer<span class="o">)</span> 2
-
-127.0.0.1:6379&gt; ZSCORE test-leaderboard user3
-<span class="s2">"5"</span>
-127.0.0.1:6379&gt; ZRANGEBYSCORE test-leaderboard 5 5 LIMIT 0 1
-1<span class="o">)</span> <span class="s2">"user2"</span>
-127.0.0.1:6379&gt; ZRANK test-leaderboard user2
-<span class="o">(</span>integer<span class="o">)</span> 1
-
-127.0.0.1:6379&gt; ZADD test-leaderboard 5 user2
-127.0.0.1:6379&gt; ZADD test-ranks 5 5
-
-EVAL <span class="s2">"local score = redis.call('ZSCORE', KEYS[1], ARGV[1]) </span><span class="se">\n</span><span class="s2"> return redis.call('ZRANK', KEYS[2], score)"</span> 2 test-leaderboard test-ranks user2
-<span class="o">(</span>integer<span class="o">)</span> 1
-</code></pre></div></div>
-
-<p>스크립트를 한 줄로 보면</p>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="jupyter" /><summary type="html"><![CDATA[LUA 스크립팅의 효율적인 방법으로 수행 할 수 있는 사례에 사용될 수 사례를 살펴봅니다. 여기에는 Redis zset에 유지되는 리더 보드가 있으며, 현재 사용 사례를 위해 주어진 사용자의 경우 해당 사용자의 순위와 리더 보드에서 사용자의 주변의 rank를 얻을 수도 있습니다.]]></summary></entry></feed>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="cache" /><category term="redis" /><category term="springboot" /><summary type="html"><![CDATA[Redis에서 Pub/Sub을 지원합니다. 특정 topic에 메시지를 전송하는 것을 Springboot을 이용하여 구현하는 것을 알아봅니다.]]></summary></entry></feed>

@@ -1,5 +1,5 @@
 ---
-title: "Watson"
+title: "AI / Machine Learning"
 layout: archive
 permalink: categories/watson
 author_profile: true
