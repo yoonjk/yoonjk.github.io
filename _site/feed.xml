@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-07-29T06:01:47+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html"></title><link href="http://localhost:4000/2023-06-30-install-argo-workflow/" rel="alternate" type="text/html" title="" /><published>2023-07-29T06:01:47+09:00</published><updated>2023-07-29T06:01:47+09:00</updated><id>http://localhost:4000/2023-06-30-install-argo-workflow</id><content type="html" xml:base="http://localhost:4000/2023-06-30-install-argo-workflow/"><![CDATA[<h2 id="argo-workflow-설치">Argo Workflow 설치</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-07-30T14:04:09+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html"></title><link href="http://localhost:4000/2023-06-30-install-argo-workflow/" rel="alternate" type="text/html" title="" /><published>2023-07-30T14:04:09+09:00</published><updated>2023-07-30T14:04:09+09:00</updated><id>http://localhost:4000/2023-06-30-install-argo-workflow</id><content type="html" xml:base="http://localhost:4000/2023-06-30-install-argo-workflow/"><![CDATA[<h2 id="argo-workflow-설치">Argo Workflow 설치</h2>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl apply <span class="nt">-n</span> argo <span class="nt">-f</span> https://github.com/argoproj/argo-workflows/releases/download/v3.4.6/namespace-install.yaml
 </code></pre></div></div>
 
@@ -9,7 +9,7 @@
   "server",
   "--auth-mode=server"
 ]}]'</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author></entry><entry><title type="html"></title><link href="http://localhost:4000/2023-04-16-install-lua/" rel="alternate" type="text/html" title="" /><published>2023-07-29T06:01:47+09:00</published><updated>2023-07-29T06:01:47+09:00</updated><id>http://localhost:4000/2023-04-16-install-lua</id><content type="html" xml:base="http://localhost:4000/2023-04-16-install-lua/"><![CDATA[<h2 id="lua-설치---사전준비">lua 설치 - 사전준비</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author></entry><entry><title type="html"></title><link href="http://localhost:4000/2023-04-16-install-lua/" rel="alternate" type="text/html" title="" /><published>2023-07-30T14:04:09+09:00</published><updated>2023-07-30T14:04:09+09:00</updated><id>http://localhost:4000/2023-04-16-install-lua</id><content type="html" xml:base="http://localhost:4000/2023-04-16-install-lua/"><![CDATA[<h2 id="lua-설치---사전준비">lua 설치 - 사전준비</h2>
 <p>사전에 compiler가 설치되어 있어야 합니다.
 Compiler가 설치되어 있지 않는 경우 다음을 실행합니다.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo yum update -y
@@ -27,7 +27,7 @@ make all <span class="nb">test</span>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>src/lua
 str = "Hello World"
 print(str)
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author></entry><entry><title type="html">Watson Assistant 로 코딩없이 ChatBot 만들기</title><link href="http://localhost:4000/watson/watson-assistant-tutorial/" rel="alternate" type="text/html" title="Watson Assistant 로 코딩없이 ChatBot 만들기" /><published>2023-07-27T00:00:00+09:00</published><updated>2023-07-27T00:00:00+09:00</updated><id>http://localhost:4000/watson/watson-assistant-tutorial</id><content type="html" xml:base="http://localhost:4000/watson/watson-assistant-tutorial/"><![CDATA[<h2 id="ibm-왓슨-어시스턴트로-챗봇을-구축하는-방법">IBM 왓슨 어시스턴트로 챗봇을 구축하는 방법</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author></entry><entry><title type="html">코딩없이 ChatBot 만들기</title><link href="http://localhost:4000/watson/watson-assistant-tutorial/" rel="alternate" type="text/html" title="코딩없이 ChatBot 만들기" /><published>2023-07-27T00:00:00+09:00</published><updated>2023-07-27T00:00:00+09:00</updated><id>http://localhost:4000/watson/watson-assistant-tutorial</id><content type="html" xml:base="http://localhost:4000/watson/watson-assistant-tutorial/"><![CDATA[<h2 id="ibm-왓슨-어시스턴트로-챗봇을-구축하는-방법">IBM 왓슨 어시스턴트로 챗봇을 구축하는 방법</h2>
 <p>이 글에서는 IBM 왓슨 어시스턴트를 사용하여 작동하는 챗봇을 구축하는 방법에 대해 알아보겠습니다.<br />
 왓슨 어시스턴트는 IBM 클라우드에서 호스팅되는 챗봇 구축용 서비스로, 별도의 프로그래밍 없이도 챗봇을 구축할 수 있습니다.</p>
 
@@ -59,8 +59,9 @@ IBM Cloud 계정에 로그인합니다. 계정이 없는 경우 여기에서 무
 
 <p><a href="https://cloud.ibm.com/registration">IBM Cloud 가입</a></p>
 
-<p><strong>1단계: 왓슨 어시스턴트 서비스 인스턴스 만들기</strong><br />
-IBM 클라우드 계정에 로그인하면 대시보드에 아래와 같은 화면이 나타납니다.<br />
+<p><strong>1단계: 왓슨 어시스턴트 서비스 인스턴스 만들기</strong></p>
+
+<p>IBM 클라우드 계정에 로그인하면 대시보드에 아래와 같은 화면이 나타납니다.<br />
 <img src="/assets/images/watson/02-dashboard.png" alt="" /></p>
 
 <p>검색창에 “왓슨 어시스턴트”를 입력하고 왓슨 어시스턴트 서비스를 생성합니다.</p>
@@ -221,8 +222,9 @@ IBM 클라우드 계정에 로그인하면 대시보드에 아래와 같은 화�
 
 <p>이제 시스템 날짜 및 시스템 시간 엔티티를 활성화했습니다. 이제 챗봇을 구축하는 데 사용할 수 있습니다.</p>
 
-<p><strong>5단계: 대화 상자 만들기</strong> .<br />
-이제 사용자 입력에 대한 응답을 제공하는 대화 상자를 만들겠습니다.<br />
+<p><strong>5단계: 대화 상자 만들기</strong> .</p>
+
+<p>이제 사용자 입력에 대한 응답을 제공하는 대화 상자를 만들겠습니다.<br />
 하지만 그 전에 대화 상자가 무엇인지 이해해 봅시다.</p>
 
 <p>왓슨 어시스턴트에 따르면…</p>
@@ -231,7 +233,112 @@ IBM 클라우드 계정에 로그인하면 대시보드에 아래와 같은 화�
   <p>Dialog는 논리 트리의 형태로 대화의 흐름을 정의합니다.<br />
 이 트리는 의도(사용자가 말하는 내용)와 응답(챗봇이 응답하는 내용)을 일치시킵니다.<br />
 트리의 각 노드에는 사용자 입력에 따라 트리를 트리거하는 조건이 있습니다.</p>
-</blockquote>]]></content><author><name>Jaeguk Yun</name></author><category term="watson" /><category term="watson assistant" /><summary type="html"><![CDATA[IBM 왓슨 어시스턴트로 챗봇을 구축하는 방법 이 글에서는 IBM 왓슨 어시스턴트를 사용하여 작동하는 챗봇을 구축하는 방법에 대해 알아보겠습니다. 왓슨 어시스턴트는 IBM 클라우드에서 호스팅되는 챗봇 구축용 서비스로, 별도의 프로그래밍 없이도 챗봇을 구축할 수 있습니다.]]></summary></entry><entry><title type="html">맥환경에서 eclipse 자동완성 단축키 설정</title><link href="http://localhost:4000/springboot/auto-sts/" rel="alternate" type="text/html" title="맥환경에서 eclipse 자동완성 단축키 설정" /><published>2023-06-01T00:00:00+09:00</published><updated>2023-06-01T00:00:00+09:00</updated><id>http://localhost:4000/springboot/auto-sts</id><content type="html" xml:base="http://localhost:4000/springboot/auto-sts/"><![CDATA[<p>윈도우에서 자동완성 단축키는 Ctrl + Space 입니다. 하지만 맥북환경에서는 Ctrl + Space로 기본으로 설정되어 있습니다.
+</blockquote>
+
+<p>Dialog를 만들려면 스킬 메뉴에서 ‘Dilaog’를 클릭하면 다음 이미지가 표시됩니다.</p>
+
+<p><img src="/assets/images/watson/15-create-dailog.png" alt="" /></p>
+
+<p>여기에서 자동으로 생성되는 두 개의 대화 상자 노드를 볼 수 있습니다.</p>
+
+<ol>
+  <li><strong>Welcome</strong>: 사용자가 어시스턴트와 처음 상호작용할 때 사용자에게 표시되는 인사말이 포함되어 있습니다.</li>
+  <li><strong>기타</strong>: 사용자의 입력이 인식되지 않을 때 사용자에게 응답하는 데 사용되는 문구가 포함되어 있습니다.</li>
+</ol>
+
+<p>이제 환영 노드를 클릭하고 어시스턴트 응답 섹션에서 텍스트를 다음과 같이 작성된 텍스트로 바꿉니다. 그리고 질문을 랜덤으로 하기위해 Random을 클릭하고 다음과 같이 텍스트를 입력합니다.</p>
+
+<p>안녕하세요! 저는 레스토랑의 AI 비서입니다. 무엇을 도와드릴까요?
+무엇을 도와드릴까요?
+<img src="/assets/images/watson/16-how-can-i-help-you.png" alt="" /></p>
+
+<p>사용자가 챗봇과 대화할 때마다 먼저 위에 작성된 메시지를 받게 됩니다.<br />
+이제 두 개의 대화 노드가 더 필요합니다. 하나는 운영 시간에 대한 정보를 제공하고 다른 하나는 예약을 할 수 있도록 합니다.</p>
+
+<p>먼저 영업 시간부터 시작하겠습니다.<br />
+새 노드를 추가하려면 환영 노드의 오른쪽 상단에 있는 점 3개를 클릭하고 아래의 노드 추가를 클릭합니다. <br />
+클릭하면 다음 이미지가 표시됩니다.</p>
+
+<p><img src="/assets/images/watson/17-create-node.png" alt="" /></p>
+
+<p>이제 새로 생성된 노드에 다음 세부 정보를 입력합니다.</p>
+
+<ol>
+  <li>노드 이름(Enter node name)을 입력합니다(선택 사항): 운영 시간</li>
+  <li>조건 입력(Enter condition): #hoursOfOperation 입력 후 #운영시간을 클릭합니다.</li>
+  <li>응답 텍스트를 입력합니다(Enter response text): 레스토랑 운영 시간은 평일 오전 10시부터 오후 10시, 주말 오전 10시부터 오후 9시까지입니다</li>
+</ol>
+
+<p>이제 사용자 지정 버튼 옆의 십자 아이콘을 클릭합니다.</p>
+
+<p><img src="/assets/images/watson/18-customize.png" alt="" /></p>
+
+<p>이제 사용자가 레스토랑의 영업 시간을 문의할 때마다 영업 시간 노드가 트리거되고 다음과 같은 응답이 표시됩니다:</p>
+
+<blockquote>
+  <p>레스토랑 운영 시간은 평일 오전 10시부터 오후 10시,<br />
+주말 오전 10시부터 오후 9시까지입니다</p>
+</blockquote>
+
+<p>이제 저희가 구축한 챗봇을 사용해 보실 수 있습니다. 오른쪽 상단의 Tryit 을 클릭하고 다음 문장을 입력하세요.</p>
+
+<p><img src="/assets/images/watson/19-try-it.png" alt="" /></p>
+
+<p>운영 시간이 어떻게 되나요?</p>
+
+<p>다음과 같은 응답이 표시됩니다.</p>
+
+<p><img src="/assets/images/watson/20-restaurant-response.png" alt="" /></p>
+
+<p>지금까지 영업 시간에 대한 정보를 제공하는 대화 노드를 추가했습니다.<br />
+이제 마지막 대화 노드를 추가하여 레스토랑의 테이블을 예약하겠습니다.</p>
+
+<p>새 대화 노드를 추가하려면 영업 시간 노드에서 점 세 개를 클릭하고 위의 추가 노드를 클릭하면 됩니다.</p>
+
+<p>다음과 같은 이미지가 표시됩니다.</p>
+
+<p><img src="/assets/images/watson/21-add-node-booking.png" alt="" /></p>
+
+<p>이제 새로 생성된 대화 상자 노드에 다음 세부 정보를 입력합니다.</p>
+
+<p>노드 이름을 입력합니다(선택 사항): Make Booking Restaurant
+조건 입력: #예약 을 입력합니다.</p>
+
+<p><img src="/assets/images/watson/22-make-booking.png" alt="" /></p>
+
+<p>사용자가 테이블 예약에 대해 문의할 때마다 챗봇이 #예약 인텐트를 인식하고 이 노드가 트리거되도록 인식 조건으로 #예약 인텐트를 입력했습니다.</p>
+
+<p>레스토랑에서 테이블을 예약하려면 챗봇은 사용자에게 몇 가지 질문을 해야 합니다.</p>
+
+<ol>
+  <li>지점을 선택해주세요</li>
+  <li>날짜는 어느 날짜로 하시겠습니까?</li>
+  <li>시간은 몇시로 예약해 드릴까요?</li>
+  <li>예약인원은 몇명이세요?</li>
+</ol>
+
+<p><img src="/assets/images/watson/22-workflow-booking a table.png" alt="" /></p>
+
+<p>이 워크플로를 만들기 위해 슬롯을 사용하겠습니다. 슬롯은 단일 노드 내에서 사용자에게 여러 가지 정보를 요청하고 저장할 수 있는 구조화된 형식을 제공합니다. 특정 작업을 염두에 두고 있고 그 작업을 수행하기 전에 사용자로부터 핵심 정보가 필요할 때 가장 유용합니다.</p>
+
+<p>슬롯을 사용하려면 예약하기 노드의 오른쪽 상단 모서리에 있는 사용자 지정 버튼을 클릭하고 슬롯 스위치를 켜짐으로 설정한 다음 적용을 클릭합니다.</p>
+
+<p><img src="/assets/images/watson/23-customize make booking.png" alt="" /></p>
+
+<p>에서 섹션을 확인하고 다음 슬롯을 추가합니다:</p>
+
+<p>@sys-date 확인, 다른 이름으로 저장 - $date, 없는 경우 - 몇 시에 오시겠습니까?<br />
+@sys-time 확인, 다른 이름으로 저장 - $시간, 없는 경우 - 몇 시에 예약하시겠습니까?<br />
+슬롯을 추가하면 다음과 같은 이미지가 표시됩니다.</p>
+
+<p><img src="/assets/images/watson/24-slot.png" alt="" /></p>
+
+<p>이제 어시스턴트 응답 섹션에 다음 텍스트를 입력합니다.</p>
+
+<p>$branch 지점에 $date 에  $time 으로  $guests 명 예약되었습니다.</p>
+
+<p>이제 챗봇이 완성되었습니다.<br />
+오른쪽 상단의 Tryit 옵션을 사용하여 사용해 볼 수 있습니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="watson" /><category term="watson assistant" /><summary type="html"><![CDATA[IBM 왓슨 어시스턴트로 챗봇을 구축하는 방법 이 글에서는 IBM 왓슨 어시스턴트를 사용하여 작동하는 챗봇을 구축하는 방법에 대해 알아보겠습니다. 왓슨 어시스턴트는 IBM 클라우드에서 호스팅되는 챗봇 구축용 서비스로, 별도의 프로그래밍 없이도 챗봇을 구축할 수 있습니다.]]></summary></entry><entry><title type="html">맥환경에서 eclipse 자동완성 단축키 설정</title><link href="http://localhost:4000/springboot/auto-sts/" rel="alternate" type="text/html" title="맥환경에서 eclipse 자동완성 단축키 설정" /><published>2023-06-01T00:00:00+09:00</published><updated>2023-06-01T00:00:00+09:00</updated><id>http://localhost:4000/springboot/auto-sts</id><content type="html" xml:base="http://localhost:4000/springboot/auto-sts/"><![CDATA[<p>윈도우에서 자동완성 단축키는 Ctrl + Space 입니다. 하지만 맥북환경에서는 Ctrl + Space로 기본으로 설정되어 있습니다.
 그래서 자동완성 단축키를 Shift + Space로 변경해서 사용합니다.</p>
 
 <p><img src="/assets/images/springboot/05-sts-short-cut-mac.png" alt="sts-short-cut-mac" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="short-key" /><summary type="html"><![CDATA[윈도우에서 자동완성 단축키는 Ctrl + Space 입니다. 하지만 맥북환경에서는 Ctrl + Space로 기본으로 설정되어 있습니다. 그래서 자동완성 단축키를 Shift + Space로 변경해서 사용합니다.]]></summary></entry><entry><title type="html">Kafka using docker-compose</title><link href="http://localhost:4000/docker/kafka-on-docker/" rel="alternate" type="text/html" title="Kafka using docker-compose" /><published>2023-05-13T00:00:00+09:00</published><updated>2023-05-13T00:00:00+09:00</updated><id>http://localhost:4000/docker/kafka-on-docker</id><content type="html" xml:base="http://localhost:4000/docker/kafka-on-docker/"><![CDATA[<p>카프카 브로커 1개, 주키퍼 1로 구성된 confluent사의 docker 이미지를 기반으로 실행하는 docker-compose 파일입니다.</p>

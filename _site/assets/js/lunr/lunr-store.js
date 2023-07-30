@@ -695,7 +695,7 @@ var store = [{
         "url": "/springboot/auto-sts/",
         "teaser": null
       },{
-        "title": "Watson Assistant 로 코딩없이 ChatBot 만들기",
+        "title": "코딩없이 ChatBot 만들기",
         "excerpt":"IBM 왓슨 어시스턴트로 챗봇을 구축하는 방법 이 글에서는 IBM 왓슨 어시스턴트를 사용하여 작동하는 챗봇을 구축하는 방법에 대해 알아보겠습니다. 왓슨 어시스턴트는 IBM 클라우드에서 호스팅되는 챗봇 구축용 서비스로, 별도의 프로그래밍 없이도 챗봇을 구축할 수 있습니다. 챗봇 구축을 시작하기 전에 챗봇이란 무엇이며 챗봇의 사용 사례를 이해해 보겠습니다. 챗봇은 사람과 대화를 시뮬레이션할 수 있는...","categories": ["watson"],
         "tags": ["watson assistant"],
         "url": "/watson/watson-assistant-tutorial/",
