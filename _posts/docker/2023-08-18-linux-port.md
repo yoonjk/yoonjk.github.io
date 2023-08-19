@@ -1,7 +1,7 @@
 ---
 title: linux listen port 확인 
 categories:
-  - linux
+  - docker
 tags:
   - port
 ---
