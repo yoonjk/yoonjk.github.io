@@ -707,6 +707,30 @@ var store = [{
         "url": "/watson/my-first-llm-app/",
         "teaser": null
       },{
+        "title": "linux listen port 확인",
+        "excerpt":"1 방법 1: netstat root@zetawiki:~# netstat -tnlp Active Internet connections (only servers) Proto Recv-Q Send-Q Local Address Foreign Address State PID/Program name tcp 0 0 127.0.0.1:8005 0.0.0.0:* LISTEN 1212/java tcp 0 0 0.0.0.0:3306 0.0.0.0:* LISTEN 1118/mysqld tcp 0 0 0.0.0.0:3690 0.0.0.0:* LISTEN 919/svnserve tcp 0 0 0.0.0.0:8080 0.0.0.0:* LISTEN 1212/java...","categories": ["docker"],
+        "tags": ["port"],
+        "url": "/docker/linux-port/",
+        "teaser": null
+      },{
+        "title": "Iceberg와 MinIO를 사용한 레이크하우스 아키텍처",
+        "excerpt":"iceberg apache iceberg는 데이터 세계를 강타한 것 같습니다. 처음에 Ryan Blue가 Netflix에서 인큐베이팅한 이 프로젝트는 결국 아파치 소프트웨어 재단으로 옮겨져 현재에 이르고 있습니다. 그 핵심은 대규모 분석 데이터 세트(수백 TB에서 수백 PB에 이르는)를 위한 오픈 테이블 형식입니다. 여러 엔진과 호환되는 형식입니다. 즉, Spark, Trino, Flink, Presto, Hive, Impala가 모두 데이터...","categories": ["watson"],
+        "tags": ["iceberg"],
+        "url": "/watson/iceberg/",
+        "teaser": null
+      },{
+        "title": "minio docker-compose standard",
+        "excerpt":"minio standard docker-compose  version: '3' services:   minio:     image: minio/minio     command: server /data --console-address \":9001\"     container_name: minio     environment:       MINIO_ROOT_USER: admin       MINIO_ROOT_PASSWORD: i@mk0rea8785@     restart: always     shm_size: '1gb'     ports:       - \"9000:9000\"       - \"9001:9001\"     volumes:       - ./data:/data  ","categories": ["docker"],
+        "tags": ["minio"],
+        "url": "/docker/minio/",
+        "teaser": null
+      },{
+        "title": "Quickstart Iceberg with Spark and Docker Compose",
+        "excerpt":"Apache Iceberg는 대규모(페타바이트) 분석 데이터 세트를 위한 오픈 테이블 형식(데이터 파일을 구성하는 방법)입니다. 넷플릭스에서 만들었으며 ASF에서 오픈 소스화되었습니다. Netflix, Apple 및 기타 여러 회사에서 광범위하게 사용되고 있습니다. Tabular.io는 Apache Iceberg 테이블을 기반으로 합니다. Dremio.com Arctic은 아파치 아이스버그용으로 구축되었습니다. 두 가지 구성 요소로 구성된 오픈 테이블 형식입니다: 메타데이터 파일(메타데이터 파일, 매니페스트...","categories": ["watson"],
+        "tags": ["iceberg"],
+        "url": "/watson/Quickstart-Iceberg-with-Spark-and-Docker-Compose/",
+        "teaser": null
+      },{
         "title": null,
         "excerpt":"lua 설치 - 사전준비 사전에 compiler가 설치되어 있어야 합니다. Compiler가 설치되어 있지 않는 경우 다음을 실행합니다. sudo yum update -y yum groupinstall -y 'Development Tools' lua 설치 curl -R -O http://www.lua.org/ftp/lua-5.4.4.tar.gz tar zxf lua-5.4.4.tar.gz cd lua-5.4.4 make all test lua cli 실행 lua를 실행하고 Hello World를 출력합니다. src/lua str =...","categories": [],
         "tags": null,
