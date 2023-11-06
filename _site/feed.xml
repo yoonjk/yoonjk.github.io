@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-08-20T18:54:12+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html"></title><link href="http://localhost:4000/2023-06-30-install-argo-workflow/" rel="alternate" type="text/html" title="" /><published>2023-08-20T18:54:12+09:00</published><updated>2023-08-20T18:54:12+09:00</updated><id>http://localhost:4000/2023-06-30-install-argo-workflow</id><content type="html" xml:base="http://localhost:4000/2023-06-30-install-argo-workflow/"><![CDATA[<h2 id="argo-workflow-설치">Argo Workflow 설치</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-11-06T19:59:34+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Cloud Native Journey</title><subtitle>Software Engineer/Architect</subtitle><author><name>Jaeguk Yun</name></author><entry><title type="html"></title><link href="http://localhost:4000/2023-06-30-install-argo-workflow/" rel="alternate" type="text/html" title="" /><published>2023-11-06T19:59:34+09:00</published><updated>2023-11-06T19:59:34+09:00</updated><id>http://localhost:4000/2023-06-30-install-argo-workflow</id><content type="html" xml:base="http://localhost:4000/2023-06-30-install-argo-workflow/"><![CDATA[<h2 id="argo-workflow-설치">Argo Workflow 설치</h2>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl apply <span class="nt">-n</span> argo <span class="nt">-f</span> https://github.com/argoproj/argo-workflows/releases/download/v3.4.6/namespace-install.yaml
 </code></pre></div></div>
 
@@ -9,7 +9,61 @@
   "server",
   "--auth-mode=server"
 ]}]'</span>
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author></entry><entry><title type="html"></title><link href="http://localhost:4000/2023-04-16-install-lua/" rel="alternate" type="text/html" title="" /><published>2023-08-20T18:54:12+09:00</published><updated>2023-08-20T18:54:12+09:00</updated><id>http://localhost:4000/2023-04-16-install-lua</id><content type="html" xml:base="http://localhost:4000/2023-04-16-install-lua/"><![CDATA[<h2 id="lua-설치---사전준비">lua 설치 - 사전준비</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author></entry><entry><title type="html"></title><link href="http://localhost:4000/2023-08-19-Interoperability-iceberg-presto-spark/" rel="alternate" type="text/html" title="" /><published>2023-11-06T19:59:34+09:00</published><updated>2023-11-06T19:59:34+09:00</updated><id>http://localhost:4000/2023-08-19-Interoperability-iceberg-presto-spark</id><content type="html" xml:base="http://localhost:4000/2023-08-19-Interoperability-iceberg-presto-spark/"><![CDATA[<p>Setup prestodb/presto server + iceberg catalog backed by a HMS service.
+Steps to Run Presto(0.282+) + Hive(3.0) + Iceberg(1.2.1 &amp; 1.3.0) and interoperability with Apache Spark 3.2.x</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://downloads.apache.org/hive/hive-standalone-metastore-3.0.0/hive-standalone-metastore-3.0.0-bin.tar.gz
+<span class="nb">tar </span>xvzf hive-standalone-metastore-3.0.0-bin.tar.gz
+<span class="nb">mv </span>hive-standalone-metastore-3.0.0-bin hive
+<span class="nb">cd </span>hive
+bin/schematool <span class="nt">-dbType</span> derby <span class="nt">-initSchema</span> <span class="c"># command will create and init the derby</span>
+<span class="c"># Start the hive metadata service</span>
+bin/start-metastore
+</code></pre></div></div>
+<p>Similarly extract the file download in step 2 and point the extracted hive location as:export HIVE_HOME=/home/user/hive</p>
+
+<h2 id="presto-설치">Presto 설치</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://repo1.maven.org/maven2/com/facebook/presto/presto-server/0.282/presto-server-0.282.tar.gz
+<span class="nb">tar </span>xvzf presto-server-0.282.tar.gz
+<span class="nb">mv </span>presto-server-0.282 presto
+<span class="nb">export </span><span class="nv">PRESTO_HOME</span><span class="o">=</span>~/presto
+
+<span class="c"># create the directories under presto installation dir.</span>
+<span class="nb">mkdir</span> <span class="nt">-p</span> <span class="nv">$PRESTO_HOME</span>/etc/catalog
+
+<span class="c"># /etc/node.properties</span>
+node.environment<span class="o">=</span>production
+node.id<span class="o">=</span>ffffffff-ffff-ffff-ffff-ffffffffffff
+node.data-dir<span class="o">=</span>/home/user/presto/data
+<span class="c"># Please note replace /home/user with a path that this process can write to.</span>
+
+<span class="c"># $PRESTO_HOME/etc/config.properties</span>
+<span class="nv">coordinator</span><span class="o">=</span><span class="nb">true
+</span>node-scheduler.include-coordinator<span class="o">=</span><span class="nb">true
+</span>http-server.http.port<span class="o">=</span>8080
+query.max-memory<span class="o">=</span>5GB
+query.max-memory-per-node<span class="o">=</span>1GB
+discovery-server.enabled<span class="o">=</span><span class="nb">true
+</span>discovery.uri<span class="o">=</span>http://localhost:8080
+
+<span class="c"># $PRESTO_HOME/etc/jvm.config</span>
+<span class="nt">-Djdk</span>.attach.allowAttachSelf<span class="o">=</span><span class="nb">true</span>
+<span class="nt">-server</span>
+<span class="nt">-Xmx16G</span>
+<span class="nt">-XX</span>:+UseG1GC
+<span class="nt">-XX</span>:G1HeapRegionSize<span class="o">=</span>32M
+<span class="nt">-XX</span>:+UseGCOverheadLimit
+<span class="nt">-XX</span>:+ExplicitGCInvokesConcurrent
+<span class="nt">-XX</span>:+HeapDumpOnOutOfMemoryError
+<span class="nt">-XX</span>:+ExitOnOutOfMemoryError
+
+<span class="c"># $PRESTO_HOME/etc/catalog/iceberg.properties</span>
+connector.name<span class="o">=</span>iceberg
+hive.metastore.uri<span class="o">=</span>thrift://localhost:9083
+iceberg.catalog.type<span class="o">=</span>hive
+</code></pre></div></div>
+<h2 id="참고">참고</h2>
+<p><a href="https://medium.com/@scrapcodes/interoperability-presto-iceberg-spark-4e5299ec7de5">Interoperability Presto + Iceberg + Spark</a></p>]]></content><author><name>Jaeguk Yun</name></author></entry><entry><title type="html"></title><link href="http://localhost:4000/2023-04-16-install-lua/" rel="alternate" type="text/html" title="" /><published>2023-11-06T19:59:34+09:00</published><updated>2023-11-06T19:59:34+09:00</updated><id>http://localhost:4000/2023-04-16-install-lua</id><content type="html" xml:base="http://localhost:4000/2023-04-16-install-lua/"><![CDATA[<h2 id="lua-설치---사전준비">lua 설치 - 사전준비</h2>
 <p>사전에 compiler가 설치되어 있어야 합니다.
 Compiler가 설치되어 있지 않는 경우 다음을 실행합니다.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo yum update -y
@@ -98,7 +152,32 @@ services:
       - "9001:9001"
     volumes:
       - ./data:/data
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="minio" /><summary type="html"><![CDATA[minio standard docker-compose version: '3' services: minio: image: minio/minio command: server /data --console-address ":9001" container_name: minio environment: MINIO_ROOT_USER: admin MINIO_ROOT_PASSWORD: i@mk0rea8785@ restart: always shm_size: '1gb' ports: - "9000:9000" - "9001:9001" volumes: - ./data:/data]]></summary></entry><entry><title type="html">Iceberg와 MinIO를 사용한 레이크하우스 아키텍처</title><link href="http://localhost:4000/watson/iceberg/" rel="alternate" type="text/html" title="Iceberg와 MinIO를 사용한 레이크하우스 아키텍처" /><published>2023-08-18T00:00:00+09:00</published><updated>2023-08-18T00:00:00+09:00</updated><id>http://localhost:4000/watson/iceberg</id><content type="html" xml:base="http://localhost:4000/watson/iceberg/"><![CDATA[<h2 id="iceberg">iceberg</h2>
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="minio" /><summary type="html"><![CDATA[minio standard docker-compose version: '3' services: minio: image: minio/minio command: server /data --console-address ":9001" container_name: minio environment: MINIO_ROOT_USER: admin MINIO_ROOT_PASSWORD: i@mk0rea8785@ restart: always shm_size: '1gb' ports: - "9000:9000" - "9001:9001" volumes: - ./data:/data]]></summary></entry><entry><title type="html">linux listen port 확인</title><link href="http://localhost:4000/docker/linux-port/" rel="alternate" type="text/html" title="linux listen port 확인" /><published>2023-08-18T00:00:00+09:00</published><updated>2023-08-18T00:00:00+09:00</updated><id>http://localhost:4000/docker/linux-port</id><content type="html" xml:base="http://localhost:4000/docker/linux-port/"><![CDATA[<p>1 방법 1: netstat</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@zetawiki:~# netstat <span class="nt">-tnlp</span>
+Active Internet connections <span class="o">(</span>only servers<span class="o">)</span>
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 127.0.0.1:8005          0.0.0.0:<span class="k">*</span>               LISTEN      1212/java       
+tcp        0      0 0.0.0.0:3306            0.0.0.0:<span class="k">*</span>               LISTEN      1118/mysqld     
+tcp        0      0 0.0.0.0:3690            0.0.0.0:<span class="k">*</span>               LISTEN      919/svnserve    
+tcp        0      0 0.0.0.0:8080            0.0.0.0:<span class="k">*</span>               LISTEN      1212/java       
+tcp        0      0 0.0.0.0:80              0.0.0.0:<span class="k">*</span>               LISTEN      1157/apache2    
+tcp        0      0 0.0.0.0:22              0.0.0.0:<span class="k">*</span>               LISTEN      968/sshd
+</code></pre></div></div>
+
+<p>2 방법 2: lsof<br />
+lsof가 설치되어 있지 않는 경우</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo yum install -y lsof
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@zetawiki:~# lsof <span class="nt">-i</span> <span class="nt">-nP</span> | <span class="nb">grep </span>LISTEN | <span class="nb">awk</span> <span class="s1">'{print $(NF-1)" "$1}'</span> | <span class="nb">sort</span> <span class="nt">-u</span>
+127.0.0.1:8005 java
+<span class="k">*</span>:22 sshd
+<span class="k">*</span>:3306 mysqld
+<span class="k">*</span>:3690 svnserve
+<span class="k">*</span>:8080 java
+<span class="k">*</span>:80 apache2
+</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="port" /><summary type="html"><![CDATA[1 방법 1: netstat]]></summary></entry><entry><title type="html">Iceberg와 MinIO를 사용한 레이크하우스 아키텍처</title><link href="http://localhost:4000/watson/iceberg/" rel="alternate" type="text/html" title="Iceberg와 MinIO를 사용한 레이크하우스 아키텍처" /><published>2023-08-18T00:00:00+09:00</published><updated>2023-08-18T00:00:00+09:00</updated><id>http://localhost:4000/watson/iceberg</id><content type="html" xml:base="http://localhost:4000/watson/iceberg/"><![CDATA[<h2 id="iceberg">iceberg</h2>
 <p>apache iceberg는 데이터 세계를 강타한 것 같습니다. 처음에 Ryan Blue가 Netflix에서 인큐베이팅한 이 프로젝트는 결국 아파치 소프트웨어 재단으로 옮겨져 현재에 이르고 있습니다. 그 핵심은 대규모 분석 데이터 세트(수백 TB에서 수백 PB에 이르는)를 위한 오픈 테이블 형식입니다.</p>
 
 <p>여러 엔진과 호환되는 형식입니다. 즉, Spark, Trino, Flink, Presto, Hive, Impala가 모두 데이터 집합에서 독립적으로 동시에 작동할 수 있다는 뜻입니다.   데이터 분석의 공용어인 SQL은 물론, 전체 스키마 진화, 숨겨진 파티셔닝, 시간 이동, 롤백 및 데이터 압축과 같은 주요 기능도 지원합니다.</p>
@@ -409,32 +488,7 @@ spark-sql&gt;
 </code></pre></div></div>
 
 <h2 id="참고">참고</h2>
-<p><a href="https://github.com/tlepple/iceberg-intro-workshop">iceberg-intro-workshop</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="watson" /><category term="iceberg" /><summary type="html"><![CDATA[iceberg apache iceberg는 데이터 세계를 강타한 것 같습니다. 처음에 Ryan Blue가 Netflix에서 인큐베이팅한 이 프로젝트는 결국 아파치 소프트웨어 재단으로 옮겨져 현재에 이르고 있습니다. 그 핵심은 대규모 분석 데이터 세트(수백 TB에서 수백 PB에 이르는)를 위한 오픈 테이블 형식입니다.]]></summary></entry><entry><title type="html">linux listen port 확인</title><link href="http://localhost:4000/docker/linux-port/" rel="alternate" type="text/html" title="linux listen port 확인" /><published>2023-08-18T00:00:00+09:00</published><updated>2023-08-18T00:00:00+09:00</updated><id>http://localhost:4000/docker/linux-port</id><content type="html" xml:base="http://localhost:4000/docker/linux-port/"><![CDATA[<p>1 방법 1: netstat</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@zetawiki:~# netstat <span class="nt">-tnlp</span>
-Active Internet connections <span class="o">(</span>only servers<span class="o">)</span>
-Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
-tcp        0      0 127.0.0.1:8005          0.0.0.0:<span class="k">*</span>               LISTEN      1212/java       
-tcp        0      0 0.0.0.0:3306            0.0.0.0:<span class="k">*</span>               LISTEN      1118/mysqld     
-tcp        0      0 0.0.0.0:3690            0.0.0.0:<span class="k">*</span>               LISTEN      919/svnserve    
-tcp        0      0 0.0.0.0:8080            0.0.0.0:<span class="k">*</span>               LISTEN      1212/java       
-tcp        0      0 0.0.0.0:80              0.0.0.0:<span class="k">*</span>               LISTEN      1157/apache2    
-tcp        0      0 0.0.0.0:22              0.0.0.0:<span class="k">*</span>               LISTEN      968/sshd
-</code></pre></div></div>
-
-<p>2 방법 2: lsof<br />
-lsof가 설치되어 있지 않는 경우</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo yum install -y lsof
-</code></pre></div></div>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@zetawiki:~# lsof <span class="nt">-i</span> <span class="nt">-nP</span> | <span class="nb">grep </span>LISTEN | <span class="nb">awk</span> <span class="s1">'{print $(NF-1)" "$1}'</span> | <span class="nb">sort</span> <span class="nt">-u</span>
-127.0.0.1:8005 java
-<span class="k">*</span>:22 sshd
-<span class="k">*</span>:3306 mysqld
-<span class="k">*</span>:3690 svnserve
-<span class="k">*</span>:8080 java
-<span class="k">*</span>:80 apache2
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="port" /><summary type="html"><![CDATA[1 방법 1: netstat]]></summary></entry><entry><title type="html">LLM 앱을 구축하기 위해 알아야 할 모든 것</title><link href="http://localhost:4000/watson/my-first-llm-app/" rel="alternate" type="text/html" title="LLM 앱을 구축하기 위해 알아야 할 모든 것" /><published>2023-07-28T00:00:00+09:00</published><updated>2023-07-28T00:00:00+09:00</updated><id>http://localhost:4000/watson/my-first-llm-app</id><content type="html" xml:base="http://localhost:4000/watson/my-first-llm-app/"><![CDATA[<h2 id="llm이-필요한-이유">LLM이 필요한 이유</h2>
+<p><a href="https://github.com/tlepple/iceberg-intro-workshop">iceberg-intro-workshop</a></p>]]></content><author><name>Jaeguk Yun</name></author><category term="watson" /><category term="iceberg" /><summary type="html"><![CDATA[iceberg apache iceberg는 데이터 세계를 강타한 것 같습니다. 처음에 Ryan Blue가 Netflix에서 인큐베이팅한 이 프로젝트는 결국 아파치 소프트웨어 재단으로 옮겨져 현재에 이르고 있습니다. 그 핵심은 대규모 분석 데이터 세트(수백 TB에서 수백 PB에 이르는)를 위한 오픈 테이블 형식입니다.]]></summary></entry><entry><title type="html">LLM 앱을 구축하기 위해 알아야 할 모든 것</title><link href="http://localhost:4000/watson/my-first-llm-app/" rel="alternate" type="text/html" title="LLM 앱을 구축하기 위해 알아야 할 모든 것" /><published>2023-07-28T00:00:00+09:00</published><updated>2023-07-28T00:00:00+09:00</updated><id>http://localhost:4000/watson/my-first-llm-app</id><content type="html" xml:base="http://localhost:4000/watson/my-first-llm-app/"><![CDATA[<h2 id="llm이-필요한-이유">LLM이 필요한 이유</h2>
 <p>언어의 진화는 오늘날까지 인간을 엄청나게 발전시켰습니다. 덕분에 오늘날 우리가 알고 있는 형태로 지식을 효율적으로 공유하고 협업할 수 있게 되었습니다. 그 결과, 우리의 집단 지식은 대부분 정리되지 않은 서면 텍스트를 통해 계속 보존되고 전달되고 있습니다.</p>
 
 <p>지난 20년 동안 정보와 프로세스를 디지털화하기 위해 수행된 이니셔티브는 종종 관계형 데이터베이스에 점점 더 많은 데이터를 축적하는 데 중점을 두었습니다. 이러한 접근 방식은 기존의 분석 머신러닝 알고리즘이 데이터를 처리하고 이해할 수 있게 해줍니다.</p>
@@ -765,42 +819,4 @@ IBM Cloud 계정에 로그인합니다. 계정이 없는 경우 여기에서 무
 오른쪽 상단의 Tryit 옵션을 사용하여 사용해 볼 수 있습니다.</p>]]></content><author><name>Jaeguk Yun</name></author><category term="watson" /><category term="watson assistant" /><summary type="html"><![CDATA[IBM 왓슨 어시스턴트로 챗봇을 구축하는 방법 이 글에서는 IBM 왓슨 어시스턴트를 사용하여 작동하는 챗봇을 구축하는 방법에 대해 알아보겠습니다. 왓슨 어시스턴트는 IBM 클라우드에서 호스팅되는 챗봇 구축용 서비스로, 별도의 프로그래밍 없이도 챗봇을 구축할 수 있습니다.]]></summary></entry><entry><title type="html">맥환경에서 eclipse 자동완성 단축키 설정</title><link href="http://localhost:4000/springboot/auto-sts/" rel="alternate" type="text/html" title="맥환경에서 eclipse 자동완성 단축키 설정" /><published>2023-06-01T00:00:00+09:00</published><updated>2023-06-01T00:00:00+09:00</updated><id>http://localhost:4000/springboot/auto-sts</id><content type="html" xml:base="http://localhost:4000/springboot/auto-sts/"><![CDATA[<p>윈도우에서 자동완성 단축키는 Ctrl + Space 입니다. 하지만 맥북환경에서는 Ctrl + Space로 기본으로 설정되어 있습니다.
 그래서 자동완성 단축키를 Shift + Space로 변경해서 사용합니다.</p>
 
-<p><img src="/assets/images/springboot/05-sts-short-cut-mac.png" alt="sts-short-cut-mac" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="short-key" /><summary type="html"><![CDATA[윈도우에서 자동완성 단축키는 Ctrl + Space 입니다. 하지만 맥북환경에서는 Ctrl + Space로 기본으로 설정되어 있습니다. 그래서 자동완성 단축키를 Shift + Space로 변경해서 사용합니다.]]></summary></entry><entry><title type="html">Kafka using docker-compose</title><link href="http://localhost:4000/docker/kafka-on-docker/" rel="alternate" type="text/html" title="Kafka using docker-compose" /><published>2023-05-13T00:00:00+09:00</published><updated>2023-05-13T00:00:00+09:00</updated><id>http://localhost:4000/docker/kafka-on-docker</id><content type="html" xml:base="http://localhost:4000/docker/kafka-on-docker/"><![CDATA[<p>카프카 브로커 1개, 주키퍼 1로 구성된 confluent사의 docker 이미지를 기반으로 실행하는 docker-compose 파일입니다.</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>version: '2'
-
-services:
-  zookeeper:
-    container_name: zookeeper
-    image: confluentinc/cp-zookeeper:latest
-    environment:
-      ZOOKEEPER_SERVER_ID: 1
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
-      ZOOKEEPER_INIT_LIMIT: 5
-      ZOOKEEPER_SYNC_LIMIT: 2
-    ports:
-      - "2181:2181"
-
-  kafka:
-    container_name: kafka
-    image: confluentinc/cp-kafka:latest
-    depends_on:
-      - zookeeper
-    ports:
-      - "9092:9092"
-    environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-</code></pre></div></div>
-
-<h2 id="kafka-연결">Kafka 연결</h2>
-<p>Confluent 사의 docker image에서는 kafka CLI 들이  sh 확장자가 없습니다. apache 나 Bitnami 에서 제공하는 docker image는 sh 확장자가 있는 것이 특징입니다.</p>
-
-<p>다음의 명령어로 현재 topic 목록을 조회합니다.</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker exec -it kafka kafka-topics --bootstrap-server kafka:9092 --list
-</code></pre></div></div>]]></content><author><name>Jaeguk Yun</name></author><category term="docker" /><category term="Kafka" /><summary type="html"><![CDATA[카프카 브로커 1개, 주키퍼 1로 구성된 confluent사의 docker 이미지를 기반으로 실행하는 docker-compose 파일입니다. ``` version: ‘2’]]></summary></entry></feed>
+<p><img src="/assets/images/springboot/05-sts-short-cut-mac.png" alt="sts-short-cut-mac" /></p>]]></content><author><name>Jaeguk Yun</name></author><category term="springboot" /><category term="short-key" /><summary type="html"><![CDATA[윈도우에서 자동완성 단축키는 Ctrl + Space 입니다. 하지만 맥북환경에서는 Ctrl + Space로 기본으로 설정되어 있습니다. 그래서 자동완성 단축키를 Shift + Space로 변경해서 사용합니다.]]></summary></entry></feed>

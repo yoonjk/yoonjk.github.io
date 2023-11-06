@@ -742,4 +742,10 @@ var store = [{
         "tags": null,
         "url": "/2023-06-30-install-argo-workflow/",
         "teaser": null
+      },{
+        "title": null,
+        "excerpt":"Setup prestodb/presto server + iceberg catalog backed by a HMS service. Steps to Run Presto(0.282+) + Hive(3.0) + Iceberg(1.2.1 &amp; 1.3.0) and interoperability with Apache Spark 3.2.x wget https://downloads.apache.org/hive/hive-standalone-metastore-3.0.0/hive-standalone-metastore-3.0.0-bin.tar.gz tar xvzf hive-standalone-metastore-3.0.0-bin.tar.gz mv hive-standalone-metastore-3.0.0-bin hive cd hive bin/schematool -dbType derby -initSchema # command will create and init the derby #...","categories": [],
+        "tags": null,
+        "url": "/2023-08-19-Interoperability-iceberg-presto-spark/",
+        "teaser": null
       }]

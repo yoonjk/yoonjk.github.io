@@ -58,6 +58,9 @@ chmod +x /usr/local/bin/minikube
 minikube를 다음과 같이 시작합니다.
 ```bash
 minikube start --driver=docker --force
+or
+# latest
+minikube start
 ```
 
 kubectl CLI download 합니다
@@ -67,6 +70,31 @@ curl -L "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable
 chmod +x /usr/local/bin/kubectl
 
 kubectl get po -A
+```
+
+## minikube dashboard 
+minikube dashboard를 enable하기 위해 다음과 같이 입력합니다.  
+```
+kubectl proxy --address='0.0.0.0' --disable-filter=true &
+```
+
+minikube dashboard 를 다시 실행합니다.
+```
+minikube dashboard를 실행하면 다음과 같이 출력됩니다.
+아래 127.0.0.1:xxxx를 자신의 서버 IP:8001로 변경해서 brower url에 입력하여 접속합니다.
+```bash
+$> minikube dashboard 
+
+Verifying dashboard health ...
+🚀  Launching proxy ...
+🤔  Verifying proxy health ...
+🎉  Opening http://127.0.0.1:43830/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/ in your default browser...
+👉  http://127.0.0.1:43830/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/
+```
+
+예를 들면 minikube가 설치된 서버 IP가 119.100.100.99 이면 다음과 같이 URL에 입력합니다.
+```
+http://119.100.100.99:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/
 ```
 
 ## Configure for connecting Jenkins
