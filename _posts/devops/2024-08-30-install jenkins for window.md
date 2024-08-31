@@ -129,8 +129,14 @@ Test Port 버튼 클릭합니다.
 
 
 ## select java home 폴더 
-java home 폴더를 선택합니다.
+default 로 **Program Files**가 선택된 화면이 나타납니다.
 
+<figure style="width: 100%" class="align-center">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/45-program-files-select-java-home.png" alt="">
+  <figcaption></figcaption>
+</figure>  
+
+java home 폴더를 선택
 <figure style="width: 100%" class="align-center">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/45-select-java-home.png" alt="">
   <figcaption></figcaption>
