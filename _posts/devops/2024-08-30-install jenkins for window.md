@@ -105,3 +105,63 @@ local jenkins 계정을 추가하고, 서비스로 로그온 권한을 할당하
   <figcaption></figcaption>
 </figure>  
 
+## select port
+jenkins port를 선택합니다.
+port 충돌 여부를 확인하기 위해 test Port 버튼을 클릭하여 확인 후 정상이면
+다음(next) 버튼을 클릭합니다.
+
+<figure style="width: 50%" class="align-left">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/45-port-selection.png" alt="">
+  <figcaption></figcaption>
+</figure>  
+
+<figure style="width: 50%" class="align-left">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/45-test-port.png" alt="">
+  <figcaption></figcaption>
+</figure>  
+
+## select java home 폴더 
+java home 폴더를 선택합니다.
+
+<figure style="width: 50%" class="align-left">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/45-select-java-home.png" alt="">
+  <figcaption></figcaption>
+</figure>  
+
+## select java home 폴더 변경 
+program files 폴더에서 java home 폴더를 찾아서 java home 폴더를 선택합니다.
+
+<figure style="width: 50%" class="align-left">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/45-select-java-home.png" alt="">
+  <figcaption></figcaption>
+</figure>  
+
+## java home 폴더 선택
+java home 폴더를 선택합니다.
+
+<figure style="width: 50%" class="align-left">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/46-select-java-folder.png" alt="">
+  <figcaption></figcaption>
+</figure>  
+
+##  custom setup
+custom setup 화면이 보이면 다음(next) 버튼을 클릭합니다.
+<figure style="width: 50%" class="align-left">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/48-custom-setup.png" alt="">
+  <figcaption></figcaption>
+</figure>  
+
+##  jenkins 설치
+jenkins 설치 준비가 되었습니다. install 버튼을 클릭합니다.  
+<figure style="width: 50%" class="align-left">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/49-ready-to-install-jenkins.png" alt="">
+  <figcaption></figcaption>
+</figure>  
+
+##  jenkins 설치
+jenkins 설치가 성공적으로 되었습니다.  
+
+<figure style="width: 50%" class="align-left">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/50-completed-the-jenkins.png" alt="">
+  <figcaption></figcaption>
+</figure>
