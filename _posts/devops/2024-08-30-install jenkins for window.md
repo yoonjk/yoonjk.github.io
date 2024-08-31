@@ -226,7 +226,7 @@ jenkins port를 확인하고 **Save and Finish** 버튼을 클릭합니다.
 </figure>
 
 ## Jenkins is Ready
-
+Jenkins is ready 화면이 보이면 **Start using Jenkins** 버튼을 클릭합니다.  
 <figure style="width: 100%" class="align-left">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/57-jenkins-is-ready.png" alt="">
   <figcaption></figcaption>
