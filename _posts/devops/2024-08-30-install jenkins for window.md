@@ -25,12 +25,12 @@ service as local or domain user를 선택하고
 account와 Password를 입력하고 Test credentials을 클릭하면 아래와 같이 invalid logon에러가 발생합니다.  
 이를 해결하기 위해서는 jenkins 계정을 추가하고, local 정책으로 서비스온 로그온 권한을 할당해야합니다.  
 
-<figure style="width: 50%" class="align-left">
+<figure style="width: 100%" class="align-center">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/42-invalid-service-logon-credentials.png" alt="">
   <figcaption></figcaption>
 </figure>  
 
-<figure style="width: 50%" class="align-left">
+<figure style="width: 100%" class="align-center">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/43-invalid-logon.png" alt="">
   <figcaption></figcaption>
 </figure>  
@@ -69,7 +69,7 @@ https://www.itechtics.com/enable-gpedit-windows...
 
 **서비스로 로그온(Log on as a service) > 속성** 을 선택 오른쪽 마우스 클릭하여 속성을 선택 
 
-<figure style="width: 50%" class="align-left">
+<figure style="width: 100%" class="align-center">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/36-log-on-as-a-service.png" alt="">
   <figcaption></figcaption>
 </figure> 
@@ -77,7 +77,7 @@ https://www.itechtics.com/enable-gpedit-windows...
 **사용자 또는 그룹선택**
    사용자 또는 그룹선택 팝업 화면이 보입니다.  
 
-<figure style="width: 50%" class="align-left">
+<figure style="width: 100%" class="align-center">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/37-service-as-a-logon-property.png" alt="">
   <figcaption></figcaption>
 </figure>  
@@ -91,7 +91,7 @@ https://www.itechtics.com/enable-gpedit-windows...
       
 정상적으로 계정이 확인되면 확인 버튼을 클릭하여 종료 
 
-<figure style="width: 50%" class="align-left">
+<figure style="width: 100%" class="align-center">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/39-added-jenkins-on-user-or-group-property.png" alt="">
   <figcaption></figcaption>
 </figure>  
@@ -100,7 +100,7 @@ https://www.itechtics.com/enable-gpedit-windows...
 local jenkins 계정을 추가하고, 서비스로 로그온 권한을 할당하고 다시 Test Credentials 버튼을 클릭합니다.
 
 
-<figure style="width: 50%" class="align-left">
+<figure style="width: 100%" class="align-center">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/44-valid-service-logon-credentials.png" alt="">
   <figcaption></figcaption>
 </figure>  
@@ -110,12 +110,12 @@ jenkins port를 선택합니다.
 port 충돌 여부를 확인하기 위해 test Port 버튼을 클릭하여 확인 후 정상이면
 다음(next) 버튼을 클릭합니다.
 
-<figure style="width: 50%" class="align-left">
+<figure style="width: 100%" class="align-center">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/45-port-selection.png" alt="">
   <figcaption></figcaption>
 </figure>  
 
-<figure style="width: 50%" class="align-left">
+<figure style="width: 100%" class="align-center">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/45-test-port.png" alt="">
   <figcaption></figcaption>
 </figure>  
@@ -123,7 +123,7 @@ port 충돌 여부를 확인하기 위해 test Port 버튼을 클릭하여 확�
 ## select java home 폴더 
 java home 폴더를 선택합니다.
 
-<figure style="width: 50%" class="align-left">
+<figure style="width: 100%" class="align-center">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/45-select-java-home.png" alt="">
   <figcaption></figcaption>
 </figure>  
@@ -131,7 +131,7 @@ java home 폴더를 선택합니다.
 ## select java home 폴더 변경 
 program files 폴더에서 java home 폴더를 찾아서 java home 폴더를 선택합니다.
 
-<figure style="width: 50%" class="align-left">
+<figure style="width: 100%" class="align-center">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/45-select-java-home.png" alt="">
   <figcaption></figcaption>
 </figure>  
@@ -139,21 +139,21 @@ program files 폴더에서 java home 폴더를 찾아서 java home 폴더를 선
 ## java home 폴더 선택
 java home 폴더를 선택합니다.
 
-<figure style="width: 50%" class="align-left">
+<figure style="width: 100%" class="align-center">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/46-select-java-folder.png" alt="">
   <figcaption></figcaption>
 </figure>  
 
 ##  custom setup
 custom setup 화면이 보이면 다음(next) 버튼을 클릭합니다.
-<figure style="width: 50%" class="align-left">
+<figure style="width: 100%" class="align-center">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/48-custom-setup.png" alt="">
   <figcaption></figcaption>
 </figure>  
 
 ##  jenkins 설치
 jenkins 설치 준비가 되었습니다. install 버튼을 클릭합니다.  
-<figure style="width: 50%" class="align-left">
+<figure style="width: 100%" class="align-center">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/49-ready-to-install-jenkins.png" alt="">
   <figcaption></figcaption>
 </figure>  
@@ -161,7 +161,67 @@ jenkins 설치 준비가 되었습니다. install 버튼을 클릭합니다.
 ##  jenkins 설치
 jenkins 설치가 성공적으로 되었습니다.  
 
-<figure style="width: 50%" class="align-left">
+<figure style="width: 100%" class="align-center">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/50-completed-the-jenkins.png" alt="">
   <figcaption></figcaption>
 </figure>
+
+## Unlock Jenkins
+browser에서 jenkins default port 8080 으로 접속하면 다음과 같이 administrator password 입력을 요구합니다.
+http://localhost:8080
+
+지정한 폴더의 파일 **C:\Users\jenkins\AppData\Local\Jenkins\.jenkins\secrets\initialAdminPassword** 을 확인합니다.
+
+jenkins 계정을 선택하면  AppData 폴더가 숨김으로되어 있기 때문에 이를 해지 해야 합니다.
+
+<figure style="width: 100%" class="align-center">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/51-jenkins-admin-password-folder.png" alt="">
+  <figcaption></figcaption>
+</figure>
+
+jenkins 계정을 선택하고 **탐색기 메뉴 보기 > 숨김 항목**을 선택
+
+<figure style="width: 100%" class="align-center">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/52-select-hide-holder.png" alt="">
+  <figcaption></figcaption>
+</figure>
+
+숨김화면을 선택(checked)하지 않으면 폴더가 숨김으로 되어 있기 때문에 비밀번호를 확인 할 수 없습니다.
+숨김폴더(appData)가 보이면 Window Power Shell 을 이용하여 비밀번호를 확인하여 브라우저에 입력합니다.  
+ 
+```bash
+type C:\Users\jenkins\AppData\Local\Jenkins\.jenkins\secrets\initialAdminPassword
+```
+
+## Customize Jenkins
+
+Customize Jenkins 화면에서 제안된 jenkins plugins들을 설치합니다.  
+
+<figure style="width: 100%" class="align-left">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/53-input-password-unlock-jenkins.png" alt="">
+  <figcaption></figcaption>
+</figure>
+
+<figure style="width: 100%" class="align-left">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/54-customizing jenkins.png" alt="">
+  <figcaption></figcaption>
+</figure>
+
+
+## admin 계정 생성
+jenkins admin 계정을 입력하고 **Save and Continue** 버튼을 클릭합니다.  
+
+<figure style="width: 100%" class="align-left">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/55-create-admin.png" alt="">
+  <figcaption></figcaption>
+</figure>
+
+## innstance configuraiton
+jenkins port를 확인하고 **Save and Finish** 버튼을 클릭합니다.
+
+
+<figure style="width: 100%" class="align-left">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/56-instance-configuration.png" alt="">
+  <figcaption></figcaption>
+</figure>
+
