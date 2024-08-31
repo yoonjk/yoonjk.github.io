@@ -20,6 +20,21 @@ jennkins를 윈도우에 설치합니다.
 - 사용자 또는 그룹 선택 대화 상자에서 입력하려는 사용자를 찾고 확인을 클릭합니다.
 - 서비스로 로그온 속성에서 확인을 클릭하여 변경 사항을 저장합니다.
 
+## service on credentials
+service as local or domain user를 선택하고
+account와 Password를 입력하고 Test credentials을 클릭하면 아래와 같이 invalid logon에러가 발생합니다.  
+이를 해결하기 위해서는 jenkins 계정을 추가하고, local 정책으로 서비스온 로그온 권한을 할당해야합니다.  
+
+<figure style="width: 50%" class="align-left">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/42-invalid-service-logon-credentials.png" alt="">
+  <figcaption></figcaption>
+</figure>  
+
+<figure style="width: 50%" class="align-left">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/43-invalid-logon.png" alt="">
+  <figcaption></figcaption>
+</figure>  
+
 ## jenkins 계정 추가 
 **windows에서 다음의 과정을 거처 jenkins 계정을 추가**
 
@@ -81,4 +96,12 @@ https://www.itechtics.com/enable-gpedit-windows...
   <figcaption></figcaption>
 </figure>  
 
+## valid Service Logon Credentials
+local jenkins 계정을 추가하고, 서비스로 로그온 권한을 할당하고 다시 Test Credentials 버튼을 클릭합니다.
+
+
+<figure style="width: 50%" class="align-left">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/44-valid-service-logon-credentials.png" alt="">
+  <figcaption></figcaption>
+</figure>  
 
