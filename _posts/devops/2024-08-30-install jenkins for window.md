@@ -115,10 +115,18 @@ port 충돌 여부를 확인하기 위해 test Port 버튼을 클릭하여 확�
   <figcaption></figcaption>
 </figure>  
 
+Test Port 버튼 클릭합니다.  
 <figure style="width: 100%" class="align-center">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/45-test-port.png" alt="">
   <figcaption></figcaption>
 </figure>  
+
+포트가 정상적이면 다음과 같이 화면에 checked(V) 출력됩니다.  
+<figure style="width: 100%" class="align-center">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/jenkins/45-valid-test-port.png" alt="">
+  <figcaption></figcaption>
+</figure>  
+
 
 ## select java home 폴더 
 java home 폴더를 선택합니다.
