@@ -111,7 +111,7 @@ kubectl label node minikube-m02 node-role.kubernetes.io/worker=worker
 ```bash
 kubectl get nodes
 ```
-<figure style="width: 100%" class="align-center">
+<figure style="width: 50%; height: 50%" class="align-center">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/k8s/12-labeled-get-nodes.png" alt="">
   <figcaption></figcaption>
 </figure>  
