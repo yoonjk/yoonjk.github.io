@@ -116,6 +116,3 @@ kubectl get nodes
   <figcaption></figcaption>
 </figure>  
 
-
-
-
