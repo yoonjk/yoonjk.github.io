@@ -1,4 +1,3 @@
-
 ---
 title:  Minikube 를 centos에 설치
 categories:
