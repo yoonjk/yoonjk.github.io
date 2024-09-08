@@ -77,12 +77,20 @@ User=root
 Group=root
 ExecStart=/app/kafka/bin/kafka-server-start.sh -daemon /app/kafka/config/server.properties
 ExecStop=/app/kafka/bin/kafka-server-stop.sh
-Restart=on-abnormal
+Restart=always
+TimeoutSec=20
+SuccessExitStatus=130 143
 
 [Install]
 WantedBy=multi-user.target
 ```
 
+zookeeper.service 를 수정하면 다음과 같이 reload합니다.
+```bash
+systemctl daemon-reload
+systemctl enable zookeeper
+systemctl start zookeeper
+```
 ## kafka using helm chart
 ```bash
 helm repo add confluentinc https://confluentinc.github.io/cp-helm-charts/   #(1)
