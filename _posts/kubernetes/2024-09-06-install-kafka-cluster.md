@@ -56,9 +56,17 @@ Group=root
 ExecStart=/app/kafka/bin/zookeeper-server-start.sh /app/kafka/config/zookeeper.properties
 ExecStop=/app/kafka/bin/zookeeper-server-stop.sh
 Restart=on-abnormal
+TimeoutSec=20
+SuccessExitStatus=130 143
 
 [Install]
 WantedBy=multi-user.target
+```
+zookeeper.service 를 수정하면 다음과 같이 reload합니다.
+```bash
+systemctl daemon-reload
+systemctl enable zookeeper.service
+systemctl start zookeeper
 ```
 
 ## kafka 서비스 등록
@@ -88,8 +96,8 @@ WantedBy=multi-user.target
 zookeeper.service 를 수정하면 다음과 같이 reload합니다.
 ```bash
 systemctl daemon-reload
-systemctl enable zookeeper
-systemctl start zookeeper
+systemctl enable kafka.service
+systemctl start kafka
 ```
 ## kafka using helm chart
 ```bash
