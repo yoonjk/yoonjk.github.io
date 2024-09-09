@@ -3,7 +3,7 @@ title:  kafka cluster 설치 및 구성
 categories:
   - kafka
 tags: 
-  - setup
+  - cluster
 ---
 
 ## kafka 설치 
