@@ -1,9 +1,9 @@
 ---
 title:  install helm on centos
 categories:
-  - kubernetes
-tags: 
   - kafka
+tags: 
+  - setup
 ---
 
 ## kafka 설치 
@@ -148,7 +148,7 @@ tickTime이 2000ms이고, syncLimit이 5라면, 최대 10초(10000ms) 동안 동
 다음의 명령어를 실행했을 때 whitelist 없기 때문에 실행할 수 없다고 아래와 같이 메시지가 출력되는 경우
 
 <figure style="width: 100%" class="align-left">
-  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/k8s/01-how-to-initialize-zookeeper-whitelist.png" alt="">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/kafka/01-how-to-initialize-zookeeper-whitelist.png" alt="">
   <figcaption></figcaption>
 </figure> 
 
