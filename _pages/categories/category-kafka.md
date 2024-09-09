@@ -1,5 +1,5 @@
 ---
-title: "Cache"
+title: "kafka"
 layout: archive
 permalink: categories/kafka
 author_profile: true
