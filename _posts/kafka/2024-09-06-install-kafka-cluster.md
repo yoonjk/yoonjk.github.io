@@ -1,5 +1,5 @@
 ---
-title:  install helm on centos
+title:  kafka cluster 설치 및 구성 
 categories:
   - kafka
 tags: 
