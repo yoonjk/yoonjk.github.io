@@ -9,23 +9,20 @@ tags:
 zookeeper의  zoonavigator의 설치합니다.
 ```bash
 version: '2'
+
 services:
-  web:
-    image: elkomzmon/zoonavigator-web:latest
-    container_name: zoonavigator-web
+  # https://github.com/elkozmon/zoonavigator
+  zoonavigator:
+    image: elkozmon/zoonavigator:latest
+    container_name: zoonavigator
     network_mode: host
     environment:
-      API_HOST: "localhost"
-      API_PORT: 9001
-      SERVER_HTTP_PORT: 8001
-    depends_on:
-      - api
+      HTTP_PORT: 9000
     restart: always
-  api:
-    image: elkozmon/zoonavigator-api:latest
-    container_name: zoonavigator-api
-    network_mode: host
-    environment:
-      SERVER_HTTP_PORT: 9001
-    restart: always
+    ports:
+      - "9000:9000"
+    extra_hosts:
+     - "zookeeper1:10.100.10.100"
+     - "zookeeper2:10.100.10.101"
+     - "zookeeper3:10.100.10.102"
 ```
