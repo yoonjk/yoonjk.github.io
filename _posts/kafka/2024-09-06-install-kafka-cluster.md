@@ -162,6 +162,8 @@ zookeeper.properties에 다음의 항목을 추가합니다.
 ```
 
 
+
+
 ## kafka using helm chart
 ```bash
 helm repo add confluentinc https://confluentinc.github.io/cp-helm-charts/   #(1)
