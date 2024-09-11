@@ -71,6 +71,8 @@ systemctl start zookeeper
 
 ## kafka 서비스 등록
 ```bash
+vi /usr/lib/systemd/system/kafka.service
+
 # Kafka server (broker) management
 
 [Unit]
