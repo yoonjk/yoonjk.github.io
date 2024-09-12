@@ -45,15 +45,14 @@ default.replication.factor: 기본 복제 인자 (기본값: 1)
 
 ## setup kafka
 kafka가 설치된 KAFKA_HOME directory 아래에 config/server.properties에서 아래 4개의 항목을 수정합니다.  
+
 - broker.id
-- log.dir
+- log.dirs
 - advertised.listeners
 - zookeeper.connect
+- delete.topic.enable=true
 
 #### broker.id
-**broker.id**
-설명:
-
 Kafka 클러스터에서 각 브로커를 구분하는 고유한 ID입니다.  
 클러스터 내에서 각각의 Kafka 브로커가 동일한 broker.id를 가질 수 없으며, 이 값은 정수로 설정됩니다. Kafka 브로커는 클러스터 내에서 유일해야 하기 때문에, broker.id가 브로커를 식별하는 중요한 역할을 합니다.  
 클러스터 내에서 브로커가 메타데이터 상에서 고유하게 식별되도록 하는 데 사용되며, 이 ID는 Zookeeper나 Kafka Controller에 의해 관리됩니다.  
@@ -67,16 +66,17 @@ Kafka 클러스터에서 각 브로커를 구분하는 고유한 ID입니다.
 #### log.dirs
 Kafka 브로커가 메시지 데이터를 저장하는 디렉토리 경로를 지정합니다. 각 브로커는 수신한 메시지를 로컬 디스크에 저장하며, 이 디렉토리는 파티션 데이터와 로그 세그먼트 파일들이 저장되는 위치입니다. 여러 디렉토리를 쉼표로 구분하여 지정할 수 있으며, Kafka는 여러 디스크에 데이터를 분산 저장할 수 있습니다.  
 이 경로는 브로커의 저장 용량 관리에 중요한 역할을 하므로 적절한 디스크 공간이 있는 경로를 설정해야 합니다.  
+
 기본값:
 
 /tmp/kafka-logs. 디폴트로 임시 디렉토리에 저장되며, 실제 운영 환경에서는 적절한 경로로 변경해야 합니다.  
 
 #### advertised.listeners
 - advertised.listeners
-설명:
 
 외부 클라이언트나 다른 브로커가 이 브로커에 접근할 때 사용할 네트워크 주소를 지정합니다. 이는 listeners 설정과 다르게, 브로커가 내부 네트워크에서 사용하는 IP와는 다른 IP(예: 외부 접근을 허용하는 공인 IP)일 수 있습니다.
-외부에서 브로커에 접근할 때 이 주소를 통해 연결됩니다. 예를 들어, 브로커가 내부적으로 여러 네트워크 인터페이스를 가질 수 있는 경우, 외부 클라이언트는 advertised.listeners에 설정된 주소로 연결합니다.
+외부에서 브로커에 접근할 때 이 주소를 통해 연결됩니다. 예를 들어, 브로커가 내부적으로 여러 네트워크 인터페이스를 가질 수 있는 경우, 외부 클라이언트는 advertised.listeners에 설정된 주소로 연결합니다.  
+
 기본값:
 
 기본값은 없습니다. 설정하지 않을 경우, listeners의 값이 클라이언트들에게 광고됩니다. 그러나, 일반적으로 외부 클라이언트가 접근할 주소를 명시적으로 설정하는 것이 좋습니다.  
@@ -91,6 +91,14 @@ zookeeper.connect=localhost:2181
 기본값:
 
 기본값은 없습니다. Zookeeper의 주소는 필수적으로 설정해야 합니다. Zookeeper가 여러 개 있을 경우 쉼표로 구분하여 설정합니다.
+
+#### delete.topic.enable
+- delete.topic.enable
+Kafka에서 토픽 삭제 기능을 활성화할지 여부를 설정합니다. 기본적으로 이 기능은 비활성화되어 있으며, 토픽 삭제를 활성화하면 관리자가 불필요하거나 사용되지 않는 토픽을 삭제할 수 있습니다. 토픽 삭제는 클러스터의 데이터를 정리하고 저장소 공간을 확보하는 데 유용하지만, 실수로 중요한 토픽을 삭제할 위험도 있습니다.
+
+기본값:
+false. 기본적으로 토픽 삭제는 비활성화되어 있으며, 설정을 true로 변경하면 토픽 삭제가 가능해집니다.
+
 
 ```ini
 # Licensed to the Apache Software Foundation (ASF) under one or more

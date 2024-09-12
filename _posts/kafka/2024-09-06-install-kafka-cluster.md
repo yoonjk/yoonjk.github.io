@@ -76,6 +76,8 @@ vi /usr/lib/systemd/system/kafka.service
 # Kafka server (broker) management
 
 [Unit]
+Requires=zookeeper.service
+After=zookeeper.service
 Description=Apache Kafka server (broker)
 Documentation=http://kafka.apache.org/documentation.html
 Requires=network.target remote-fs.target zookeeper.service
@@ -85,7 +87,7 @@ After=network.target remote-fs.target zookeeper.service
 Type=simple
 User=root
 Group=root
-ExecStart=/app/kafka/bin/kafka-server-start.sh -daemon /app/kafka/config/server.properties
+ExecStart=/app/kafka/bin/kafka-server-start.sh /app/kafka/config/server.properties
 ExecStop=/app/kafka/bin/kafka-server-stop.sh
 Restart=always
 TimeoutSec=20
