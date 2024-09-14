@@ -51,7 +51,7 @@ GOPATH는 일반적으로 **~/home/go**가  **GOPATH**로 지정합니다.
 </figure> 
 
 .bash_profile 은 다음과 같습니다.
-![](img/2024-09-15-04-29-12.png)
+
 <figure style="width: 100%" class="align-center">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/kafka/04-bash-profile.png" alt="">
   <figcaption></figcaption>
@@ -62,7 +62,14 @@ GOPATH는 일반적으로 **~/home/go**가  **GOPATH**로 지정합니다.
 # cd Burrow, after clone source
 go mod tidy
 go install
+ls -al $GOPATH/bin
 ```
+
+
+<figure style="width: 100%" class="align-center">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/kafka/08-build-output.png" alt="">
+  <figcaption></figcaption>
+</figure> 
 
 **burrow.toml 파일수정**
 ```ini
