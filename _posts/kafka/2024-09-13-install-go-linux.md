@@ -44,9 +44,10 @@ GOPATH는 일반적으로 **~/home/go**가  **GOPATH**로 지정합니다.
 - linux인 경우 /usr/local/go  
 - windows 는  c:\go
 
+![](img/2024-09-15-04-44-57.png)
 
 <figure style="width: 100%" class="align-center">
-  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/kafka/06-goroot-or-gopath.png" alt="">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/kafka/06-goroot-in-windows.png" alt="">
   <figcaption></figcaption>
 </figure> 
 
