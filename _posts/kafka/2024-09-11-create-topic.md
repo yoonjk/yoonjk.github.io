@@ -3,7 +3,7 @@ title: create topic
 categories:
   - kafka
 tags: 
-  - server
+  - kafka-topics 
 ---
 
 kafka 의 topic을 생성하기 위해 topic명이 first_topic이고, partition이 3인 topic을 생성합니다.

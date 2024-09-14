@@ -1,9 +1,9 @@
 ---
-title: create topic
+title: how to setup kafka-topic-ui to systemd
 categories:
   - kafka
 tags: 
-  - server
+  - kafka-topic-ui
 ---
 
 ```ini
