@@ -3,19 +3,23 @@ title: kafka-manager using docker
 categories:
   - docker
 tags:
-  - Jupyter
+  - kafka
 ---
-kafka-manager를  docker를 기반으로 실행하여 kafka-manager를 확인합니다.
-```yaml
-version: '2'
 
+kafka-manager를  docker를 기반으로 실행하여 kafka-manager를 확인합니다.
+
+```yaml
+version: '3.6'
 services:
-  # https://github.com/yahoo/kafka-manager
-  kafka-manager:
-    image: qnib/plain-kafka-manager
-    network_mode: host
+  kafka_manager:
+    image: hlebalbau/kafka-manager:stable
+    ports:
+      - "9000:9000"
     environment:
-      ZOOKEEPER_HOSTS: "zookeeper1:2181,zookeeper2:2181,zookeeper3:2181"
-      APPLICATION_SECRET: change_me_please
-    restart: always
+      ZK_HOSTS: "zookeeper:2181,zookeeper2:2181,zookeeper3:2181"
+      APPLICATION_SECRET: "random-secret"
+    extra_hosts:
+      - "zookeeper1:10.117.25.140"
+      - "zookeeper2:10.66.219.165"
+      - "zookeeper3:10.66.219.164"
 ```
