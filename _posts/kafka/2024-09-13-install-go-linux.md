@@ -47,7 +47,7 @@ GOPATH는 일반적으로 **~/home/go**가  **GOPATH**로 지정합니다.
 ![](img/2024-09-15-04-44-57.png)
 
 <figure style="width: 100%" class="align-center">
-  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/kafka/06-goroot-in-windows.png" alt="">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/kafka/08-goroot-in-windows.png" alt="">
   <figcaption></figcaption>
 </figure> 
 
@@ -68,7 +68,7 @@ ls -al $GOPATH/bin
 
 
 <figure style="width: 100%" class="align-center">
-  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/kafka/08-build-output.png" alt="">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/kafka/07-build-output.png" alt="">
   <figcaption></figcaption>
 </figure> 
 
@@ -122,3 +122,8 @@ cp burrow.toml $HOME/Burrow/config
 # Running Burrow
 $GOPATH/bin/Burrow --config-dir $HOME/Burrow/config
 ```
+
+#### 
+Burrow의 Http-Endpoint 링크 입니다.  
+
+Burrow HTTP-Endpoint : [HTTP-Endpoint](https://github.com/linkedin/Burrow/wiki/HTTP-Endpoint)
