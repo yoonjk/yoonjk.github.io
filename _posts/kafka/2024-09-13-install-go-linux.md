@@ -30,12 +30,6 @@ git clone github.com/linkedin/Burrow
 cd Burrow
 ```
 
-<figure style="width: 100%" class="align-center">
-  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/kafka/05-install-go-lang-linux.png" alt="">
-  <figcaption></figcaption>
-</figure> 
-
-
 **GOPATH 추가**
 GOPATH는 일반적으로 **~/home/go**가  **GOPATH**로 지정합니다.  
 그래서 go lang source를 build하면 $GOPATH/bin 폴더에 build binary 파일이 생성됩니다.  
@@ -46,7 +40,7 @@ GOPATH는 일반적으로 **~/home/go**가  **GOPATH**로 지정합니다.
 
 ![](img/2024-09-15-04-44-57.png)
 
-<figure style="width: 100%" class="align-center">
+<figure style="width: 100%; height: 50%" class="align-center">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/kafka/08-goroot-in-windows.png" alt="">
   <figcaption></figcaption>
 </figure> 
