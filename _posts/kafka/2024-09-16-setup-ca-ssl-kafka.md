@@ -1,5 +1,5 @@
 ---
-title: Add jmx_prometheus_agent를  zookeeper service 에 추가 
+title: setup ca for secured kafka
 categories:
   - kafka
 tags: 
