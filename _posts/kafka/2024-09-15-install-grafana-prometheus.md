@@ -1,5 +1,5 @@
 ---
-title: install LinkedIn kafka-monitor on linux
+title: setup prometheus and add jmx_prometheus_javaagent
 categories:
   - kafka
 tags: 
