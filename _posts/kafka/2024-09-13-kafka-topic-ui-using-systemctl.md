@@ -18,7 +18,7 @@ User=root
 Group=root
 ExecStart=/bin/bash -c "docker compose -f /app/manager/kafka-topic-ui/docker-compose.yaml up"
 ExecStop=/bin/bash -c "docker compose -f /app/manager/kafka-topic-ui/docker-compose.yaml stop"
-Restart=always
+Restart=no
 TimeoutSec=20
 SuccessExitStatus=130 143
 
