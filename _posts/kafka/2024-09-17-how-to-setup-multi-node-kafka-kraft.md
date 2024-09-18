@@ -222,9 +222,6 @@ OutputTopic: first-topic      TopicId: 4kVImoFNTQeyk3r2zQbdvw PartitionCount: 6 
 #### final - server.properties 
 node 1의 server.properties에서 수정한 부분입니다. 
 ```ini
-# The role of this server. Setting this puts us in KRaft mode
-process.roles=broker,controller
-
 # The node id associated with this instance's roles
 node.id=1
 
@@ -247,9 +244,6 @@ transaction.state.log.replication.factor=2
 node 2의 server.properties에서 수정한 부분입니다. 
 
 ```ini
-# The role of this server. Setting this puts us in KRaft mode
-process.roles=broker,controller
-
 # The node id associated with this instance's roles
 node.id=2
 
@@ -261,12 +255,8 @@ listeners=PLAINTEXT://kafka2:9092,CONTROLLER://kafka2:9093
 
 # Listener name, hostname and port the broker will advertise to clients.
 # If not set, it uses the value for "listeners".
-# advertised.listeners=PLAINTEXT://localhost:9092
 advertised.listeners=PLAINTEXT://kafka2.mydomain.com:9092
 
-# The default number of log partitions per topic. More partitions allow greater
-# parallelism for consumption, but this will also result in more files across
-# the brokers.
 num.partitions=6
 
 offsets.topic.replication.factor=2
@@ -275,6 +265,12 @@ transaction.state.log.replication.factor=2
 
 node 3의 server.properties에서 수정한 부분입니다. 
 ```ini
+# The node id associated with this instance's roles
+node.id=3
+
+# The connect string for the controller quorum
+controller.quorum.voters=1@kafka1.mydomain.com:9093,2@kafka2.mydomain.com:9093,3@kafka3.mydomain.com:9093
+
 # The address the socket server listens on.
 listeners=PLAINTEXT://kafka3:9092,CONTROLLER://kafka3:9093
 
