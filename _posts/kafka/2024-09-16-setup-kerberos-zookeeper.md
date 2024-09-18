@@ -70,3 +70,6 @@ systemctl restart zookeeper
 systemctl restart kafka
 ```
 
+```bash
+zookeeper-security-migration.sh --zookeeper.connect zookeeper1.mydomain.com --zookeeper.acl secure
+```
