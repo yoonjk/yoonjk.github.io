@@ -1,5 +1,5 @@
 ---
-title: kafka에서 무결안(Durability) 보장을 위한 방안
+title: kafka에서 무결성(Durability) 보장을 위한 방안
 categories:
   - kafka
 tags: 
