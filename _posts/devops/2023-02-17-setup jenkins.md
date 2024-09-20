@@ -88,6 +88,8 @@ sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
 Jenkins 를 다음과 같이 설치합니다.
 ```bash
 sudo dnf install -y jenkins
+# or
+sudo yum install -y jenkins
 ```
 
 OS 부팅 시 Jenkins 서비스가 시작되도록 설정합니다.
