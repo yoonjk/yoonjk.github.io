@@ -16,6 +16,7 @@ Kubernetes에서 프로덕션 환경으로 배포하는 것은 상당히 스트�
 
 바로 이것이 바로 카나리아 배포의 핵심입니다!
 
+
 ## Pre-requisites
 
 [Kind](https://kind.sigs.k8s.io/docs/user/quick-start/#installation) or minikube
