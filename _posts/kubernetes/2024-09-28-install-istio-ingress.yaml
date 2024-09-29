@@ -1,0 +1,44 @@
+---
+title:  Install Gateways 
+categories:
+  - kubernetes
+tags: 
+  - istio
+---
+
+Istio는 쿠버네티스 [게이트웨이 API](https://istio.io/latest/blog/2024/gateway-mesh-ga/)를 지원하며 향후 트래픽 관리를 위한 기본 API로 만들 계획입니다.  
+게이트웨이 API를 사용하는 경우, 이 문서에 설명된 대로 게이트웨이 배포를 설치 및 관리할 필요가 없습니다.  
+기본적으로 게이트웨이 배포 및 서비스는 게이트웨이 구성에 따라 자동으로 프로비저닝됩니다.  
+자세한 내용은 [게이트웨이 API](https://istio.io/latest/docs/tasks/traffic-management/ingress/gateway-api/#automated-deployment) 작업을 참조하세요. 
+
+서비스 메시를 생성하는 것과 함께 Istio를 사용하면 메시의 에지에서 실행되는 Envoy 프록시인 게이트웨이를 관리하여 메시로 들어오고 나가는 트래픽을 세밀하게 제어할 수 있습니다.
+
+Istio의 기본 제공 구성 프로필 중 일부는 설치 중에 [게이트웨이](https://istio.io/latest/docs/concepts/traffic-management/#gateways)를 배포합니다.  
+예를 들어, 기본 설정으로 istioctl 설치를 호출하면 컨트롤 플레인과 함께 인그레스 게이트웨이가 배포됩니다.  
+평가 및 간단한 사용 사례에는 괜찮지만 게이트웨이를 컨트롤 플레인과 결합하여 관리 및 업그레이드가 더 복잡해집니다.  
+프로덕션 Istio 배포의 경우, 독립적으로 작동할 수 있도록 분리하는 것이 좋습니다.  
+
+
+```yaml
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+metadata:
+  name: ingress
+spec:
+  profile: empty # Do not install CRDs or the control plane
+  components:
+    ingressGateways:
+    - name: istio-ingressgateway
+      namespace: istio-ingress
+      enabled: true
+      label:
+        # Set a unique label for the gateway. This is required to ensure Gateways
+        # can select this workload
+        istio: ingressgateway
+  values:
+    gateways:
+      istio-ingressgateway:
+        # Enable gateway injection
+        injectionTemplate: gateway
+```
+

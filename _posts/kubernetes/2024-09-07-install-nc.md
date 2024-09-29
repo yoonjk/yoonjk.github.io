@@ -1,4 +1,3 @@
-
 ---
 title:  install helm on centos
 categories:
