@@ -1,5 +1,5 @@
 ---
-title:  install helm on centos
+title:  install helm on centos 
 categories:
   - kubernetes
 tags: 

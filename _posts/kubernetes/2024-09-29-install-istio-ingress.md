@@ -1,5 +1,5 @@
 ---
-title:  Install Gateways 
+title:  Install Gateways
 categories:
   - kubernetes
 tags: 
@@ -32,6 +32,10 @@ Istio의 기본 제공 [구성 프로필](https://istio.io/latest/docs/setup/add
 기존 배포 도구를 사용하는 사용자를 지원하기 위해 Istio는 게이트웨이를 배포하는 몇 가지 다른 방법을 제공합니다. 각 방법은 동일한 결과를 생성합니다. 가장 익숙한 방법을 선택하세요.
 
 **istioOperator**를 이용한 설치 
+
+아래에 나열된 모든 메서드는 런타임에 추가 파드 설정을 채우기 위해 주입에 의존합니다. 이를 지원하려면 게이트웨이가 배포되는 네임스페이스에 istio-injection=disabled 레이블이 없어야 합니다. 레이블이 있는 경우, 파드가 생성될 때 대체되는 플레이스홀더인 자동 이미지를 가져오려고 시도하는 파드가 시작에 실패하는 것을 볼 수 있습니다.
+
+
 
 ```yaml
 apiVersion: install.istio.io/v1alpha1
