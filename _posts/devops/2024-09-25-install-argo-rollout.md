@@ -210,3 +210,7 @@ kubectl argo rollouts get rollout sample  --watch -n sample-app
 
 ## 참조
 [install and deploy canary using argo rollout](https://jhandguy.github.io/posts/automated-canary-deployment/)
+
+[argo-rollout-examples](https://github.com/argoproj/rollouts-demo/tree/master/examples)
+[argo-rollouts-ovewview](https://argoproj.github.io/argo-rollouts/)
+[argo-rollouts-with-istio](https://velog.io/@sawa1989/ArgoRollouts-with-Istio)
