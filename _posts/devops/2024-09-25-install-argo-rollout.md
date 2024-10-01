@@ -214,3 +214,5 @@ kubectl argo rollouts get rollout sample  --watch -n sample-app
 [argo-rollout-examples](https://github.com/argoproj/rollouts-demo/tree/master/examples)
 [argo-rollouts-ovewview](https://argoproj.github.io/argo-rollouts/)
 [argo-rollouts-with-istio](https://velog.io/@sawa1989/ArgoRollouts-with-Istio)
+[argo rollouts by redhat](https://docs.redhat.com/en/documentation/red_hat_openshift_gitops/1.14/html/argo_rollouts/index)
+[sample-app using argo rollouts](https://github.com/jhandguy/canary-deployment.git)
