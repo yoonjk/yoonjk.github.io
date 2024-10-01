@@ -1,5 +1,5 @@
 ---
-title: deploy canary using argo rollout
+title: Part 2 - Canary Deployment in Kubernetes
 categories:
   - devops 
 tags:
@@ -161,6 +161,8 @@ Argo 롤아웃 컨트롤러는 또한 어떤 ingress가 stableIngress인지 알�
 
 ```bash
 kubectl argo rollouts dashboard -n argo-rollouts &
+# or
+kubectl argo rollouts dashboard -n argo-rollouts 
 ```
 
 이제 **http://localhost:3100/rollout/자신의 app rollout**명 으로 이동하면 샘플 앱 롤아웃의 상태를 보여주는 반짝이는 대시보드가 표시됩니다.
@@ -177,7 +179,7 @@ kubectl argo rollouts dashboard -n argo-rollouts &
 
 지금까지 트래픽의 100%를 처리하면서 안정적으로 표시된 리비전은 하나만 관찰할 수 있습니다.
 
-이제 컨테이너에 새 이미지를 설정하고 어떤 일이 일어나는지 살펴봅시다!  
+이제 컨테이너에 새 이미지를 설정하고 어떤 일이 일어나는지 살펴봅니다!  
 
 <figure style="width: 100%" class="align-center">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/argo/02-step1-canary.png" alt="">
@@ -208,6 +210,34 @@ kubectl argo rollouts get rollout sample-app  --watch -n sample-app
 kubectl argo rollouts get rollout sample  --watch -n sample-app
 ```
 
+#### Promoting Rollouts
+다음 단계로 진행할 수 있을 만큼 자신감이 생겼다면, 이제 대시보드에서 PROMOTE 버튼을 통해 또는 Kubectl 플러그인을 통해 롤아웃을 홍보할 수 있습니다.
+
+```bash
+kubectl argo rollouts promote sample-app -n sample-app
+```
+**fully promote**
+모든 롤아웃 단계를 건너뛰고 바로 100% 카나리아 트래픽을 달성하고 싶을 경우  대시보드에서 전체 홍보 버튼을 통해 또는 명령줄에서 롤아웃을 완전히 promote 할 수 있습니다.
+
+```bash
+kubectl argo rollouts promote sample-app -n sample-app --full
+```
+
+**abort**
+하지만 반대로 변경 사항을 롤아웃하는 도중에 문제가 발견되면 대시보드의 중단 버튼이나 CLI를 통해 쉽게 롤아웃을 중단하고 100% 안정적인 트래픽으로 돌아갈 수 있습니다.
+
+```bash
+kubectl argo rollouts abort sample-app -n sample-app
+```
+
+**undo**
+마지막으로, 롤아웃이 완료되고 문제가 발생하면 표준 배포와 마찬가지로 대시보드에서 롤백 버튼을 사용하거나 Kubectl을 통해 롤백을 실행 취소하고 이전 버전으로 쉽게 롤백할 수 있습니다.
+
+```bash
+kubectl argo rollouts undo sample-app -n sample-app
+```
+
+
 ## 참조
 [install and deploy canary using argo rollout](https://jhandguy.github.io/posts/automated-canary-deployment/)
 
@@ -216,3 +246,6 @@ kubectl argo rollouts get rollout sample  --watch -n sample-app
 [argo-rollouts-with-istio](https://velog.io/@sawa1989/ArgoRollouts-with-Istio)
 [argo rollouts by redhat](https://docs.redhat.com/en/documentation/red_hat_openshift_gitops/1.14/html/argo_rollouts/index)
 [sample-app using argo rollouts](https://github.com/jhandguy/canary-deployment.git)
+[Part 1 - Canary Deployment in Kubernetes](https://jhandguy.github.io/posts/simple-canary-deployment/)
+[Part 2 - Canary Deployment in Kubernetes](https://jhandguy.github.io/posts/automated-canary-deployment/)
+[Park 3 - Canary Deployment in Kubernetes](https://jhandguy.github.io/posts/smart-canary-deployment/)
