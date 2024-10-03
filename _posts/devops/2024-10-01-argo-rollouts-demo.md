@@ -35,16 +35,94 @@ spec:
       - pause: {duration: 10}
 ```
 
-다음 명령을 실행하여  롤아웃 및 서비스를 배포합니다:
+다음 명령을 실행하여  롤아웃 및 서비스를 배포합니다:  
+
+rollout.yaml 파일은 다음과 같습니다.  
+
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: rollouts-demo
+spec:
+  replicas: 5
+  strategy:
+    canary:
+      canaryService: rollouts-demo-canary
+      stableService: rollouts-demo-stable
+      steps:
+      - setWeight: 20
+      - pause: {}
+      - setWeight: 40
+      - pause: {duration: 10}
+      - setWeight: 60
+      - pause: {duration: 10}
+      - setWeight: 80
+      - pause: {duration: 10}
+      - setWeight: 100
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: rollouts-demo
+  template:
+    metadata:
+      labels:
+        app: rollouts-demo
+    spec:
+      containers:
+      - name: rollouts-demo
+        image: argoproj/rollouts-demo:blue
+        ports:
+        - name: http
+          containerPort: 8080
+          protocol: TCP
+        resources:
+          requests:
+            memory: 32Mi
+            cpu: 5m
+```
+
+services.yaml 파일은 다음과 같습니다.
+
+```yaml
+
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: rollouts-demo-canary
+spec:
+  ports:
+  - port: 80
+    targetPort: http
+    protocol: TCP
+    name: http
+  selector:
+    app: rollouts-demo
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rollouts-demo-stable
+spec:
+  ports:
+  - port: 80
+    targetPort: http
+    protocol: TCP
+    name: http
+  selector:
+    app: rollouts-demo
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/argoproj/argo-rollouts/master/docs/getting-started/basic/rollout.yaml
-kubectl apply -f https://raw.githubusercontent.com/argoproj/argo-rollouts/master/docs/getting-started/basic/service.yaml
+kubectl apply -f kubectl apply -f https://raw.githubusercontent.com/argoproj/argo-rollouts/master/docs/getting-started/nginx/rollout.yaml
+kubectl apply -f https://raw.githubusercontent.com/argoproj/argo-rollouts/master/docs/getting-started/nginx/services.yaml
 # or
-wget https://raw.githubusercontent.com/argoproj/argo-rollouts/master/docs/getting-started/basic/rollout.yaml
-wget https://raw.githubusercontent.com/argoproj/argo-rollouts/master/docs/getting-started/basic/service.yaml
+wget https://raw.githubusercontent.com/argoproj/argo-rollouts/master/docs/getting-started/nginx/rollout.yaml
+wget https://raw.githubusercontent.com/argoproj/argo-rollouts/master/docs/getting-started/nginx/services.yaml
 
 kubectl apply -f rollout.yaml
-kubectl apply -f service.yaml
+kubectl apply -f services.yaml
 ```
 
 롤아웃을 처음 생성하면 업그레이드가 발생하지 않았기 때문에 즉시 레플리카가 100%로 확장된다
@@ -100,4 +178,39 @@ kubectl argo rollouts get rollout rollouts-demo --watch
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/argo/12-prompting-rollouts-demo.png" alt="rollouts-demo">
   <figcaption></figcaption>
 </figure>  
+
+4. Aborting a Rollout
+
+다음으로 업데이트 중 롤아웃을 수동으로 중단하는 방법을 알아보겠습니다. 먼저 이미지 설정 명령을 사용하여 컨테이너의 새 “red” 버전을 배포하고 롤아웃이 일시 중지된 단계에 다시 도달할 때까지 기다립니다:
+
+```bash
+kubectl argo rollouts set image rollouts-demo \
+  rollouts-demo=argoproj/rollouts-demo:red
+```
+
+<figure style="width: 100%" class="align-center">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/argo/12-abort-rollouts-demo.png" alt="rollouts-demo">
+  <figcaption></figcaption>
+</figure> 
+
+이번에는 롤아웃을 다음 단계로 승격하는 대신 업데이트를 중단하여 '안정' 버전으로 돌아갑니다. 플러그인은 업데이트 중 언제든지 롤아웃을 수동으로 중단할 수 있는 방법으로 중단 명령을 제공합니다:
+
+```bash
+kubectl argo rollouts abort rollouts-demo
+```
+롤아웃이 중단되면 레플리카셋의 “안정적인” 버전(이 경우 노란색 이미지)은 스케일업되고 다른 모든 버전은 스케일다운됩니다. 레플리카셋의 안정 버전이 실행 중이고 정상적으로 작동하더라도 원하는 버전(빨간색 이미지)이 실제로 실행 중인 버전이 아니므로 전체 롤아웃은 여전히 성능 저하된 것으로 간주됩니다.
+
+
+<figure style="width: 100%" class="align-center">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/argo/13-stable-rollouts-demo.png" alt="rollouts-demo">
+  <figcaption></figcaption>
+</figure> 
+
+```
+kubectl argo rollouts set image rollouts-demo \
+  rollouts-demo=argoproj/rollouts-demo:yellow
+```
+이 명령을 실행하면 롤아웃이 즉시 정상 상태가 되고 새 레플리카셋이 생성되는 것과 관련된 활동이 없는 것을 확인할 수 있습니다.
+
+롤아웃이 아직 원하는 상태에 도달하지 않은 경우(예: 롤아웃이 중단되었거나 업데이트 도중) 안정적인 매니페스트가 다시 적용되면 롤아웃은 이를 업데이트가 아닌 롤백으로 감지하고 분석 및 단계를 건너뛰어 안정적인 레플리카 세트의 배포를 빠르게 추적합니다.
 
