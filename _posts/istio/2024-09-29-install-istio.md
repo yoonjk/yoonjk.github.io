@@ -1,11 +1,35 @@
 ---
-title:  Install istio
+title:  istio 설치
 categories:
-  - kubernetes
+  - istio
 tags: 
   - istio
 ---
 
+#### istio command cli 다운로드
+- [Download the Istio release](https://istio.io/latest/docs/setup/additional-setup/download-istio-release/)
+
+[Istio 릴리스 페이지](https://github.com/istio/istio/releases/tag/1.23.2)로 이동하여 사용 중인 OS용 설치 파일을 다운로드하거나 최신 릴리스를 자동으로 다운로드하여 압축을 풀어줍니다.(Linux 또는 macOS):
+
+
+> 위의 명령은 Istio의 최신 릴리스(숫자)를 다운로드합니다. 
+> 명령줄에 변수를 전달하여 특정 버전을 다운로드하거나 프로세서 아키텍처를 재정의할 수 있습니다. 
+> 예를 들어 x86_64 아키텍처용 Istio 1.23.2를 다운로드하려면 다음과 같이 실행합니다:
+>
+
+```bash
+curl -L https://istio.io/downloadIstio | sh -
+```
+
+- Istio 패키지 디렉토리로 이동합니다. 예를 들어 패키지가 istio-1.23.2인 경우
+
+
+- 설치 디렉터리에는 다음이 포함됩니다:  
+>> - samples/ 디렉터리의 샘플 애플리케이션
+>> - bin/ 디렉터리의 istioctl 클라이언트 바이너리.
+
+- 경로(path)에 istioctl 클라이언트를 추가합니다(Linux 또는 macOS):
+  
 ```bash
 
 curl -L https://istio.io/downloadIstio | sh -
@@ -13,6 +37,12 @@ curl -L https://istio.io/downloadIstio | sh -
 curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.23.2 TARGET_ARCH=x86_64 sh -
 cd istio-1.23.2
 ```
+
+<figure style="width: 100%" class="align-center">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/istio/01-download-istio.png" alt="">
+  <figcaption></figcaption>
+</figure>  
+
 
 vi ~/.bash_profile 에 istio-1.23.2/bin을 path에 추가합니다.
 ```bash
@@ -30,17 +60,36 @@ source ~/.bash_profile
   <figcaption></figcaption>
 </figure>  
 
+#### istio 설치 
 ```bash
 istioctl install
+```
+<figure style="width: 100%" class="align-center">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/istio/02-install-istio.png" alt="">
+  <figcaption></figcaption>
+</figure>  
 
+<figure style="width: 100%" class="align-center">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/istio/03-install-y-istio.png" alt="">
+  <figcaption></figcaption>
+</figure>  
+
+- istio 설치 확인
+다음의 명령어로 istio 설치를 확인합니다.
+```
+kubectl get po -n istio-system
+```
+
+```bash
 # unlabeld
 kubectl label namespace default istio-injection-
 
 # labeled 
 kubectl label namespace default istio-injection=enabled
-
-
 ```
+
+
+
 
 #### enable ingress
 
@@ -59,7 +108,7 @@ metadata:
   name: ingress-bookinfo
 spec:
   rules:
-  - host: demo.mydomain.com
+  - host: example-demo.com
     http:
       paths:
       - path: /productpage
@@ -80,7 +129,7 @@ GATEWAY_URL=$(minikube ip)
 echo $GATEWAY_URL
 
 # /etc/hosts
-192.168.49.2   demo.mydomain.com
+192.168.49.2   example-demo.com
 ```
 
 

@@ -27,6 +27,14 @@
 
 
             <span class="nav__sub-title">Kubernetes</span>
+            <ul></ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "argo" %}
+                        <li><a href="/categories/argo" class="">Argo ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "devops" %}
@@ -43,11 +51,25 @@
             </ul>
             <ul>
                 {% for category in site.categories %}
+                    {% if category[0] == "cache" %}
+                        <li><a href="/categories/cache" class="">Cache ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>              
+            <ul>
+                {% for category in site.categories %}
                     {% if category[0] == "docker" %}
                         <li><a href="/categories/docker" class="">Docker ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>           
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "istio" %}
+                        <li><a href="/categories/istio" class="">Istio ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>              
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "kafka" %}
@@ -62,13 +84,7 @@
                     {% endif %}
                 {% endfor %}
             </ul>            
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "cache" %}
-                        <li><a href="/categories/cache" class="">Cache ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>  
+
 
             <span class="nav__sub-title">AI / Machine Learning</span>
             <ul>

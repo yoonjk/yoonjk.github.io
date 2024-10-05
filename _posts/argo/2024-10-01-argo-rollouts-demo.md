@@ -1,7 +1,7 @@
 ---
 title: argo rollouts demo
 categories:
-  - devops 
+  - argo 
 tags:
   - argo
   - rollout

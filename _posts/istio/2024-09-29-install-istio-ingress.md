@@ -1,7 +1,7 @@
 ---
 title:  Install Gateways
 categories:
-  - kubernetes
+  - istio
 tags: 
   - istio
 ---

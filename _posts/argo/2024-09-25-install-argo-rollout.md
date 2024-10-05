@@ -1,7 +1,7 @@
 ---
 title: Part 2 - Canary Deployment in Kubernetes
 categories:
-  - devops 
+  - argo 
 tags:
   - argo
   - rollout
