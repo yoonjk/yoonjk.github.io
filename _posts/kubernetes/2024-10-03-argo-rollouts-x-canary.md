@@ -37,20 +37,14 @@ spec:
   - host: my-app.example.com
     http:
       paths:
-      - path: /
+      - path: /success
         pathType: Prefix
         backend:
           service:
-            name: my-app-stable
+            name: canary-demo
             port:
               number: 80
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: my-app-canary
-            port:
-              number: 80
+ 
 ```
 
 nginx.ingress.kubernetes.io/canary: "true": 이 설정은 Ingress가 카나리 배포를 지원함을 의미합니다.
@@ -66,7 +60,7 @@ metadata:
   name: my-app
 spec:
   hosts:
-  - my-app.example.com
+  - canary-demo.com
   http:
   - match:
     - headers:
@@ -74,17 +68,22 @@ spec:
           exact: "true"
     route:
     - destination:
-        host: my-app-canary
-        subset: v2
-  - route:
+        host: canary-demo
+        subset: blue
+      weight: 100
     - destination:
-        host: my-app-stable
-        subset: v1
+        host: canary-demo
+        subset: green
+      weight: 0
 ```
 
 match.headers.X-Canary: 이 부분은 요청의 HTTP 헤더에 X-Canary: true가 있는지 확인합니다.
 destination.host: my-app-canary: X-Canary 헤더가 있는 요청은 my-app-canary로 라우팅됩니다.
 destination.host: my-app-stable: X-Canary 헤더가 없는 요청은 my-app-stable로 라우팅됩니다.
+
+```bash
+for i in `seq 1 1000`; do curl -H "host: canary-demo.com" -H "X-Canary:  always" $GATEWAY_URL/success; echo ""; sleep 1; done
+```
 
 요약
 **X-Canary**는 Argo Rollouts에서 카나리 배포 시 트래픽을 제어하기 위해 사용하는 HTTP 헤더입니다.

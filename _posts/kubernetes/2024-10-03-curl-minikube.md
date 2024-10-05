@@ -18,6 +18,10 @@ kubectl run curl --image=alpine/curl:8.2.1 -n kube-system -i --tty --rm -- sh
 ```bash
 kubectl exec -it curl -n kube-system -- sh
 for i in `seq 1 10000`; do curl canary-demo-stable.bluegreen/;echo ""; sleep 1 ; done
+# or
+for i in `seq 1 10000`; do curl canary-demo-canary.bluegreen/;echo ""; sleep 1 ; done
+
+for i in `seq 1 10000`; do curl -H "host: canary-demo.com" ;echo ""; sleep 1 ; done
 ```
 
 #### ingress 을 이용하여 test
