@@ -1,7 +1,7 @@
 ---
 title: argo rollouts demo
 categories:
-  - argo 
+  - argo
 tags:
   - argo
   - rollout
