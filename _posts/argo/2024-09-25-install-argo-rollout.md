@@ -55,7 +55,7 @@ helm repo add argo https://argoproj.github.io/argo-helm
 helm install my-release argo/argo-rollouts
 ```
 
-```
+```bash
 ➜ kubectl get deploy -n argo-rollouts
 NAME                      READY   UP-TO-DATE   AVAILABLE   AGE
 argo-rollouts             1/1     1            1           13m
