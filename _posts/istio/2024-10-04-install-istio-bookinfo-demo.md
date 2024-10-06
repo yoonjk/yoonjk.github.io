@@ -143,7 +143,26 @@ minikube ip
   <figcaption></figcaption>
 </figure>  
 
-8. bookinfo 연결 테스트 
+8. bookinfo-gateway 수정
+
+```bash
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: Gateway
+metadata:
+  name: bookinfo-gateway
+spec:
+  gatewayClassName: istio
+  listeners:
+  - name: http
+    hostname: "demo.example.com"
+    port: 80
+    protocol: HTTP
+    allowedRoutes:
+      namespaces:
+        from: Same
+```
+
+9. bookinfo 연결 테스트 
 
 ```bash
 
@@ -160,7 +179,7 @@ done
 
 ```
 
-9. kiali addons에서 kiali 설치 하고 dashboard로 확인합니다.
+10. kiali addons에서 kiali 설치 하고 dashboard로 확인합니다.
 samples/addons에 있는 kiali를 설치합니다.  
 ```bash
 kubectl apply -f samples/addons
@@ -179,10 +198,15 @@ istioctl dashboard kiali --address 0.0.0.0
   <figcaption></figcaption>
 </figure>  
 
-10. bookinfo 트래픽 발생
+11. bookinfo 트래픽 발생
 
 bookinfo의 productpage uri 에 트패픽을 발생합니다.
 ```bash
 for i in `seq 1 10000`; do curl -s  -H "host: demo.example.com" "http://${GATEWAY_URL}/productpage" | grep -o "<title>.*</title>"; sleep 1; done
 ```
+
+<figure style="width: 100%" class="align-center">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/istio/traffic-grapah.png" alt="">
+  <figcaption></figcaption>
+</figure> 
 
