@@ -163,9 +163,7 @@ done
 9. kiali addons에서 kiali 설치 하고 dashboard로 확인합니다.
 samples/addons에 있는 kiali를 설치합니다.  
 ```bash
-kubectl apply -f samples/addons/kiali.yaml
-# or 
-kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.23/samples/addons/kiali.yaml
+kubectl apply -f samples/addons
 ```
 
 kiali가 설치되어 있는지 확인합니다.  
@@ -177,6 +175,14 @@ istioctl dashboard kiali --address 0.0.0.0
 
 
 <figure style="width: 100%" class="align-center">
-  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/istio/install-kiali.png" alt="">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/istio/install-addons.png" alt="">
   <figcaption></figcaption>
-</figure> 
+</figure>  
+
+10. bookinfo 트래픽 발생
+
+bookinfo의 productpage uri 에 트패픽을 발생합니다.
+```bash
+for i in `seq 1 10000`; do curl -s  -H "host: demo.example.com" "http://${GATEWAY_URL}/productpage" | grep -o "<title>.*</title>"; sleep 1; done
+```
+
