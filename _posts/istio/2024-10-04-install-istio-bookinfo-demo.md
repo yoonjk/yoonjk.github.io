@@ -210,3 +210,9 @@ for i in `seq 1 10000`; do curl -s  -H "host: demo.example.com" "http://${GATEWA
   <figcaption></figcaption>
 </figure> 
 
+for i in `seq 1 10000`
+do
+curl -s  -H "host: demo.example.com" "http://${GATEWAY_URL}/success" 
+echo ""
+sleep 1
+done
