@@ -73,7 +73,7 @@ systemctl start zookeeper
 ```bash
 vi /usr/lib/systemd/system/kafka.service
 
-# Kafka server (broker) management
+# Kafka server management
 
 [Unit]
 Requires=zookeeper.service
@@ -97,6 +97,15 @@ SuccessExitStatus=130 143
 WantedBy=multi-user.target
 ```
 
+
+kafka process를 종료합니다.
+
+```bash
+# Kafka 종료 
+bin/kafka-server-stop.sh
+# kafka process 확인 
+ps -ef|grep server.properties
+```
 kafka.service 를 수정하면 다음과 같이 reload합니다.
 ```bash
 systemctl daemon-reload

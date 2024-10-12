@@ -64,3 +64,26 @@ tickTime: 기본 시간 단위 (기본 3000ms)로 ZooKeeper에서 하트비트 �
 initLimit: 팔로워가 리더와 초기 연결을 설정하는 데 걸릴 수 있는 최대 시간 (tickTime의 배수).
 syncLimit: 리더와 팔로워 간 동기화가 완료되는 데 걸릴 수 있는 최대 시간 (tickTime의 배수).
 이 설정들은 ZooKeeper에서 클라이언트와 서버, 그리고 리더와 팔로워 간의 연결 유지와 상태 동기화에 필수적이며, 네트워크 환경에 따라 적절하게 조정할 필요가 있습니다.
+
+```ini
+dataDir=/app/zookeeper
+# the port at which the clients will connect
+clientPort=2181
+# disable the per-ip limit on the number of connections since this is a non-production config
+maxClientCnxns=0
+# Disable the adminserver by default to avoid port conflicts.
+# Set the port to something non-conflicting if choosing to enable this
+admin.enableServer=true
+admin.serverPort=8080
+
+# Define custom
+tickTime=2000
+syncLimit=5
+initLimit=10
+
+4lw.commands.whitelist=stat, ruok, conf, isro, cons
+
+server.1=zookeeper1:2888:3888
+server.2=zookeeper2:2888:3888
+server.3=zookeeper3:2888:3888
+```
