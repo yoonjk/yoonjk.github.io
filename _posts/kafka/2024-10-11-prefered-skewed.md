@@ -26,6 +26,10 @@ Preferred Replicas % 의미
 이를 위해, 리더 재조정(Leader Rebalancing) 작업을 정기적으로 수행하여 각 파티션의 선호 리더가 실제로 리더 역할을 하도록 조정합니다.
 Kafka에서는 kafka-preferred-replica-election.sh 스크립트를 사용하여 선호 복제본이 리더 역할을 하도록 강제로 리밸런싱할 수 있습니다
 
+```bash
+kafka-preferred-replica-election.sh --zookeeper <zookeeper-host>:<zookeeper-port>
+```
+
 2. Brokers Leader Skewed %
 **Brokers Leader Skewed %**는 Kafka 클러스터에서 리더 파티션이 특정 브로커에 몰려 있는 정도를 나타내는 지표입니다.
 
