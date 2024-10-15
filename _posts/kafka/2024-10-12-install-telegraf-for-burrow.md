@@ -120,3 +120,14 @@ Telegraf는 다양한 시스템 및 애플리케이션에서 시계열 데이터
 플러그인 기반 구조로 다양한 소스에서 데이터를 수집할 수 있고, 데이터를 전송하기 전에 필터링 및 집계할 수 있습니다.  
 InfluxDB, Prometheus, Kafka와 같은 다양한 시스템과 통합되어 모니터링 데이터를 쉽게 수집하고 시각화할 수 있습니다.  
 유연성, 경량성, 확장성 덕분에 시스템 모니터링, 애플리케이션 성능 추적, 로그 분석 등 다양한 목적에 활용될 수 있습니다.  
+
+## telegraf 설치 
+
+```bash
+wget https://dl.influxdata.com/telegraf/releases/telegraf-1.17.3_linux_amd64.tar.gz
+mkdir -p /app/manager
+tar xvf telegraf-1.17.3_linux_amd64.tar.gz -C /app/manager
+cd /app/manager
+mv telegraf-1.17.3 telegraf
+cd telegraf
+```

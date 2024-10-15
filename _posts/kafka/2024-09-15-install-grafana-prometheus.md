@@ -69,6 +69,7 @@ prometheus를 아래의 [링크](https://prometheus.io/download/)
 
 ```bash
 wget https://github.com/prometheus/prometheus/releases/download/v3.0.0-beta.0/prometheus-3.0.0-beta.0.linux-amd64.tar.gz
+tar -xzf prometheus-3.0.0-beta.0.linux-amd64.tar.gz
 ```
 
 
@@ -139,6 +140,8 @@ systemctl start prometheus
 systemctl status prometheus
 ```
 
+## 참조  
+- [Grafana dashboard for Apache Kafka Cluster](https://grafana.com/grafana/dashboards/13684)
 
 
 

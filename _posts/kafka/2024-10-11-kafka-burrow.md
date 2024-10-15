@@ -282,3 +282,5 @@ spec:
 - [Kafka Burrow partition lag](https://www.redpanda.com/guides/kafka-performance-kafka-burrow-partition-lag)
 - [Monitoring Kafka with Burrow and Prometheus Operator](https://github.com/ignatev/burrow-kafka-dashboard)
 - [Burrow Dashboard](https://github.com/joway/burrow-dashboard)
+- [kafka 관련 성능 고찰](https://team-platform.tistory.com/6)
+- [kafk 내장 성틍 tool](https://blair2dev.tistory.com/9)
