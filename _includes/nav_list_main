@@ -93,7 +93,15 @@
                         <li><a href="/categories/watson" class="">Watson ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
-            </ul>              
+            </ul>    
+            <span class="nav__sub-title">기타</span>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "etc" %}
+                        <li><a href="/categories/etc" class="">Etc ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>                           
       </li>
 
 

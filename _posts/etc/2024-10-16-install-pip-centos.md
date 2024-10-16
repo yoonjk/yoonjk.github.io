@@ -1,7 +1,7 @@
 ---
 title: install python3.11 to centos
 categories:
-  - devops 
+  - etc 
 tags:
   - python
 ---
