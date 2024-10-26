@@ -134,17 +134,25 @@ Kafka는 상태를 유지하기 위해 ZooKeeper에 의존하기 때문에 ZooKe
 </table>
 
 
-**UnderReplicatedPartitions**
+**UnderReplicatedPartitions**  
 정상 클러스터에서는 동기화 중 복제본(ISR)의 수가 총 복제본 수와 정확히 같아야 합니다. 파티션 복제본이 리더 파티션보다 너무 뒤처지면 팔로워 파티션이 ISR 풀에서 제거되고 그에 따라 IsrShrinksPerSec이 증가합니다. 브로커를 사용할 수 없게 되면 UnderReplicatedPartitions의 값이 급격하게 증가합니다. 복제 없이는 Kafka의 고가용성 보장을 충족할 수 없으므로 이 메트릭 값이 오랜 기간 동안 0을 초과하는 경우 반드시 조사가 필요합니다.  
 
-**IsrShrinksPerSec/IsrExpandsPerSec**
+**IsrShrinksPerSec/IsrExpandsPerSec**  
 브로커 클러스터를 확장하거나 파티션을 제거하는 경우를 제외하고 특정 파티션에 대한 동기화 복제본(ISR)의 수는 상당히 고정적으로 유지되어야 합니다. 고가용성을 유지하기 위해, 건강한 Kafka 클러스터에는 장애 조치를 위한 최소한의 ISR이 필요합니다. 복제본이 일정 시간 동안 리더에 연결되지 않으면 ISR 풀에서 제거될 수 있습니다(replica.socket.timeout.ms 매개변수로 구성 가능). 이러한 메트릭 값의 플랩핑이 있는지, 그리고 그 직후에 IsrExpandsPerSec의 증가 없이 IsrShrinksPerSec의 증가가 있는지 조사해야 합니다.  
 
+**ActiveControllerCount**  
+Kafka 클러스터에서 가장 먼저 부팅되는 노드는 자동으로 컨트롤러가 되며, 컨트롤러는 하나만 있을 수 있습니다. Kafka 클러스터의 컨트롤러는 파티션 리더 목록을 유지하고, 파티션 리더를 사용할 수 없게 되는 경우 리더십 전환을 조정하는 역할을 담당합니다. 컨트롤러를 교체해야 하는 경우, ZooKeeper는 브로커 풀에서 무작위로 새 컨트롤러를 선택합니다. 모든 브로커의 ActiveControllerCount 합은 항상 1이어야 하며, 1초 이상 지속되는 다른 값에 대해 알림을 보내야 합니다
+
+**OfflinePartitionsCount (controller only)**  
+이 메트릭은 활성 리더가 없는 파티션의 수를 보고합니다. 모든 읽기 및 쓰기 작업은 파티션 리더에서만 수행되므로 이 메트릭의 값이 0이 아닌 경우 서비스 중단을 방지하기 위해 경고를 보내야 합니다. 활성 리더가 없는 파티션은 완전히 액세스할 수 없으며, 해당 파티션의 소비자와 생산자 모두 리더를 사용할 수 있게 될 때까지 차단됩니다.
+
+**LeaderElectionRateAndTimeMs**  
+파티 리더가 사망하면 새 리더를 선출하기 위한 선거가 시작됩니다. 파티션 리더가 ZooKeeper에서 세션을 유지하지 못하면 “죽은” 것으로 간주됩니다. ZooKeeper의 Zab과 달리, 카프카는 리더 선출에 다수결 합의 알고리즘을 사용하지 않습니다. 대신, Kafka의 쿼럼은 특정 파티션에 대한 모든 동기화 복제본(ISR)의 집합으로 구성됩니다. 복제본이 리더를 따라잡으면 동기화 중인 것으로 간주되며, 이는 ISR의 모든 복제본이 리더로 승격될 수 있음을 의미합니다.  
 
 ## purgatory
 - purgatory란: Kafka에서 purgatory란 특정 요청이 조건을 만족할 때까지 보류되며, 대기 상태로 처리되는 구조를 의미합니다. Kafka에는 대표적으로 Producer Purgatory와 Fetch Purgatory라는 두 가지 종류의 purgatory가 존재합니다.
 
-1. Producer Purgatory
+- Producer Purgatory
 Producer Purgatory는 프로듀서(producer)로부터 메시지를 받았을 때 지정된 조건이 충족될 때까지 해당 요청을 대기시키는 Kafka 내부 구조입니다. 대표적인 경우로는 acks 설정이 있습니다. 프로듀서의 acks 값은 메시지가 정상적으로 브로커에 저장되었을 때 응답을 기다리는 정도를 설정하는 옵션으로, 0, 1, -1(all) 등으로 설정할 수 있습니다.
 
 acks=1: 리더 복제본이 메시지를 받아들이면 즉시 응답을 반환합니다.
@@ -155,7 +163,7 @@ Producer Purgatory의 주요 기능:
 
 복제 일관성 유지: 요청이 모두 복제될 때까지 대기함으로써, 메시지 복제와 데이터 일관성을 보장합니다.
 성능 최적화: Kafka는 이러한 대기 구조를 통해 비동기 처리를 최적화하여, 효율적인 데이터 전송과 복제를 수행할 수 있습니다.
-2. Fetch Purgatory
+- Fetch Purgatory
 Fetch Purgatory는 컨슈머(consumer)가 데이터를 요청할 때 특정 조건을 만족할 때까지 요청을 대기시키는 구조입니다. 컨슈머가 Kafka로부터 데이터를 읽을 때, 요청하는 데이터가 아직 준비되지 않았거나 특정 조건에 맞는 데이터가 없다면, 해당 요청이 Fetch Purgatory에 추가됩니다. 이 구조는 주로 데이터의 최소 레코드 수 또는 최소 바이트 수에 도달할 때까지 기다리도록 설정된 경우에 사용됩니다.
 
 예를 들어, 컨슈머가 특정 오프셋부터 최소 5MB 이상의 데이터를 가져오기를 요청했을 때, 해당 데이터가 준비될 때까지 요청은 Fetch Purgatory에 머물며, 데이터를 충분히 수집한 후에 응답하게 됩니다.
