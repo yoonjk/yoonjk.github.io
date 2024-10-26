@@ -60,29 +60,43 @@ Kafka는 상태를 유지하기 위해 ZooKeeper에 의존하기 때문에 ZooKe
 
 <table>
   <caption>
-    Council budget (in £) 2018
+    Kafka-emitted metrics
   </caption>
   <thead>
     <tr>
-      <th scope="col">Items</th>
-      <th scope="col">Expenditure</th>
+      <th scope="col">Name</th>
+      <th scope="col">Mbean name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Metric type</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th scope="row">Donuts</th>
-      <td>3,000</td>
+      <th scope="row">UnderReplicatedPartitions</th>
+      <td>kafka.server:type=ReplicaManager,name=UnderReplicatedPartitions</td>
+      <td>복제되지 않은 파티션 수</td>
+      <td>Resource: Availability</td>
     </tr>
     <tr>
-      <th scope="row">Stationery</th>
-      <td>18,000</td>
+      <th scope="row">IsrShrinksPerSec/IsrExpandsPerSec</th>
+      <td>kafka.server:type=ReplicaManager,name=IsrShrinksPerSec</br>kafka.server:type=ReplicaManager,name=IsrExpandsPerSec</td>
+      <td>동기화 복제본(ISR) 풀이 축소/확장되는 속도</td>
+      <td>Resource: Availability</td>
     </tr>
+     <tr>
+      <th scope="row">ActiveControllerCount</th>
+      <td>kafka.controller:type=KafkaController,name=ActiveControllerCount</td>
+      <td>동클러스터의 active 컨트롤러 수</td>
+      <td>Resource: Error</td>
+    </tr>   
   </tbody>
   <tfoot>
-    <tr>
-      <th scope="row">Totals</th>
-      <td>21,000</td>
-    </tr>
+     <tr>
+      <th scope="row">RequestsPerSecond</th>
+      <td>kafka.network:type=RequestMetrics,name=RequestsPerSec,request={Produce|FetchConsumer|FetchFollower},version={0|1|2|3|…}	Number of (producer|consumer|follower) requests per second	Work: Throughput</td>
+      <td>초당 (생산자|소비자|팔로워) 요청 수</td>
+      <td>Work: Throughput</td>
+    </tr>   
   </tfoot>
 </table>
 
