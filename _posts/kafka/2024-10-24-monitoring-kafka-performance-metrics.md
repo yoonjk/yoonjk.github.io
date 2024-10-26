@@ -232,13 +232,15 @@ purgatory의 크기를 주시하는 것은 지연 시간의 근본적인 원인�
       <td>CPU 사용량</td>
       <td>Resource: Utilization</td>
     </tr>   
+  </tbody>
+  <tfoot>
      <tr>
       <th scope="row">Network bytes sent/received</th>
       <td>k네트워크 트래픽 인/아웃</td>
       <td>총 바이트 수신/발신 속도 집계</td>
       <td>Resource: Utilization</td>
-    </tr>       
-  </tbody>
+    </tr>   
+  </tfoot>
 </table>
 
 ## purgatory
