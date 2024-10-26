@@ -149,6 +149,32 @@ Kafka 클러스터에서 가장 먼저 부팅되는 노드는 자동으로 컨�
 **LeaderElectionRateAndTimeMs**  
 파티 리더가 사망하면 새 리더를 선출하기 위한 선거가 시작됩니다. 파티션 리더가 ZooKeeper에서 세션을 유지하지 못하면 “죽은” 것으로 간주됩니다. ZooKeeper의 Zab과 달리, 카프카는 리더 선출에 다수결 합의 알고리즘을 사용하지 않습니다. 대신, Kafka의 쿼럼은 특정 파티션에 대한 모든 동기화 복제본(ISR)의 집합으로 구성됩니다. 복제본이 리더를 따라잡으면 동기화 중인 것으로 간주되며, 이는 ISR의 모든 복제본이 리더로 승격될 수 있음을 의미합니다.  
 
+**LeaderElectionRateAndTimeMs**  
+리더 선출 비율(초당)과 클러스터에 리더가 없는 총 시간(밀리초 단위)을 보고합니다. UncleanLeaderElectionsPerSec만큼 나쁘지는 않지만, 이 메트릭을 계속 주시하고 싶을 것입니다. 위에서 언급했듯이 리더 선거는 현재 리더와의 연락이 끊어질 때 트리거되며, 이는 오프라인 브로커로 해석될 수 있습니다. 
+
+
+<figure style="width: 100%" class="align-center">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/kafka/unclean-leader-elections-per-sec.png" alt="">
+  <figcaption></figcaption>
+</figure> 
+
+**UncleanLeaderElectionsPerSec**  
+부정 리더 선출은 카프카 브로커 중 자격을 갖춘 파티션 리더가 없을 때 발생합니다. 일반적으로 파티션의 리더인 브로커가 오프라인 상태가 되면 파티션의 ISR 집합에서 새 리더가 선출됩니다. Kafka 버전 0.11 이상에서는 기본적으로 리더 선출이 비활성화되어 있으므로, 새 리더로 선출할 ISR이 없는 경우 파티션이 오프라인 상태가 됩니다. 카프카가 unclean 리더 선출을 허용하도록 구성된 경우, 동기화되지 않은 복제본 중에서 리더가 선택되며, 이전 리더가 손실되기 전에 동기화되지 않은 모든 메시지는 영원히 손실됩니다. 기본적으로 부정 리더 선거는 가용성을 위해 일관성을 희생합니다. 이 메트릭은 데이터 손실을 의미하므로 주의해야 합니다.  
+
+**TotalTimeMs**
+TotalTimeMs 메트릭군은 요청을 서비스하는 데 걸린 총 시간을 측정합니다(생산, 가져오기-소비자, 가져오기-팔로워 요청 등):
+
+- produce: 생산자가 데이터를 전송하는 요청
+- fetch-consumer: 새 데이터를 가져오기 위한 소비자의 요청
+- fetch-follower: 파티션의 팔로워인 브로커가 새 데이터를 가져오기 위한 요청  
+  
+총 시간 측정값 자체는 네 가지 메트릭의 합입니다:
+
+queue: 요청 큐에서 대기하는 데 소요된 시간
+로컬: 리더가 처리하는 데 소요된 시간
+원격: 팔로워 응답을 기다리는 데 소요된 시간(requests.required.acks=-1인 경우에만 해당)
+응답: 응답을 보내는 데 걸린 시간
+
 ## purgatory
 - purgatory란: Kafka에서 purgatory란 특정 요청이 조건을 만족할 때까지 보류되며, 대기 상태로 처리되는 구조를 의미합니다. Kafka에는 대표적으로 Producer Purgatory와 Fetch Purgatory라는 두 가지 종류의 purgatory가 존재합니다.
 
