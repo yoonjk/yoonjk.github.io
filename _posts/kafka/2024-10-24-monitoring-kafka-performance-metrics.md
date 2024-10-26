@@ -59,9 +59,6 @@ Kafka는 상태를 유지하기 위해 ZooKeeper에 의존하기 때문에 ZooKe
 **Kafka-emitted metrics**
 
 <table>
-  <caption>
-    Kafka-emitted metrics
-  </caption>
   <thead>
     <tr>
       <th scope="col">Name</th>
@@ -94,16 +91,78 @@ Kafka는 상태를 유지하기 위해 ZooKeeper에 의존하기 때문에 ZooKe
       <td>kafka.controller:type=KafkaController,name=OfflinePartitionsCount</td>
       <td>오프라인 파티션 수</td>
       <td>Resource: Availability</td>
+    </tr>
+     <tr>
+      <th scope="row">LeaderElectionRateAndTimeMs</th>
+      <td>kafka.controller:type=ControllerStats,name=LeaderElectionRateAndTimeMs</td>
+      <td>리더 선출 비율 및 지연 시간</td>
+      <td>Other</td>
+    </tr>     
+     <tr>
+      <th scope="row">UncleanLeaderElectionsPerSec</th>
+      <td>kafka.controller:type=ControllerStats,name=UncleanLeaderElectionsPerSec</td>
+      <td>초당 'unclean' 선거 횟수</td>
+      <td>Resource: Error</td>
+    </tr>              
+    <tr>
+      <th scope="row">TotalTimeMs</th>
+      <td>kafka.network:type=RequestMetrics,name=TotalTimeMs,request={Produce|FetchConsumer|FetchFollower}</td>
+      <td>지정된 요청을 처리하는 데 걸린 총 시간(ms)(Produce/Fetch)</td>
+      <td>Work: Performance</td>
+    </tr>         
+     <tr>
+      <th scope="row">PurgatorySize</th>
+      <td>kafka.server:type=DelayedOperationPurgatory,name=PurgatorySize,delayedOperation={Produce|Fetch}</td>
+      <td>지정된 요청을 처리하는 데 걸린 총 시간(ms)(Produce/Fetch)</td>
+      <td>Other</td>
     </tr>       
+     <tr>
+      <th scope="row">BytesInPerSec/BytesOutPerSec</th>
+      <td>kafka.server:type=BrokerTopicMetrics,name={BytesInPerSec|BytesOutPerSec}</td>
+      <td>생산자 퍼지토리에서 대기 중인 요청 수/ 가져오기 퍼지토리에서 대기 중인 요청 수</td>
+      <td>Work: Throughput</td>
+    </tr>        
   </tbody>
   <tfoot>
      <tr>
       <th scope="row">RequestsPerSecond</th>
       <td>kafka.network:type=RequestMetrics,name=RequestsPerSec,request={Produce|FetchConsumer|FetchFollower},version={0|1|2|3|…}	Number of (producer|consumer|follower) requests per second	Work: Throughput</td>
-      <td>초당 (생산자|소비자|팔로워) 요청 수</td>
+      <td>총 바이트 수신/발신 속도 집계</td>
       <td>Work: Throughput</td>
     </tr>   
   </tfoot>
 </table>
 
 
+**UnderReplicatedPartitions**
+정상 클러스터에서는 동기화 중 복제본(ISR)의 수가 총 복제본 수와 정확히 같아야 합니다. 파티션 복제본이 리더 파티션보다 너무 뒤처지면 팔로워 파티션이 ISR 풀에서 제거되고 그에 따라 IsrShrinksPerSec이 증가합니다. 브로커를 사용할 수 없게 되면 UnderReplicatedPartitions의 값이 급격하게 증가합니다. 복제 없이는 Kafka의 고가용성 보장을 충족할 수 없으므로 이 메트릭 값이 오랜 기간 동안 0을 초과하는 경우 반드시 조사가 필요합니다.  
+
+**IsrShrinksPerSec/IsrExpandsPerSec**
+브로커 클러스터를 확장하거나 파티션을 제거하는 경우를 제외하고 특정 파티션에 대한 동기화 복제본(ISR)의 수는 상당히 고정적으로 유지되어야 합니다. 고가용성을 유지하기 위해, 건강한 Kafka 클러스터에는 장애 조치를 위한 최소한의 ISR이 필요합니다. 복제본이 일정 시간 동안 리더에 연결되지 않으면 ISR 풀에서 제거될 수 있습니다(replica.socket.timeout.ms 매개변수로 구성 가능). 이러한 메트릭 값의 플랩핑이 있는지, 그리고 그 직후에 IsrExpandsPerSec의 증가 없이 IsrShrinksPerSec의 증가가 있는지 조사해야 합니다.  
+
+
+## purgatory
+- purgatory란: Kafka에서 purgatory란 특정 요청이 조건을 만족할 때까지 보류되며, 대기 상태로 처리되는 구조를 의미합니다. Kafka에는 대표적으로 Producer Purgatory와 Fetch Purgatory라는 두 가지 종류의 purgatory가 존재합니다.
+
+1. Producer Purgatory
+Producer Purgatory는 프로듀서(producer)로부터 메시지를 받았을 때 지정된 조건이 충족될 때까지 해당 요청을 대기시키는 Kafka 내부 구조입니다. 대표적인 경우로는 acks 설정이 있습니다. 프로듀서의 acks 값은 메시지가 정상적으로 브로커에 저장되었을 때 응답을 기다리는 정도를 설정하는 옵션으로, 0, 1, -1(all) 등으로 설정할 수 있습니다.
+
+acks=1: 리더 복제본이 메시지를 받아들이면 즉시 응답을 반환합니다.
+acks=-1 (all): 모든 팔로워 복제본까지 메시지가 복제될 때까지 기다렸다가 응답합니다.
+예를 들어, 프로듀서가 acks=-1로 설정했을 때 모든 팔로워가 복제 완료 상태가 되어야만 요청이 완료되므로, 모든 팔로워가 복제본을 수신할 때까지 요청이 Producer Purgatory에 머물게 됩니다. 이 때까지 해당 요청은 응답을 보류하는 상태가 되며, 특정 조건을 만족하는 순간 Purgatory에서 빠져나가게 됩니다.
+
+Producer Purgatory의 주요 기능:
+
+복제 일관성 유지: 요청이 모두 복제될 때까지 대기함으로써, 메시지 복제와 데이터 일관성을 보장합니다.
+성능 최적화: Kafka는 이러한 대기 구조를 통해 비동기 처리를 최적화하여, 효율적인 데이터 전송과 복제를 수행할 수 있습니다.
+2. Fetch Purgatory
+Fetch Purgatory는 컨슈머(consumer)가 데이터를 요청할 때 특정 조건을 만족할 때까지 요청을 대기시키는 구조입니다. 컨슈머가 Kafka로부터 데이터를 읽을 때, 요청하는 데이터가 아직 준비되지 않았거나 특정 조건에 맞는 데이터가 없다면, 해당 요청이 Fetch Purgatory에 추가됩니다. 이 구조는 주로 데이터의 최소 레코드 수 또는 최소 바이트 수에 도달할 때까지 기다리도록 설정된 경우에 사용됩니다.
+
+예를 들어, 컨슈머가 특정 오프셋부터 최소 5MB 이상의 데이터를 가져오기를 요청했을 때, 해당 데이터가 준비될 때까지 요청은 Fetch Purgatory에 머물며, 데이터를 충분히 수집한 후에 응답하게 됩니다.
+
+Fetch Purgatory의 주요 기능:
+
+효율적인 데이터 수집: 컨슈머가 대량의 데이터를 요청할 때, 지정된 데이터 양이 확보될 때까지 대기함으로써 네트워크 자원을 절약할 수 있습니다.
+데이터의 안정성 보장: 데이터를 모두 수집한 후 일괄적으로 응답함으로써 안정적인 데이터 전송을 보장합니다.
+Purgatory의 이점
+Kafka의 Purgatory 시스템은 메시지 복제 및 데이터 수집 시점을 제어할 수 있어, 높은 데이터 일관성과 전송 효율성을 유지하는 데 중요한 역할을 합니다. 또한, 이 구조 덕분에 Kafka는 대규모 데이터 스트림을 처리할 때 안정성과 성능을 유지할 수 있습니다.
