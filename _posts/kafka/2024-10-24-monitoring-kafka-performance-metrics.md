@@ -51,6 +51,14 @@ Kafka는 상태를 유지하기 위해 ZooKeeper에 의존하기 때문에 ZooKe
 
 이 문서에서는 메트릭 수집 및 알림을 위한 프레임워크를 제공하는 [모니터링 101 시리즈](https://www.datadoghq.com/blog/monitoring-101-collecting-data/)에서 소개된 메트릭 용어를 참조합니다 
 
+## Broker metrics
+모든 메시지가 소비되려면 Kafka 브로커를 통과해야 하므로, 브로커 클러스터에서 발생하는 문제를 모니터링하고 경고하는 것이 매우 중요합니다. 브로커 메트릭은 세 가지 등급으로 분류할 수 있습니다:  
+
+- Kafka-emitted metrics
+- Host-level metrics
+- JVM garbage collection metrics
+
+
 <figure style="width: 100%" class="align-center">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/kafka/monitoring-kafka-broker.png" alt="">
   <figcaption></figcaption>
@@ -198,7 +206,40 @@ purgatory의 크기를 주시하는 것은 지연 시간의 근본적인 원인�
 **RequestsPerSec**  
 생산자, 소비자, 팔로워의 요청 비율을 모니터링하여 Kafka 배포가 효율적으로 통신하고 있는지 확인해야 합니다. 생산자가 더 많은 트래픽을 보내거나 배포가 확장되어 메시지를 가져와야 하는 소비자 또는 팔로워가 추가되면 Kafka의 요청 속도가 증가할 것으로 예상할 수 있습니다. 그러나 초당 요청 수가 여전히 높다면 생산자, 소비자 및/또는 브로커의 배치 크기를 늘리는 것을 고려해야 합니다. 이렇게 하면 요청 수를 줄여 불필요한 네트워크 오버헤드를 줄임으로써 Kafka 배포의 처리량을 개선할 수 있습니다.  
 
+## Host-level broker metrics
 
+<table>
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Metric type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Page cache reads ratio</th>
+      <td>페이지 캐시에서 읽은 것과 디스크에서 읽은 것의 비율</td>
+      <td>Resource: Saturation</td>
+    </tr>
+    <tr>
+      <th scope="row">Disk usage</th>
+      <td>현재 사용 중인 디스크 공간과 사용 가능한 공간 비교</td>
+      <td>Resource: Utilization</td>
+    </tr>
+     <tr>
+      <th scope="row">CPU usage</th>
+      <td>CPU 사용량</td>
+      <td>Resource: Utilization</td>
+    </tr>   
+     <tr>
+      <th scope="row">Network bytes sent/received</th>
+      <td>k네트워크 트래픽 인/아웃</td>
+      <td>총 바이트 수신/발신 속도 집계</td>
+      <td>Resource: Utilization</td>
+    </tr>       
+  </tbody>
+</table>
 
 ## purgatory
 - purgatory란: Kafka에서 purgatory란 특정 요청이 조건을 만족할 때까지 보류되며, 대기 상태로 처리되는 구조를 의미합니다. Kafka에는 대표적으로 Producer Purgatory와 Fetch Purgatory라는 두 가지 종류의 purgatory가 존재합니다.
