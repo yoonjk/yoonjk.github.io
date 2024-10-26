@@ -1,4 +1,10 @@
-
+---
+title: kafka 성능 metrics 모니터링
+categories:
+  - kafka
+tags: 
+  - metrics
+---
 
 아키텍처 개요
 자세히 알아보기 전에 Kafka 배포의 일반적인 아키텍처를 이해하는 것이 중요합니다. 모든 배포는 아래 그림과 같은 구성 요소로 이루어져 있습니다:
