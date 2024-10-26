@@ -245,7 +245,138 @@ purgatory의 크기를 주시하는 것은 지연 시간의 근본적인 원인�
 **Page cache read ratio**  
 Kafka는 처음부터 커널의 페이지 캐시를 활용하여 안정적이고(디스크 기반) 성능이 뛰어난(인메모리) 메시지 파이프라인을 제공하도록 설계되었습니다. 페이지 캐시 읽기 비율은 데이터베이스의 캐시 히트 비율과 유사하며, 값이 높을수록 읽기가 빨라지고 따라서 성능이 향상됩니다. 복제본이 리더를 따라잡는 경우(새 브로커가 생성될 때처럼) 이 메트릭은 잠시 떨어지지만 페이지 캐시 읽기 비율이 80% 미만으로 유지되면 추가 브로커를 프로비저닝하는 것이 도움이 될 수 있습니다.  
 
+<figure style="width: 100%" class="align-center">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/kafka/page-cache-reads-radio.png" alt="">
+  <figcaption></figcaption>
+</figure> 
 
+**경고할 메트릭: 디스크 사용량**
+Kafka는 모든 데이터를 디스크에 보존하기 때문에 Kafka에서 사용할 수 있는 디스크 여유 공간을 모니터링해야 합니다. 디스크가 꽉 차면 Kafka가 실패하므로 시간 경과에 따른 디스크 증가를 추적하고 디스크 공간이 거의 다 사용되기 전에 적절한 시점에 관리자에게 알리도록 알림을 설정하는 것이 매우 중요합니다.  
+
+<figure style="width: 100%" class="align-center">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/kafka/cluster-disk-freespace.png" alt="">
+  <figcaption></figcaption>
+</figure> 
+
+**CPU 사용량**  
+카프카의 주요 병목 현상은 일반적으로 메모리이지만, CPU 사용량을 주시하는 것도 나쁘지 않습니다. GZIP 압축이 활성화된 사용 사례에서도 CPU가 성능 문제의 원인이 되는 경우는 드뭅니다. 따라서 CPU 사용량이 급증하는 경우 이를 조사해 볼 필요가 있습니다.  
+
+**네트워크 바이트 전송/수신**  
+카프카의 바이트 입/출력 메트릭을 모니터링하는 경우, 카프카의 측면을 파악하고 있는 것입니다. 호스트의 네트워크 사용량을 전체적으로 파악하려면 호스트 수준의 네트워크 처리량을 모니터링해야 하며, 특히 Kafka 브로커가 다른 네트워크 서비스를 호스팅하는 경우 더욱 그렇습니다. 높은 네트워크 사용량은 성능 저하의 증상일 수 있으며, 높은 네트워크 사용량을 보이는 경우 TCP 재전송 및 패킷 오류 삭제와의 상관관계를 파악하면 성능 문제가 네트워크와 관련이 있는지 판단하는 데 도움이 될 수 있습니다.  
+
+**JVM garbage collection metrics**  
+Kafka는 Scala로 작성되고 Java 가상 머신(JVM)에서 실행되므로 메모리를 확보하기 위해 Java 가비지 수집 프로세스에 의존합니다. Kafka 클러스터의 활동이 많을수록 가비지 컬렉션이 더 자주 실행됩니다.  
+
+<figure style="width: 100%" class="align-center">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/kafka/jvm-gc-per-min.png" alt="">
+  <figcaption></figcaption>
+</figure> 
+
+
+Java 애플리케이션에 익숙한 사람이라면 가비지 컬렉션이 높은 성능 비용을 초래할 수 있다는 것을 알고 있습니다. 가비지 컬렉션으로 인한 긴 일시 정지의 가장 눈에 띄는 효과는 (세션 시간 초과로 인해) 중단된 ZooKeeper 세션의 증가입니다.
+
+가비지 컬렉션의 유형은 젊은 세대(새 개체) 또는 오래된 세대(오래 살아남은 개체)가 수집되는지에 따라 달라집니다. Java 가비지 컬렉션에 대한 좋은 입문서는 이 [페이지를 참조] (https://engineering.linkedin.com/garbage-collection/garbage-collection-optimization-high-throughput-and-low-latency-java-applications)하세요.
+
+가비지 수집 중에 과도하게 일시 중지되는 경우 JDK 버전 또는 가비지 수집기를 업그레이드하거나 zookeeper.session.timeout.ms의 시간 초과 값을 확장하는 것이 좋습니다. 또한 가비지 수집을 최소화하도록 Java 런타임을 조정할 수도 있습니다. LinkedIn의 엔지니어가 JVM 가비지 수집 최적화에 대해 자세히 설명하는 글을 작성했습니다. 물론 [Kafka 문서](https://kafka.apache.org/documentation/#java)에서 몇 가지 권장 사항을 확인할 수도 있습니다.
+
+<table>
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Mbean name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Metric type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">CollectionCount</th>
+      <td>java.lang:type=GarbageCollector,name=G1 (Young|Old) Generation</td>
+      <td>JVM이 실행한 젊은 또는 오래된 가비지 수집 프로세스의 총 개수입니다</td>
+      <td>Other</td>
+    </tr>
+    <tr>
+      <th scope="row">CollectionTime</th>
+      <td>java.lang:type=GarbageCollector,name=G1 (Young|Old) Generation</td>
+      <td>JVM이 최근 또는 오래된 가비지 수집 프로세스를 실행하는 데 소요된 총 시간(밀리초)</td>
+      <td>Other</td>
+    </tr>
+  </tbody>
+</table>
+
+**Young generation garbage collection time**  
+젊은 세대 가비지 컬렉션은 비교적 자주 발생합니다. 이는 가비지 수집이 수행되는 동안 모든 애플리케이션 스레드가 일시 중지되는 중지 가비지 수집입니다. 이 메트릭의 값이 크게 증가하면 Kafka의 성능에 큰 영향을 미칩니다.  
+
+<figure style="width: 100%" class="align-center">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/kafka/young-gc-time.png" alt="">
+  <figcaption></figcaption>
+</figure> 
+
+**Old generation garbage collection count/time**  
+오래전에 생성한 가비지 컬렉션은 이전 세대의 힙에서 사용하지 않는 메모리를 확보합니다. 이는 일시 중지 가비지 수집으로, 애플리케이션 스레드를 일시적으로 중단하지만 간헐적으로만 중단합니다. 이 프로세스가 완료되는 데 몇 초가 걸리거나 빈도가 증가하면 클러스터가 효율적으로 작동하기에 메모리가 충분하지 않을 수 있습니다.  
+
+## Kafka producer metrics
+카프카 프로듀서는 소비를 위해 토픽을 중개하기 위해 메시지를 푸시하는 독립적인 프로세스입니다. 프로듀서가 실패하면 소비자는 새로운 메시지를 받지 못하게 됩니다. 다음은 들어오는 데이터의 안정적인 스트림을 보장하기 위해 모니터링해야 할 가장 유용한 프로듀서 메트릭 몇 가지입니다.  
+
+<figure style="width: 100%" class="align-center">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/kafka/producer-metrics.png" alt="">
+  <figcaption></figcaption>
+</figure> 
+
+<table>
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Mbean name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Metric type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">compression-rate-avg</th>
+      <td>kafka.producer:type=producer-metrics,client-id=([-.w]+)</td>
+      <td>전송된 배치의 평균 압축률</td>
+      <td>Work: Other</td>
+    </tr>
+    <tr>
+      <th scope="row">Colresponse-ratelectionTime</th>
+      <td>kafka.producer:type=producer-metrics,client-id=([-.w]+)</td>
+      <td>초당 평균 수신 응답 수</td>
+      <td>Work: Throughput</td>
+    </tr>
+    <tr>
+      <th scope="row">request-rate</th>
+      <td>kafka.producer:type=producer-metrics,client-id=([-.w]+)</td>
+      <td>초당 평균 요청 전송 횟수</td>
+      <td>Work: Throughput</td>
+    </tr>
+    <tr>
+      <th scope="row">request-latency-avg</th>
+      <td>jkafka.producer:type=producer-metrics,client-id=([-.w]+)</td>
+      <td>평균 요청 지연 시간(ms)</td>
+      <td>Work: Throughput</td>
+    </tr>
+    <tr>
+      <th scope="row">outgoing-byte-rate</th>
+      <td>jkafka.producer:type=producer-metrics,client-id=([-.w]+)</td>
+      <td>초당 평균 발신/수신 바이트 수</td>
+      <td>Work: Throughput</td>
+    </tr>
+    <tr>
+      <th scope="row">io-wait-time-ns-avg</th>
+      <td>jkafka.producer:type=producer-metrics,client-id=([-.w]+)</td>
+      <td>I/O 스레드가 소켓을 대기하는 데 소요된 평균 시간(ns)</td>
+      <td>Work: Throughput</td>
+    </tr>
+    <tr>
+      <th scope="row">batch-size-avg</th>
+      <td>jkafka.producer:type=producer-metrics,client-id=([-.w]+)</td>
+      <td>요청당 파티션당 전송된 평균 바이트 수</td>
+      <td>Work: Throughput</td>
+    </tr>                    
+  </tbody>
+</table>
 
 ## purgatory
 - purgatory란: Kafka에서 purgatory란 특정 요청이 조건을 만족할 때까지 보류되며, 대기 상태로 처리되는 구조를 의미합니다. Kafka에는 대표적으로 Producer Purgatory와 Fetch Purgatory라는 두 가지 종류의 purgatory가 존재합니다.
@@ -254,13 +385,16 @@ Kafka는 처음부터 커널의 페이지 캐시를 활용하여 안정적이고
 Producer Purgatory는 프로듀서(producer)로부터 메시지를 받았을 때 지정된 조건이 충족될 때까지 해당 요청을 대기시키는 Kafka 내부 구조입니다. 대표적인 경우로는 acks 설정이 있습니다. 프로듀서의 acks 값은 메시지가 정상적으로 브로커에 저장되었을 때 응답을 기다리는 정도를 설정하는 옵션으로, 0, 1, -1(all) 등으로 설정할 수 있습니다.
 
 acks=1: 리더 복제본이 메시지를 받아들이면 즉시 응답을 반환합니다.
-acks=-1 (all): 모든 팔로워 복제본까지 메시지가 복제될 때까지 기다렸다가 응답합니다.
+acks=-1 (all): 모든 팔로워 복제본까지 메시지가 복제될 때까지 기다렸다가 응답합니다.  
+
 예를 들어, 프로듀서가 acks=-1로 설정했을 때 모든 팔로워가 복제 완료 상태가 되어야만 요청이 완료되므로, 모든 팔로워가 복제본을 수신할 때까지 요청이 Producer Purgatory에 머물게 됩니다. 이 때까지 해당 요청은 응답을 보류하는 상태가 되며, 특정 조건을 만족하는 순간 Purgatory에서 빠져나가게 됩니다.
 
 Producer Purgatory의 주요 기능:
 
 복제 일관성 유지: 요청이 모두 복제될 때까지 대기함으로써, 메시지 복제와 데이터 일관성을 보장합니다.
 성능 최적화: Kafka는 이러한 대기 구조를 통해 비동기 처리를 최적화하여, 효율적인 데이터 전송과 복제를 수행할 수 있습니다.
+
+
 - Fetch Purgatory
 Fetch Purgatory는 컨슈머(consumer)가 데이터를 요청할 때 특정 조건을 만족할 때까지 요청을 대기시키는 구조입니다. 컨슈머가 Kafka로부터 데이터를 읽을 때, 요청하는 데이터가 아직 준비되지 않았거나 특정 조건에 맞는 데이터가 없다면, 해당 요청이 Fetch Purgatory에 추가됩니다. 이 구조는 주로 데이터의 최소 레코드 수 또는 최소 바이트 수에 도달할 때까지 기다리도록 설정된 경우에 사용됩니다.
 
