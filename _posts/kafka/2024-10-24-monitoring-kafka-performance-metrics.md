@@ -79,7 +79,7 @@ Kafka는 상태를 유지하기 위해 ZooKeeper에 의존하기 때문에 ZooKe
     </tr>
     <tr>
       <th scope="row">IsrShrinksPerSec/IsrExpandsPerSec</th>
-      <td>kafka.server:type=ReplicaManager,name=IsrShrinksPerSec</br>kafka.server:type=ReplicaManager,name=IsrExpandsPerSec</td>
+      <td>kafka.server:type=ReplicaManager,name=IsrShrinksPerSec<br/>kafka.server:type=ReplicaManager,name=IsrExpandsPerSec</td>
       <td>동기화 복제본(ISR) 풀이 축소/확장되는 속도</td>
       <td>Resource: Availability</td>
     </tr>
@@ -89,6 +89,12 @@ Kafka는 상태를 유지하기 위해 ZooKeeper에 의존하기 때문에 ZooKe
       <td>동클러스터의 active 컨트롤러 수</td>
       <td>Resource: Error</td>
     </tr>   
+     <tr>
+      <th scope="row">OfflinePartitionsCount</th>
+      <td>kafka.controller:type=KafkaController,name=OfflinePartitionsCount</td>
+      <td>오프라인 파티션 수</td>
+      <td>Resource: Availability</td>
+    </tr>       
   </tbody>
   <tfoot>
      <tr>
