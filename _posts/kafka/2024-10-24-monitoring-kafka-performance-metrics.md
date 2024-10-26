@@ -237,11 +237,15 @@ purgatory의 크기를 주시하는 것은 지연 시간의 근본적인 원인�
      <tr>
       <th scope="row">Network bytes sent/received</th>
       <td>k네트워크 트래픽 인/아웃</td>
-      <td>총 바이트 수신/발신 속도 집계</td>
       <td>Resource: Utilization</td>
     </tr>   
   </tfoot>
 </table>
+
+**Page cache read ratio**  
+Kafka는 처음부터 커널의 페이지 캐시를 활용하여 안정적이고(디스크 기반) 성능이 뛰어난(인메모리) 메시지 파이프라인을 제공하도록 설계되었습니다. 페이지 캐시 읽기 비율은 데이터베이스의 캐시 히트 비율과 유사하며, 값이 높을수록 읽기가 빨라지고 따라서 성능이 향상됩니다. 복제본이 리더를 따라잡는 경우(새 브로커가 생성될 때처럼) 이 메트릭은 잠시 떨어지지만 페이지 캐시 읽기 비율이 80% 미만으로 유지되면 추가 브로커를 프로비저닝하는 것이 도움이 될 수 있습니다.  
+
+
 
 ## purgatory
 - purgatory란: Kafka에서 purgatory란 특정 요청이 조건을 만족할 때까지 보류되며, 대기 상태로 처리되는 구조를 의미합니다. Kafka에는 대표적으로 Producer Purgatory와 Fetch Purgatory라는 두 가지 종류의 purgatory가 존재합니다.
