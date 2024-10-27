@@ -378,6 +378,102 @@ Java 애플리케이션에 익숙한 사람이라면 가비지 컬렉션이 높�
   </tbody>
 </table>
 
+**Compression rate**  
+이 메트릭은 생산자가 브로커에 전송하는 데이터 배치의 데이터 압축량을 반영합니다. 압축률은 압축되지 않은 크기와 비교한 배치의 압축된 크기의 평균 비율입니다. 압축률이 작을수록 효율성이 높다는 뜻입니다. 이 지표가 상승하면 데이터 형태에 문제가 있거나 불량 생산자가 압축되지 않은 데이터를 전송하고 있음을 나타낼 수 있습니다.  
+
+**Response rate**  
+프로듀서의 경우 응답률은 브로커로부터 받은 응답의 비율을 나타냅니다. 브로커는 데이터가 수신되면 프로듀서에게 응답합니다. 구성에 따라 “수신됨”은 세 가지 의미 중 하나를 가질 수 있습니다:
+
+- 메시지가 수신되었지만 커밋되지 않음(request.required.acks == 0)  
+- 리더가 메시지를 디스크에 썼습니다(request.required.acks == 1)  
+- 리더가 모든 레플리카로부터 데이터가 디스크에 기록되었다는 확인을 받았습니다(request.required.acks == all)
+
+필요한 수의 확인을 받을 때까지 프로듀서 데이터를 사용할 수 없습니다.
+
+응답률이 낮다면 여러 가지 요인이 작용하고 있을 수 있습니다. 먼저 브로커의 request.required.acks 설정 지시문을 확인하는 것이 좋습니다. 요청.required.acks에 적합한 값을 선택하는 것은 전적으로 사용 사례에 따라 다르며, 가용성과 일관성을 맞바꾸고 싶은지 여부는 사용자가 결정할 수 있습니다.
+
+
+<figure style="width: 100%" class="align-center">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/kafka/producer-response-rate.png" alt="">
+  <figcaption></figcaption>
+</figure> 
+
+**Request rate**  
+요청 비율은 프로듀서가 브로커에게 데이터를 전송하는 비율입니다. 물론 정상적인 요청 비율을 구성하는 요소는 사용 사례에 따라 크게 달라질 수 있습니다. 지속적인 서비스 가용성을 보장하기 위해서는 최고치와 최저치를 주시하는 것이 필수적입니다. [속도 제한](https://kafka.apache.org/documentation/#design_quotas)을 사용하지 않으면 트래픽이 급증하는 경우 브로커가 급격한 데이터 유입을 처리하는 데 어려움을 겪으면서 속도가 느려질 수 있습니다.
+
+**Request latency average**  
+평균 요청 지연 시간은 KafkaProducer.send()가 호출된 시점부터 프로듀서가 브로커로부터 응답을 받을 때까지의 시간을 측정한 값입니다. 여기서 “수신”은 [응답 속도](https://www.datadoghq.com/blog/monitoring-kafka-performance-metrics/#metric-to-watch-response-rate)에 대한 단락에서 설명한 것처럼 여러 가지를 의미할 수 있습니다.
+
+프로듀서가 각 메시지를 생성하자마자 반드시 전송하는 것은 아닙니다. 프로듀서의 [linger.ms](https://kafka.apache.org/documentation/#producerconfigs) 값은 메시지 배치를 보내기 전에 대기할 최대 시간을 결정하므로, 한 번의 요청으로 메시지를 보내기 전에 더 많은 메시지를 누적할 수 있습니다. linger.ms의 기본값은 0ms이며, 이 값을 높게 설정하면 지연 시간이 늘어날 수 있지만 제작자가 각 메시지에 대한 네트워크 오버헤드 없이 여러 메시지를 보낼 수 있으므로 처리량을 개선하는 데 도움이 될 수 있습니다. Kafka 배포의 처리량을 개선하기 위해 linger.ms를 늘리는 경우 요청 지연 시간을 모니터링하여 허용 가능한 한도를 초과하지 않는지 확인해야 합니다.  
+
+지연 시간은 처리량과 밀접한 상관관계가 있으므로 프로듀서 구성에서 batch.size를 수정하면 처리량이 크게 향상될 수 있습니다. 최적의 배치 크기를 결정하는 것은 사용 사례에 따라 크게 달라지지만 일반적으로 사용 가능한 메모리가 있으면 배치 크기를 늘려야 합니다. 구성하는 배치 크기는 상한선이라는 점에 유의하세요. 배치 크기가 작을수록 더 많은 네트워크 라운드 트립이 발생하므로 처리량이 감소할 수 있습니다.
+
+
+<figure style="width: 100%" class="align-center">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/kafka/average-request-latency.png" alt="">
+  <figcaption></figcaption>
+</figure> 
+
+**Outgoing byte rate**  
+카프카 브로커와 마찬가지로 프로듀서 네트워크 처리량을 모니터링하고 싶을 것입니다. 시간 경과에 따른 트래픽 양을 관찰하는 것은 네트워크 인프라를 변경할 필요가 있는지 여부를 결정하는 데 필수적입니다. 프로듀서 네트워크 트래픽을 모니터링하면 인프라 변경에 대한 결정을 내리는 데 도움이 될 뿐만 아니라 프로듀서의 생산 속도를 파악하고 과도한 트래픽의 원인을 파악하는 데도 도움이 됩니다.
+
+**I/O wait time**  
+프로듀서는 일반적으로 데이터를 기다리거나 데이터를 전송하는 두 가지 중 하나를 수행합니다. 프로듀서가 전송할 수 있는 데이터보다 더 많은 데이터를 생성하는 경우 네트워크 리소스를 기다리게 됩니다. 하지만 프로듀서가 속도 제한을 받지 않거나 대역폭을 최대로 사용하지 않는다면 병목 현상을 파악하기가 더 어려워집니다. 디스크 액세스는 모든 처리 작업 중 가장 느린 경향이 있으므로 프로듀서의 I/O 대기 시간을 확인하는 것이 좋은 출발점입니다. I/O 대기 시간은 CPU가 유휴 상태인 동안 I/O를 수행하는 데 소요된 시간의 비율을 나타냅니다. 대기 시간이 과도하게 길다면 프로듀서가 필요한 데이터를 충분히 빠르게 얻을 수 없다는 뜻입니다. 스토리지 백엔드에 기존 하드 드라이브를 사용하는 경우 SSD를 고려할 수 있습니다.
+
+**batch.size**  
+네트워크 리소스를 보다 효율적으로 사용하기 위해 Kafka 프로듀서는 메시지를 보내기 전에 메시지를 일괄 처리로 그룹화하려고 시도합니다. 프로듀서는 [batch.size](https://kafka.apache.org/documentation/#brokerconfigs)(기본값은 16KB)로 정의된 양의 데이터가 축적될 때까지 기다리지만, linger.ms(기본값은 0밀리초)보다 더 오래 기다리지는 않습니다.) 프로듀서가 전송하는 배치의 크기가 구성된 batch.size보다 지속적으로 작으면, 프로듀서가 도착하지 않는 추가 데이터를 기다리느라 대기 시간이 낭비됩니다. 배치 크기 값이 구성된 batch.size보다 작으면 linger.ms 설정을 줄이는 것이 좋습니다.  
+
+
+## Kafka consumer metrics
+
+<figure style="width: 100%" class="align-center">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/kafka/consumer-metrics.png" alt="">
+  <figcaption></figcaption>
+</figure> 
+
+<table>
+  <thead>
+    <tr>
+      <th scope="col">JMX attribute</th>
+      <th scope="col">Mbean name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Metric type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">records-lag</th>
+      <td>kafka.consumer:type=consumer-fetch-manager-metrics,client-id=([-.w]+),topic=([-.w]+),partition=([-.w]+)</td>
+      <td>이 파티션에서 (생산자 offset - 소비자 offset) 차의 offset  메시지 수</td>
+      <td>Work: Performance</td>
+    </tr>
+    <tr>
+      <th scope="row">records-lag-max</th>
+      <td>kafka.consumer:type=consumer-fetch-manager-metrics,client-id=([-.w]+),topic=([-.w]+),partition=([-.w]+)</td>
+      <td>특정 파티션 또는 이 클라이언트의 모든 파티션에 대해  (생산자 offset - 소비자 offset)의 최대 메시지 수</td>
+      <td>Work: Performance</td>
+    </tr>
+    <tr>
+      <th scope="row">bytes-consumed-rate</th>
+      <td>kafka.consumer:type=consumer-fetch-manager-metrics,client-id=([-.w]+),topic=([-.w]+),partition=([-.w]+)</td>
+      <td>특정 토픽 또는 모든 토픽에 대해 초당 소비되는 평균 바이트 수</td>
+      <td>Work: Throughput</td>
+    </tr>
+    <tr>
+      <th scope="row">records-consumed-rate</th>
+      <td>kafka.consumer:type=consumer-fetch-manager-metrics,client-id=([-.w]+),topic=([-.w]+),partition=([-.w]+)</td>
+      <td>특정 토픽 또는 모든 토픽에 대해 초당 소비되는 평균 레코드 수</td>
+      <td>Work: Performance</td>
+    </tr>Work: Throughput</td>
+    <tr>
+      <th scope="row">records-lag</th>
+      <td>kafka.consumer:type=consumer-fetch-manager-metrics,client-id=([-.w]+),topic=([-.w]+),partition=([-.w]+)</td>
+      <td>이 파티션에서 (생산자 offset - 소비자 offset) 차의 offset  메시지 수</td>
+      <td>Work: Throughput</td>
+    </tr>                 
+  </tbody>
+</table>
+
 ## purgatory
 - purgatory란: Kafka에서 purgatory란 특정 요청이 조건을 만족할 때까지 보류되며, 대기 상태로 처리되는 구조를 의미합니다. Kafka에는 대표적으로 Producer Purgatory와 Fetch Purgatory라는 두 가지 종류의 purgatory가 존재합니다.
 
