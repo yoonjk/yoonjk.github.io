@@ -466,13 +466,171 @@ Java 애플리케이션에 익숙한 사람이라면 가비지 컬렉션이 높�
       <td>Work: Performance</td>
     </tr>Work: Throughput</td>
     <tr>
-      <th scope="row">records-lag</th>
+      <th scope="row">fetch-rate</th>
       <td>kafka.consumer:type=consumer-fetch-manager-metrics,client-id=([-.w]+),topic=([-.w]+),partition=([-.w]+)</td>
-      <td>이 파티션에서 (생산자 offset - 소비자 offset) 차의 offset  메시지 수</td>
+      <td>소비자의 초당 가져오기 요청 횟수</td>
       <td>Work: Throughput</td>
     </tr>                 
   </tbody>
 </table>
+
+**Records lag/Records lag max**  
+레코드 지연은 소비자의 현재 로그 오프셋과 생산자의 현재 로그 오프셋 간의 계산된 차이입니다. 레코드 지연 최대값은 레코드 지연의 최대 관측값입니다. 이러한 메트릭 값의 중요성은 전적으로 소비자의 행동에 따라 달라집니다. 오래된 메시지를 장기 저장소에 백업하는 소비자가 있다면 레코드 지연이 상당히 클 것으로 예상할 수 있습니다. 그러나 소비자가 실시간 데이터를 처리하는 경우 지속적으로 높은 지연 값은 과부하가 걸린 소비자의 신호일 수 있으며, 이 경우 더 많은 소비자를 프로비저닝하고 토픽을 더 많은 파티션으로 분할하면 처리량을 늘리고 지연을 줄이는 데 도움이 될 수 있습니다  
+
+<figure style="width: 100%" class="align-center">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/kafka/bytes-consumed-rate.png" alt="">
+  <figcaption></figcaption>
+</figure> 
+
+**records consumed rate**  
+각 Kafka 메시지는 하나의 데이터 레코드입니다. 메시지의 크기가 다양할 수 있기 때문에 초당 소비되는 레코드 수는 소비되는 바이트 수와 큰 상관관계가 없을 수 있습니다. 생산자와 워크로드에 따라 다르지만, 일반적인 배포에서는 이 수치가 상당히 일정하게 유지될 것으로 예상해야 합니다. 이 메트릭을 시간 경과에 따라 모니터링하면 데이터 소비의 추세를 발견하고 경고를 보낼 수 있는 기준선을 만들 수 있습니다.  
+
+<figure style="width: 100%" class="align-center">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/kafka/message-consumed.png" alt="">
+  <figcaption></figcaption>
+</figure> 
+
+**fetch rate**  
+소비자의 가져오기 비율은 전반적인 소비자 상태를 나타내는 좋은 지표가 될 수 있습니다. 최소 가져오기 비율이 0에 가까워지면 잠재적으로 소비자에 문제가 있다는 신호일 수 있습니다. 건강한 소비자의 경우 최소 가져오기 비율은 일반적으로 0이 아니므로 이 값이 떨어지면 소비자 실패의 신호일 수 있습니다.  
+
+## Why ZooKeeper?
+ZooKeeper는 Kafka 배포에서 중요한 역할을 합니다. Kafka의 브로커와 토픽에 대한 정보를 유지하고, 배포를 통해 이동하는 트래픽 속도를 관리하기 위해 할당량을 적용하며, 배포 상태가 변경될 때 Kafka가 파티션 리더를 선출할 수 있도록 복제본에 대한 정보를 저장하는 일을 담당합니다. ZooKeeper는 Kafka 배포의 중요한 구성 요소이며, ZooKeeper가 중단되면 Kafka가 중단됩니다. 안정적인 Kafka 클러스터를 실행하려면 ZooKeeper를 앙상블이라는 고가용성 구성으로 배포해야 합니다. 그러나 앙상블을 실행하든 단일 ZooKeeper 호스트를 실행하든, ZooKeeper를 모니터링하는 것은 건강한 Kafka 클러스터를 유지하는 데 있어 핵심입니다.  
+
+
+<figure style="width: 100%" class="align-center">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/kafka/zookeeper-metrics.png" alt="">
+  <figcaption></figcaption>
+</figure> 
+
+ZooKeeper는 MBeans를 통해, 4글자 단어를 사용하는 명령줄 인터페이스를 통해, 그리고 관리자 서버에서 제공하는 HTTP 엔드포인트로 메트릭을 노출합니다. ZooKeeper 메트릭 수집에 대한 자세한 내용은 이 시리즈의 2부를 확인하세요.  
+
+<table>
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Metric type</th>
+      <th scope="col">Availability</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">outstanding_requests</th>
+      <td>대기 중인 요청 수</td>
+      <td>Resource: Saturation</td>
+      <td>Four-letter words, AdminServer, JMX</td>      
+    </tr>
+    <tr>
+      <th scope="row">avg_latency</th>
+      <td>클라이언트 요청에 응답하는 데 걸리는 시간</td>
+      <td>Work: Throughput</td>
+      <td>Four-letter words, AdminServer, JMX</td>
+    </tr>
+    <tr>
+      <th scope="row">num_alive_connections</th>
+      <td>ZooKeeper에 연결된 클라이언트 수</td>
+      <td>Resource: Availability</td>
+      <td>Four-letter words, AdminServer, JMX</td>
+    </tr>
+    <tr>
+      <th scope="row">followers</th>
+      <td>active 팔로워 수</td>
+      <td>Resource: Availability</td>
+      <td>Four-letter words, AdminServer</td>
+    </tr>
+    <tr>
+      <th scope="row">pending_syncs</th>
+      <td>팔로워의 보류 중인 동기화 건수</td>
+      <td>Other</td>
+      <td>Four-letter words, AdminServer, JMX</td>
+    </tr>     
+    <tr>
+      <th scope="row">open_file_descriptor_count</th>
+      <td>사용 중인 파일 descriptors 수</td>
+      <td>Resource: Utilization</td>
+      <td>FFour-letter words, AdminServer</td>
+    </tr>                  
+  </tbody>
+</table>
+
+**Outstanding requests**  
+
+<figure style="width: 100%" class="align-center">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/kafka/outstanding-requests.png" alt="">
+  <figcaption></figcaption>
+</figure> 
+
+클라이언트가 요청을 처리할 수 있는 속도보다 더 빨리 요청을 제출할 수 있습니다. 클라이언트가 많은 경우, 이런 일이 가끔 발생하는 것은 거의 당연한 일입니다. 대기 중인 요청으로 인해 사용 가능한 메모리가 모두 소모되는 것을 방지하기 위해, ZooKeeper는 대기열 제한에 도달하면 클라이언트를 스로틀링합니다. 이 제한은 ZooKeeper의 zookeeper.globalOutstandingLimit 설정에 정의되어 있으며, 기본값은 1,000으로 설정되어 있습니다. 요청이 처리될 때까지 일정 시간 동안 대기하는 경우 보고된 평균 지연 시간에서 상관관계를 확인할 수 있습니다. 미처리 요청과 지연 시간을 모두 추적하면 성능 저하의 원인을 보다 명확하게 파악할 수 있습니다.  
+
+**Average latency**  
+평균 요청 지연 시간은 ZooKeeper가 요청에 응답하는 데 걸리는 평균 시간(밀리초)입니다. ZooKeeper는 트랜잭션을 트랜잭션 로그에 기록할 때까지 요청에 응답하지 않습니다. ZooKeeper 앙상블의 성능이 저하되는 경우, 평균 지연 시간을 미처리 요청 및 보류 중인 동기화(아래에서 자세히 설명)와 연관시켜 속도 저하의 원인에 대한 통찰력을 얻을 수 있습니다.  
+
+
+<figure style="width: 100%" class="align-center">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/kafka/average-request-lateency.png" alt="">
+  <figcaption></figcaption>
+</figure> 
+
+**Number of alive connections**  
+ZooKeeper는 num_alive_connections 메트릭을 통해 연결된 클라이언트 수를 보고합니다. 이는 ZooKeeper가 아닌 노드에 대한 연결을 포함한 모든 연결을 나타냅니다. 대부분의 환경에서 이 숫자는 상당히 정적으로 유지되어야 하며, 일반적으로 소비자, 프로듀서, 브로커, ZooKeeper 노드의 수는 비교적 안정적으로 유지되어야 합니다. 이 값의 예상치 못한 하락에 주의해야 합니다. Kafka는 ZooKeeper를 사용하여 작업을 조정하기 때문에, 연결이 끊어진 클라이언트에 따라 ZooKeeper에 대한 연결이 끊어지면 여러 가지 다른 영향을 미칠 수 있습니다.  
+
+**Followers (leader only)**  
+팔로워 수는 ZooKeeper 앙상블의 총 크기에서 1을 뺀 수와 같아야 합니다. (리더는 팔로워 수에 포함되지 않습니다). 앙상블의 크기는 사용자 개입(예: 관리자가 노드를 해제하거나 위임한 경우)으로 인해 변경되어야 하므로 이 값에 변경이 있을 경우 알림을 보내야 합니다.  
+
+**Pending syncs (leader only)**
+트랜잭션 로그는 ZooKeeper에서 가장 성능이 중요한 부분입니다. ZooKeeper는 응답을 반환하기 전에 트랜잭션을 디스크에 동기화해야 하므로 보류 중인 동기화가 많으면 대기 시간이 늘어납니다. 미결 동기화 기간이 길어지면 의심할 여지 없이 성능이 저하되는데, 이는 동기화가 수행될 때까지 ZooKeeper가 요청을 서비스할 수 없기 때문입니다. pending_syncs 값이 10보다 크면 알림을 고려해야 합니다.  
+
+**Open file descriptor count**  
+ZooKeeper는 파일 시스템의 상태를 유지 관리하며, 각 z노드는 디스크의 하위 디렉터리에 해당합니다. Linux에서는 사용할 수 있는 파일 descriptor의 수가 제한되어 있습니다. 이는 구성할 수 있으므로 이 메트릭을 시스템의 구성된 제한과 비교하여 필요에 따라 제한을 늘려야 합니다.  
+
+## ZooKeeper system metrics
+ZooKeeper 자체에서 생성하는 메트릭 외에도 몇 가지 호스트 수준의 ZooKeeper 메트릭도 모니터링할 가치가 있습니다.  
+
+<table>
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Metric type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Bytes sent/received</th>
+      <td>ZooKeeper 호스트가 송수신한 바이트 수</td>
+      <td>Resource: Utilization</td> 
+    </tr>
+    <tr>
+      <th scope="row">Usable memory</th>
+      <td>ZooKeeper에서 사용 가능한 미사용 메모리 양</td>
+      <td>Resource: Utilization</td>
+    </tr>
+    <tr>
+      <th scope="row">Swap usage</th>
+      <td>ZooKeeper가 사용하는 스왑 공간의 양</td>
+      <td>Resource: Saturation</td>
+    </tr>
+    <tr>
+      <th scope="row">Disk latency</th>
+      <td>데이터 요청과 디스크에서 데이터 반환 사이의 시간 지연</td>
+      <td>Resource: Saturation</td>
+      <td>Four-letter words, AdminServer</td>
+    </tr>               
+  </tbody>
+</table>
+
+**Bytes sent/received**  
+많은 소비자와 파티션이 있는 대규모 배포에서 ZooKeeper는 클러스터의 변화하는 상태를 기록하고 전달하기 때문에 병목 현상이 발생할 수 있습니다. 시간 경과에 따른 송수신 바이트 수를 추적하면 성능 문제를 진단하는 데 도움이 될 수 있습니다. ZooKeeper 앙상블의 트래픽이 증가하는 경우, 더 많은 노드를 프로비저닝하여 더 많은 볼륨을 수용해야 합니다.  
+
+**Usable memory**  
+ZooKeeper는 전적으로 RAM에 상주해야 하며, 디스크로 페이지해야 하는 경우 상당한 성능 저하를 겪게 됩니다. 따라서 사용 가능한 메모리 양을 추적하여 ZooKeeper의 성능을 최적으로 유지해야 합니다. ZooKeeper는 상태를 저장하는 데 사용되므로, ZooKeeper 성능이 저하되면 클러스터 전체에 영향을 미친다는 점을 기억하세요. ZooKeeper 노드로 프로비저닝된 머신에는 부하 급증을 처리할 수 있는 충분한 메모리 버퍼가 있어야 합니다.  
+
+**Swap usage**  
+ZooKeeper의 메모리가 부족하면 스왑을 해야 하며, 이로 인해 속도가 느려질 수 있습니다. 더 많은 메모리를 프로비저닝할 수 있도록 스왑 사용량에 대한 알림을 받아야 합니다.  
+
+**Disk latency**  
+ZooKeeper는 RAM에 상주해야 하지만, 현재 상태를 주기적으로 스냅샷하고 모든 트랜잭션의 로그를 유지하기 위해 여전히 파일 시스템을 사용합니다. ZooKeeper는 업데이트가 수행되기 전에 비휘발성 스토리지에 트랜잭션을 기록해야 하므로 디스크 액세스가 잠재적인 병목 현상을 일으킬 수 있습니다. 디스크 지연 시간이 급증하면 ZooKeeper와 통신하는 모든 호스트의 서비스가 저하될 수 있으므로 앙상블에 SSD를 장착하는 것 외에도 디스크 지연 시간을 주시해야 합니다.  
+
 
 ## purgatory
 - purgatory란: Kafka에서 purgatory란 특정 요청이 조건을 만족할 때까지 보류되며, 대기 상태로 처리되는 구조를 의미합니다. Kafka에는 대표적으로 Producer Purgatory와 Fetch Purgatory라는 두 가지 종류의 purgatory가 존재합니다.
@@ -501,4 +659,8 @@ Fetch Purgatory의 주요 기능:
 효율적인 데이터 수집: 컨슈머가 대량의 데이터를 요청할 때, 지정된 데이터 양이 확보될 때까지 대기함으로써 네트워크 자원을 절약할 수 있습니다.
 데이터의 안정성 보장: 데이터를 모두 수집한 후 일괄적으로 응답함으로써 안정적인 데이터 전송을 보장합니다.
 Purgatory의 이점
-Kafka의 Purgatory 시스템은 메시지 복제 및 데이터 수집 시점을 제어할 수 있어, 높은 데이터 일관성과 전송 효율성을 유지하는 데 중요한 역할을 합니다. 또한, 이 구조 덕분에 Kafka는 대규모 데이터 스트림을 처리할 때 안정성과 성능을 유지할 수 있습니다.
+Kafka의 Purgatory 시스템은 메시지 복제 및 데이터 수집 시점을 제어할 수 있어, 높은 데이터 일관성과 전송 효율성을 유지하는 데 중요한 역할을 합니다. 또한, 이 구조 덕분에 Kafka는 대규모 데이터 스트림을 처리할 때 안정성과 성능을 유지할 수 있습니다. 
+
+
+## 참고
+- [Monitoring Kafka performance metrics](https://www.datadoghq.com/blog/monitoring-kafka-performance-metrics/#kafka-producer-metrics)
