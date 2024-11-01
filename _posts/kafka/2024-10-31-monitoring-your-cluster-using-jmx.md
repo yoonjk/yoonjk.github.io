@@ -18,10 +18,13 @@ Procedure
 
 Set the KAFKA_JMX_OPTS environment variable with the JMX properties for enabling JMX monitoring.
 
+```bash
 export KAFKA_JMX_OPTS=-Dcom.sun.management.jmxremote=true
   -Dcom.sun.management.jmxremote.port=<port>
   -Dcom.sun.management.jmxremote.authenticate=false
   -Dcom.sun.management.jmxremote.ssl=false
+```
+  
 Replace <port> with the name of the port on which you want the Kafka component to listen for JMX connections.
 
 Add org.apache.kafka.common.metrics.JmxReporter to metric.reporters in the server.properties file.
@@ -162,7 +165,7 @@ kafka.network:type=RequestChannel,name=RequestQueueSize # 3
 kafka.network:type=RequestChannel,name=ResponseQueueSize 4
 kafka.network:type=Processor,name=IdlePercent,networkProcessor=([-.\w]+) # 5
 kafka.server:type=KafkaServer,name=TotalDiskReadBytes # 6
-kafka.server:type=KafkaServer,name=TotalDiskWriteBytes # dd7
+kafka.server:type=KafkaServer,name=TotalDiskWriteBytes # # 7
 ```
 
 1
