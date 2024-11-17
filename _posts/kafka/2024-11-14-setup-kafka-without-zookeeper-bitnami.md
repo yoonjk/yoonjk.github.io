@@ -23,7 +23,7 @@ helm repo update
 ```
 
 <figure style="width: 100%" class="align-center">
-  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/kafka/kafka-add-bitnami-repo.png" alt="">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/kafka/add-repo-bitnami.png" alt="">
   <figcaption></figcaption>
 </figure> 
 
