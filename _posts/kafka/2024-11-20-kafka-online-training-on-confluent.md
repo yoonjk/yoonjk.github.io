@@ -1,5 +1,5 @@
 ---
-title: Learn Apache Kafka® & Flink
+title: Learn Apache Kafka
 categories:
   - kafka
 tags: 
@@ -7,6 +7,6 @@ tags:
   - kafka
 ---
 
-
+confluent 에서 아파치 카프카 강의 
 ]Learn Apache Kafka® & Flink](https://developer.confluent.io/courses/#fundamentals)
 
