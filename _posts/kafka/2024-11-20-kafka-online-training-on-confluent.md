@@ -8,5 +8,5 @@ tags:
 ---
 
 confluent 에서 아파치 카프카 강의 
-]Learn Apache Kafka® & Flink](https://developer.confluent.io/courses/#fundamentals)
+]Learn Apache Kafka](https://developer.confluent.io/courses/#fundamentals)
 
