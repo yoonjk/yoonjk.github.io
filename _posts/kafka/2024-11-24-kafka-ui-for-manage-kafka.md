@@ -26,3 +26,4 @@ kafka-ui의 주요 기능은 다음과 같습니다.
 
 ## 참조
 - [kafka-ui](https://github.com/provectus/kafka-ui)
+- [Running Mirror Maker 2 on Kafka Connect cluster](https://medium.com/@penkov.vladimir/running-mirror-maker-2-on-kafka-connect-cluster-3b391d686efe)
