@@ -1,5 +1,5 @@
 ---
-title: kafka mirrormaker active-passive 방식 구성하기 
+title: kafka mirrormaker active-passive 방식 구성하기 데모  
 categories:
   - kafka
 tags: 
