@@ -75,11 +75,11 @@ conn scott/admin1234
 </figure> 
 
 <figure style="width: 100%" class="align-center">
-  <img src="{{ site.url }}{{ site.baseurl }}/assets/docker/images/starting-oracle.png" alt="">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/docker/starting-oracle.png" alt="">
   <figcaption></figcaption>
 </figure> 
 
 <figure style="width: 100%" class="align-center">
-  <img src="{{ site.url }}{{ site.baseurl }}/assets/docker/images/oracle-connected.png" alt="">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/docker/oracle-connected.png" alt="">
   <figcaption></figcaption>
 </figure> 
