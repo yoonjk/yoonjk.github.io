@@ -1,10 +1,12 @@
 ---
-title: LC_CTYPE: cannot change locale (UTF-8): No such file or directory
+title: LC_CTYPE: cannot change locale (UTF-8) No such file or directory
 categories:
   - etc 
 tags:
   - linux
 ---
+Cannot change locale (UTF-8) No such file or directory
+
 
 ## LC_CTYPE cannot change locale
 ```bash
