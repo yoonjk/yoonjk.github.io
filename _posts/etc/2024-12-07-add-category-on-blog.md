@@ -25,7 +25,7 @@ _includes 폴더 아래에 있는 nav_list_main 파일에 메뉴를 추가합니
 ## category 파일 생성
 _pages > categories 폴더 아래에 신규 추가 category 파일을 생성  
 
-<figure style="width: 100%" class="align-center">
+<figure style="width: 30%" class="align-center">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/etc/make-a-category-file.png" alt="">
   <figcaption></figcaption>
 </figure>  
