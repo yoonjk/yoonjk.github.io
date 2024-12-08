@@ -83,3 +83,4 @@ conn scott/admin1234
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/docker/oracle-connected.png" alt="">
   <figcaption></figcaption>
 </figure> 
+![alt text](image.png)
