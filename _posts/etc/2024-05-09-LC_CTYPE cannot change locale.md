@@ -5,8 +5,8 @@ categories:
 tags:
   - linux
 ---
-Cannot change locale (UTF-8) No such file or directory
 
+Cannot change locale (UTF-8) No such file or directory
 
 ## LC_CTYPE cannot change locale
 ```bash
