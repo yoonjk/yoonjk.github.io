@@ -33,6 +33,8 @@ services:
       - --collation-server=utf8_general_ci
     volumes:
       - ./data:/dev/docker/db/mysql-db01 # 마운트 설정
+    security_opt:
+      - seccomp:unconfined      
 ```
 
 docker-compose.yaml 파일이 있는 곳에서 docker-compose를 실행합니다.  
