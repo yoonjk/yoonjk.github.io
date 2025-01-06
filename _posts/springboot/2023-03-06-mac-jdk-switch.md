@@ -17,6 +17,8 @@ ls -al /Library/Java/JavaVirtualMachines
   <figcaption></figcaption>
 </figure> 
 
+
+
 ## Install jdk1.8
 mac에서 open jdk를 설치합니다
 
