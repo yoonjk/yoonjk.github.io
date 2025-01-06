@@ -9,5 +9,8 @@ jdk1.8 에서 jdk11로 전환하여 개발을 하는 경우 jdk는 11로 변경�
 ```bash
 vi $HOME/.mavenrc
 
-export JAVA_HOME=$(/usr/libexec/java_home -v 110)
+export JAVA_HOME=$(/usr/libexec/java_home -v 11)
+
+
+
 ```
