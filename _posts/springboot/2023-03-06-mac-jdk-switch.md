@@ -12,7 +12,7 @@ macOS에서 jdk base 설치 위치는 다음과 같습니다.
 ls -al /Library/Java/JavaVirtualMachines
 ```
 
-<figure style="width: 70%" class="align-center">
+<figure style="width: 70%" class="align-left">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/springboot/install_java_base_home.png" alt="">
   <figcaption></figcaption>
 </figure> 
