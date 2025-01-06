@@ -6,7 +6,7 @@ tags:
   - openjdk
 ---
 
-## open jdk
+## Install jdk1.8
 mac에서 open jdk를 설치합니다
 
 ```bash
