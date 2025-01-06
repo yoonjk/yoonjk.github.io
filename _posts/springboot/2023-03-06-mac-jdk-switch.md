@@ -12,6 +12,11 @@ macOS에서 jdk base 설치 위치는 다음과 같습니다.
 ls -al /Library/Java/JavaVirtualMachines
 ```
 
+<figure style="width: 50%" class="align-center">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/springboot/install_java_base_home.png" alt="">
+  <figcaption></figcaption>
+</figure> 
+
 ## Install jdk1.8
 mac에서 open jdk를 설치합니다
 
@@ -45,3 +50,4 @@ zsh profile을 적용합니다.
 ```bash
 source ~/.zshrc
 ```
+
