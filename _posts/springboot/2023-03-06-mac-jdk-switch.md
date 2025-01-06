@@ -6,6 +6,12 @@ tags:
   - openjdk
 ---
 
+macOS에서 jdk base 설치 위치는 다음과 같습니다.  
+
+```bash
+ls -al /Library/Java/JavaVirtualMachines
+```
+
 ## Install jdk1.8
 mac에서 open jdk를 설치합니다
 
