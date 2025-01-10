@@ -1,5 +1,5 @@
 ---
-title: Git add 명령어
+title: Git 마스터하기 - add 명령어
 categories:
   - etc 
 tags:
