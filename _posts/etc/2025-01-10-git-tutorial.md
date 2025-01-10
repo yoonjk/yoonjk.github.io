@@ -16,6 +16,12 @@ Git은 세 가지 상태로 파일을 관리합니다:
 스테이징 영역 (Staging Area): 커밋할 파일이 임시로 저장되는 영역.  
 Git 저장소 (Repository): 커밋된 파일이 영구적으로 저장되는 영역.  
 
+<figure style="width: 100%" class="align-center">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/etc/git-add.png" alt="">
+  <figcaption></figcaption>
+</figure>  
+
+
 ## git add
 git add는 Git에서 파일 변경 사항을 스테이징(staging area)으로 추가하는 명령어입니다.  
 이는 작업 디렉토리에서 수정되거나 새로 추가된 파일을 Git이 추적하도록 준비하는 단계입니다. 스테이징된 파일만 git commit을 통해 저장소에 기록됩니다.  
