@@ -1,0 +1,55 @@
+---
+title: Git 마스터하기 - diff 명령어
+categories:
+  - etc 
+tags:
+  - git
+---
+
+git diff는 Git에서 파일 간의 차이를 확인할 때 사용하는 명령어입니다. 주로 작업 디렉토리, 스테이징 영역, 저장소 간의 변경 내용을 비교하여 어떤 부분이 수정되었는지 확인하는 데 사용됩니다.
+
+
+<figure style="width: 100%" class="align-center">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/etc/git-diff.png" alt="">
+  <figcaption></figcaption>
+</figure>  
+
+
+**주요 역할과 동작 원리**  
+1. 파일 간의 변경점 확인
+git diff는 텍스트 기반으로 파일의 수정된 줄을 보여줍니다.
+
+- 제거된 줄은 - 기호와 함께 빨간색으로 표시됩니다.  
+- 추가된 줄은 + 기호와 함께 초록색으로 표시됩니다.  
+2. 비교 범위 설정 가능
+
+- 작업 디렉토리와 스테이징 영역 간의 차이.  
+- 스테이징 영역과 최신 커밋 간의 차이.  
+- 두 특정 커밋 간의 차이.  
+
+3. 부분별 비교 지원
+- 특정 파일, 디렉토리, 브랜치 등 비교 범위를 세부적으로 지정할 수 있습니다.
+
+## 기본 사용법
+1. 작업 디렉토리와 스테이징 영역 비교
+
+```bash
+git diff
+```
+
+2. 작업 디렉토리와 최신 커밋 비교
+
+```bash
+git diff HEAD
+```
+
+3. 두 커밋 간의 비교
+```bash
+git diff commit1   commit2
+```
+
+4. 브랜치 간의 비교
+```bash
+git diff 브랜치1  브랜치2
+```
+
