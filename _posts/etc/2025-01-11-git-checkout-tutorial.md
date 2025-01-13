@@ -14,6 +14,7 @@ git checkout은 Git에서 브랜치를 전환하거나 특정 커밋, 파일, �
   <figcaption></figcaption>
 </figure>  
 
+
 **주요 역할**
 1. 브랜치 전환  
 git checkout은 브랜치를 변경하여 해당 브랜치의 마지막 커밋 상태로 작업 디렉토리를 업데이트합니다.
