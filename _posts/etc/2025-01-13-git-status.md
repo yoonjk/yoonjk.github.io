@@ -47,7 +47,7 @@ On branch <branch-name>
 - 현재 작업 중인 브랜치 이름을 표시합니다.  
 - 브랜치가 최신 상태인지, 아니면 커밋이 뒤처져 있는지를 알려줍니다.   
 
-1. 상태 메시지
+1. 상태 메시지  
 - Changes to be Committed (커밋될 변경 사항):  
 스테이징 영역에 추가된 변경 사항이 있으며, 다음 커밋에 포함될 준비가 되어 있습니다.  
 ```bash
@@ -63,6 +63,7 @@ Changes not staged for commit:
   (use "git restore <file>..." to discard changes in working directory)
       <file-name>
 ```
+
 - Untracked Files (추적되지 않은 파일):  
 Git이 아직 관리하지 않는 새 파일입니다. git add로 스테이징할 수 있습니다.  
 ```bash
@@ -70,6 +71,7 @@ Git이 아직 관리하지 않는 새 파일입니다. git add로 스테이징�
   (use "git add <file>..." to include in what will be committed)
       <file-name>
 ```
+
 - Clean Working Tree (정리된 상태):  
 변경 사항이 없고, 모든 파일이 최신 상태
 ```bash
@@ -81,7 +83,7 @@ nothing to commit, working tree clean
 - '-s', '--short' 옵션 : $ git status 명령 간단하게 보여주는 옵션
    ㄴ> $ git status -s 명령어 실행 시 결과에 '상태정보 컬럼'에 2개의 상태가 표시되는데, 
 
-[상태표시 종류]  
+### 상태표시 종류
 - **?? 표시** : 추적하지 않는 새 파일  
 - **- A 표시** : Staged 상태로 추가한 파일 중 새로 생성한 파일  
 - **- M 표시** : 수정한 파일  - 상태 비었으면 그 상태의 파일이 없는 것  
