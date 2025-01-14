@@ -138,7 +138,7 @@ nothing to commit, working tree clean
     <tr>
         <td>?</td>
         <td>?</td>
-        <td>message4.md</td>
+        <td>message5.md</td>
         <td>추적하지 않는 새 파일</td>
     </tr>           
     </tbody>
