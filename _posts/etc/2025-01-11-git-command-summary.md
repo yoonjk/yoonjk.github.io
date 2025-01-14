@@ -1,5 +1,5 @@
 ---
-title: Git 명령어 요약
+title: Git 마스터하기 - 명령어 요약
 categories:
   - etc 
 tags:
