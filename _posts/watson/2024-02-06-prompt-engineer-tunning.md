@@ -8,7 +8,7 @@ tags:
 
 prompt engineer vs tuning  
 
-<figure style="width: 100%" class="align-center">
+<figure style="width: 40%" class="align-center">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/watson/prompt-engineer-tuning.png" alt="">
   <figcaption></figcaption>
 </figure> 
