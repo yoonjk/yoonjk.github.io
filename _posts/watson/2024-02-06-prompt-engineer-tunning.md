@@ -7,14 +7,8 @@ tags:
 ---
 
 prompt engineer vs tuning  
-                ┌───────────────────────────┐  
-                │   🏗️ Prompt Engineering   │  
-                │ (사람이 직접 질문을 최적화)     │  
-                └───────────────────────────┘  
-                              │   
-                              ▼  
-                ┌───────────────────────────┐  
-                │   🔄 Prompt Tuning        │  
-                │ (AI가 최적의 프롬프트를 학습)   │  
-                └───────────────────────────┘  
 
+<figure style="width: 100%" class="align-center">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/watson/prompt-engineer-tuning.png" alt="">
+  <figcaption></figcaption>
+</figure> 
