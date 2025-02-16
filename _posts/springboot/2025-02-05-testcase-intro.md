@@ -41,6 +41,8 @@ Spring Boot에서는 보통 JUnit과 같은 테스트 프레임워크를 사용�
 </tbody>
 </table>
 
+## API vs 테스트케이스 vs 시나리오 관계 
+
 <figure style="width: 80%" class="align-center">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/springboot/testcase-scenario.png" alt="">
   <figcaption></figcaption>
