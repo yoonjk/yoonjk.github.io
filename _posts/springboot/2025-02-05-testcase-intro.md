@@ -40,3 +40,8 @@ Spring Boot에서는 보통 JUnit과 같은 테스트 프레임워크를 사용�
     </tr>
 </tbody>
 </table>
+
+<figure style="width: 40%" class="align-center">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/springboot/testcase-scenario.png" alt="">
+  <figcaption></figcaption>
+</figure> 
