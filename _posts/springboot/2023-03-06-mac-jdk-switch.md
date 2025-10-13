@@ -63,3 +63,4 @@ mkdir -p openjdk21/Contents/Home
 cd /Library/Java/JavaVirtualMachines/openjdk21/Contents
 sudo ln -s /opt/homebrew/Cellar/openjdk@21/21.0.8 Home
 ```
+
