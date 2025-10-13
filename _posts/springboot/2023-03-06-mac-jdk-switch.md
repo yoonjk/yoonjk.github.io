@@ -52,4 +52,14 @@ zsh profile을 적용합니다.
 ```bash
 source ~/.zshrc
 ```
+## Install openjdk@21
+brew 명령어로 openjdk 21 version을 설치하고 symlink 를 생성합니다.
 
+```bash
+brew install openjdk@21
+ls -al /opt/homebrew/Cellar/openjdk@21/21.0.8
+cd /Library/Java/JavaVirtualMachines/
+mkdir -p openjdk21/Contents/Home
+cd /Library/Java/JavaVirtualMachines/openjdk21/Contents
+sudo ln -s /opt/homebrew/Cellar/openjdk@21/21.0.8 Home
+```
