@@ -33,7 +33,7 @@ RemoteSigned :
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 ```
 
-- 그리고 다시 일반 PowerShell에서:
+- 그리고 다시 일반 PowerShell에서:  
 ```bash
 cd 프로젝트_폴더
 python -m venv .venv          # 이미 만들었다면 생략
