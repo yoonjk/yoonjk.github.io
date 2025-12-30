@@ -53,3 +53,18 @@ COLLATE utf8_general_ci;
 +--------------------+
 5 rows in set (0.01 sec)
 ```
+
+## mysql shell 설치
+
+```bash
+sudo dnf install mysql-shell
+```
+
+## mysql shell 로그인
+mysql shell을 이용하여 로그앤합니다.  
+
+```bash
+mysqlsh
+
+\c --mysql -u root -p
+```
