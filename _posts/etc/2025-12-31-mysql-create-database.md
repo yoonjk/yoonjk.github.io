@@ -1,5 +1,5 @@
 ---
-title: [mysql] create database 
+title: mysql - create database 
 categories:
   - etc 
 tags:
@@ -9,7 +9,6 @@ tags:
 mysql을 데이터베이스 utf8 character set으로 생성하는 명령어 입니다.  
 
 ## 데이터베이스 설치
-
 mysql community server를 설치합니다.  
 
 ```bash
