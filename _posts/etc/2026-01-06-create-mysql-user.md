@@ -1,5 +1,5 @@
 ---
-title: [mysql] mysql user 생성
+title: mysql - mysql user 생성
 categories:
   - etc 
 tags:
