@@ -1,5 +1,5 @@
 ---
-title: [mysql] ERROR 1820 (HY000)
+title: mysql - ERROR 1820 (HY000)
 categories:
   - etc 
 tags:
