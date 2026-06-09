@@ -37,6 +37,38 @@ services:
       - seccomp:unconfined      
 ```
 
+## mysql for ARM version docker-compose 파일
+docker image를 latest 로 변경하고 character-set-server와 collation-server 값을 다음과 같이 변경합니다.  
+
+- --character-set-server=utf8mb4 # 인코딩  
+- --collation-server=utf8mb4_general_ci  
+
+
+```yaml
+version: "3" # 파일규격버전
+
+services:
+  db: # 서비스이름
+    image: mysql:latest # 이미지 최근버전
+    container_name: mysql # 컨테이너 이름
+    ports:
+      - "3306:3306" # 포트 설정  외부:내부
+    environment:
+      MYSQL_ROOT_PASSWORD: "1234qwer" # 패스워드설정
+      MYSQL_DATABASE: "demo"
+      MYSQL_USER: "user00"
+      MYSQL_PASSWORD: "admin1234"
+    command:
+      - --character-set-server=utf8mb4 # 인코딩
+      - --collation-server=utf8mb4_general_ci
+    volumes:
+      - ./data:/dev/docker/db/mysql-db01 # 마운트 설정
+    security_opt:
+      - seccomp:unconfined      
+```
+
+## mysql startup  
+
 docker-compose.yaml 파일이 있는 곳에서 docker-compose를 실행합니다.  
 ```
 docker-compose up -d
